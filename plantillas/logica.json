@@ -91,6 +91,66 @@
       "respuesta": 4,
       "pista": "Si los rojos son el doble, los cromos se parten en 3 partes iguales.",
       "explicacion": "Hay 3 partes iguales (1 de azules y 2 de rojos): 12 ÷ 3 = 4 azules."
+    },
+    {
+      "tipo": "logica",
+      "variante": "deduccion",
+      "grupo": "Deducción",
+      "enunciado": "En un saco hay 3 animales: patos y conejos. En total tienen 8 patas. ¿Cuántos patos y cuántos conejos hay?",
+      "etiquetas": ["Patos", "Conejos"],
+      "respuesta": [2, 1],
+      "pista": "Los patos tienen 2 patas y los conejos 4. Empieza probando con 1 pato y cuenta las patas.",
+      "explicacion": "2 patos (4 patas) y 1 conejo (4 patas) suman 3 animales y 8 patas. Con 1 pato y 2 conejos habría 10 patas y con 3 patos solo 6."
+    },
+    {
+      "tipo": "logica",
+      "variante": "deduccion",
+      "grupo": "Deducción",
+      "enunciado": "En el cajón hay 12 lápices y bolígrafos entre los dos, y los bolígrafos son el doble que los lápices. ¿Cuántos lápices y cuántos bolígrafos hay?",
+      "etiquetas": ["Lápices", "Bolígrafos"],
+      "respuesta": [4, 8],
+      "pista": "Por cada lápiz hay 2 bolígrafos: 1 + 2 = 3, 2 + 4 = 6… ¿qué pareja llega a 12?",
+      "explicacion": "4 lápices y 8 bolígrafos suman 12, y 8 es el doble que 4."
+    },
+    {
+      "tipo": "logica",
+      "variante": "deduccion",
+      "grupo": "Deducción",
+      "enunciado": "En la clase hay 24 niños y niñas. Hay 4 niños más que niñas. ¿Cuántos niños y cuántas niñas hay?",
+      "etiquetas": ["Niños", "Niñas"],
+      "respuesta": [14, 10],
+      "pista": "Si quitaras los 4 niños de más, quedarían el mismo número de niños que niñas y sumarían 20.",
+      "explicacion": "Sin los 4 niños de más sobrarían 20 para dos grupos iguales: 10 niñas y, sumando los 4, 14 niños."
+    },
+    {
+      "tipo": "logica",
+      "variante": "eliminatoria",
+      "grupo": "Eliminatoria",
+      "enunciado": "Berta, Carlos y Diego van en fila. Berta está delante de Carlos y Carlos delante de Diego. ¿Quién va al final?",
+      "opciones": ["Berta", "Carlos", "Diego", "No se puede saber"],
+      "respuesta": "Diego",
+      "pista": "Dibuja tres huecos y coloca primero a quien va delante de todos.",
+      "explicacion": "El orden es Berta, Carlos y Diego: delante Berta y al final Diego."
+    },
+    {
+      "tipo": "logica",
+      "variante": "eliminatoria",
+      "grupo": "Eliminatoria",
+      "enunciado": "¿Cuántos meses del año tienen 28 días?",
+      "opciones": ["1 solo", "2", "4", "Todos"],
+      "respuesta": "Todos",
+      "pista": "Febrero tiene 28… pero ¿los demás meses no llegan alguna vez al día 28?",
+      "explicacion": "Todos los meses tienen al menos 28 días: febrero justo 28 (o 29) y los demás, más."
+    },
+    {
+      "tipo": "logica",
+      "variante": "eliminatoria",
+      "grupo": "Eliminatoria",
+      "enunciado": "El pupitre de Omar está justo detrás del de Lidia, y el de Lidia está en la primera fila. ¿En qué fila está el de Omar?",
+      "opciones": ["Primera", "Segunda", "Tercera", "No se puede saber"],
+      "respuesta": "Segunda",
+      "pista": "Justo detrás de la primera fila está la segunda.",
+      "explicacion": "Lidia está en la primera fila y Omar justo detrás: la segunda fila."
     }
   ]
 }

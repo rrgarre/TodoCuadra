@@ -144,7 +144,8 @@ plantillas/               # TODO lo de las fichas: JSON + la lógica que los ent
   templates.js            # formatos, parseo/validación, cargador local y lectura remota
   remotas.js              # config de la carpeta remota de GitHub (vacío = desactivada)
   calculo.json            # ficha «Ejercicios de hoy» (sheet-001): 31 ejercicios + 4 trucos
-  logica.json             # ficha «Lógica»: 9 retos (series, comparaciones, enigmas)
+  logica.json             # ficha «Lógica»: 15 retos (series, comparaciones, enigmas,
+                          #   deducciones y eliminatorias)
 src/
   main.jsx                # arranque
   App.jsx                 # pantallas: portada → secciones → resumen
@@ -242,7 +243,7 @@ por tipo:
 | `problema` | `texto`, `pasos` (`op`: `suma`/`resta`/`multiplicacion`/`division`, `a`, `b`), `modo` opcional (`guiado`/`eleccion`), `respuesta` opcional | los resultados de los pasos **se calculan solos**; si escribes `respuesta` debe coincidir con el último resultado |
 | `mental` | `expr`, `resultado`, `pista` opcional, `trucoId` opcional | `trucoId` enlaza con un `truco` de la misma ficha; si no existe, la ficha no se carga |
 | `truco` | `titulo`, `gancho`, `resumen`, `ejemplo` (`expr`, `pasos[]`), `explicacion` | todos obligatorios |
-| `logica` | `variante`, `enunciado`, `pista`/`explicacion` opcionales + según variante | `serie`: `elementos` (≥ 3 números) y `respuesta` (si la serie es aritmética se comprueba); `comparacion`: `izquierda`, `derecha` y `respuesta` = `mayor`/`menor`/`igual` (se comprueba); `enigma`: `respuesta` numérica |
+| `logica` | `variante`, `enunciado`, `pista`/`explicacion` opcionales + según variante | `serie`: `elementos` (≥ 3 números) y `respuesta` (si la serie es aritmética se comprueba); `comparacion`: `izquierda`, `derecha` y `respuesta` = `mayor`/`menor`/`igual` (se comprueba); `enigma`: `respuesta` numérica; `eliminatoria`: `opciones` (≥ 2 textos distintos) y `respuesta` = texto exacto de la buena (tiene que estar entre las `opciones`); `deduccion`: `etiquetas` (≥ 2) y `respuesta` = un entero ≥ 0 por etiqueta (p. ej. `[2, 1]`) |
 
 La agrupación por defecto es por `grupo` (si cada ejercicio lo lleva) o por tipo.
 
@@ -274,10 +275,13 @@ propia ficha (los mismos ids pueden aparecer en varias secciones):
 - `plantillas/calculo.json` — **Ejercicios de hoy** (🧮, id `sheet-001`): las 4 secciones de
   siempre (19 operaciones, 4 problemas, 12 items de cálculo mental con trucos intercalados
   y los 4 trucos) — **39 items** = 31 ejercicios con corrección + 4 trucos.
-- `plantillas/logica.json` — **Lógica** (🧩): **9 retos** de tres grupos: 3 **series**
-  numéricas para completar, 3 **comparaciones** (mayor/menor/igual, con botones) y 3
-  **enigmas** con respuesta numérica —nivel 4º de Primaria—, todos con pista al segundo
-  fallo y explicación en *Ver solución*.
+- `plantillas/logica.json` — **Lógica** (🧩): **15 retos** de cinco grupos: 3 **series**
+  numéricas para completar, 3 **comparaciones** (mayor/menor/igual, con botones), 3
+  **enigmas** con respuesta numérica, 3 **deducciones** con una casilla etiquetada por
+  cantidad (p. ej. «3 animales y 8 patas: ¿cuántos patos y cuántos conejos?» con casillas
+  *Patos* y *Conejos*) y 3 **eliminatorias** (varias opciones y solo una buena, que hay que
+  descartando encontrar) —nivel 4º de Primaria—, todos con pista al segundo fallo y
+  explicación en *Ver solución*.
 
 ### Fichas remotas (GitHub)
 
@@ -318,7 +322,7 @@ Comportamiento:
 | Multiplicaciones de dos cifras con fila parcial desplazada (sin casillas de llevadas) | ✅ `236×24`, `148×35`, `267×48` comprobadas (parciales y columnas) |
 | Divisiones con pasos intermedios (selección de cifras tocando el dividendo, cociente y resto — producto de cabeza) | ✅ las 4 divisiones, con cabecera `dividendo : divisor`, selección de cifras y restos verificados |
 | Botón **Reiniciar** en cada ejercicio de operaciones (sin tocar el resto) | ✅ acción `RESET_ITEM` + botón en sumas/restas/multiplicaciones/divisiones (tests de reducer y render) |
-| Nuevo tipo **Lógica**: series, comparaciones (mayor/menor/igual) y enigmas con pista al segundo fallo | ✅ componente `Logica.jsx` + validación; los 9 retos renderizan y se corrigen |
+| Nuevo tipo **Lógica**: series, comparaciones (mayor/menor/igual), enigmas, deducciones (casillas etiquetadas) y eliminatorias (opciones) con pista al segundo fallo | ✅ componente `Logica.jsx` + validación; los 15 retos renderizan y se corrigen |
 | **Fichas** en `plantillas/*.json`: cabecera `titulo`/`tipo`, formatos `calculo`/`logica`, ids y grupos automáticos, `secciones` y resultados calculados | ✅ `parseTemplate` + registro `FORMATOS`; decenas de casos válidos/inválidos y paridad 1:1 de `calculo.json` con la antigua hoja en código |
 | Ficha rota → **aviso en la portada** con su ruta y el error, sin romper la app | ✅ fichero inválido en el mock de render: se salta y aparece el aviso |
 | **Portada por zonas** (🧮 Cálculo, 🧩 Lógica) con las secciones de la ficha activa desplegadas debajo; ficha de una sola sección se abre directa | ✅ render de portada y de la ficha Lógica; `SET_SHEET` queda en la portada con el progreso cargado |

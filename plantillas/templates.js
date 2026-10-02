@@ -232,8 +232,16 @@ function buildExercise(raw, def, n, err, id) {
 
     case "logica": {
       const v = raw.variante;
-      if (v !== "serie" && v !== "comparacion" && v !== "enigma") {
-        err(`el ejercicio ${n} ("logica") necesita "variante": serie, comparacion o enigma.`);
+      if (
+        v !== "serie" &&
+        v !== "comparacion" &&
+        v !== "enigma" &&
+        v !== "eliminatoria" &&
+        v !== "deduccion"
+      ) {
+        err(
+          `el ejercicio ${n} ("logica") necesita "variante": serie, comparacion, enigma, eliminatoria o deduccion.`
+        );
         return null;
       }
       if (!hasText(raw.enunciado)) {
@@ -302,6 +310,76 @@ function buildExercise(raw, def, n, err, id) {
         ex.explanation =
           explicacion ??
           `${raw.izquierda} ${esperada === "mayor" ? ">" : esperada === "menor" ? "<" : "="} ${raw.derecha}: por eso la respuesta es ${esperada}.`;
+        return ex;
+      }
+
+      if (v === "eliminatoria") {
+        // Varias respuestas candidatas: solo una es buena y las demás se descartan.
+        if (
+          !Array.isArray(raw.opciones) ||
+          raw.opciones.length < 2 ||
+          raw.opciones.some((o) => !hasText(o))
+        ) {
+          err(
+            `el ejercicio ${n} ("logica/eliminatoria") necesita "opciones" con al menos 2 respuestas de texto.`
+          );
+          return null;
+        }
+        const opciones = raw.opciones.map((o) => o.trim());
+        if (new Set(opciones).size !== opciones.length) {
+          err(`el ejercicio ${n} ("logica/eliminatoria"): las "opciones" deben ser todas distintas.`);
+          return null;
+        }
+        if (!hasText(raw.respuesta)) {
+          err(
+            `el ejercicio ${n} ("logica/eliminatoria") necesita "respuesta" con el texto exacto de la opción correcta.`
+          );
+          return null;
+        }
+        const resp = raw.respuesta.trim();
+        if (!opciones.includes(resp)) {
+          err(
+            `el ejercicio ${n} ("logica/eliminatoria"): la "respuesta" (${resp}) no coincide con ninguna de las "opciones".`
+          );
+          return null;
+        }
+        ex.options = opciones;
+        ex.answer = resp;
+        if (explicacion) ex.explanation = explicacion;
+        return ex;
+      }
+
+      if (v === "deduccion") {
+        // Cantidades con dos condiciones: una casilla etiquetada por cantidad.
+        if (
+          !Array.isArray(raw.etiquetas) ||
+          raw.etiquetas.length < 2 ||
+          raw.etiquetas.some((e) => !hasText(e))
+        ) {
+          err(
+            `el ejercicio ${n} ("logica/deduccion") necesita "etiquetas" con al menos 2 nombres (p. ej. ["Patos", "Conejos"]).`
+          );
+          return null;
+        }
+        const etiquetas = raw.etiquetas.map((e) => e.trim());
+        if (new Set(etiquetas).size !== etiquetas.length) {
+          err(`el ejercicio ${n} ("logica/deduccion"): las "etiquetas" deben ser todas distintas.`);
+          return null;
+        }
+        if (
+          !Array.isArray(raw.respuesta) ||
+          raw.respuesta.length !== etiquetas.length ||
+          !raw.respuesta.every((r) => isInt(r) && r >= 0)
+        ) {
+          err(
+            `el ejercicio ${n} ("logica/deduccion"): "respuesta" debe ser una lista con un número entero ≥ 0 por cada etiqueta (p. ej. [2, 1]).`
+          );
+          return null;
+        }
+        ex.labels = etiquetas;
+        ex.answers = [...raw.respuesta];
+        ex.answer = raw.respuesta.join(",");
+        if (explicacion) ex.explanation = explicacion;
         return ex;
       }
 

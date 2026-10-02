@@ -130,11 +130,36 @@ function mentalError(_entered, _expected, exercise, attempts) {
   return base;
 }
 
-/* ---- Lógica (series, comparaciones y enigmas) ---- */
+/* ---- Lógica (series, comparaciones, enigmas, eliminatorias y deducciones) ---- */
 
 function validateLogicStep(exercise, entry) {
   const entered = entry.values.answer;
   const raw = String(entered ?? "").trim();
+
+  if (exercise.variant === "eliminatoria") {
+    if (raw === "") {
+      return fail("Elige una de las opciones antes de comprobar.");
+    }
+    if (raw === String(exercise.answer)) return ok();
+    return fail(logicChoiceError(exercise, entry.attempts ?? 0));
+  }
+
+  if (exercise.variant === "deduccion") {
+    const parts = raw.split(",").map((p) => p.trim());
+    if (
+      parts.length !== exercise.answers.length ||
+      parts.some((p) => p === "")
+    ) {
+      return fail(
+        `Rellena las ${exercise.answers.length} casillas con cada cantidad antes de comprobar.`
+      );
+    }
+    const aciertos = parts.every(
+      (p, i) => /^\d+$/.test(p) && Number(p) === exercise.answers[i]
+    );
+    if (aciertos) return ok();
+    return fail(logicDeductionError(exercise, entry.attempts ?? 0));
+  }
 
   if (raw === "") {
     return fail(
@@ -156,6 +181,22 @@ function validateLogicStep(exercise, entry) {
 
 function logicCompareError(_entered, _expected, exercise, attempts) {
   const base = "No es correcto. Compara las dos cantidades con calma.";
+  if (attempts >= 1 && exercise.hint) {
+    return `${base} ${exercise.hint}`;
+  }
+  return base;
+}
+
+function logicChoiceError(exercise, attempts) {
+  const base = "No es correcto. Descarta esa opción e inténtalo otra vez.";
+  if (attempts >= 1 && exercise.hint) {
+    return `${base} ${exercise.hint}`;
+  }
+  return base;
+}
+
+function logicDeductionError(exercise, attempts) {
+  const base = "No es correcto. Repasa las pistas y vuelve a contar.";
   if (attempts >= 1 && exercise.hint) {
     return `${base} ${exercise.hint}`;
   }

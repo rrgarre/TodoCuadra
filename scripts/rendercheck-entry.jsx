@@ -331,7 +331,7 @@ function render(state, opts = {}) {
     "hoja plantilla: existe, es plantilla y se llama Lógica",
     Boolean(l) && l.template === true && l.sections[0].title === "Lógica"
   );
-  check("hoja plantilla: 9 retos", l.logicExercises.length === 9, JSON.stringify(l.logicExercises?.length));
+  check("hoja plantilla: 15 retos", l.logicExercises.length === 15, JSON.stringify(l.logicExercises?.length));
 
   const htmlHome = render(
     { screen: "home", sectionIndex: 0, itemIndex: 0, progress: {} },
@@ -354,7 +354,7 @@ function render(state, opts = {}) {
   );
 
   const items = getSectionItems(l, l.sections[0]);
-  check("hoja plantilla: 9 items en su sección", items.length === 9, `fueron ${items.length}`);
+  check("hoja plantilla: 15 items en su sección", items.length === 15, `fueron ${items.length}`);
 
   items.forEach((item, i) => {
     try {
@@ -388,11 +388,36 @@ function render(state, opts = {}) {
     ["Mayor", "Menor", "Igual"].every((t) => htmlComp.includes(t))
   );
 
+  const htmlDed = render(
+    { screen: "section", sectionIndex: 0, itemIndex: 9, progress: {} },
+    { sheetId: l.id }
+  );
+  check(
+    "deducción: casillas etiquetadas Patos y Conejos",
+    htmlDed.includes("logic-fields") &&
+      htmlDed.includes("Patos") &&
+      htmlDed.includes("Conejos"),
+    htmlDed.slice(0, 300)
+  );
+
+  const htmlElim = render(
+    { screen: "section", sectionIndex: 0, itemIndex: 12, progress: {} },
+    { sheetId: l.id }
+  );
+  check(
+    "eliminatoria: opciones para descartar con la correcta entre ellas",
+    htmlElim.includes("logic-options") &&
+      htmlElim.includes("Diego") &&
+      htmlElim.includes("No se puede saber") &&
+      htmlElim.includes('aria-pressed="false"'),
+    htmlElim.slice(0, 300)
+  );
+
   const htmlLSummary = render(
     { screen: "summary", sectionIndex: 0, itemIndex: 0, progress: {} },
     { sheetId: l.id }
   );
-  check("resumen de la hoja Lógica: 9 ejercicios", htmlLSummary.includes(">9<"), htmlLSummary.slice(0, 200));
+  check("resumen de la hoja Lógica: 15 ejercicios", htmlLSummary.includes(">15<"), htmlLSummary.slice(0, 200));
 }
 
 /* ---------------- Fichas remotas (caché en localStorage) ---------------- */

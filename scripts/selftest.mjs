@@ -393,17 +393,18 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   check("plantilla logica.json: válida", r.ok, JSON.stringify(r.errors));
   if (r.ok) {
     const sh = r.sheet;
-    check("plantilla logica.json: 9 retos de lógica", sh.logicExercises.length === 9);
+    check("plantilla logica.json: 15 retos de lógica", sh.logicExercises.length === 15, JSON.stringify(sh.logicExercises.length));
     check(
       "plantilla logica.json: ids autogenerados",
-      sh.logicExercises[0].id === "logica-1" && sh.logicExercises[8].id === "logica-9",
+      sh.logicExercises[0].id === "logica-1" && sh.logicExercises[14].id === "logica-15",
       JSON.stringify(sh.logicExercises.map((e) => e.id))
     );
     const sec = sh.sections[0];
     check("plantilla logica.json: sección «Lógica» con su icono", sec.title === "Lógica" && sec.icon === "🧩");
     check(
-      "plantilla logica.json: grupos Series, Comparaciones, Enigmas",
-      sec.groups.map((g) => g.label).join(",") === "Series,Comparaciones,Enigmas" &&
+      "plantilla logica.json: grupos Series, Comparaciones, Enigmas, Deducción y Eliminatoria",
+      sec.groups.map((g) => g.label).join(",") ===
+        "Series,Comparaciones,Enigmas,Deducción,Eliminatoria" &&
         sec.groups.every((g) => g.ids.length === 3),
       JSON.stringify(sec.groups.map((g) => g.label))
     );
@@ -414,6 +415,29 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
         typeof sh.logicExercises[3].explanation === "string"
     );
     check("plantilla logica.json: formato logica", sh.formato === "logica", sh.formato);
+
+    // Variantes nuevas: deducción (casillas etiquetadas) y eliminatoria (opciones).
+    const deds = sh.logicExercises.filter((e) => e.variant === "deduccion");
+    const elims = sh.logicExercises.filter((e) => e.variant === "eliminatoria");
+    check(
+      "logica.json: 3 deducciones y 3 eliminatorias",
+      deds.length === 3 && elims.length === 3,
+      JSON.stringify({ deds: deds.length, elims: elims.length })
+    );
+    check(
+      "logica.json: la deducción del saco (patos y conejos)",
+      deds[0] &&
+        JSON.stringify(deds[0].labels) === JSON.stringify(["Patos", "Conejos"]) &&
+        JSON.stringify(deds[0].answers) === JSON.stringify([2, 1]) &&
+        deds[0].answer === "2,1",
+      JSON.stringify(deds[0])
+    );
+    check(
+      "logica.json: la eliminatoria tiene la buena entre sus opciones",
+      elims.every((e) => e.options.length === 4 && e.options.includes(e.answer)) &&
+        elims[0].answer === "Diego",
+      JSON.stringify(elims[0])
+    );
   }
 
   // Registro de formatos: cada ficha declara su "tipo" y eso decide su zona.
@@ -513,6 +537,52 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
     f2
   );
   check("enigma sin respuesta: rechazado", !sinResp.ok && sinResp.errors[0].includes("respuesta"), JSON.stringify(sinResp.errors));
+
+  const elimMala = parseTemplate(
+    {
+      titulo: "X", tipo: "logica",
+      ejercicios: [{ tipo: "logica", variante: "eliminatoria", enunciado: "¿Quién?", opciones: ["Berta", "Carlos"], respuesta: "Diego" }],
+    },
+    f2
+  );
+  check(
+    "eliminatoria: respuesta que no está entre las opciones → error",
+    !elimMala.ok && elimMala.errors[0].includes("no coincide con ninguna"),
+    JSON.stringify(elimMala.errors)
+  );
+
+  const elimSinOpciones = parseTemplate(
+    { titulo: "X", tipo: "logica", ejercicios: [{ tipo: "logica", variante: "eliminatoria", enunciado: "¿Quién?", respuesta: "Diego" }] },
+    f2
+  );
+  check(
+    "eliminatoria: sin opciones → error",
+    !elimSinOpciones.ok && elimSinOpciones.errors[0].includes('"opciones"'),
+    JSON.stringify(elimSinOpciones.errors)
+  );
+
+  const dedMala = parseTemplate(
+    {
+      titulo: "X", tipo: "logica",
+      ejercicios: [{ tipo: "logica", variante: "deduccion", enunciado: "¿Cuántos?", etiquetas: ["Patos", "Conejos"], respuesta: [2] }],
+    },
+    f2
+  );
+  check(
+    "deduccion: respuesta que no cuadra con las etiquetas → error",
+    !dedMala.ok && dedMala.errors[0].includes("por cada etiqueta"),
+    JSON.stringify(dedMala.errors)
+  );
+
+  const dedSinEtiquetas = parseTemplate(
+    { titulo: "X", tipo: "logica", ejercicios: [{ tipo: "logica", variante: "deduccion", enunciado: "¿Cuántos?", respuesta: [2, 1] }] },
+    f2
+  );
+  check(
+    "deduccion: sin etiquetas → error",
+    !dedSinEtiquetas.ok && dedSinEtiquetas.errors[0].includes('"etiquetas"'),
+    JSON.stringify(dedSinEtiquetas.errors)
+  );
 
   // Cargador: la válida entra y la rota solo deja aviso (nunca rompe).
   const built = buildTemplateSheets({
@@ -870,6 +940,63 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   const badEn = validateStep(enigma, { step: 0, values: { answer: "7" }, attempts: 0 });
   check("lógica enigma: incorrecto", !badEn.ok);
   check("lógica: un solo paso", getStepsCount(enigma) === 1);
+
+  const elim = {
+    id: "l8", type: "logica", variant: "eliminatoria", prompt: "¿Quién va al final?",
+    options: ["Berta", "Carlos", "Diego", "No se puede saber"],
+    answer: "Diego",
+    hint: "El orden es Berta, Carlos y Diego.",
+  };
+  const sinOpcion = validateStep(elim, { step: 0, values: { answer: "" }, attempts: 0 });
+  check(
+    "lógica eliminatoria: pide elegir opción",
+    !sinOpcion.ok && sinOpcion.message.includes("Elige una de las opciones"),
+    sinOpcion.message
+  );
+  const optMal = validateStep(elim, { step: 0, values: { answer: "Carlos" }, attempts: 0 });
+  check(
+    "lógica eliminatoria: primer fallo sin pista",
+    !optMal.ok && !optMal.message.includes("El orden es"),
+    optMal.message
+  );
+  const optMal2 = validateStep(elim, { step: 0, values: { answer: "Carlos" }, attempts: 1 });
+  check(
+    "lógica eliminatoria: segundo fallo con pista",
+    !optMal2.ok && optMal2.message.includes("El orden es Berta"),
+    optMal2.message
+  );
+  const optOk = validateStep(elim, { step: 0, values: { answer: "Diego" }, attempts: 0 });
+  check("lógica eliminatoria: correcta", optOk.ok, JSON.stringify(optOk));
+
+  const ded = {
+    id: "l9", type: "logica", variant: "deduccion", prompt: "Patos y conejos",
+    labels: ["Patos", "Conejos"],
+    answers: [2, 1],
+    answer: "2,1",
+    hint: "Los patos tienen 2 patas y los conejos 4.",
+  };
+  const casillasVacias = validateStep(ded, { step: 0, values: { answer: "" }, attempts: 0 });
+  check(
+    "lógica deducción: casillas vacías avisan",
+    !casillasVacias.ok && casillasVacias.message.includes("Rellena las 2 casillas"),
+    casillasVacias.message
+  );
+  const unaSola = validateStep(ded, { step: 0, values: { answer: "2" }, attempts: 0 });
+  check(
+    "lógica deducción: una sola casilla no basta",
+    !unaSola.ok && unaSola.message.includes("Rellena las 2 casillas"),
+    unaSola.message
+  );
+  const dedMal = validateStep(ded, { step: 0, values: { answer: "1,2" }, attempts: 1 });
+  check(
+    "lógica deducción: fallo con pista",
+    !dedMal.ok && dedMal.message.includes("Los patos tienen 2 patas"),
+    dedMal.message
+  );
+  const dedOk = validateStep(ded, { step: 0, values: { answer: "2,1" }, attempts: 0 });
+  check("lógica deducción: correcta", dedOk.ok, JSON.stringify(dedOk));
+  const dedCeros = validateStep(ded, { step: 0, values: { answer: "02,01" }, attempts: 0 });
+  check("lógica deducción: acepta ceros a la izquierda", dedCeros.ok, JSON.stringify(dedCeros));
 }
 
 console.log(failures === 0 ? "\nTODO CORRECTO" : `\n${failures} FALLOS`);
