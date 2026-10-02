@@ -1,0 +1,45 @@
+/* Tokens de diseño: colores, tipografía, espacios y medidas. */
+:root {
+  --font-sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial,
+    sans-serif;
+  --font-num: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial,
+    sans-serif;
+
+  --color-bg: #f4f7fb;
+  --color-surface: #ffffff;
+  --color-surface-alt: #eef3fa;
+  --color-text: #1f2a3d;
+  --color-text-soft: #5b6778;
+  --color-text-muted: #6b7688;
+  --color-border: #d9e1ec;
+  --color-border-strong: #b9c5d6;
+
+  --color-primary: #2f6fed;
+  --color-primary-dark: #2358c4;
+  --color-primary-soft: #e8f0fe;
+  --color-success: #1d9a5a;
+  --color-success-soft: #e6f7ee;
+  --color-danger: #d64545;
+  --color-danger-soft: #fdecec;
+  --color-warning: #c77b12;
+  --color-warning-soft: #fdf3e3;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 1px 3px rgba(31, 42, 61, 0.08);
+  --shadow-md: 0 6px 20px rgba(31, 42, 61, 0.1);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --tap-min: 48px;
+  --focus-ring: 0 0 0 3px rgba(47, 111, 237, 0.35);
+
+  /* Tamaño de una casilla de las operaciones verticales. */
+  --cell: clamp(38px, 9vw, 52px);
+}

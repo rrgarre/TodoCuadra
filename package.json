@@ -1,0 +1,21 @@
+{
+  "name": "juego-de-calcular",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Juego de Calcular: ejercicios de matemáticas para 4º de Primaria (100% frontend)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node scripts/selftest.mjs && esbuild scripts/rendercheck-entry.jsx --bundle --format=cjs --platform=node --jsx=automatic --outfile=scripts/.rendercheck.cjs && node scripts/.rendercheck.cjs"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.11"
+  }
+}

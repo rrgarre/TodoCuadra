@@ -1,0 +1,528 @@
+/* Ejercicios: tarjeta, operaciones verticales, problemas, mental y trucos. */
+
+/* ---- Tarjeta de ejercicio ---- */
+.exercise {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.exercise-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.exercise-type {
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+.exercise-step {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.exercise-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.exercise-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.exercise-actions .btn-primary {
+  flex: 1;
+  min-width: 180px;
+}
+
+/* ---- Solución ---- */
+.solution {
+  background: var(--color-warning-soft);
+  border: 1px solid #f0dcb4;
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.solution h3 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-warning);
+}
+
+.solution-steps {
+  display: grid;
+  gap: 6px;
+}
+
+.solution-steps li {
+  font-variant-numeric: tabular-nums;
+  font-size: 1.02rem;
+}
+
+.solution-final {
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+/* ---- Operaciones verticales (rejilla CSS) ---- */
+.vgrid-wrap {
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.vgrid {
+  --cell-cols: 4;
+  display: grid;
+  grid-auto-rows: minmax(var(--cell), auto);
+  justify-content: center;
+  gap: 4px 2px;
+  margin: 0 auto;
+  font-family: var(--font-num);
+}
+
+.vline {
+  border-top: 3px solid var(--color-text);
+  height: 0;
+  margin: 4px 0;
+  align-self: end;
+}
+
+.vcell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cell);
+  height: var(--cell);
+  font-size: calc(var(--cell) * 0.5);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  border-radius: var(--radius-sm);
+  user-select: none;
+}
+
+.vcell--box {
+  border: 2px solid var(--color-border-strong);
+  background: var(--color-surface);
+}
+
+.vcell--future {
+  border: 2px dashed var(--color-border-strong);
+  background: var(--color-surface-alt);
+  color: transparent;
+}
+
+.vcell--done {
+  border: 2px solid var(--color-success);
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}
+
+.vcell--given {
+  border: 2px solid var(--color-border);
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+}
+
+/* Azul compartido: las cifras del dividendo que se seleccionan tocándolas
+   y toda la cadena del resto (del resto parcial al resto final).
+   Va después de --given y antes de --error para que el error mande. */
+.vcell--selected,
+.vcell--chain {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+}
+
+/* Va después de --given para que el error siempre pinte su borde. */
+.vcell--error {
+  border: 2px solid var(--color-danger);
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+.vcell--sign {
+  border: none;
+  background: transparent;
+  font-weight: 800;
+  font-size: calc(var(--cell) * 0.55);
+}
+
+.vcell--carry {
+  width: calc(var(--cell) * 0.72);
+  height: calc(var(--cell) * 0.6);
+  font-size: calc(var(--cell) * 0.34);
+  color: var(--color-primary-dark);
+}
+
+.vcell--bring {
+  border-bottom: 2px dotted var(--color-primary);
+}
+
+/* El aviso de error manda también en el borde de la cifra bajada. */
+.vcell--bring.vcell--error {
+  border-bottom: 2px solid var(--color-danger);
+}
+
+.vcell--static {
+  font-weight: 700;
+}
+
+/* Cifra del dividendo: se toca para seleccionarla (queda en azul). */
+.vcell--pick {
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Señal de "seleccionada" que no depende solo del color. */
+.vcell--pick.vcell--selected {
+  font-weight: 800;
+}
+
+.vcell--pick:hover:not(:disabled) {
+  border-color: var(--color-primary);
+}
+
+.vcell--pick:focus-visible {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+/* Aviso de flujo bajo la rejilla (divisiones). */
+.grid-hint {
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* Celdas de entrada (inputs de una sola cifra) */
+.digit {
+  width: var(--cell);
+  height: var(--cell);
+  padding: 0;
+  text-align: center;
+  font-family: var(--font-num);
+  font-size: calc(var(--cell) * 0.5);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  caret-color: var(--color-primary);
+}
+
+.digit::placeholder {
+  color: #b6c1d1;
+}
+
+.digit:hover:not(:disabled) {
+  border-color: var(--color-primary);
+}
+
+.digit:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+.digit:disabled {
+  background: var(--color-surface-alt);
+  color: var(--color-text-soft);
+}
+
+/* Mismo azul de la cadena del resto en las casillas de entrada; el
+   error (más abajo) sigue mandando sobre él. */
+.digit.digit--chain {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+}
+
+.digit.is-error {
+  border-color: var(--color-danger);
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+/* ---- Problemas ---- */
+.problem-text {
+  background: var(--color-surface-alt);
+  border-left: 5px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  width: 100%;
+}
+
+.wf-steps {
+  display: grid;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.wf-step {
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.wf-step.is-current {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.wf-step.is-done {
+  border-color: var(--color-success);
+  background: var(--color-success-soft);
+}
+
+.wf-step.is-locked {
+  opacity: 0.65;
+}
+
+.wf-step-label {
+  font-weight: 800;
+  font-size: 0.92rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-soft);
+}
+
+.wf-expression {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.wf-expression .given {
+  padding: 4px 8px;
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-sm);
+}
+
+.wf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wf-field label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text-soft);
+}
+
+fieldset.op-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+fieldset.op-fieldset legend {
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0;
+  margin-bottom: var(--space-1);
+}
+
+.op-choices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--space-2);
+}
+
+.op-choice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--tap-min);
+  padding: 10px 12px;
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.op-choice:hover:not(:disabled) {
+  border-color: var(--color-primary);
+}
+
+.op-choice.is-selected {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.op-choice .op-symbol {
+  font-size: 1.3rem;
+}
+
+.wf-calc {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+.wf-calc .op-symbol-lg {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+/* ---- Cálculo mental ---- */
+.mental-expr {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  font-size: clamp(1.8rem, 6vw, 2.6rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.mental-expr .input-number {
+  width: 6ch;
+  font-size: clamp(1.4rem, 5vw, 1.9rem);
+}
+
+.mental-hint {
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* ---- Trucos ---- */
+.tip {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.tip-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.tip-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.tip-tease {
+  font-size: 1.08rem;
+  color: var(--color-text-soft);
+}
+
+.tip-short {
+  font-size: 1.12rem;
+  font-weight: 700;
+  background: var(--color-primary-soft);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+}
+
+.tip-example {
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.tip-expr {
+  font-size: 1.3rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.tip-example ol {
+  display: grid;
+  gap: 4px;
+  list-style: decimal;
+  padding-left: 1.4rem;
+  font-variant-numeric: tabular-nums;
+  font-size: 1.05rem;
+}
+
+.tip-explanation {
+  color: var(--color-text-soft);
+  line-height: 1.6;
+}
+
+.tip-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.tip-actions .btn-primary {
+  flex: 1;
+  min-width: 180px;
+}
+
+/* ---- Soluciones de sumas y restas ---- */
+.solution-columns {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 480px) {
+  .exercise {
+    padding: var(--space-4);
+  }
+
+  .exercise-actions .btn-primary,
+  .tip-actions .btn-primary {
+    min-width: 100%;
+  }
+}

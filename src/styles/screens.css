@@ -1,0 +1,325 @@
+/* Estructura de pantallas: cabecera, inicio, sección y resumen. */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-4) var(--space-6);
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* ---- Portada ---- */
+.hero {
+  text-align: center;
+  padding: var(--space-6) var(--space-4) var(--space-5);
+  background: linear-gradient(180deg, var(--color-primary-soft), transparent);
+}
+
+.hero h1 {
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  letter-spacing: -0.02em;
+}
+
+.hero-level {
+  display: inline-block;
+  margin-top: var(--space-2);
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.hero-sub {
+  margin-top: var(--space-3);
+  font-size: 1.15rem;
+  color: var(--color-text-soft);
+  font-weight: 600;
+}
+
+/* ---- Lista de secciones ---- */
+.section-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.section-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.section-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.section-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-soft);
+  font-size: 1.6rem;
+}
+
+.section-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.section-body strong {
+  display: block;
+  font-size: 1.12rem;
+}
+
+.section-body span {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.section-progress {
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.section-cta {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.home-footer {
+  margin-top: var(--space-5);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: center;
+}
+
+.home-footer p {
+  width: 100%;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+/* ---- Barra superior de la sección ---- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  max-width: 880px;
+  margin: 0 auto;
+  padding: var(--space-2) var(--space-4);
+  min-height: 60px;
+}
+
+.topbar-title {
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+  font-size: 1.05rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.topbar-meta {
+  font-weight: 700;
+  color: var(--color-text-soft);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ---- Progreso ---- */
+.progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 var(--space-4) var(--space-2);
+}
+
+.progress-track {
+  flex: 1;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--color-surface-alt);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-primary-dark)
+  );
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+
+.progress-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-text-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Navegación dentro de la sección ---- */
+.item-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.group-label {
+  margin: var(--space-5) 0 var(--space-3);
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+
+.group-label:first-child {
+  margin-top: 0;
+}
+
+/* ---- Resumen ---- */
+.summary {
+  text-align: center;
+}
+
+.summary h1 {
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+  margin-bottom: var(--space-2);
+}
+
+.summary-sub {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+}
+
+.summary-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.stat {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-primary-dark);
+}
+
+.stat-label {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.stat--pct .stat-value {
+  color: var(--color-success);
+}
+
+.summary-sections {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+  text-align: left;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+}
+
+.summary-row strong {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-primary-dark);
+}
+
+.summary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+}
+
+@media (max-width: 560px) {
+  .section-card {
+    flex-wrap: wrap;
+  }
+
+  .section-cta {
+    width: 100%;
+    text-align: center;
+  }
+
+  .topbar-meta {
+    font-size: 0.9rem;
+  }
+}
