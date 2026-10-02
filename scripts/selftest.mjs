@@ -123,8 +123,9 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   const d = buildDivision(918, 18);
   check("918÷18: primer parcial 91 (dígitos 0 y 1)", d.steps[0].partial === 91);
   check(
-    "918÷18: producto 90 en columnas 1 y 2",
-    JSON.stringify(d.steps[0].productCells.map((c) => c.col)) === "[1,2]"
+    "918÷18: producto 90 calculado en el modelo (no se pinta) y resto en la columna 2",
+    d.steps[0].product === 90 &&
+      JSON.stringify(d.steps[0].remainderCells.map((c) => c.col)) === "[2]"
   );
   check(
     "918÷18: primer paso baja el 9 y el 1 (columnas 1 y 2)",
@@ -151,8 +152,10 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
     d.quotientCells.map((c) => c.col).join(",") === "7,8,9"
   );
   check(
-    "384:3: sin paréntesis, con margen a la izquierda para el signo −",
-    d.steps[0].minusCol >= 0 && d.ds === 1
+    "384:3: margen a la izquierda y sin producto ni signo en el modelo",
+    d.ds === 1 &&
+      !("productCells" in d.steps[0]) &&
+      !("minusCol" in d.steps[0])
   );
 }
 {
@@ -294,7 +297,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
 
   const noBd = validateStep(ex, {
     step: 0,
-    values: { cells: { "q-0": "1", "p-0-1": "3", "r-0-1": "0" } },
+    values: { cells: { "q-0": "1", "r-0-1": "0" } },
     attempts: 0,
   });
   check(
@@ -305,7 +308,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
 
   const wrongBd = validateStep(ex, {
     step: 0,
-    values: { cells: { "bd-0-1": "5", "q-0": "1", "p-0-1": "3", "r-0-1": "0" } },
+    values: { cells: { "bd-0-1": "5", "q-0": "1", "r-0-1": "0" } },
     attempts: 0,
   });
   check(
@@ -316,27 +319,31 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
 
   const good0 = validateStep(ex, {
     step: 0,
-    values: { cells: { "bd-0-1": "3", "q-0": "1", "p-0-1": "3", "r-0-1": "0" } },
+    values: { cells: { "bd-0-1": "3", "q-0": "1", "r-0-1": "0" } },
     attempts: 0,
   });
   check("división paso 1 correcto", good0.ok, JSON.stringify(good0));
 
-  const badProd = validateStep(ex, {
+  const badRem = validateStep(ex, {
     step: 0,
-    values: { cells: { "bd-0-1": "3", "q-0": "1", "p-0-1": "4", "r-0-1": "0" } },
+    values: { cells: { "bd-0-1": "3", "q-0": "1", "r-0-1": "1" } },
     attempts: 0,
   });
-  check("producto parcial mal → ¿cuánto es 1×3?", !badProd.ok && badProd.message.includes("1 × 3"), badProd.message);
+  check(
+    "resto mal → recuerda el producto de cabeza (1 × 3)",
+    !badRem.ok && badRem.message.includes("1 × 3"),
+    badRem.message
+  );
   const badQ = validateStep(ex, {
     step: 0,
-    values: { cells: { "bd-0-1": "3", "q-0": "2", "p-0-1": "3", "r-0-1": "0" } },
+    values: { cells: { "bd-0-1": "3", "q-0": "2", "r-0-1": "0" } },
     attempts: 0,
   });
   check("cociente mal → pregunta cuántas veces cabe", !badQ.ok && badQ.message.includes("cuántas veces cabe 3 en 3"), badQ.message);
 
   const good1 = validateStep(ex, {
     step: 1,
-    values: { cells: { "bd-1-2": "8", "q-1": "2", "p-1-2": "6", "r-1-2": "2" } },
+    values: { cells: { "bd-1-2": "8", "q-1": "2", "r-1-2": "2" } },
     attempts: 0,
   });
   check("división paso 2 correcto (selecciona el 8)", good1.ok, JSON.stringify(good1));

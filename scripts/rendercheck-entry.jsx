@@ -176,8 +176,12 @@ function render(state) {
     !htmlDiv.includes('data-cell-id="bd-0-')
   );
   check(
-    "div-4: el producto del paso 0 comparte fila con el cociente",
-    /grid-column:3;grid-row:2[^>]*data-cell-id="p-0-2"/.test(htmlDiv)
+    "div-4: el resto del paso 0 comparte fila con el cociente",
+    /grid-column:3;grid-row:2[^>]*data-cell-id="r-0-2"/.test(htmlDiv)
+  );
+  check(
+    "div-4: sin producto ni signo (el producto es de cabeza)",
+    !htmlDiv.includes('data-cell-id="p-') && !htmlDiv.includes("−</span>")
   );
   check(
     "div-4: el resto lleva el azul de la cadena",

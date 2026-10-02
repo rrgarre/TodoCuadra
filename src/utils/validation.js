@@ -254,7 +254,6 @@ function validateDivisionStep(exercise, entry) {
 
   const ordered = [
     step.quotientCell,
-    ...step.productCells.slice().reverse(),
     ...step.remainderCells.slice().reverse(),
   ];
   const empty = ordered.find((c) => String(cells[c.id] ?? "").trim() === "");
@@ -272,19 +271,13 @@ function validateDivisionStep(exercise, entry) {
     );
   }
 
-  for (const cell of step.productCells.slice().reverse()) {
-    if (Number(String(cells[cell.id]).trim()) !== cell.value) {
-      return fail(
-        `Revisa este paso: ¿cuánto es ${step.qDigit} × ${exercise.b}?`,
-        [cell.id]
-      );
-    }
-  }
-
+  // El producto (cifra del cociente × divisor) no se escribe: si el
+  // resto no cuadra, se recuerda la multiplicación "de cabeza" sin
+  // revelar el resultado de la resta.
   for (const cell of step.remainderCells.slice().reverse()) {
     if (Number(String(cells[cell.id]).trim()) !== cell.value) {
       return fail(
-        `Revisa la resta: ¿cuánto es ${step.partial} − ${step.product}?`,
+        `Piensa: ${step.qDigit} × ${exercise.b} = ${step.product}. ¿Cuánto es ${step.partial} − ${step.product}?`,
         [cell.id]
       );
     }

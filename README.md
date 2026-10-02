@@ -73,7 +73,7 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
   *Siguiente*, y siempre desde el principio de cada sección.
 - **Cálculo en columna como en el papel**: cada operación se rellena con **una casilla por
   cifra** alineadas con CSS Grid —el resultado de sumas y restas en la fila inferior, los
-  productos parciales y el total en las multiplicaciones, cociente/producto/resto en las
+  productos parciales y el total en las multiplicaciones, cociente y resto en las
   divisiones—. La escritura es **de derecha a izquierda** y, en sumas, restas y
   multiplicaciones, **el cursor arranca siempre en la casilla de la derecha de la fila que
   toca resolver** (las unidades); las casillas usan `inputmode="numeric"` para el teclado
@@ -99,15 +99,16 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
     app avisa (*«todavía no llega…: toca la cifra X»*) y se puede seguir seleccionando.
   - El **cociente va debajo del divisor**: su primera cifra queda justo bajo él y sigue
     hacia la derecha (la rejilla se ensancha si hace falta); comparte la primera fila de
-    trabajo con el producto del primer paso.
+    trabajo con el resto del primer paso.
   - El **mismo azul recorre la cadena del resto**, del resto parcial al resto final,
     junto con las cifras seleccionadas del dividendo.
   - Después, cada paso se rellena en orden —**cifra del cociente** (de izquierda a derecha
-    a lo largo de la división), **producto parcial** y **resto**— y se comprueba de una en
-    una. Las casillas **se generan cuando les toca**: no se pintan casillas vacías de
-    pasos futuros.
+    a lo largo de la división) y **resto**— y se comprueba de una en una. Cada paso es
+    **una sola fila de resto**; **el producto (cifra del cociente × divisor) no se escribe:
+    se calcula de cabeza**, y tampoco se pinta el signo `−`. Las casillas **se generan
+    cuando les toca**: no se pintan casillas vacías de pasos futuros.
   - Los mensajes apuntan al paso concreto, con lenguaje para niñas y niños:
-    *«Revisa este paso: ¿cuánto es 8 × 3?»*, *«Piensa: ¿cuántas veces cabe 18 en 91?»*…
+    *«Piensa: 3 × 9 = 27. ¿Cuánto es 30 − 27?»*, *«Piensa: ¿cuántas veces cabe 18 en 91?»*…
 - **Corrección explicativa**: *Comprobar* señala la casilla y el paso con la cifra correcta y
   por qué; distingue entre **procedimiento correcto con fallo de cálculo** y error de paso.
   *Ver solución* aparece solo bajo demanda y marca el ejercicio como *a revisar*.
@@ -167,7 +168,7 @@ no hace falta tocar el resto de la aplicación.
 | Cifras alineadas por columna (CSS Grid, sin posicionamiento absoluto) | ✅ retícula verificada por tests de columnas |
 | Entrada de cifras de derecha a izquierda con salto de foco | ✅ implementado en `DigitCell`, también en el resultado de sumas y restas (verificación manual en el navegador recomendada) |
 | Multiplicaciones de dos cifras con fila parcial desplazada (sin casillas de llevadas) | ✅ `236×24`, `148×35`, `267×48` comprobadas (parciales y columnas) |
-| Divisiones con pasos intermedios (selección de cifras tocando el dividendo, cociente, producto, resta) | ✅ las 4 divisiones, con cabecera `dividendo : divisor`, selección de cifras y restos verificados |
+| Divisiones con pasos intermedios (selección de cifras tocando el dividendo, cociente y resto — producto de cabeza) | ✅ las 4 divisiones, con cabecera `dividendo : divisor`, selección de cifras y restos verificados |
 | Problemas de 2 pasos guiados y de 3 pasos con elección de operación | ✅ render de los 4 + validación de cada modo |
 | Cálculo mental con pista al segundo fallo | ✅ tests de validación |
 | Trucos: intercalados en cálculo mental y en su sección | ✅ los 4 trucos renderizan en ambos sitios |

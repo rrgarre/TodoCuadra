@@ -331,17 +331,15 @@ function cellsForValue(value, endCol, idPrefix, step) {
  *
  *   2 8 4 : 3                     ← cabecera; las cifras seleccionadas
  *                                     (tocadas) quedan en azul
- *       2 7      9 4              ← fila 2: producto del paso 0 y, desde
- *                                     el divisor hacia la derecha, el
- *                                     cociente
- *       −
- *         1 4                     ← resto en azul; en el paso siguiente
- *       1 2                          esa misma fila recibe la cifra
- *       −                             seleccionada (también en azul)
- *           2                     ← resto final, en azul
+ *     1 4   9 4                   ← fila 2: resto del paso 0 (en azul)
+ *         2                          y, a la derecha, el cociente
+ *
+ * El producto (cifra del cociente × divisor) NO se escribe: se calcula
+ * de cabeza; tampoco se pinta el signo −. Cada paso es una sola fila
+ * de resto.
  *
  * Columnas de la rejilla (dividendo a la izquierda):
- *   0                  : margen (para el signo − de la primera columna)
+ *   0                  : margen (la primera columna queda libre)
  *   1 .. largoDiv      : dividendo (datos; sus cifras se tocan para
  *                        seleccionarlas)
  *   largoDiv + 1       : hueco
@@ -354,12 +352,12 @@ function cellsForValue(value, endCol, idPrefix, step) {
  *
  * Filas:
  *   1                   : cabecera (dividendo : divisor)
- *   2                   : primer renglón de trabajo (producto del paso 0)
- *                         y, a la derecha, el cociente completo
- *   2 + 3k / 3 + 3k /   : paso k → producto, signo − y resto
- *   4 + 3k
- *   1 + 3k (k ≥ 1)      : la fila del resto del paso k−1, que recibe la
- *                         cifra recién seleccionada (parcial del paso k)
+ *   2 + k               : resto del paso k (en azul); la fila 2 es
+ *                         también el primer renglón de trabajo y, a la
+ *                         derecha, va el cociente completo
+ *   1 + k (k ≥ 1)       : la cifra seleccionada del paso k, que se
+ *                         añade a la fila del resto del paso k−1
+ *                         (nace así el parcial siguiente)
  */
 export function buildDivision(dividend, divisor) {
   const dStr = String(dividend);
@@ -415,8 +413,6 @@ export function buildDivision(dividend, divisor) {
       rem,
       endCol,
       endIdx: idx,
-      minusCol: endCol - String(product).length,
-      productCells: cellsForValue(product, endCol, "p", k),
       remainderCells: cellsForValue(rem, endCol, "r", k),
       bringDownCells,
       quotientCell: {

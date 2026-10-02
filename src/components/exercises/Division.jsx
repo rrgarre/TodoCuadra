@@ -10,14 +10,10 @@ import { buildDivision, placeName } from "../../utils/calculations.js";
  *
  *      2 8 4 : 3        ← cabecera: las cifras del dividendo se tocan
  *                          para SELECCIONARLAS (quedan en azul)
- *      2 7      9 4     ← primer renglón de trabajo: el producto del
- *                          primer paso y, desde el divisor hacia la
- *                          derecha, el cociente
- *      −
- *        1 4            ← resto (en azul); en el paso siguiente esa
- *      1 2                  misma fila recibe la cifra seleccionada
- *      −
- *          2            ← resto final (en azul)
+ *        1 4   9 4      ← resto del paso 0 (en azul) y el cociente,
+ *            2              que empieza desde el divisor; el producto
+ *                          y el signo − no se pintan: el producto es
+ *                          de cabeza
  *
  * Reglas del flujo:
  *  - las cifras del dividendo NO se copian "hacia abajo": se tocan para
@@ -31,8 +27,9 @@ import { buildDivision, placeName } from "../../utils/calculations.js";
  *    al resto final;
  *  - cada casilla se genera cuando le toca (no se pintan casillas
  *    vacías de pasos futuros);
- *  - cada paso (seleccionar cifras → cifra del cociente → producto →
- *    resto) se comprueba de una en una.
+ *  - cada paso (seleccionar cifras → cifra del cociente → resto) se
+ *    comprueba de una en una; el producto (cifra del cociente ×
+ *    divisor) no se escribe: se calcula de cabeza.
  */
 export default function Division({ exercise, controller }) {
   const { values, setCell, revealed, status, feedback, step, stepsDone } =
@@ -78,15 +75,14 @@ export default function Division({ exercise, controller }) {
     return set;
   }, [model, cells]);
 
-  // Orden de escritura de cada paso: cifra del cociente, producto (de
-  // derecha a izquierda) y resto (de derecha a izquierda). Las cifras
+  // Orden de escritura de cada paso: cifra del cociente y resto (de
+  // derecha a izquierda). El producto se calcula de cabeza y las cifras
   // del dividendo no se teclean: se tocan para seleccionarlas.
   const orderById = useMemo(() => {
     const map = new Map();
     for (const st of model.steps) {
       const sequence = [
         st.quotientCell,
-        ...[...st.productCells].reverse(),
         ...[...st.remainderCells].reverse(),
       ];
       sequence.forEach((cell, i) => map.set(cell.id, i));
@@ -261,15 +257,14 @@ export default function Division({ exercise, controller }) {
         ))}
 
         {/* Pasos: el cociente va en la fila 2, desde el divisor hacia la
-            derecha; el trabajo empieza en esa misma fila con el producto
-            del paso 0 y sigue hacia abajo (3 filas por paso). */}
+            derecha; el resto de cada paso ocupa una fila (2 + paso) y
+            ahí nace el parcial del paso siguiente, que recibe la cifra
+            seleccionada. */}
         {model.steps.map((st) => {
-          // Nada de casillas (ni signos) de pasos futuros.
+          // Nada de casillas de pasos futuros.
           if (!revealed && st.step > step) return null;
-          const bdRow = 1 + st.step * 3; // = fila del resto del paso anterior
-          const prodRow = 2 + st.step * 3;
-          const minusRow = 3 + st.step * 3;
-          const remRow = 4 + st.step * 3;
+          const bdRow = 1 + st.step; // = fila del resto del paso anterior
+          const remRow = 2 + st.step;
           const stBrought = st.bringDownCells.filter(
             (c) => cells[c.id]
           ).length;
@@ -286,22 +281,6 @@ export default function Division({ exercise, controller }) {
                 2,
                 `Cifra ${st.step + 1} del cociente`
               )}
-              {st.productCells.map((cell) =>
-                renderCell(
-                  cell,
-                  prodRow,
-                  `Cifra de las ${placeName(
-                    st.endCol - cell.col
-                  )} del producto parcial`
-                )
-              )}
-              <span
-                className="vcell vcell--sign"
-                style={{ gridColumn: st.minusCol + 1, gridRow: minusRow }}
-                aria-hidden="true"
-              >
-                −
-              </span>
               {st.remainderCells.map((cell) =>
                 renderCell(
                   cell,
