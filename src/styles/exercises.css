@@ -526,3 +526,100 @@ fieldset.op-fieldset legend {
     min-width: 100%;
   }
 }
+
+/* ---- Lógica: series, comparaciones y enigmas ---- */
+.logic-prompt {
+  margin: 0 0 var(--space-3);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.logic-series,
+.logic-compare {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.logic-compare {
+  justify-content: center;
+}
+
+.logic-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--tap-min);
+  min-height: var(--tap-min);
+  padding: 0 var(--space-2);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.logic-chip--q {
+  border-style: dashed;
+  background: var(--color-surface);
+  color: var(--color-text-soft);
+}
+
+.logic-chip--op {
+  min-width: 108px;
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+}
+
+.logic-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.logic-option {
+  min-width: 104px;
+  min-height: var(--tap-min);
+  padding: 0 var(--space-4);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-weight: 700;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.logic-option:focus-visible {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+.logic-option.is-selected {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+}
+
+.logic-option:disabled {
+  cursor: default;
+}
+
+.logic-answer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-2);
+}
+
+.solution-note {
+  margin-top: var(--space-2);
+  color: var(--color-text-soft);
+  line-height: 1.5;
+}

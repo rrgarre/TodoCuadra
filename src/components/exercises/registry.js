@@ -8,6 +8,7 @@ import Multiplication from "./Multiplication.jsx";
 import Division from "./Division.jsx";
 import WordProblem from "./WordProblem.jsx";
 import MentalCalculation from "./MentalCalculation.jsx";
+import Logica from "./Logica.jsx";
 
 export const EXERCISE_COMPONENTS = {
   addition: Addition,
@@ -16,4 +17,5 @@ export const EXERCISE_COMPONENTS = {
   division: Division,
   wordProblem: WordProblem,
   mental: MentalCalculation,
+  logica: Logica,
 };

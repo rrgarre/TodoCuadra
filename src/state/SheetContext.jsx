@@ -11,13 +11,17 @@ import {
   useEffect,
   useMemo,
   useReducer,
+  useState,
 } from "react";
 import { getSheet, getSectionItems } from "../data/sheets/index.js";
+import { refreshRemoteTemplates } from "../../plantillas/templates.js";
 import { validateStep, getStepsCount } from "../utils/validation.js";
 import {
   loadSheetState,
   saveSheetState,
   clearSheetState,
+  loadActiveSheetId,
+  saveActiveSheetId,
 } from "../utils/storage.js";
 
 const SheetContext = createContext(null);
@@ -65,6 +69,8 @@ function successMessage(exercise) {
     case "multiplication":
     case "division":
       return "¡Correcto! Toda la operación está bien hecha.";
+    case "logica":
+      return "¡Correcto! Has resuelto el reto de lógica.";
     default:
       return "¡Correcto!";
   }
@@ -209,7 +215,32 @@ export function reducer(state, action) {
     }
 
     case "RESET":
-      return { screen: "home", sectionIndex: 0, itemIndex: 0, progress: {} };
+      return { ...state, screen: "home", sectionIndex: 0, itemIndex: 0, progress: {} };
+
+    case "RESET_ITEM": {
+      // Reinicia un solo ejercicio (sus casillas, paso y avisos) sin
+      // tocar el resto del progreso; seguimos en el mismo ejercicio.
+      if (!state.progress[action.exercise.id]) return state;
+      const progress = { ...state.progress };
+      delete progress[action.exercise.id];
+      return { ...state, progress };
+    }
+
+    case "SET_SHEET": {
+      // Cambia de ficha: carga su progreso y vuelve a la portada, donde
+      // sus secciones se despliegan bajo su tarjeta.
+      const progress =
+        action.saved && typeof action.saved === "object" && action.saved.progress
+          ? action.saved.progress
+          : {};
+      return {
+        sheetId: action.sheetId,
+        screen: "home",
+        sectionIndex: 0,
+        itemIndex: 0,
+        progress,
+      };
+    }
 
     default:
       return state;
@@ -221,25 +252,49 @@ export function reducer(state, action) {
 /* ------------------------------------------------------------------ */
 
 function initState(sheet) {
+  const base = {
+    sheetId: sheet.id,
+    screen: "home",
+    sectionIndex: 0,
+    itemIndex: 0,
+    progress: {},
+  };
   const saved = loadSheetState(sheet.id);
   if (saved && typeof saved === "object") {
-    return {
-      screen: saved.screen ?? "home",
-      sectionIndex: saved.sectionIndex ?? 0,
-      itemIndex: saved.itemIndex ?? 0,
-      progress: saved.progress ?? {},
-    };
+    // El progreso guardado manda, pero la hoja activa es la que toca.
+    return { ...base, ...saved, sheetId: sheet.id };
   }
-  return { screen: "home", sectionIndex: 0, itemIndex: 0, progress: {} };
+  return base;
 }
 
 export function SheetProvider({ children }) {
-  const sheet = useMemo(() => getSheet(), []);
-  const [state, dispatch] = useReducer(reducer, sheet, initState);
+  // La hoja activa se guarda en su propia clave; el resto del estado
+  // (pantalla y progreso) es el de esa hoja.
+  const [state, dispatch] = useReducer(reducer, undefined, () =>
+    initState(getSheet(loadActiveSheetId() ?? undefined))
+  );
+  const sheet = useMemo(() => getSheet(state.sheetId), [state.sheetId]);
+
+  // Al arrancar se actualizan las fichas remotas (si hay carpeta
+  // configurada); al terminar, se fuerza un re render para listirlas.
+  const [remoteVersion, setRemoteVersion] = useState(0);
+  useEffect(() => {
+    let alive = true;
+    refreshRemoteTemplates().then((r) => {
+      if (alive && r.changed) setRemoteVersion((v) => v + 1);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   useEffect(() => {
-    saveSheetState(sheet.id, state);
-  }, [sheet, state]);
+    saveSheetState(state.sheetId, state);
+  }, [state]);
+
+  useEffect(() => {
+    saveActiveSheetId(state.sheetId);
+  }, [state.sheetId]);
 
   /** Avanza al siguiente item; si termina la sección, a la siguiente; si no
    *  hay más secciones, al resumen. */
@@ -259,13 +314,24 @@ export function SheetProvider({ children }) {
       state,
       dispatch,
       goNext,
+      /** Cambia a otra ficha en la portada (con su progreso cargado). */
+      setSheet: (id) => {
+        if (id === state.sheetId) return;
+        const target = getSheet(id);
+        dispatch({
+          type: "SET_SHEET",
+          sheetId: target.id,
+          saved: loadSheetState(target.id),
+        });
+      },
       reset: () => {
-        clearSheetState(sheet.id);
+        clearSheetState(state.sheetId);
         dispatch({ type: "RESET" });
       },
     }),
-    // goNext se recrea con cada render; lo incluimos vía state.
-    [sheet, state]
+    // goNext se recrea con cada render; lo incluimos vía state, e
+    // idem con remoteVersion para refrescar cuando llegan fichas.
+    [sheet, state, remoteVersion]
   );
 
   return <SheetContext.Provider value={value}>{children}</SheetContext.Provider>;
@@ -315,6 +381,7 @@ export function useExerciseController(exercise) {
       dispatch({ type: "SET_WORD_STEP", exercise, index, field, value }),
     setGuidedAnswer: (index, value) =>
       dispatch({ type: "SET_GUIDED_ANSWER", exercise, index, value }),
+    resetItem: () => dispatch({ type: "RESET_ITEM", exercise }),
   };
 }
 

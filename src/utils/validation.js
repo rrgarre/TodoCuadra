@@ -74,6 +74,8 @@ export function validateStep(exercise, entry) {
       return validateMultiplicationStep(exercise, entry);
     case "division":
       return validateDivisionStep(exercise, entry);
+    case "logica":
+      return validateLogicStep(exercise, entry);
     default:
       return fail("Este ejercicio no se puede comprobar.");
   }
@@ -122,6 +124,38 @@ function validateColumnAnswer(model, entry, kind) {
 
 function mentalError(_entered, _expected, exercise, attempts) {
   const base = "No es correcto. Inténtalo otra vez con calma.";
+  if (attempts >= 1 && exercise.hint) {
+    return `${base} ${exercise.hint}`;
+  }
+  return base;
+}
+
+/* ---- Lógica (series, comparaciones y enigmas) ---- */
+
+function validateLogicStep(exercise, entry) {
+  const entered = entry.values.answer;
+  const raw = String(entered ?? "").trim();
+
+  if (raw === "") {
+    return fail(
+      exercise.variant === "comparacion"
+        ? "Elige mayor, menor o igual antes de comprobar."
+        : "Escribe tu respuesta antes de comprobar."
+    );
+  }
+
+  if (exercise.variant === "comparacion") {
+    if (raw.toLowerCase() === String(exercise.answer).toLowerCase()) return ok();
+    return fail(
+      logicCompareError(entered, exercise.answer, exercise, entry.attempts ?? 0)
+    );
+  }
+
+  return validateSingleAnswer(entered, exercise.answer, mentalError, exercise, entry.attempts ?? 0);
+}
+
+function logicCompareError(_entered, _expected, exercise, attempts) {
+  const base = "No es correcto. Compara las dos cantidades con calma.";
   if (attempts >= 1 && exercise.hint) {
     return `${base} ${exercise.hint}`;
   }

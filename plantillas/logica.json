@@ -1,0 +1,96 @@
+{
+  "titulo": "Lógica",
+  "tipo": "logica",
+  "nivel": "4º Primaria",
+  "descripcion": "Series, comparaciones y enigmas para pensar",
+  "icono": "🧩",
+  "ejercicios": [
+    {
+      "tipo": "logica",
+      "variante": "serie",
+      "grupo": "Series",
+      "enunciado": "¿Qué número sigue en la serie?",
+      "elementos": [2, 4, 6, 8],
+      "respuesta": 10,
+      "pista": "Mira cuánto aumenta cada número respecto al anterior.",
+      "explicacion": "La serie sube de 2 en 2: 8 + 2 = 10."
+    },
+    {
+      "tipo": "logica",
+      "variante": "serie",
+      "grupo": "Series",
+      "enunciado": "¿Qué número sigue en la serie?",
+      "elementos": [5, 10, 15, 20],
+      "respuesta": 25,
+      "pista": "Cada número es el anterior más una cantidad que no cambia.",
+      "explicacion": "La serie sube de 5 en 5: 20 + 5 = 25."
+    },
+    {
+      "tipo": "logica",
+      "variante": "serie",
+      "grupo": "Series",
+      "enunciado": "¿Qué número sigue? Ojo, esta serie no sube: baja.",
+      "elementos": [40, 35, 30, 25],
+      "respuesta": 20,
+      "pista": "Comprueba de cuánto en cuánto cambian los números.",
+      "explicacion": "La serie baja de 5 en 5: 25 − 5 = 20."
+    },
+    {
+      "tipo": "logica",
+      "variante": "comparacion",
+      "grupo": "Comparaciones",
+      "enunciado": "Compara las dos cantidades: ¿la primera es mayor, menor o igual que la segunda?",
+      "izquierda": 456,
+      "derecha": 465,
+      "respuesta": "menor",
+      "pista": "Mira primero las centenas y después las decenas."
+    },
+    {
+      "tipo": "logica",
+      "variante": "comparacion",
+      "grupo": "Comparaciones",
+      "enunciado": "Compara las dos cantidades: ¿la primera es mayor, menor o igual que la segunda?",
+      "izquierda": 837,
+      "derecha": 783,
+      "respuesta": "mayor",
+      "pista": "Empieza por las centenas: un 8 frente a un 7."
+    },
+    {
+      "tipo": "logica",
+      "variante": "comparacion",
+      "grupo": "Comparaciones",
+      "enunciado": "Compara las dos cantidades: ¿la primera es mayor, menor o igual que la segunda?",
+      "izquierda": 625,
+      "derecha": 625,
+      "respuesta": "igual",
+      "pista": "Comprueba las tres cifras, una a una."
+    },
+    {
+      "tipo": "logica",
+      "variante": "enigma",
+      "grupo": "Enigmas",
+      "enunciado": "Lucía piensa un número. Si le suma 9 obtiene 17. ¿Qué número pensó?",
+      "respuesta": 8,
+      "pista": "Piensa al revés: deshaz la suma.",
+      "explicacion": "Para deshacer la suma, resta 9: 17 − 9 = 8."
+    },
+    {
+      "tipo": "logica",
+      "variante": "enigma",
+      "grupo": "Enigmas",
+      "enunciado": "Bruno piensa un número, lo multiplica por 4 y le salen 28. ¿Qué número pensó?",
+      "respuesta": 7,
+      "pista": "Piensa al revés: deshaz la multiplicación.",
+      "explicacion": "Para deshacer la multiplicación, divide: 28 ÷ 4 = 7."
+    },
+    {
+      "tipo": "logica",
+      "variante": "enigma",
+      "grupo": "Enigmas",
+      "enunciado": "En una cesta hay 12 cromos rojos y azules. Los rojos son el doble que los azules. ¿Cuántos cromos azules hay?",
+      "respuesta": 4,
+      "pista": "Si los rojos son el doble, los cromos se parten en 3 partes iguales.",
+      "explicacion": "Hay 3 partes iguales (1 de azules y 2 de rojos): 12 ÷ 3 = 4 azules."
+    }
+  ]
+}

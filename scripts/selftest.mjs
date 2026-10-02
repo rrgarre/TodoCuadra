@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import {
   buildMultiplication,
   buildDivision,
@@ -7,6 +8,18 @@ import {
   subtractionStepsText,
 } from "../src/utils/calculations.js";
 import { validateStep, getStepsCount } from "../src/utils/validation.js";
+import {
+  parseTemplate,
+  buildTemplateSheets,
+  loadTemplates,
+  FORMATOS,
+  applyRemoteFiles,
+  getRemoteTemplates,
+  resetRemote,
+  fetchRemoteFiles,
+  refreshRemoteTemplates,
+  resetTemplateCache,
+} from "../plantillas/templates.js";
 
 let failures = 0;
 function check(name, cond, extra = "") {
@@ -370,6 +383,493 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   check("mental: primer error sin pista", !first.ok && !first.message.includes("Pista"));
   const second = validateStep(ex, { step: 0, values: { answer: "45" }, attempts: 1 });
   check("mental: segundo error con pista", !second.ok && second.message.includes("Pista"), second.message);
+}
+
+/* ---------- Plantillas (carpeta plantillas/*.json) ---------- */
+{
+  const f = "plantillas/logica.json";
+  const json = JSON.parse(readFileSync(f, "utf8"));
+  const r = parseTemplate(json, f);
+  check("plantilla logica.json: válida", r.ok, JSON.stringify(r.errors));
+  if (r.ok) {
+    const sh = r.sheet;
+    check("plantilla logica.json: 9 retos de lógica", sh.logicExercises.length === 9);
+    check(
+      "plantilla logica.json: ids autogenerados",
+      sh.logicExercises[0].id === "logica-1" && sh.logicExercises[8].id === "logica-9",
+      JSON.stringify(sh.logicExercises.map((e) => e.id))
+    );
+    const sec = sh.sections[0];
+    check("plantilla logica.json: sección «Lógica» con su icono", sec.title === "Lógica" && sec.icon === "🧩");
+    check(
+      "plantilla logica.json: grupos Series, Comparaciones, Enigmas",
+      sec.groups.map((g) => g.label).join(",") === "Series,Comparaciones,Enigmas" &&
+        sec.groups.every((g) => g.ids.length === 3),
+      JSON.stringify(sec.groups.map((g) => g.label))
+    );
+    check(
+      "plantilla logica.json: tipos internos y explicaciones",
+      sh.logicExercises.every((e) => e.type === "logica") &&
+        typeof sh.logicExercises[0].explanation === "string" &&
+        typeof sh.logicExercises[3].explanation === "string"
+    );
+    check("plantilla logica.json: formato logica", sh.formato === "logica", sh.formato);
+  }
+
+  // Registro de formatos: cada ficha declara su "tipo" y eso decide su zona.
+  check(
+    "formatos: registro con calculo y logica (y sin quiz todavía)",
+    Boolean(FORMATOS.calculo) && Boolean(FORMATOS.logica) && !FORMATOS.quiz &&
+      FORMATOS.calculo.bloque === "Cálculo" && FORMATOS.logica.bloque === "Lógica",
+    JSON.stringify(Object.keys(FORMATOS))
+  );
+  check(
+    "formatos: calculo admite operaciones, problemas, mental y trucos",
+    ["suma", "resta", "multiplicacion", "division", "problema", "mental", "truco"].every((t) =>
+      FORMATOS.calculo.tipos.includes(t)
+    )
+  );
+  check("formatos: logica solo admite logica", FORMATOS.logica.tipos.length === 1 && FORMATOS.logica.tipos[0] === "logica");
+
+  const f2 = "plantillas/prueba.json";
+  const noTitulo = parseTemplate({ tipo: "calculo", ejercicios: [{ tipo: "suma", a: 1, b: 2 }] }, f2);
+  check(
+    "plantilla sin titulo: error en español con la ruta",
+    !noTitulo.ok && noTitulo.errors.some((e) => e.includes(f2) && e.includes("titulo")),
+    JSON.stringify(noTitulo.errors)
+  );
+
+  const sinTipo = parseTemplate({ titulo: "X", ejercicios: [{ tipo: "suma", a: 1, b: 2 }] }, f2);
+  check(
+    "plantilla sin tipo: pide el formato de la ficha",
+    !sinTipo.ok && sinTipo.errors.some((e) => e.includes('falta el campo "tipo"')),
+    JSON.stringify(sinTipo.errors)
+  );
+
+  const tipoFichaMalo = parseTemplate({ titulo: "X", tipo: "quiz", ejercicios: [{ tipo: "suma", a: 1, b: 2 }] }, f2);
+  check(
+    "tipo de ficha desconocido: lista los formatos válidos",
+    !tipoFichaMalo.ok && tipoFichaMalo.errors.some((e) => e.includes("Formatos válidos: calculo, logica")),
+    JSON.stringify(tipoFichaMalo.errors)
+  );
+
+  const tipoMalo = parseTemplate({ titulo: "X", tipo: "calculo", ejercicios: [{ tipo: "arpita" }] }, f2);
+  check("tipo desconocido: lista los válidos", !tipoMalo.ok && tipoMalo.errors[0].includes("suma, resta"), JSON.stringify(tipoMalo.errors));
+
+  const fueraDeFormato = parseTemplate({ titulo: "X", tipo: "logica", ejercicios: [{ tipo: "suma", a: 1, b: 2 }] }, f2);
+  check(
+    "ejercicio fuera del formato: el tipo no pertenece a la ficha",
+    !fueraDeFormato.ok && fueraDeFormato.errors[0].includes("no pertenece al formato «logica»"),
+    JSON.stringify(fueraDeFormato.errors)
+  );
+
+  const restaMala = parseTemplate({ titulo: "X", tipo: "calculo", ejercicios: [{ tipo: "resta", a: 5, b: 9 }] }, f2);
+  check("resta con a < b: rechazada", !restaMala.ok && restaMala.errors[0].includes("mayor o igual"), JSON.stringify(restaMala.errors));
+
+  const divCero = parseTemplate({ titulo: "X", tipo: "calculo", ejercicios: [{ tipo: "division", a: 10, b: 0 }] }, f2);
+  check("división entre 0: rechazada", !divCero.ok && divCero.errors[0].includes("mayor que 0"), JSON.stringify(divCero.errors));
+
+  const mulLarga = parseTemplate({ titulo: "X", tipo: "calculo", ejercicios: [{ tipo: "multiplicacion", a: 12, b: 123 }] }, f2);
+  check("multiplicación con b de 3 cifras: rechazada", !mulLarga.ok && mulLarga.errors[0].includes("una o dos cifras"), JSON.stringify(mulLarga.errors));
+
+  const probMala = parseTemplate(
+    {
+      titulo: "X",
+      tipo: "calculo",
+      ejercicios: [{ tipo: "problema", texto: "Tengo 5 canicas y recibo 3.", pasos: [{ op: "suma", a: 5, b: 3 }], respuesta: 9 }],
+    },
+    f2
+  );
+  check("problema con respuesta que no cuadra: rechazado", !probMala.ok && probMala.errors[0].includes("no coincide") && probMala.errors[0].includes("8"), JSON.stringify(probMala.errors));
+
+  const probOk = parseTemplate(
+    {
+      titulo: "X",
+      tipo: "calculo",
+      ejercicios: [{ tipo: "problema", texto: "Tengo 5 canicas y recibo 3.", pasos: [{ op: "suma", a: 5, b: 3 }] }],
+    },
+    f2
+  );
+  check(
+    "problema: resultados calculados (respuesta y último paso)",
+    probOk.ok && probOk.sheet.wordProblems[0].answer === 8 && probOk.sheet.wordProblems[0].plan[0].result === 8,
+    JSON.stringify(probOk.errors)
+  );
+
+  const serieMala = parseTemplate(
+    { titulo: "X", tipo: "logica", ejercicios: [{ tipo: "logica", variante: "serie", enunciado: "¿Qué sigue?", elementos: [2, 4, 6], respuesta: 9 }] },
+    f2
+  );
+  check("serie con respuesta que no la sigue: rechazada", !serieMala.ok && serieMala.errors[0].includes("esperaba 8"), JSON.stringify(serieMala.errors));
+
+  const compMala = parseTemplate(
+    { titulo: "X", tipo: "logica", ejercicios: [{ tipo: "logica", variante: "comparacion", enunciado: "Compara", izquierda: 456, derecha: 465, respuesta: "mayor" }] },
+    f2
+  );
+  check("comparación con respuesta que no cuadra: rechazada", !compMala.ok && compMala.errors[0].includes("menor"), JSON.stringify(compMala.errors));
+
+  const sinResp = parseTemplate(
+    { titulo: "X", tipo: "logica", ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "¿Cuánto es?" }] },
+    f2
+  );
+  check("enigma sin respuesta: rechazado", !sinResp.ok && sinResp.errors[0].includes("respuesta"), JSON.stringify(sinResp.errors));
+
+  // Cargador: la válida entra y la rota solo deja aviso (nunca rompe).
+  const built = buildTemplateSheets({
+    "C:\\proy\\plantillas\\logica.json": { default: json },
+    "C:\\proy\\plantillas\\rota.json": { default: { titulo: "Rota", tipo: "calculo", ejercicios: [{ tipo: "arpita" }] } },
+  });
+  check(
+    "cargador: válida carga y rota avisa con su ruta",
+    built.sheets.length === 1 && built.warnings.length === 1 && built.warnings[0].includes("plantillas/rota.json"),
+    JSON.stringify(built)
+  );
+}
+
+/* ---------- Ficha de Cálculo (calculo.json, la que había en código) ---------- */
+{
+  const f = "plantillas/calculo.json";
+  const json = JSON.parse(readFileSync(f, "utf8"));
+  const r = parseTemplate(json, f);
+  check("ficha calculo.json: válida", r.ok, JSON.stringify(r.errors));
+  if (r.ok) {
+    const sh = r.sheet;
+    check(
+      "calculo: id propio, título, icono y formato",
+      sh.id === "sheet-001" && sh.title === "Ejercicios de hoy" &&
+        sh.icon === "📘" && sh.formato === "calculo",
+      JSON.stringify({ id: sh.id, title: sh.title, icon: sh.icon, formato: sh.formato })
+    );
+    check(
+      "calculo: 31 ejercicios + 4 trucos",
+      sh.additions.length === 5 && sh.subtractions.length === 5 &&
+        sh.multiplications.length === 5 && sh.divisions.length === 4 &&
+        sh.wordProblems.length === 4 && sh.mentalCalculations.length === 8 &&
+        sh.tips.length === 4,
+      JSON.stringify({
+        sum: sh.additions.length, res: sh.subtractions.length, mul: sh.multiplications.length,
+        div: sh.divisions.length, prob: sh.wordProblems.length, men: sh.mentalCalculations.length,
+        tips: sh.tips.length,
+      })
+    );
+    check(
+      "calculo: ids de extremos conservados (sum-1 … tip-4)",
+      sh.additions[0].id === "sum-1" && sh.subtractions[4].id === "res-5" &&
+        sh.multiplications[0].id === "mul-1" && sh.divisions[3].id === "div-4" &&
+        sh.mentalCalculations[7].id === "men-8" && sh.tips[3].id === "tip-4"
+    );
+
+    const p1 = sh.wordProblems.find((w) => w.id === "prob-1");
+    const p3 = sh.wordProblems.find((w) => w.id === "prob-3");
+    check(
+      "calculo: prob-1 guiado con dos pasos y respuesta 166",
+      p1 && p1.mode === "guided" && p1.plan.length === 2 && p1.answer === 166,
+      JSON.stringify(p1)
+    );
+    check(
+      "calculo: prob-3 de elección con tres pasos y respuesta 31",
+      p3 && p3.mode === "choose" && p3.plan.length === 3 && p3.answer === 31 &&
+        p3.plan[0].op === "mul" && p3.plan[2].op === "sub",
+      JSON.stringify(p3)
+    );
+    check(
+      "calculo: textos de los problemas intactos",
+      sh.wordProblems.every((w) => w.text.length > 40) &&
+        p1.text.startsWith("En la biblioteca del cole")
+    );
+
+    const m1 = sh.mentalCalculations.find((m) => m.id === "men-1");
+    const m5 = sh.mentalCalculations.find((m) => m.id === "men-5");
+    check(
+      "calculo: men-1 enlaza el truco tip-1 y lleva su pista",
+      m1.tipId === "tip-1" && m1.result === 46 && m1.hint.includes("Pista: en lugar de sumar 19"),
+      JSON.stringify(m1)
+    );
+    check("calculo: men-5 no enlaza truco", !m5.tipId);
+    check(
+      "calculo: trucos completos con ejemplo",
+      sh.tips[0].title === "Sumar 19 (o 29, 39…)" &&
+        sh.tips[0].example.steps.length === 2 &&
+        sh.tips.every((t) => t.type === "tip" && typeof t.explanation === "string")
+    );
+
+    check(
+      "calculo: 4 secciones con sus ids",
+      sh.sections.length === 4 &&
+        sh.sections.map((s) => s.id).join(",") === "operaciones,problemas,mental,tips",
+      JSON.stringify(sh.sections.map((s) => s.id))
+    );
+    check(
+      "calculo: sección Operaciones con sus 4 grupos y sus ids",
+      sh.sections[0].title === "Operaciones" && sh.sections[0].icon === "🧮" &&
+        sh.sections[0].groups.map((g) => g.label).join(",") ===
+          "Sumas,Restas,Multiplicaciones,Divisiones" &&
+        sh.sections[0].groups[0].ids.join(",") === "sum-1,sum-2,sum-3,sum-4,sum-5" &&
+        sh.sections[0].groups[3].ids.length === 4,
+      JSON.stringify(sh.sections[0].groups.map((g) => g.label))
+    );
+    check(
+      "calculo: la sección mental intercala los trucos en su orden",
+      JSON.stringify(sh.sections[2].groups[0].ids) ===
+        JSON.stringify(["men-1", "tip-1", "men-2", "tip-2", "men-3", "men-4", "tip-3", "men-5", "men-6", "men-7", "tip-4", "men-8"]),
+      JSON.stringify(sh.sections[2].groups[0].ids)
+    );
+    check(
+      "calculo: los trucos se repiten en su propia sección",
+      sh.sections[3].groups[0].ids.join(",") === "tip-1,tip-2,tip-3,tip-4"
+    );
+    check(
+      "calculo: nada queda fuera de secciones (35 ids cubiertos)",
+      new Set(sh.sections.flatMap((s) => s.groups.flatMap((g) => g.ids))).size === 35
+    );
+  }
+
+  const f2 = "plantillas/prueba.json";
+
+  // secciones: id que no existe.
+  const secRota = parseTemplate(
+    {
+      titulo: "X", tipo: "calculo",
+      ejercicios: [{ id: "a1", tipo: "suma", a: 1, b: 2 }],
+      secciones: [{ titulo: "Única", grupos: [{ etiqueta: "G", ids: ["otro"] }] }],
+    },
+    f2
+  );
+  check(
+    "secciones: referencia a un id inexistente → error",
+    !secRota.ok && secRota.errors[0].includes("no corresponde a ningún ejercicio"),
+    JSON.stringify(secRota.errors)
+  );
+
+  // secciones: ejercicio que no aparece en ninguna.
+  const secHueco = parseTemplate(
+    {
+      titulo: "X", tipo: "calculo",
+      ejercicios: [
+        { id: "a1", tipo: "suma", a: 1, b: 2 },
+        { id: "a2", tipo: "suma", a: 3, b: 4 },
+      ],
+      secciones: [{ titulo: "Única", grupos: [{ etiqueta: "G", ids: ["a1"] }] }],
+    },
+    f2
+  );
+  check(
+    "secciones: ejercicio fuera de toda sección → error",
+    !secHueco.ok && secHueco.errors.some((e) => e.includes("«a2» no aparece en ninguna sección")),
+    JSON.stringify(secHueco.errors)
+  );
+
+  // El formato logica agrupa solo: no admite secciones escritas a mano.
+  const secEnLogica = parseTemplate(
+    {
+      titulo: "X", tipo: "logica",
+      ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "¿Cuánto es?", respuesta: 5 }],
+      secciones: [{ titulo: "Única", grupos: [{ etiqueta: "G", ids: ["x-1"] }] }],
+    },
+    f2
+  );
+  check(
+    "logica: no admite secciones personalizadas",
+    !secEnLogica.ok && secEnLogica.errors[0].includes('no admite "secciones"'),
+    JSON.stringify(secEnLogica.errors)
+  );
+
+  // Un mental no puede apuntar a un truco que no existe.
+  const trucoRoto = parseTemplate(
+    { titulo: "X", tipo: "calculo", ejercicios: [{ id: "m1", tipo: "mental", expr: "1 + 1", resultado: 2, trucoId: "tip-9" }] },
+    f2
+  );
+  check(
+    "mental: trucoId inexistente → error",
+    !trucoRoto.ok && trucoRoto.errors[0].includes("«tip-9»"),
+    JSON.stringify(trucoRoto.errors)
+  );
+
+  // Ids personalizados: de ficha y de ejercicio.
+  const conId = parseTemplate(
+    { titulo: "X", id: "mi-ficha", tipo: "calculo", ejercicios: [{ id: "custom-1", tipo: "suma", a: 1, b: 2 }] },
+    f2
+  );
+  check(
+    "ids: id de ficha y de ejercicio personalizados",
+    conId.ok && conId.sheet.id === "mi-ficha" && conId.sheet.additions[0].id === "custom-1",
+    JSON.stringify(conId.errors)
+  );
+
+  const dup = parseTemplate(
+    { titulo: "X", tipo: "calculo", ejercicios: [
+      { id: "x", tipo: "suma", a: 1, b: 2 },
+      { id: "x", tipo: "suma", a: 3, b: 4 },
+    ] },
+    f2
+  );
+  check("ids: repetido → error", !dup.ok && dup.errors[0].includes("se repite el id"), JSON.stringify(dup.errors));
+}
+
+/* ---------- Fichas remotas (carpeta de GitHub con nombre aleatorio) ---------- */
+{
+  // La lista de ficheros remotos: la buena carga, las rotas solo avisan.
+  const aplicadas = applyRemoteFiles([
+    {
+      name: "abuela.json",
+      content: JSON.stringify({
+        titulo: "Retos de la abuela", tipo: "logica",
+        ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "Ana piensa un número y le suma 3. ¿Cuál era si obtiene 10?", respuesta: 7 }],
+      }),
+    },
+    { name: "rota.json", content: "{esto no es un json" },
+    {
+      name: "formato-raro.json",
+      content: JSON.stringify({ titulo: "X", tipo: "alien", ejercicios: [{ tipo: "suma", a: 1, b: 2 }] }),
+    },
+  ]);
+  check(
+    "remota: la ficha válida se parsea con su formato",
+    aplicadas.sheets.length === 1 &&
+      aplicadas.sheets[0].formato === "logica" &&
+      aplicadas.sheets[0].logicExercises.length === 1,
+    JSON.stringify(aplicadas)
+  );
+  check(
+    "remota: la rota y la de formato desconocido solo dejan aviso con su nombre",
+    aplicadas.warnings.length === 2 &&
+      aplicadas.warnings.some((w) => w.includes("remoto/rota.json")) &&
+      aplicadas.warnings.some((w) => w.includes("remoto/formato-raro.json") && w.includes("formato")),
+    JSON.stringify(aplicadas.warnings)
+  );
+
+  // Fusionado: si una remota repite el id de una local, gana la local.
+  globalThis.__PLANTILLAS_MOCK__ = {
+    "C:\\proy\\plantillas\\logica.json": JSON.parse(readFileSync("plantillas/logica.json", "utf8")),
+  };
+  applyRemoteFiles([
+    {
+      name: "clon.json",
+      content: JSON.stringify({
+        titulo: "Clon", id: "plantilla-logica", tipo: "logica",
+        ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "¿5?", respuesta: 5 }],
+      }),
+    },
+    {
+      name: "extra.json",
+      content: JSON.stringify({
+        titulo: "Extra", tipo: "logica",
+        ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "¿6?", respuesta: 6 }],
+      }),
+    },
+  ]);
+  resetTemplateCache();
+  const merged = loadTemplates();
+  check(
+    "remota: gana la local (mismo id) y la extra se suma",
+    merged.sheets.filter((s) => s.id === "plantilla-logica").length === 1 &&
+      merged.sheets.some((s) => s.title === "Extra") &&
+      !merged.sheets.some((s) => s.title === "Clon") &&
+      merged.warnings.some((w) => w.includes("ya existe una ficha local con el id «plantilla-logica»")),
+    JSON.stringify({ sheets: merged.sheets.map((s) => s.title), warnings: merged.warnings })
+  );
+  resetRemote();
+  resetTemplateCache();
+  delete globalThis.__PLANTILLAS_MOCK__;
+
+  // Descarga: solo los .json del listado y el base64 UTF-8 de GitHub.
+  const originalFetch = globalThis.fetch;
+  const base64 = (obj) => Buffer.from(JSON.stringify(obj), "utf8").toString("base64");
+  globalThis.fetch = async (url) =>
+    String(url).includes("/contents/")
+      ? {
+          ok: true,
+          status: 200,
+          json: async () => [
+            { type: "dir", name: "sub" },
+            { type: "file", name: "leeme.md", url: "https://api.github.com/x/leeme" },
+            { type: "file", name: "remota.json", url: "https://api.github.com/x/remota" },
+          ],
+        }
+      : {
+          ok: true,
+          status: 200,
+          json: async () => ({
+            content: base64({
+              titulo: "Descargada", tipo: "logica",
+              ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "¿9?", respuesta: 9 }],
+            }),
+          }),
+        };
+
+  const descargadas = await fetchRemoteFiles({ usuario: "usuario-demo", repo: "tc-7f3a9d2b1c8e4f6a", carpeta: "plantillas" });
+  check(
+    "remota: descarga solo los .json y descodifica el base64",
+    descargadas.length === 1 &&
+      descargadas[0].name === "remota.json" &&
+      JSON.parse(descargadas[0].content).titulo === "Descargada",
+    JSON.stringify(descargadas)
+  );
+
+  const okRefresh = await refreshRemoteTemplates({ usuario: "u", repo: "r", carpeta: "plantillas" });
+  check(
+    "remota: refresh con éxito la aplica y señala el cambio",
+    okRefresh.changed === true &&
+      getRemoteTemplates().sheets.some((s) => s.title === "Descargada"),
+    JSON.stringify(getRemoteTemplates())
+  );
+
+  // Fallos: sin caché se avisa; con caché, se usa la guardada.
+  resetRemote();
+  globalThis.fetch = async () => ({ ok: false, status: 403, json: async () => ({}) });
+  const sinCache = await refreshRemoteTemplates({ usuario: "u", repo: "r", carpeta: "plantillas" });
+  check(
+    "remota: fallo sin caché → aviso para la portada",
+    sinCache.changed === true &&
+      typeof getRemoteTemplates().aviso === "string" &&
+      getRemoteTemplates().aviso.includes("No se han podido descargar"),
+    JSON.stringify(getRemoteTemplates())
+  );
+  applyRemoteFiles([
+    {
+      name: "guardada.json",
+      content: JSON.stringify({
+        titulo: "Guardada", tipo: "logica",
+        ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "¿3?", respuesta: 3 }],
+      }),
+    },
+  ]);
+  const conCache = await refreshRemoteTemplates({ usuario: "u", repo: "r", carpeta: "plantillas" });
+  check(
+    "remota: fallo con caché → se mantiene lo guardado sin romper",
+    conCache.changed === false && getRemoteTemplates().sheets.length === 1,
+    JSON.stringify(getRemoteTemplates())
+  );
+  globalThis.fetch = originalFetch;
+  resetRemote();
+}
+
+/* ---------- Lógica: validación paso a paso ---------- */
+{
+  const serie = { id: "l1", type: "logica", variant: "serie", prompt: "¿Qué sigue?", series: [2, 4, 6, 8], answer: 10, hint: "Sube de 2 en 2." };
+  const empty = validateStep(serie, { step: 0, values: { answer: "" }, attempts: 0 });
+  check("lógica serie: sin respuesta avisa", !empty.ok && empty.message.includes("Escribe tu respuesta"), empty.message);
+  const wrong = validateStep(serie, { step: 0, values: { answer: "12" }, attempts: 0 });
+  check("lógica serie: primer fallo sin pista", !wrong.ok && !wrong.message.includes("Sube de 2"), wrong.message);
+  const wrong2 = validateStep(serie, { step: 0, values: { answer: "12" }, attempts: 1 });
+  check("lógica serie: segundo fallo con pista", !wrong2.ok && wrong2.message.includes("Sube de 2 en 2"), wrong2.message);
+  const good = validateStep(serie, { step: 0, values: { answer: "010" }, attempts: 0 });
+  check("lógica serie: correcto aunque lleve ceros", good.ok, JSON.stringify(good));
+
+  const comp = { id: "l4", type: "logica", variant: "comparacion", prompt: "Compara", left: 456, right: 465, answer: "menor", hint: "Mira las centenas." };
+  const sinEligir = validateStep(comp, { step: 0, values: { answer: "" }, attempts: 0 });
+  check("lógica comparación: pide elegir opción", !sinEligir.ok && sinEligir.message.includes("mayor, menor o igual"), sinEligir.message);
+  const eligioMal = validateStep(comp, { step: 0, values: { answer: "mayor" }, attempts: 1 });
+  check("lógica comparación: fallo con pista", !eligioMal.ok && eligioMal.message.includes("Mira las centenas"), eligioMal.message);
+  const okComp = validateStep(comp, { step: 0, values: { answer: "menor" }, attempts: 0 });
+  check("lógica comparación: correcto", okComp.ok, JSON.stringify(okComp));
+
+  const enigma = { id: "l7", type: "logica", variant: "enigma", prompt: "Enigma", answer: 8 };
+  const okEn = validateStep(enigma, { step: 0, values: { answer: "8" }, attempts: 0 });
+  check("lógica enigma: correcto", okEn.ok, JSON.stringify(okEn));
+  const badEn = validateStep(enigma, { step: 0, values: { answer: "7" }, attempts: 0 });
+  check("lógica enigma: incorrecto", !badEn.ok);
+  check("lógica: un solo paso", getStepsCount(enigma) === 1);
 }
 
 console.log(failures === 0 ? "\nTODO CORRECTO" : `\n${failures} FALLOS`);

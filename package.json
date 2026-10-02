@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node scripts/selftest.mjs && esbuild scripts/rendercheck-entry.jsx --bundle --format=cjs --platform=node --jsx=automatic --outfile=scripts/.rendercheck.cjs && node scripts/.rendercheck.cjs"
+    "test": "node scripts/selftest.mjs && esbuild scripts/rendercheck-entry.jsx --bundle --format=cjs --platform=node --jsx=automatic --log-override:empty-import-meta=silent --outfile=scripts/.rendercheck.cjs && node scripts/.rendercheck.cjs"
   },
   "dependencies": {
     "react": "^18.3.1",

@@ -6,9 +6,16 @@
 
 import React from "react";
 import { renderToString } from "react-dom/server";
+import { readFileSync } from "node:fs";
 import App from "../src/App.jsx";
 import { reducer } from "../src/state/SheetContext.jsx";
-import { getSheet, getSectionItems } from "../src/data/sheets/index.js";
+import { getSheet, getSectionItems, resetSheetCache } from "../src/data/sheets/index.js";
+import { sheetStateKey, ACTIVE_STORAGE_KEY } from "../src/utils/storage.js";
+import {
+  REMOTE_STORAGE_KEY,
+  resetRemote,
+  resetTemplateCache,
+} from "../plantillas/templates.js";
 
 let failures = 0;
 function check(name, cond, extra = "") {
@@ -19,20 +26,44 @@ function check(name, cond, extra = "") {
   }
 }
 
-/* localStorage simulada: devuelve el estado que indiquemos. */
-let savedState = null;
+/* Plantillas simuladas: una válida (logica.json) y una rota, para
+ * comprobar que la portada carga las buenas y avisa de las malas. */
+globalThis.__PLANTILLAS_MOCK__ = {
+  "C:\\proy\\plantillas\\calculo.json": {
+    default: JSON.parse(readFileSync("plantillas/calculo.json", "utf8")),
+  },
+  "C:\\proy\\plantillas\\logica.json": {
+    default: JSON.parse(readFileSync("plantillas/logica.json", "utf8")),
+  },
+  "C:\\proy\\plantillas\\rota.json": {
+    default: { titulo: "Rota", tipo: "calculo", ejercicios: [{ tipo: "arpita" }] },
+  },
+};
+
+/* localStorage simulada, por clave: el progreso de cada hoja y la
+ * hoja activa se guardan en claves distintas. */
+let stored = {};
 globalThis.window = {
   localStorage: {
-    getItem: () =>
-      savedState ? JSON.stringify({ version: 1, state: savedState }) : null,
-    setItem: () => {},
-    removeItem: () => {},
+    getItem: (k) => (k in stored ? stored[k] : null),
+    setItem: (k, v) => {
+      stored[k] = String(v);
+    },
+    removeItem: (k) => {
+      delete stored[k];
+    },
   },
   scrollTo: () => {},
 };
 
-function render(state) {
-  savedState = state;
+function render(state, opts = {}) {
+  const sheetId = opts.sheetId ?? "sheet-001";
+  stored = {
+    // Claves extra (p. ej. la caché de fichas remotas).
+    ...(opts.storedExtra ?? {}),
+    [sheetStateKey(sheetId)]: JSON.stringify({ version: 1, state }),
+    [ACTIVE_STORAGE_KEY]: sheetId,
+  };
   // React separa los nodos de texto con <!-- --> al hidratar; los quitamos
   // para poder comparar cadenas de texto normales.
   return renderToString(React.createElement(App)).replace(/<!-- -->/g, "");
@@ -51,6 +82,14 @@ function render(state) {
   );
   check("portada: botón Empezar", html.includes("Empezar"));
   check("portada: botón Resetear todo", html.includes("Resetear todo"));
+  check("portada: zona Cálculo en el menú", html.includes("🧮 Cálculo"));
+  check("portada: zona Lógica en el menú", html.includes("🧩 Lógica"));
+  check("portada: secciones desplegadas bajo la ficha en uso", html.includes("section-list--hija"));
+  check("portada: la ficha de Cálculo está en uso", html.includes('aria-label="Ejercicios de hoy: ficha en uso"'));
+  check("portada: la ficha de Lógica se puede usar", html.includes('aria-label="Usar la ficha Lógica"'));
+  check("portada: tarjeta de la hoja Lógica (plantilla)", html.includes("Lógica") && html.includes("· plantilla"));
+  check("portada: aviso de la plantilla rota", html.includes("plantillas/rota.json"));
+  check("portada: la hoja en uso está marcada", html.includes("✓ En uso"));
 }
 
 {
@@ -218,6 +257,16 @@ function render(state) {
       /grid-column:2;grid-row:5/.test(htmlSum),
     "no aparecen las posiciones esperadas"
   );
+  check("sum-1: botón Reiniciar (en cada operación)", htmlSum.includes("Reiniciar"));
+
+  const atMen = findItem("men-1");
+  const htmlMen = render({
+    screen: "section",
+    sectionIndex: atMen.s,
+    itemIndex: atMen.i,
+    progress: {},
+  });
+  check("men-1: sin botón Reiniciar (es exclusivo de operaciones)", !htmlMen.includes("Reiniciar"));
 
   const atRes = findItem("res-1");
   const htmlRes = render({ screen: "section", sectionIndex: atRes.s, itemIndex: atRes.i, progress: {} });
@@ -272,6 +321,115 @@ function render(state) {
     progress: { "mul-3": { values: { cells: {} }, status: "review", step: 0, stepsDone: [], feedback: null, revealed: true, attempts: 1 } },
   });
   check("mul-3 revelado: solución completa", htmlReveal.includes("Solución y procedimiento") && htmlReveal.includes("Resultado: 5664"));
+}
+
+/* ---------------- Hoja plantilla (Lógica) ---------------- */
+
+{
+  const l = getSheet("plantilla-logica");
+  check(
+    "hoja plantilla: existe, es plantilla y se llama Lógica",
+    Boolean(l) && l.template === true && l.sections[0].title === "Lógica"
+  );
+  check("hoja plantilla: 9 retos", l.logicExercises.length === 9, JSON.stringify(l.logicExercises?.length));
+
+  const htmlHome = render(
+    { screen: "home", sectionIndex: 0, itemIndex: 0, progress: {} },
+    { sheetId: l.id }
+  );
+  check(
+    "portada de la hoja Lógica: sus secciones anidadas y las zonas del menú",
+    htmlHome.includes("Series, comparaciones y enigmas para pensar") &&
+      htmlHome.includes("🧮 Cálculo") &&
+      htmlHome.includes("🧩 Lógica"),
+    htmlHome.slice(0, 400)
+  );
+  check(
+    "portada de la hoja Lógica: su ficha (una sola sección) se puede tocar",
+    !htmlHome.includes('disabled="" aria-label="Lógica: ficha en uso"')
+  );
+  check(
+    "portada de la hoja Lógica: la ficha de Cálculo no despliega sus secciones",
+    !htmlHome.includes("Sumas, restas, multiplicaciones y divisiones")
+  );
+
+  const items = getSectionItems(l, l.sections[0]);
+  check("hoja plantilla: 9 items en su sección", items.length === 9, `fueron ${items.length}`);
+
+  items.forEach((item, i) => {
+    try {
+      const h = render(
+        { screen: "section", sectionIndex: 0, itemIndex: i, progress: {} },
+        { sheetId: l.id }
+      );
+      check(`reto ${item.id}: renderiza con etiqueta Lógica`, h.includes("Lógica") && h.includes("Comprobar"));
+    } catch (e) {
+      failures += 1;
+      console.error(`FAIL reto ${item.id}: ${e.message}`);
+    }
+  });
+
+  const htmlSerie = render(
+    { screen: "section", sectionIndex: 0, itemIndex: 0, progress: {} },
+    { sheetId: l.id }
+  );
+  check(
+    "serie: fichas de la serie con el signo ?",
+    htmlSerie.includes("logic-chip--q") && htmlSerie.includes("Serie: 2, 4, 6, 8"),
+    htmlSerie.slice(0, 300)
+  );
+
+  const htmlComp = render(
+    { screen: "section", sectionIndex: 0, itemIndex: 3, progress: {} },
+    { sheetId: l.id }
+  );
+  check(
+    "comparación: opciones Mayor/Menor/Igual",
+    ["Mayor", "Menor", "Igual"].every((t) => htmlComp.includes(t))
+  );
+
+  const htmlLSummary = render(
+    { screen: "summary", sectionIndex: 0, itemIndex: 0, progress: {} },
+    { sheetId: l.id }
+  );
+  check("resumen de la hoja Lógica: 9 ejercicios", htmlLSummary.includes(">9<"), htmlLSummary.slice(0, 200));
+}
+
+/* ---------------- Fichas remotas (caché en localStorage) ---------------- */
+
+{
+  const fichaRemota = JSON.stringify({
+    titulo: "Retos de la abuela",
+    tipo: "logica",
+    ejercicios: [
+      { tipo: "logica", variante: "enigma", enunciado: "Ana piensa un número y le suma 3. ¿Cuál era si obtiene 10?", respuesta: 7 },
+    ],
+  });
+  const extra = {
+    [REMOTE_STORAGE_KEY]: JSON.stringify({
+      savedAt: Date.now(),
+      files: [{ name: "abuela.json", content: fichaRemota }],
+    }),
+  };
+
+  resetRemote();
+  resetTemplateCache();
+  resetSheetCache();
+  const html = render(
+    { screen: "home", sectionIndex: 0, itemIndex: 0, progress: {} },
+    { storedExtra: extra }
+  );
+  check(
+    "fichas remotas: la guardada en la caché se lista en su zona",
+    html.includes("Retos de la abuela") && html.includes("🧩 Lógica"),
+    html.slice(0, 300)
+  );
+
+  resetRemote();
+  resetTemplateCache();
+  resetSheetCache();
+  const html2 = render({ screen: "home", sectionIndex: 0, itemIndex: 0, progress: {} });
+  check("fichas remotas: sin caché no aparece", !html2.includes("Retos de la abuela"));
 }
 
 /* ---------------- Pruebas del reducer ---------------- */
@@ -344,6 +502,40 @@ function render(state) {
   // RESET limpia todo.
   const reset = reducer({ ...base, progress: { "sum-1": { ...multEntry } } }, { type: "RESET" });
   check("RESET limpia el progreso", Object.keys(reset.progress).length === 0 && reset.screen === "home");
+
+  // RESET_ITEM reinicia un solo ejercicio (el botón «Reiniciar»).
+  const ri = reducer(
+    { ...base, progress: { "sum-1": { ...multEntry }, "mul-3": { ...multEntry } } },
+    { type: "RESET_ITEM", exercise: sum }
+  );
+  check(
+    "RESET_ITEM borra solo ese ejercicio",
+    !ri.progress["sum-1"] && Boolean(ri.progress["mul-3"]) && ri.screen === "home",
+    JSON.stringify(Object.keys(ri.progress))
+  );
+  const riNoop = reducer(base, { type: "RESET_ITEM", exercise: sum });
+  check("RESET_ITEM sin progreso no cambia nada", riNoop === base);
+
+  // SET_SHEET: cambiar de ficha (se queda en la portada, con su progreso).
+  const swFresh = reducer(base, { type: "SET_SHEET", sheetId: "plantilla-logica", saved: null });
+  check(
+    "SET_SHEET sin progreso guardado: vuelve a la portada",
+    swFresh.sheetId === "plantilla-logica" && swFresh.screen === "home" && swFresh.sectionIndex === 0 && swFresh.itemIndex === 0,
+    JSON.stringify(swFresh)
+  );
+  const swSaved = reducer(base, {
+    type: "SET_SHEET",
+    sheetId: "plantilla-logica",
+    saved: { screen: "summary", sectionIndex: 2, itemIndex: 3, progress: { "logica-1": { status: "correct" } } },
+  });
+  check(
+    "SET_SHEET con progreso guardado: lo conserva y sigue en la portada",
+    swSaved.sheetId === "plantilla-logica" && swSaved.screen === "home" &&
+      Boolean(swSaved.progress["logica-1"]) && swSaved.itemIndex === 0 && swSaved.sectionIndex === 0,
+    JSON.stringify(swSaved)
+  );
+  const keepSheet = reducer({ ...base, sheetId: "plantilla-logica" }, { type: "RESET" });
+  check("RESET conserva la hoja activa", keepSheet.sheetId === "plantilla-logica");
 }
 
 console.log(failures === 0 ? "\nRENDER Y REDUCER CORRECTOS" : `\n${failures} FALLOS`);

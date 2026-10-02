@@ -1,0 +1,168 @@
+{
+  "titulo": "Ejercicios de hoy",
+  "tipo": "calculo",
+  "id": "sheet-001",
+  "nivel": "4º Primaria",
+  "icono": "📘",
+  "ejercicios": [
+    { "id": "sum-1", "tipo": "suma", "a": 348, "b": 276 },
+    { "id": "sum-2", "tipo": "suma", "a": 467, "b": 585 },
+    { "id": "sum-3", "tipo": "suma", "a": 1256, "b": 879 },
+    { "id": "sum-4", "tipo": "suma", "a": 2384, "b": 1597 },
+    { "id": "sum-5", "tipo": "suma", "a": 756, "b": 468 },
+
+    { "id": "res-1", "tipo": "resta", "a": 532, "b": 278 },
+    { "id": "res-2", "tipo": "resta", "a": 845, "b": 267 },
+    { "id": "res-3", "tipo": "resta", "a": 1000, "b": 368 },
+    { "id": "res-4", "tipo": "resta", "a": 3206, "b": 1458 },
+    { "id": "res-5", "tipo": "resta", "a": 900, "b": 476 },
+
+    { "id": "mul-1", "tipo": "multiplicacion", "a": 236, "b": 4 },
+    { "id": "mul-2", "tipo": "multiplicacion", "a": 457, "b": 6 },
+    { "id": "mul-3", "tipo": "multiplicacion", "a": 236, "b": 24 },
+    { "id": "mul-4", "tipo": "multiplicacion", "a": 148, "b": 35 },
+    { "id": "mul-5", "tipo": "multiplicacion", "a": 267, "b": 48 },
+
+    { "id": "div-1", "tipo": "division", "a": 384, "b": 3 },
+    { "id": "div-2", "tipo": "division", "a": 924, "b": 6 },
+    { "id": "div-3", "tipo": "division", "a": 1008, "b": 7 },
+    { "id": "div-4", "tipo": "division", "a": 918, "b": 18 },
+
+    {
+      "id": "prob-1",
+      "tipo": "problema",
+      "modo": "guiado",
+      "texto": "En la biblioteca del cole hay 125 libros de aventuras y 87 libros de ciencia. Durante la semana se prestan 46 libros. ¿Cuántos libros quedan en la biblioteca?",
+      "pasos": [
+        { "op": "suma", "a": 125, "b": 87 },
+        { "op": "resta", "a": 212, "b": 46 }
+      ],
+      "respuesta": 166
+    },
+    {
+      "id": "prob-2",
+      "tipo": "problema",
+      "modo": "guiado",
+      "texto": "El cole compra 5 cajas de lápices con 24 lápices en cada caja. Después reparte todos los lápices en 6 bandejas, una por curso. ¿Cuántos lápices hay en cada bandeja?",
+      "pasos": [
+        { "op": "multiplicacion", "a": 5, "b": 24 },
+        { "op": "division", "a": 120, "b": 6 }
+      ],
+      "respuesta": 20
+    },
+    {
+      "id": "prob-3",
+      "tipo": "problema",
+      "modo": "eleccion",
+      "texto": "Nico tiene 12 cromos. Compra 3 sobres y en cada sobre hay 8 cromos. Después regala 5 cromos a su prima. ¿Cuántos cromos tiene ahora?",
+      "pasos": [
+        { "op": "multiplicacion", "a": 3, "b": 8 },
+        { "op": "suma", "a": 12, "b": 24 },
+        { "op": "resta", "a": 36, "b": 5 }
+      ],
+      "respuesta": 31
+    },
+    {
+      "id": "prob-4",
+      "tipo": "problema",
+      "modo": "eleccion",
+      "texto": "En la panadería del barrio sacan 6 bandejas con 12 panes en cada una. Al rato entran 30 panes más y al final del día se venden 45 panes. ¿Cuántos panes quedan?",
+      "pasos": [
+        { "op": "multiplicacion", "a": 6, "b": 12 },
+        { "op": "suma", "a": 72, "b": 30 },
+        { "op": "resta", "a": 102, "b": 45 }
+      ],
+      "respuesta": 57
+    },
+
+    { "id": "men-1", "tipo": "mental", "expr": "27 + 19", "resultado": 46, "trucoId": "tip-1", "pista": "Pista: en lugar de sumar 19, suma 20 y después resta 1." },
+    { "id": "men-2", "tipo": "mental", "expr": "43 − 9", "resultado": 34, "trucoId": "tip-2", "pista": "Pista: resta 10 y después suma 1." },
+    { "id": "men-3", "tipo": "mental", "expr": "24 × 5", "resultado": 120, "trucoId": "tip-3", "pista": "Pista: multiplica por 10 y después divide entre 2." },
+    { "id": "men-4", "tipo": "mental", "expr": "120 ÷ 5", "resultado": 24, "trucoId": "tip-3", "pista": "Pista: duplica el número (×2) y después divide entre 10." },
+    { "id": "men-5", "tipo": "mental", "expr": "50 − 18", "resultado": 32, "pista": "Pista: resta 20 y devuelve 2." },
+    { "id": "men-6", "tipo": "mental", "expr": "72 + 49", "resultado": 121, "pista": "Pista: suma 50 y después resta 1." },
+    { "id": "men-7", "tipo": "mental", "expr": "16 × 10", "resultado": 160, "trucoId": "tip-4", "pista": "Pista: desplaza todas las cifras una posición hacia la izquierda." },
+    { "id": "men-8", "tipo": "mental", "expr": "300 − 125", "resultado": 175, "pista": "Pista: resta 100, después 20 y por último 5." },
+
+    {
+      "id": "tip-1",
+      "tipo": "truco",
+      "titulo": "Sumar 19 (o 29, 39…)",
+      "gancho": "¿Sabes sumar 27 + 19 sin apenas pensar?",
+      "resumen": "Cuando sumes 19, suma 20 y después resta 1.",
+      "ejemplo": { "expr": "27 + 19", "pasos": ["27 + 20 = 47", "47 − 1 = 46"] },
+      "explicacion": "Sumar 20 es muy fácil porque solo añades una decena. Como te has pasado 1, después lo restas. El mismo truco sirve para 29 (suma 30 y resta 1) y para 39 (suma 40 y resta 1)."
+    },
+    {
+      "id": "tip-2",
+      "tipo": "truco",
+      "titulo": "Restar 9 (o 8, 7…)",
+      "gancho": "43 − 9 se puede resolver en un instante.",
+      "resumen": "Cuando restes 9, resta 10 y después suma 1.",
+      "ejemplo": { "expr": "43 − 9", "pasos": ["43 − 10 = 33", "33 + 1 = 34"] },
+      "explicacion": "Restar 10 es más fácil que restar 9. Como te has pasado 1, lo vuelves a sumar. Para restar 8, resta 10 y suma 2. Para restar 7, resta 10 y suma 3."
+    },
+    {
+      "id": "tip-3",
+      "tipo": "truco",
+      "titulo": "Multiplicar por 5",
+      "gancho": "24 × 5 se puede hacer sin acordarte de la tabla del 5.",
+      "resumen": "Multiplicar por 5 es igual que multiplicar por 10 y dividir entre 2.",
+      "ejemplo": { "expr": "24 × 5", "pasos": ["24 × 10 = 240", "240 ÷ 2 = 120"] },
+      "explicacion": "Primero multiplicas por 10 (se añade un cero) y luego lo partes en dos. También funciona al revés: primero la mitad y después por 10. Prueba con 60 × 5: 60 × 10 = 600 y 600 ÷ 2 = 300."
+    },
+    {
+      "id": "tip-4",
+      "tipo": "truco",
+      "titulo": "Multiplicar por 10",
+      "gancho": "Multiplicar por 10 es cuestión de mirar cómo se mueven las cifras.",
+      "resumen": "Al multiplicar por 10, cada cifra se mueve un lugar hacia la izquierda.",
+      "ejemplo": { "expr": "16 × 10", "pasos": ["16 × 10 = 160"] },
+      "explicacion": "Las unidades pasan a decenas, las decenas a centenas… y por eso parece que se añade un cero al final. Con 125 × 10 obtienes 1250."
+    }
+  ],
+  "secciones": [
+    {
+      "id": "operaciones",
+      "titulo": "Operaciones",
+      "icono": "🧮",
+      "descripcion": "Sumas, restas, multiplicaciones y divisiones",
+      "grupos": [
+        { "etiqueta": "Sumas", "ids": ["sum-1", "sum-2", "sum-3", "sum-4", "sum-5"] },
+        { "etiqueta": "Restas", "ids": ["res-1", "res-2", "res-3", "res-4", "res-5"] },
+        { "etiqueta": "Multiplicaciones", "ids": ["mul-1", "mul-2", "mul-3", "mul-4", "mul-5"] },
+        { "etiqueta": "Divisiones", "ids": ["div-1", "div-2", "div-3", "div-4"] }
+      ]
+    },
+    {
+      "id": "problemas",
+      "titulo": "Problemas matemáticos",
+      "icono": "📚",
+      "descripcion": "Problemas de 2 y de 3 pasos",
+      "grupos": [
+        { "etiqueta": "Problemas", "ids": ["prob-1", "prob-2", "prob-3", "prob-4"] }
+      ]
+    },
+    {
+      "id": "mental",
+      "titulo": "Cálculo mental",
+      "icono": "🧠",
+      "descripcion": "Resuelve rápido y descubre trucos por el camino",
+      "grupos": [
+        {
+          "etiqueta": "Ejercicios y trucos",
+          "ids": ["men-1", "tip-1", "men-2", "tip-2", "men-3", "men-4", "tip-3", "men-5", "men-6", "men-7", "tip-4", "men-8"]
+        }
+      ]
+    },
+    {
+      "id": "tips",
+      "titulo": "Trucos de cálculo mental",
+      "icono": "💡",
+      "descripcion": "Estrategias para calcular sin esfuerzo",
+      "grupos": [
+        { "etiqueta": "Estrategias", "ids": ["tip-1", "tip-2", "tip-3", "tip-4"] }
+      ]
+    }
+  ]
+}

@@ -15,10 +15,15 @@ const TYPE_LABELS = {
   division: "División",
   wordProblem: "Problema",
   mental: "Cálculo mental",
+  logica: "Lógica",
 };
 
 // Ejercicios en los que el foco arranca en la casilla de la derecha.
 const FOCUS_FROM_RIGHT = ["addition", "subtraction", "multiplication"];
+
+// Operaciones con su propio botón «Reiniciar» (borra ese ejercicio
+// para intentarlo de nuevo sin tocar el resto de la hoja).
+const RESETTABLE = ["addition", "subtraction", "multiplication", "division"];
 
 export default function ExerciseCard({
   exercise,
@@ -37,6 +42,7 @@ export default function ExerciseCard({
     reveal,
     nextStep,
     next,
+    resetItem,
   } = controller;
 
   const isStepDone = stepsDone.includes(step) || status === "correct";
@@ -150,6 +156,16 @@ export default function ExerciseCard({
             onClick={reveal}
           >
             Ver solución
+          </button>
+        )}
+        {RESETTABLE.includes(exercise.type) && (
+          <button
+            type="button"
+            className="btn btn-ghost"
+            onClick={resetItem}
+            title="Borra este ejercicio para volver a empezar"
+          >
+            Reiniciar
           </button>
         )}
       </div>
