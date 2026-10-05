@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useMemo } from "react";
 import ExerciseCard from "../common/ExerciseCard.jsx";
 import DigitGrid from "../common/DigitGrid.jsx";
 import DigitCell from "../common/DigitCell.jsx";
@@ -8,32 +8,25 @@ import { buildDivision, placeName } from "../../utils/calculations.js";
  * División larga al estilo del algoritmo de Primaria, con el dividendo a
  * la izquierda y el divisor a la derecha:
  *
- *      2 8 4 : 3        ← cabecera: las cifras del dividendo se tocan
- *                          para SELECCIONARLAS (quedan en azul)
- *        1 4   9 4      ← resto del paso 0 (en azul) y el cociente,
- *            2              que empieza desde el divisor; el producto
- *                          y el signo − no se pintan: el producto es
- *                          de cabeza
+ *      2 8 4 : 3        ← cabecera (datos: no se toca nada aquí)
+ *        1 4   9 4      ← resto del paso 0 en azul (lo escribe el
+ *            2              alumno) y, a la derecha, el cociente
  *
  * Reglas del flujo:
- *  - las cifras del dividendo NO se copian "hacia abajo": se tocan para
- *    seleccionarlas y quedan marcadas en azul en la propia cabecera; la
- *    PRIMERA selección (el primer trozo del dividendo) solo cambia de
- *    color, sin copia ninguna debajo;
- *  - en los pasos siguientes, la cifra seleccionada se añade en azul al
- *    renglón del resto, que es donde nace el parcial siguiente; si el
- *    número todavía no llega al divisor, la app pide tocar otra cifra;
- *  - el mismo azul recorre toda la cadena del resto, del resto parcial
- *    al resto final;
- *  - cada casilla se genera cuando le toca (no se pintan casillas
- *    vacías de pasos futuros);
- *  - cada paso (seleccionar cifras → cifra del cociente → resto) se
- *    comprueba de una en una; el producto (cifra del cociente ×
- *    divisor) no se escribe: se calcula de cabeza.
+ *  - SIN pasos intermedios: toda la operación (cociente, restos y
+ *    cifras bajadas) está visible desde el principio y se comprueba de
+ *    una sola vez, al final;
+ *  - las cifras del dividendo NO se tocan: las que se bajan se copian
+ *    del dividendo al renglón del resto y las escribe el alumno (en
+ *    azul); el primer trozo se lee directamente en la cabecera;
+ *  - el cursor sigue el algoritmo: al escribir una cifra del cociente
+ *    salta al resto parcial, que se escribe de IZQUIERDA a DERECHA (y
+ *    al final de esa fila, la cifra que se baja para el paso siguiente);
+ *  - el producto (cifra del cociente × divisor) no se escribe: se
+ *    calcula de cabeza, y tampoco se pinta el signo −.
  */
 export default function Division({ exercise, controller }) {
-  const { values, setCell, revealed, status, feedback, step, stepsDone } =
-    controller;
+  const { values, setCell, revealed, status, feedback } = controller;
 
   const model = useMemo(
     () => buildDivision(exercise.a, exercise.b),
@@ -41,160 +34,59 @@ export default function Division({ exercise, controller }) {
   );
 
   const locked = revealed || status === "correct";
-  const isStepDone = stepsDone.includes(step);
   const errorIds = feedback?.type === "error" ? (feedback.cellIds ?? []) : [];
   const cells = values.cells ?? {};
 
-  // Aviso de los toques en el dividendo; se limpia al escribir o al
-  // cambiar de paso.
-  const [pickError, setPickError] = useState(null);
-  useEffect(() => {
-    setPickError(null);
-  }, [step]);
-
-  const handleType = (cellId, value) => {
-    setPickError(null);
-    setCell(cellId, value);
-  };
-
-  // Cada columna del dividendo tiene su casilla de selección (bd-k-c):
-  // su valor marca la cifra como seleccionada (azul) en la cabecera.
-  const bdIdByCol = useMemo(() => {
-    const map = new Map();
-    for (const st of model.steps) {
-      for (const c of st.bringDownCells) map.set(c.col, c.id);
-    }
-    return map;
-  }, [model]);
-
-  const selectedCols = useMemo(() => {
-    const set = new Set();
-    for (const st of model.steps) {
-      for (const c of st.bringDownCells) if (cells[c.id]) set.add(c.col);
-    }
-    return set;
-  }, [model, cells]);
-
-  // Orden de escritura de cada paso: cifra del cociente y resto (de
-  // derecha a izquierda). El producto se calcula de cabeza y las cifras
-  // del dividendo no se teclean: se tocan para seleccionarlas.
+  // Orden de escritura GLOBAL: cifra del cociente → resto del paso (de
+  // IZQUIERDA a DERECHA) → cifra que se baja para el paso siguiente; así
+  // el cursor salta del cociente al resto parcial y avanza por sus
+  // casillas como en el algoritmo. El paso 0 no baja nada: su trozo
+  // está en la cabecera.
   const orderById = useMemo(() => {
     const map = new Map();
-    for (const st of model.steps) {
-      const sequence = [
-        st.quotientCell,
-        ...[...st.remainderCells].reverse(),
-      ];
-      sequence.forEach((cell, i) => map.set(cell.id, i));
+    let order = 0;
+    for (let k = 0; k < model.steps.length; k++) {
+      const st = model.steps[k];
+      map.set(st.quotientCell.id, order++);
+      for (const cell of st.remainderCells) map.set(cell.id, order++);
+      const next = model.steps[k + 1];
+      if (next) {
+        for (const cell of next.bringDownCells) map.set(cell.id, order++);
+      }
     }
     return map;
   }, [model]);
 
-  function cellMode(cellStep) {
+  // Sin pasos: todas las casillas se pueden tocar desde el principio.
+  function cellMode() {
     if (revealed) return "solution";
-    if (cellStep < step) return "locked";
-    if (cellStep > step) return "future";
-    return isStepDone || locked ? "locked" : "input";
-  }
-
-  const stepModel = model.steps[step];
-  const broughtCount = stepModel
-    ? stepModel.bringDownCells.filter((c) => cells[c.id]).length
-    : 0;
-  const nextBring =
-    stepModel && broughtCount < stepModel.bringDownCells.length
-      ? stepModel.bringDownCells[broughtCount]
-      : null;
-
-  /** Tocar una cifra del dividendo la selecciona (la marca en azul). */
-  function handlePick(col) {
-    if (locked || isStepDone || !nextBring) return;
-    if (selectedCols.has(col)) return; // ya seleccionada
-    if (col !== nextBring.col) {
-      setPickError(
-        `La siguiente es la cifra ${nextBring.value}: tócala en el dividendo.`
-      );
-      return;
-    }
-    setPickError(null);
-    setCell(nextBring.id, String(nextBring.value));
+    return locked ? "locked" : "input";
   }
 
   function renderCell(cell, row, label, tone) {
-    const mode = cellMode(cell.step);
-    // Sin casillas de pasos futuros: se generan cuando les toca.
-    if (mode === "future") return null;
     return (
       <DigitCell
         key={cell.id}
         cell={{ ...cell, order: orderById.get(cell.id) }}
         row={row}
-        mode={mode}
+        mode={cellMode()}
         entered={cells[cell.id]}
         label={label}
         error={errorIds.includes(cell.id)}
-        onType={handleType}
+        onType={setCell}
         tone={tone}
       />
     );
   }
-
-  /**
-   * Cifra seleccionada que se añade al renglón del resto (pasos ≥ 1):
-   * aparece con un toque en el dividendo (no se teclea). En el paso
-   * actual solo se pinta el hueco de la próxima cifra.
-   */
-  function renderBringCell(cell, row, idx, st, stBrought) {
-    const filled = cells[cell.id];
-    const isCurrent = st.step === step && !locked && !isStepDone;
-    if (isCurrent && !filled && idx > stBrought) return null;
-    const shown = filled || (isCurrent ? "" : String(cell.value));
-    const isError = errorIds.includes(cell.id);
-    return (
-      <span
-        key={cell.id}
-        className={`vcell ${shown ? "vcell--chain" : "vcell--box"} vcell--bring${
-          isError ? " vcell--error" : ""
-        }`}
-        style={{ gridColumn: cell.col + 1, gridRow: row }}
-        data-cell-id={cell.id}
-        tabIndex={-1}
-        title="Cifra del dividendo seleccionada"
-        aria-label={
-          shown
-            ? `Cifra ${shown} del dividendo seleccionada`
-            : "Celda de la cifra del dividendo pendiente de selección"
-        }
-      >
-        {shown || "\u00a0"}
-      </span>
-    );
-  }
-
-  // Aviso bajo la rejilla: guía el flujo del paso actual.
-  const hint =
-    locked || isStepDone || !stepModel
-      ? null
-      : pickError ??
-        (nextBring
-          ? broughtCount === 0
-            ? `Toca en el dividendo la cifra ${nextBring.value} para seleccionarla.`
-            : `${stepModel.bringDownCells
-                .slice(0, broughtCount)
-                .map((c) => c.value)
-                .join("")} todavía no llega a ${exercise.b}: toca la cifra ${nextBring.value}.`
-          : cells[stepModel.quotientCell.id]
-          ? null
-          : "Ahora escribe la cifra del cociente.");
 
   const solution = (
     <>
       <ul className="solution-steps">
         {model.steps.map((st) => (
           <li key={st.step}>
-            {`Seleccionas ${st.bringDownCells
+            {`Tomas ${st.bringDownCells
               .map((c) => c.value)
-              .join(" y ")} → ${st.partial}; `}
+              .join(" y ")} del dividendo → ${st.partial}; `}
             {st.qDigit} × {exercise.b} = {st.product}; {st.partial} −{" "}
             {st.product} = {st.rem}.
           </li>
@@ -213,32 +105,18 @@ export default function Division({ exercise, controller }) {
   return (
     <ExerciseCard exercise={exercise} controller={controller} solution={solution}>
       <DigitGrid cols={model.cols} onFillDigits={setCell}>
-        {/* Cabecera: dividendo : divisor (datos). Tocar una cifra del
-            dividendo la selecciona y la marca en azul; la primera
-            selección no se copia al trabajo. */}
-        {model.dividendCells.map((cell) => {
-          const isSelected =
-            revealed || Boolean(cells[bdIdByCol.get(cell.col)]);
-          return (
-            <button
-              key={`dd-${cell.col}`}
-              type="button"
-              className={`vcell vcell--given vcell--pick${
-                isSelected ? " vcell--selected" : ""
-              }`}
-              style={{ gridColumn: cell.col + 1, gridRow: 1 }}
-              onClick={() => handlePick(cell.col)}
-              disabled={locked || isStepDone}
-              aria-label={
-                isSelected
-                  ? `Cifra ${cell.value} del dividendo seleccionada`
-                  : `Tocar la cifra ${cell.value} del dividendo`
-              }
-            >
-              {cell.value}
-            </button>
-          );
-        })}
+        {/* Cabecera: dividendo : divisor (datos). Las cifras del
+            dividendo no se tocan: las que se bajan las escribe el
+            alumno en el renglón del resto. */}
+        {model.dividendCells.map((cell) => (
+          <span
+            key={`dd-${cell.col}`}
+            className="vcell vcell--given"
+            style={{ gridColumn: cell.col + 1, gridRow: 1 }}
+          >
+            {cell.value}
+          </span>
+        ))}
         <span
           className="vcell vcell--sign"
           style={{ gridColumn: model.colonCol + 1, gridRow: 1 }}
@@ -256,25 +134,26 @@ export default function Division({ exercise, controller }) {
           </span>
         ))}
 
-        {/* Pasos: el cociente va en la fila 2, desde el divisor hacia la
-            derecha; el resto de cada paso ocupa una fila (2 + paso) y
-            ahí nace el parcial del paso siguiente, que recibe la cifra
-            seleccionada. */}
+        {/* Todo el trabajo visible desde el principio: el cociente va en
+            la fila 2, desde el divisor hacia la derecha; el resto de cada
+            paso ocupa una fila (2 + paso) y, al final de esa fila, la
+            cifra que se baja para el paso siguiente. */}
         {model.steps.map((st) => {
-          // Nada de casillas de pasos futuros.
-          if (!revealed && st.step > step) return null;
           const bdRow = 1 + st.step; // = fila del resto del paso anterior
           const remRow = 2 + st.step;
-          const stBrought = st.bringDownCells.filter(
-            (c) => cells[c.id]
-          ).length;
           return (
             <Fragment key={st.step}>
-              {/* Cifras seleccionadas de este paso (en azul): el paso 0 no
-                  pinta nada, su selección vive en la cabecera. */}
+              {/* Cifras que se bajan del dividendo: las escribe el alumno
+                  (en azul); el paso 0 no baja nada, su trozo se lee en
+                  la cabecera. */}
               {st.step > 0 &&
-                st.bringDownCells.map((cell, idx) =>
-                  renderBringCell(cell, bdRow, idx, st, stBrought)
+                st.bringDownCells.map((cell) =>
+                  renderCell(
+                    cell,
+                    bdRow,
+                    "Cifra que se baja del dividendo",
+                    "chain"
+                  )
                 )}
               {renderCell(
                 st.quotientCell,
@@ -295,11 +174,6 @@ export default function Division({ exercise, controller }) {
           );
         })}
       </DigitGrid>
-      {hint && (
-        <p className="grid-hint" role="status">
-          {hint}
-        </p>
-      )}
     </ExerciseCard>
   );
 }

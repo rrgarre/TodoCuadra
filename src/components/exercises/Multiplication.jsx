@@ -14,22 +14,14 @@ import { buildMultiplication, placeName } from "../../utils/calculations.js";
  * Las llevadas NO se escriben en casillas: se calculan mentalmente (aunque
  * el feedback avisa cuando hay que sumar una).
  *
- * Se trabaja por PASOS: primero el primer producto parcial, después el
- * segundo y al final la suma. Con multiplicador de una cifra hay UNA sola
- * fila (el producto ya es el resultado) y UNA sola comprobación: no se
- * piden dos filas iguales. Cada paso se comprueba por separado y las
- * casillas se rellenan de derecha a izquierda.
+ * TODA la operación se rellena de una vez —cada fila parcial y, al final,
+ * la suma— **sin comprobaciones intermedias**: una sola pulsación de
+ * «Comprobar» al final. Las casillas se escriben de derecha a izquierda,
+ * fila a fila (de arriba abajo), y el foco arranca en la casilla de la
+ * derecha de la primera fila.
  */
 export default function Multiplication({ exercise, controller }) {
-  const {
-    values,
-    setCell,
-    revealed,
-    status,
-    feedback,
-    step,
-    stepsDone,
-  } = controller;
+  const { values, setCell, revealed, status, feedback } = controller;
 
   const model = useMemo(
     () => buildMultiplication(exercise.a, exercise.b),
@@ -37,32 +29,31 @@ export default function Multiplication({ exercise, controller }) {
   );
 
   const locked = revealed || status === "correct";
-  const isStepDone = stepsDone.includes(step);
   const errorIds =
     feedback?.type === "error" ? (feedback.cellIds ?? []) : [];
   const cells = values.cells ?? {};
 
-  // Orden de escritura dentro de cada paso: de derecha a izquierda
-  // (como se escribe en papel).
+  // Orden de escritura GLOBAL: de derecha a izquierda dentro de cada
+  // fila y de arriba abajo entre filas (como se escribe en papel).
   const orderById = useMemo(() => {
     const map = new Map();
+    let order = 0;
     for (const st of model.steps) {
       const sequence =
         st.kind === "total" ? [...st.cells].reverse() : [...st.partialCells].reverse();
-      sequence.forEach((cell, i) => map.set(cell.id, i));
+      for (const cell of sequence) map.set(cell.id, order++);
     }
     return map;
   }, [model]);
 
-  function cellMode(cellStep) {
+  // Sin pasos: todas las casillas se pueden tocar desde el principio.
+  function cellMode() {
     if (revealed) return "solution";
-    if (cellStep < step) return "locked";
-    if (cellStep > step) return "future";
-    return isStepDone || locked ? "locked" : "input";
+    return locked ? "locked" : "input";
   }
 
   function renderCell(cell, row, kind) {
-    const mode = cellMode(cell.step);
+    const mode = cellMode();
     const label =
       kind === "total"
         ? `Cifra de las ${placeName(cell.pos)} del resultado final`

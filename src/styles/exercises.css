@@ -145,10 +145,9 @@
   color: var(--color-text);
 }
 
-/* Azul compartido: las cifras del dividendo que se seleccionan tocándolas
-   y toda la cadena del resto (del resto parcial al resto final).
+/* Azul compartido: toda la cadena del resto (del resto parcial al resto
+   final) y las cifras del dividendo que se bajan solas.
    Va después de --given y antes de --error para que el error mande. */
-.vcell--selected,
 .vcell--chain {
   border-color: var(--color-primary);
   background: var(--color-primary-soft);
@@ -176,45 +175,8 @@
   color: var(--color-primary-dark);
 }
 
-.vcell--bring {
-  border-bottom: 2px dotted var(--color-primary);
-}
-
-/* El aviso de error manda también en el borde de la cifra bajada. */
-.vcell--bring.vcell--error {
-  border-bottom: 2px solid var(--color-danger);
-}
-
 .vcell--static {
   font-weight: 700;
-}
-
-/* Cifra del dividendo: se toca para seleccionarla (queda en azul). */
-.vcell--pick {
-  padding: 0;
-  font-family: inherit;
-  cursor: pointer;
-}
-
-/* Señal de "seleccionada" que no depende solo del color. */
-.vcell--pick.vcell--selected {
-  font-weight: 800;
-}
-
-.vcell--pick:hover:not(:disabled) {
-  border-color: var(--color-primary);
-}
-
-.vcell--pick:focus-visible {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: var(--focus-ring);
-}
-
-/* Aviso de flujo bajo la rejilla (divisiones). */
-.grid-hint {
-  color: var(--color-text-muted);
-  text-align: center;
 }
 
 /* Celdas de entrada (inputs de una sola cifra) */

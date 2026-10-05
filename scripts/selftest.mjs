@@ -43,7 +43,7 @@ function check(name, cond, extra = "") {
 /* ---------- Multiplicaciones ---------- */
 {
   const m = buildMultiplication(236, 24);
-  check("236×24: 3 pasos", m.steps.length === 3);
+  check("236×24: 3 filas (2 parciales + total)", m.steps.length === 3);
   check("236×24: total 5664", m.total === 5664);
   const s0 = m.steps[0];
   check("236×24: parcial 944", s0.prod === 944);
@@ -87,7 +87,7 @@ function check(name, cond, extra = "") {
   const ex = { id: "t-m1", type: "multiplication", a: 236, b: 4 };
   const m = buildMultiplication(236, 4);
   check(
-    "236×4: 1 solo paso (sin fila de total duplicada)",
+    "236×4: 1 sola fila (sin fila de total duplicada)",
     m.steps.length === 1 && m.steps[0].kind === "partial",
     JSON.stringify(m.steps.map((s) => s.kind))
   );
@@ -270,105 +270,141 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   check("resta correcta", good.ok, JSON.stringify(good));
 }
 
-/* ---------- Validación paso a paso ---------- */
+/* ---------- Validación de las operaciones (una sola comprobación) ---------- */
 {
   const ex = { id: "t", type: "multiplication", a: 236, b: 24 };
-  check("multiplicación: 3 pasos", getStepsCount(ex) === 3);
+  check("multiplicación: sin pasos (una sola comprobación)", getStepsCount(ex) === 1);
 
-  const noCarries = validateStep(ex, {
+  const todas = {
+    "partial-0-2": "9", "partial-0-1": "4", "partial-0-0": "4",
+    "partial-1-3": "4", "partial-1-2": "7", "partial-1-1": "2",
+    "total-3": "5", "total-2": "6", "total-1": "6", "total-0": "4",
+  };
+
+  const good = validateStep(ex, {
     step: 0,
-    values: { cells: { "partial-0-2": "9", "partial-0-1": "4", "partial-0-0": "4" } },
+    values: { cells: todas },
     attempts: 0,
   });
-  check("paso 1 sin casillas de llevada → correcto (no se piden)", noCarries.ok, JSON.stringify(noCarries));
+  check(
+    "multiplicación completa correcta (todo de una vez, sin llevadas escritas)",
+    good.ok,
+    JSON.stringify(good)
+  );
 
   const badPartial = validateStep(ex, {
     step: 0,
-    values: { cells: { "partial-0-2": "9", "partial-0-1": "5", "partial-0-0": "4" } },
+    values: { cells: { ...todas, "partial-0-1": "5" } },
     attempts: 0,
   });
-  check("paso 1 con cifra parcial incorrecta → mensaje con 3×4", !badPartial.ok && badPartial.message.includes("3 × 4"), badPartial.message);
+  check("cifra parcial incorrecta → mensaje con 3×4", !badPartial.ok && badPartial.message.includes("3 × 4"), badPartial.message);
 
-  const step0 = validateStep(ex, {
+  const badRow1 = validateStep(ex, {
     step: 0,
-    values: { cells: { "partial-0-2": "9", "partial-0-1": "4", "partial-0-0": "4" } },
+    values: { cells: { ...todas, "partial-1-2": "8" } },
     attempts: 0,
   });
-  check("paso 1 correcto", step0.ok, JSON.stringify(step0));
+  check("segunda fila parcial incorrecta → mensaje con 3×2", !badRow1.ok && badRow1.message.includes("3 × 2"), badRow1.message);
+
+  const badTotal = validateStep(ex, {
+    step: 0,
+    values: { cells: { ...todas, "total-2": "7" } },
+    attempts: 0,
+  });
+  check("total incorrecto → recuerda sumar las dos filas", !badTotal.ok && badTotal.message.includes("suma las dos filas"), badTotal.message);
 
   const empty = validateStep(ex, { step: 0, values: { cells: {} }, attempts: 0 });
   check("casillas vacías → aviso de rellenar", !empty.ok && empty.message.includes("Rellena"), empty.message);
 
-  const step1 = validateStep(ex, {
-    step: 1,
-    values: { cells: { "partial-1-3": "4", "partial-1-2": "7", "partial-1-1": "2" } },
+  const half = validateStep(ex, {
+    step: 0,
+    values: { cells: { "partial-0-2": "9", "partial-0-1": "4", "partial-0-0": "4" } },
     attempts: 0,
   });
-  check("paso 2 (472 desplazado) correcto", step1.ok, JSON.stringify(step1));
-
-  const total = validateStep(ex, {
-    step: 2,
-    values: { cells: { "total-3": "5", "total-2": "6", "total-1": "6", "total-0": "4" } },
-    attempts: 0,
-  });
-  check("paso 3 (total 5664) correcto", total.ok, JSON.stringify(total));
+  check("solo la primera fila → pide rellenar el resto", !half.ok && half.message.includes("Rellena"), half.message);
 }
 {
   const ex = { id: "d", type: "division", a: 384, b: 3 };
-  check("división: 3 pasos", getStepsCount(ex) === 3);
+  check("división: sin pasos (una sola comprobación)", getStepsCount(ex) === 1);
 
-  const noBd = validateStep(ex, {
+  // Todo lo escribe el alumno: cociente, restos y cifras bajadas.
+  const todas = {
+    "q-0": "1", "r-0-1": "0", "bd-1-2": "8",
+    "q-1": "2", "r-1-2": "2", "bd-2-3": "4",
+    "q-2": "8", "r-2-3": "0",
+  };
+
+  const good = validateStep(ex, {
+    step: 0,
+    values: { cells: todas },
+    attempts: 0,
+  });
+  check(
+    "división completa correcta (el alumno escribe hasta las cifras bajadas)",
+    good.ok,
+    JSON.stringify(good)
+  );
+
+  const strayBd = validateStep(ex, {
+    step: 0,
+    values: { cells: { ...todas, "bd-0-1": "9" } },
+    attempts: 0,
+  });
+  check(
+    "el primer trozo no se escribe: bd-0 ignorado (se lee en la cabecera)",
+    strayBd.ok,
+    JSON.stringify(strayBd)
+  );
+
+  const empty = validateStep(ex, { step: 0, values: { cells: {} }, attempts: 0 });
+  check("división vacía → aviso de rellenar", !empty.ok && empty.message.includes("Rellena"), empty.message);
+
+  const onlyFirst = validateStep(ex, {
     step: 0,
     values: { cells: { "q-0": "1", "r-0-1": "0" } },
     attempts: 0,
   });
-  check(
-    "sin seleccionar la cifra → pide tocar el dividendo",
-    !noBd.ok && noBd.message.includes("para seleccionarla"),
-    noBd.message
-  );
+  check("solo el primer paso → pide el resto de la operación", !onlyFirst.ok && onlyFirst.message.includes("Rellena"), onlyFirst.message);
 
-  const wrongBd = validateStep(ex, {
-    step: 0,
-    values: { cells: { "bd-0-1": "5", "q-0": "1", "r-0-1": "0" } },
-    attempts: 0,
-  });
-  check(
-    "cifra seleccionada equivocada → la que toca",
-    !wrongBd.ok && wrongBd.message.includes("la cifra 3"),
-    wrongBd.message
-  );
-
-  const good0 = validateStep(ex, {
-    step: 0,
-    values: { cells: { "bd-0-1": "3", "q-0": "1", "r-0-1": "0" } },
-    attempts: 0,
-  });
-  check("división paso 1 correcto", good0.ok, JSON.stringify(good0));
-
-  const badRem = validateStep(ex, {
-    step: 0,
-    values: { cells: { "bd-0-1": "3", "q-0": "1", "r-0-1": "1" } },
-    attempts: 0,
-  });
-  check(
-    "resto mal → recuerda el producto de cabeza (1 × 3)",
-    !badRem.ok && badRem.message.includes("1 × 3"),
-    badRem.message
-  );
   const badQ = validateStep(ex, {
     step: 0,
-    values: { cells: { "bd-0-1": "3", "q-0": "2", "r-0-1": "0" } },
+    values: { cells: { ...todas, "q-0": "2" } },
     attempts: 0,
   });
   check("cociente mal → pregunta cuántas veces cabe", !badQ.ok && badQ.message.includes("cuántas veces cabe 3 en 3"), badQ.message);
 
-  const good1 = validateStep(ex, {
-    step: 1,
-    values: { cells: { "bd-1-2": "8", "q-1": "2", "r-1-2": "2" } },
+  const badRem = validateStep(ex, {
+    step: 0,
+    values: { cells: { ...todas, "r-0-1": "1" } },
     attempts: 0,
   });
-  check("división paso 2 correcto (selecciona el 8)", good1.ok, JSON.stringify(good1));
+  check("resto mal → recuerda el producto de cabeza (1 × 3)", !badRem.ok && badRem.message.includes("1 × 3"), badRem.message);
+
+  const badBring = validateStep(ex, {
+    step: 0,
+    values: { cells: { ...todas, "bd-1-2": "9" } },
+    attempts: 0,
+  });
+  check(
+    "cifra bajada mal → la que toca del dividendo",
+    !badBring.ok && badBring.message.includes("bajar la cifra 8"),
+    badBring.message
+  );
+
+  // Orden del cursor: tras el resto se pide la cifra bajada ANTES de
+  // seguir con la cifra del cociente del paso siguiente.
+  const afterRem = validateStep(ex, {
+    step: 0,
+    values: { cells: { ...todas, "bd-1-2": "", "q-1": "9" } },
+    attempts: 0,
+  });
+  check(
+    "tras el resto → cifra bajada pendiente antes que el cociente siguiente",
+    !afterRem.ok &&
+      afterRem.message.includes("Rellena") &&
+      !afterRem.message.includes("Piensa"),
+    afterRem.message
+  );
 }
 {
   const ex = {

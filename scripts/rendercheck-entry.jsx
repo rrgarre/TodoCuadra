@@ -165,16 +165,19 @@ function render(state, opts = {}) {
 
   const at = findItem("mul-3");
   const htmlMul = render({ screen: "section", sectionIndex: at.s, itemIndex: at.i, progress: {} });
-  check("mul-3: tipo y paso", htmlMul.includes("Multiplicación") && htmlMul.includes("Paso 1 de 3"));
+  check(
+    "mul-3: tipo y sin pasos (una sola comprobación)",
+    htmlMul.includes("Multiplicación") && !/Paso \d+ de \d+/.test(htmlMul)
+  );
   check("mul-3: muestra el multiplicando y el multiplicador", />2</.test(htmlMul) && />6</.test(htmlMul) && />4</.test(htmlMul));
   check(
-    "mul-3: 3 casillas editables en el paso 1 (sin llevadas)",
-    (htmlMul.match(/data-cell-id/g) || []).length === 3,
+    "mul-3: las 10 casillas editables desde el principio (2 filas parciales + total)",
+    (htmlMul.match(/data-cell-id/g) || []).length === 10,
     `fueron ${(htmlMul.match(/data-cell-id/g) || []).length}`
   );
   check(
-    "mul-3: filas futuras visibles como marcadores",
-    (htmlMul.match(/vcell--future/g) || []).length > 0
+    "mul-3: sin filas futuras (todo visible, sin comprobaciones intermedias)",
+    !htmlMul.includes("vcell--future")
   );
   check("mul-3: sin casillas de llevadas", !htmlMul.includes("Llevada"));
   check(
@@ -205,7 +208,7 @@ function render(state, opts = {}) {
       !htmlDiv.includes(">)</span>") &&
       htmlDiv.includes(">:</span>")
   );
-  const iDivid = htmlDiv.indexOf('aria-label="Tocar la cifra');
+  const iDivid = htmlDiv.indexOf("vcell--given");
   const iColon = htmlDiv.indexOf(">:</span>");
   const iDivis = htmlDiv.indexOf("vcell--given", iColon);
   check(
@@ -214,12 +217,12 @@ function render(state, opts = {}) {
     `dividendo=${iDivid}, dosPuntos=${iColon}, divisor=${iDivis}`
   );
   check(
-    "div-4: las cifras del dividendo se seleccionan tocándolas",
-    htmlDiv.includes('aria-label="Tocar la cifra 9 del dividendo"')
+    "div-4: las cifras del dividendo son datos (no se tocan para bajarlas)",
+    !htmlDiv.includes("Tocar la cifra") && !htmlDiv.includes("vcell--pick")
   );
   check(
-    "div-4: aviso para seleccionar la primera cifra",
-    htmlDiv.includes("para seleccionarla")
+    "div-4: sin avisos de selección (las cifras bajan solas)",
+    !htmlDiv.includes("para seleccionarla") && !htmlDiv.includes("grid-hint")
   );
   check("div-4: cociente con casillas", htmlDiv.includes("Cifra 1 del cociente"));
   check(
@@ -228,7 +231,7 @@ function render(state, opts = {}) {
     htmlDiv.slice(htmlDiv.indexOf('data-cell-id="q-0"') - 120, htmlDiv.indexOf('data-cell-id="q-0"'))
   );
   check(
-    "div-4: la primera selección no se copia al trabajo (sin celdas bd-0)",
+    "div-4: el primer trozo se lee en la cabecera (sin celdas bd-0)",
     !htmlDiv.includes('data-cell-id="bd-0-')
   );
   check(
@@ -244,8 +247,18 @@ function render(state, opts = {}) {
     htmlDiv.includes("digit--chain")
   );
   check(
-    "div-4: sin casillas de pasos futuros",
-    !htmlDiv.includes("vcell--future") && !htmlDiv.includes('data-cell-id="q-1"')
+    "div-4: todo el trabajo visible desde el inicio (sin pasos): 2 cifras de cociente y el 2.º resto",
+    htmlDiv.includes('data-cell-id="q-1"') &&
+      htmlDiv.includes('data-cell-id="r-1-') &&
+      !htmlDiv.includes("vcell--future"),
+    htmlDiv.slice(0, 400)
+  );
+  check(
+    "div-4: las cifras bajadas son casillas que escribe el alumno (5 casillas en total)",
+    htmlDiv.includes('data-cell-id="bd-1-') &&
+      htmlDiv.includes('aria-label="Cifra que se baja del dividendo"') &&
+      (htmlDiv.match(/data-cell-id/g) || []).length === 5,
+    `fueron ${(htmlDiv.match(/data-cell-id/g) || []).length}`
   );
 
   const atProb = findItem("prob-3");
@@ -605,21 +618,28 @@ function render(state, opts = {}) {
   nav = reducer(nav, { type: "NEXT", itemsCount: counts[3], sectionsCount: 4 });
   check("NEXT al final de todo → resumen", nav.screen === "summary");
 
-  // Multiplicación: paso a paso.
+  // Multiplicación: una sola comprobación al final (sin pasos).
   let mp = reducer(base, { type: "SET_CELL", exercise: mult, cellId: "x", value: "1" });
   const multEntry = {
     values: {
       cells: {
         "partial-0-2": "9", "partial-0-1": "4", "partial-0-0": "4",
+        "partial-1-3": "4", "partial-1-2": "7", "partial-1-1": "2",
+        "total-3": "5", "total-2": "6", "total-1": "6", "total-0": "4",
       },
     },
     status: "pending", step: 0, stepsDone: [], feedback: null, revealed: false, attempts: 0,
   };
   mp = { ...mp, progress: { "mul-3": multEntry } };
   mp = reducer(mp, { type: "CHECK", exercise: mult });
-  check("multiplicación: paso 1 correcto → paso pendiente de avanzar", mp.progress["mul-3"].stepsDone.includes(0) && mp.progress["mul-3"].status === "pending" && mp.progress["mul-3"].feedback.type === "ok");
+  check(
+    "multiplicación: una sola comprobación completa → correcto",
+    mp.progress["mul-3"].status === "correct" &&
+      mp.progress["mul-3"].feedback.type === "ok",
+    JSON.stringify(mp.progress["mul-3"].feedback)
+  );
   mp = reducer(mp, { type: "NEXT_STEP", exercise: mult });
-  check("NEXT_STEP pasa al paso 2", mp.progress["mul-3"].step === 1 && mp.progress["mul-3"].feedback === null);
+  check("NEXT_STEP sigue disponible (lo usan los problemas guiados)", mp.progress["mul-3"].step === 1 && mp.progress["mul-3"].feedback === null);
 
   // REVEAL marca como visto.
   const revealed = reducer({ ...base, progress: { "sum-1": { ...multEntry, values: { cells: {} } } } }, { type: "REVEAL", exercise: sum });

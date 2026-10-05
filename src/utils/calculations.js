@@ -324,13 +324,15 @@ function cellsForValue(value, endCol, idPrefix, step) {
 }
 
 /**
- * Construye la división paso a paso al estilo del algoritmo de Primaria.
+ * Construye la división al estilo del algoritmo de Primaria. Cada paso
+ * del modelo es una fila del trabajo; en la app todo el trabajo se
+ * rellena de una vez y se comprueba solo al final (sin pasos
+ * intermedios).
  *
  * La cabecera es el propio enunciado, con el dividendo a la IZQUIERDA y
  * el divisor a la DERECHA, separados por los dos puntos:
  *
- *   2 8 4 : 3                     ← cabecera; las cifras seleccionadas
- *                                     (tocadas) quedan en azul
+ *   2 8 4 : 3                     ← cabecera (datos: no se toca nada)
  *     1 4   9 4                   ← fila 2: resto del paso 0 (en azul)
  *         2                          y, a la derecha, el cociente
  *
@@ -340,8 +342,8 @@ function cellsForValue(value, endCol, idPrefix, step) {
  *
  * Columnas de la rejilla (dividendo a la izquierda):
  *   0                  : margen (la primera columna queda libre)
- *   1 .. largoDiv      : dividendo (datos; sus cifras se tocan para
- *                        seleccionarlas)
+ *   1 .. largoDiv      : dividendo (datos: no se tocan; las cifras que
+ *                        se bajan las escribe el alumno en el trabajo)
  *   largoDiv + 1       : hueco
  *   largoDiv + 2       : ":"
  *   largoDiv + 3       : hueco

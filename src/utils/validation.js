@@ -1,8 +1,10 @@
 /**
  * Validación de ejercicios.
  *
- * Cada ejercicio se comprueba **paso a paso** y los mensajes indican dónde
- * está el error sin revelar la solución (para eso está "Ver solución").
+ * Las operaciones verticales (suma, resta, multiplicación y división) se
+ * comprueban **de una sola vez, al final**; los problemas siguen paso a
+ * paso. Los mensajes indican dónde está el error sin revelar la solución
+ * (para eso está "Ver solución").
  */
 
 import {
@@ -20,11 +22,10 @@ import {
 export function getStepsCount(exercise) {
   switch (exercise.type) {
     case "multiplication":
-      // El número real de pasos: con multiplicador de una cifra es 1
-      // (la fila del producto ya es el resultado).
-      return buildMultiplication(exercise.a, exercise.b).steps.length;
     case "division":
-      return buildDivision(exercise.a, exercise.b).steps.length;
+      // Sin pasos intermedios: toda la operación se rellena de una vez
+      // y se comprueba solo al final.
+      return 1;
     case "wordProblem":
       return exercise.plan.length;
     default:
@@ -262,43 +263,49 @@ function validatePlanStep(exercise, entry) {
 
 function validateMultiplicationStep(exercise, entry) {
   const model = buildMultiplication(exercise.a, exercise.b);
-  const stepIndex = entry.step;
   const cells = entry.values.cells ?? {};
-  const step = model.steps[stepIndex];
-  const partial = step.kind === "total" ? step.cells : step.partialCells;
-  // Las llevadas no se escriben en casillas: se tienen en cuenta solo
-  // para avisar cuando la cifra depende de ellas.
-  const carries = step.kind === "total" ? [] : step.carryCells;
 
-  const empty = partial.find((c) => String(cells[c.id] ?? "").trim() === "");
-  if (empty && !(partial.length === 1 && partial[0].value === 0 && empty === partial[0])) {
-    return fail(
-      "Rellena todas las casillas de este paso antes de comprobar.",
-      [empty.id]
-    );
-  }
+  // Toda la operación de una sola vez, fila a fila (de arriba abajo) y,
+  // dentro de cada fila, de derecha a izquierda (como se escribe en
+  // papel): primero las casillas sin rellenar de la fila y después sus
+  // cifras.
+  for (const step of model.steps) {
+    const isTotal = step.kind === "total";
+    const row = isTotal ? step.cells : step.partialCells;
+    // Las llevadas no se escriben en casillas: se tienen en cuenta solo
+    // para avisar cuando la cifra depende de ellas.
+    const carries = isTotal ? [] : step.carryCells;
+    const ordered = [...row].reverse(); // escritura: derecha → izquierda
 
-  // Cifras del resultado (escritura: de derecha a izquierda).
-  for (let i = partial.length - 1; i >= 0; i--) {
-    const cell = partial[i];
-    const entered = String(cells[cell.id] ?? "").trim();
-    if (entered === "") continue; // caso especial de "0" ya permitido arriba
-    if (Number(entered) !== cell.value) {
-      if (step.kind === "total") {
+    const empty = ordered.find((c) => String(cells[c.id] ?? "").trim() === "");
+    // Casilla de un "0" de fila: se permite dejarla vacía.
+    const zeroRow = row.length === 1 && row[0].value === 0;
+    if (empty && !(zeroRow && empty === row[0])) {
+      return fail("Rellena todas las casillas de la operación antes de comprobar.", [
+        empty.id,
+      ]);
+    }
+
+    for (const cell of ordered) {
+      const entered = String(cells[cell.id] ?? "").trim();
+      if (entered === "") continue; // caso especial de "0" ya permitido arriba
+      if (Number(entered) !== cell.value) {
+        if (isTotal) {
+          return fail(
+            "Revisa esta cifra: suma las dos filas anteriores y cuenta bien las llevadas.",
+            [cell.id]
+          );
+        }
+        const aDigits = String(exercise.a).split("").reverse().map(Number);
+        const aDigit = aDigits[cell.pos - step.step] ?? 0;
+        // La llevada que alimenta esta cifra es la que va justo encima.
+        const carryIn = carries.find((c) => c.pos === cell.pos)?.value ?? 0;
+        const carryNote = carryIn > 0 ? " Y recuerda sumar la llevada." : "";
         return fail(
-          "Revisa esta cifra: suma las dos filas anteriores y cuenta bien las llevadas.",
+          `Revisa esta cifra: ¿cuánto es ${aDigit} × ${step.digit}?${carryNote}`,
           [cell.id]
         );
       }
-      const aDigits = String(exercise.a).split("").reverse().map(Number);
-      const aDigit = aDigits[cell.pos - step.step] ?? 0;
-      // La llevada que alimenta esta cifra es la que va justo encima.
-      const carryIn = carries.find((c) => c.pos === cell.pos)?.value ?? 0;
-      const carryNote = carryIn > 0 ? " Y recuerda sumar la llevada." : "";
-      return fail(
-        `Revisa esta cifra: ¿cuánto es ${aDigit} × ${step.digit}?${carryNote}`,
-        [cell.id]
-      );
     }
   }
 
@@ -309,53 +316,55 @@ function validateMultiplicationStep(exercise, entry) {
 
 function validateDivisionStep(exercise, entry) {
   const model = buildDivision(exercise.a, exercise.b);
-  const k = entry.step;
-  const step = model.steps[k];
   const cells = entry.values.cells ?? {};
 
-  // 1) Las cifras seleccionadas del dividendo: se tocan de izquierda a
-  //    derecha, antes de escribir nada.
-  for (const bd of step.bringDownCells) {
-    const entered = String(cells[bd.id] ?? "").trim();
+  // Toda la división de una sola vez, en el orden en que se escribe:
+  // cifra del cociente → resto del paso (de izquierda a derecha) →
+  // cifra que se baja para el paso siguiente. Las cifras que se bajan
+  // las escribe el alumno: se comprueban como cualquier otra casilla.
+  const ordered = [];
+  for (let k = 0; k < model.steps.length; k++) {
+    const st = model.steps[k];
+    ordered.push({ cell: st.quotientCell, kind: "quotient", st });
+    for (const cell of st.remainderCells) {
+      ordered.push({ cell, kind: "remainder", st });
+    }
+    const next = model.steps[k + 1];
+    if (next) {
+      for (const cell of next.bringDownCells) {
+        ordered.push({ cell, kind: "bring", st: next });
+      }
+    }
+  }
+
+  for (const item of ordered) {
+    const entered = String(cells[item.cell.id] ?? "").trim();
     if (entered === "") {
-      return fail(`Toca en el dividendo la cifra ${bd.value} para seleccionarla.`, [
-        bd.id,
+      return fail("Rellena todas las casillas de la operación antes de comprobar.", [
+        item.cell.id,
       ]);
     }
-    if (Number(entered) !== bd.value) {
-      return fail(`Tenías que seleccionar la cifra ${bd.value}.`, [bd.id]);
-    }
-  }
+    if (Number(entered) === item.cell.value) continue;
 
-  const ordered = [
-    step.quotientCell,
-    ...step.remainderCells.slice().reverse(),
-  ];
-  const empty = ordered.find((c) => String(cells[c.id] ?? "").trim() === "");
-  if (empty) {
-    return fail("Rellena todas las casillas de este paso antes de comprobar.", [
-      empty.id,
-    ]);
-  }
-
-  const qEntered = String(cells[step.quotientCell.id]).trim();
-  if (Number(qEntered) !== step.qDigit) {
-    return fail(
-      `Piensa: ¿cuántas veces cabe ${exercise.b} en ${step.partial}?`,
-      [step.quotientCell.id]
-    );
-  }
-
-  // El producto (cifra del cociente × divisor) no se escribe: si el
-  // resto no cuadra, se recuerda la multiplicación "de cabeza" sin
-  // revelar el resultado de la resta.
-  for (const cell of step.remainderCells.slice().reverse()) {
-    if (Number(String(cells[cell.id]).trim()) !== cell.value) {
+    if (item.kind === "quotient") {
       return fail(
-        `Piensa: ${step.qDigit} × ${exercise.b} = ${step.product}. ¿Cuánto es ${step.partial} − ${step.product}?`,
-        [cell.id]
+        `Piensa: ¿cuántas veces cabe ${exercise.b} en ${item.st.partial}?`,
+        [item.cell.id]
       );
     }
+    if (item.kind === "bring") {
+      return fail(
+        `Tenías que bajar la cifra ${item.cell.value} del dividendo.`,
+        [item.cell.id]
+      );
+    }
+    // El producto (cifra del cociente × divisor) no se escribe: si el
+    // resto no cuadra, se recuerda la multiplicación "de cabeza" sin
+    // revelar el resultado de la resta.
+    return fail(
+      `Piensa: ${item.st.qDigit} × ${exercise.b} = ${item.st.product}. ¿Cuánto es ${item.st.partial} − ${item.st.product}?`,
+      [item.cell.id]
+    );
   }
 
   return ok();

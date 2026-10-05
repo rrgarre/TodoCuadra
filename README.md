@@ -80,43 +80,43 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
 - **Cálculo en columna como en el papel**: cada operación se rellena con **una casilla por
   cifra** alineadas con CSS Grid —el resultado de sumas y restas en la fila inferior, los
   productos parciales y el total en las multiplicaciones, cociente y resto en las
-  divisiones—. La escritura es **de derecha a izquierda** y, en sumas, restas y
-  multiplicaciones, **el cursor arranca siempre en la casilla de la derecha de la fila que
+  divisiones—. La escritura es **de derecha a izquierda** (en las divisiones, el resto
+  parcial se escribe de izquierda a derecha) y, en sumas, restas y multiplicaciones,
+  **el cursor arranca siempre en la casilla de la derecha de la fila que
   toca resolver** (las unidades); las casillas usan `inputmode="numeric"` para el teclado
   numérico móvil.
-- **Multiplicaciones por pasos** (esto es lo central de la hoja):
-  - Paso 1: la primera fila parcial.
-  - Paso 2: la fila parcial siguiente, **desplazada una columna a la izquierda**.
-  - Paso 3: la suma final.
-  - Con multiplicador de una cifra: **una sola fila de resultado y una sola comprobación**
-    (el producto ya es el resultado: no se piden dos filas iguales).
+- **Multiplicaciones sin comprobaciones intermedias** (esto es lo central de la hoja):
+  - Se rellena **toda la operación de una vez**, de arriba abajo: la primera fila
+    parcial, la fila parcial siguiente, **desplazada una columna a la izquierda**, y,
+    al final, la suma total; después una sola pulsación de **Comprobar**.
+  - Con multiplicador de una cifra: **una sola fila de resultado** (el producto ya es
+    el resultado: no se piden dos filas iguales).
   - **Sin casillas de llevadas**: las llevadas se calculan mentalmente; el aviso
     *«Y recuerda sumar la llevada»* sigue apareciendo cuando la cifra depende de ella.
-  - Las casillas de los pasos futuros se muestran como marcadores sin rellenar, para no
-    adelantar respuestas; las filas ya validadas quedan bloqueadas mostrando las cifras
-    escritas (los estados se comunican con icono + texto, nunca solo con color).
+  - Si algo falla, se señala la casilla con la cifra mal y su mensaje; al completar bien
+    la operación, las filas quedan bloqueadas mostrando las cifras escritas (los
+    estados se comunican con icono + texto, nunca solo con color).
 - **Divisiones con el algoritmo de la escuela**, con la cabecera del propio enunciado
   (**dividendo a la izquierda y divisor a la derecha**: `284 : 3`) y el trabajo justo
   debajo:
-  - Las cifras del dividendo **se tocan para seleccionarlas** y quedan marcadas en **azul**
-    en la propia cabecera; **la primera selección no se copia abajo**, solo cambia de color.
-    A partir del segundo paso, la cifra seleccionada se añade en azul al renglón del resto,
-    que es donde nace el parcial siguiente; si el número todavía no llega al divisor, la
-    app avisa (*«todavía no llega…: toca la cifra X»*) y se puede seguir seleccionando.
+  - **Sin tocar el dividendo**: las cifras que se bajan **las escribe el alumno** en el
+    renglón del resto (en azul), copiándolas del dividendo; el primer trozo se lee
+    directamente en la cabecera.
+  - **El cursor sigue el algoritmo**: al escribir una cifra del cociente salta al resto
+    parcial, que se escribe **de izquierda a derecha** (y al final de esa fila, la cifra
+    que se baja para el paso siguiente).
   - El **cociente va debajo del divisor**: su primera cifra queda justo bajo él y sigue
     hacia la derecha (la rejilla se ensancha si hace falta); comparte la primera fila de
     trabajo con el resto del primer paso.
-  - El **mismo azul recorre la cadena del resto**, del resto parcial al resto final,
-    junto con las cifras seleccionadas del dividendo.
-  - Después, cada paso se rellena en orden —**cifra del cociente** (de izquierda a derecha
-    a lo largo de la división) y **resto**— y se comprueba de una en una. Cada paso es
-    **una sola fila de resto**; **el producto (cifra del cociente × divisor) no se escribe:
-    se calcula de cabeza**, y tampoco se pinta el signo `−`. Las casillas **se generan
-    cuando les toca**: no se pintan casillas vacías de pasos futuros.
-  - Los mensajes apuntan al paso concreto, con lenguaje para niñas y niños:
+  - El **mismo azul recorre la cadena del resto**, del resto parcial al resto final.
+  - **Sin pasos intermedios**: todo el trabajo (cociente y restos) está visible desde el
+    principio y se comprueba **de una sola vez, al final**. Cada paso es **una sola fila
+    de resto**; **el producto (cifra del cociente × divisor) no se escribe: se calcula de
+    cabeza**, y tampoco se pinta el signo `−`.
+  - Los mensajes señalan la casilla con lenguaje para niñas y niños:
     *«Piensa: 3 × 9 = 27. ¿Cuánto es 30 − 27?»*, *«Piensa: ¿cuántas veces cabe 18 en 91?»*…
-- **Corrección explicativa**: *Comprobar* señala la casilla y el paso con la cifra correcta y
-  por qué; distingue entre **procedimiento correcto con fallo de cálculo** y error de paso.
+- **Corrección explicativa**: *Comprobar* señala la casilla con la cifra correcta y el por
+  qué; distingue entre **procedimiento correcto con fallo de cálculo** y error de paso.
   *Ver solución* aparece solo bajo demanda y marca el ejercicio como *a revisar*.
 - **Cálculo mental**: si se falla dos veces, aparece la pista del truco correspondiente.
 - **Resumen final**: totales, aciertos, ejercicios a revisar y porcentaje.
@@ -163,7 +163,7 @@ src/
   state/SheetContext.jsx  # reducer de la app + persistencia en localStorage
   utils/
     calculations.js       # construye la retícula de cada operación y sus pasos
-    validation.js         # comprobación paso a paso y mensajes en español
+    validation.js         # comprobación de las operaciones al final y mensajes en español
     storage.js            # lectura/escritura versionada de localStorage (+ hoja activa)
   components/
     layout/               # HomeScreen, SectionScreen, SummaryScreen, TrivialScreen, TopBar
@@ -355,8 +355,8 @@ Reglas del juego:
 | Sumas, restas, multiplicaciones y divisiones se corrigen correctamente | ✅ `npm test` (lógica + render de los 19 items) |
 | Cifras alineadas por columna (CSS Grid, sin posicionamiento absoluto) | ✅ retícula verificada por tests de columnas |
 | Entrada de cifras de derecha a izquierda con salto de foco | ✅ implementado en `DigitCell`, también en el resultado de sumas y restas (verificación manual en el navegador recomendada) |
-| Multiplicaciones de dos cifras con fila parcial desplazada (sin casillas de llevadas) | ✅ `236×24`, `148×35`, `267×48` comprobadas (parciales y columnas) |
-| Divisiones con pasos intermedios (selección de cifras tocando el dividendo, cociente y resto — producto de cabeza) | ✅ las 4 divisiones, con cabecera `dividendo : divisor`, selección de cifras y restos verificados |
+| Multiplicaciones de dos cifras con fila parcial desplazada (sin casillas de llevadas), **sin comprobaciones intermedias**: todo se rellena y se corrige de una vez | ✅ `236×24`, `148×35`, `267×48` comprobadas (parciales y columnas) + validación única con las 10 casillas |
+| Divisiones **sin pasos intermedios**: el alumno escribe todo (cociente, restos y cifras bajadas, con el cursor saltando del cociente al resto de izquierda a derecha) y se comprueba al final | ✅ las 4 divisiones, con cabecera `dividendo : divisor`, cociente, restos y cifras bajadas verificados |
 | Botón **Reiniciar** en cada ejercicio de operaciones (sin tocar el resto) | ✅ acción `RESET_ITEM` + botón en sumas/restas/multiplicaciones/divisiones (tests de reducer y render) |
 | Nuevo tipo **Lógica**: series, comparaciones (mayor/menor/igual), enigmas, deducciones (casillas etiquetadas) y eliminatorias (opciones) con pista al segundo fallo | ✅ componente `Logica.jsx` + validación; los 15 retos renderizan y se corrigen |
 | **Fichas** en `plantillas/*.json`: cabecera `titulo`/`tipo`, formatos `calculo`/`logica`, ids y grupos automáticos, `secciones` y resultados calculados | ✅ `parseTemplate` + registro `FORMATOS`; decenas de casos válidos/inválidos y paridad 1:1 de `calculo.json` con la antigua hoja en código |

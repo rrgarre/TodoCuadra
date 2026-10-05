@@ -1,12 +1,14 @@
 /**
  * Casilla de una sola cifra para las operaciones verticales.
  *
- * Comportamiento de escritura (de derecha a izquierda, como en papel):
- *  - al escribir una cifra, el foco pasa a la casilla de la izquierda
- *    (siguiente en el orden de escritura: data-order + 1);
+ * Comportamiento de escritura (el orden lo fija cada ejercicio con
+ * data-order; normalmente de derecha a izquierda como en papel —y en
+ * divisiones, el resto parcial de izquierda a derecha):
+ *  - al escribir una cifra, el foco pasa a la siguiente casilla del
+ *    orden (data-order + 1);
  *  - Retroceso borra la cifra; si está vacía, vuelve a la anterior;
  *  - Flechas ← → se mueven por la rejilla;
- *  - Pegar varias cifras (ver DigitGrid) rellena de derecha a izquierda.
+ *  - Pegar varias cifras (ver DigitGrid) rellena casillas seguidas.
  */
 
 function moveByOrder(input, delta) {
@@ -75,7 +77,7 @@ export default function DigitCell({
         onChange={(e) => {
           const digit = e.target.value.replace(/[^0-9]/g, "").slice(0, 1);
           onType(cell.id, digit);
-          if (digit) moveByOrder(e.target, 1); // avanza hacia la izquierda
+          if (digit) moveByOrder(e.target, 1); // siguiente en el orden
         }}
         onKeyDown={(e) => {
           if (e.key === "ArrowLeft") {

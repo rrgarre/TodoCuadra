@@ -78,8 +78,8 @@ export default function ExerciseCard({
 
   // El foco arranca siempre en la casilla de la DERECHA de la fila que
   // toca resolver (las unidades: la primera en escribirse). Vale para
-  // sumas, restas y multiplicaciones; en las divisiones el foco se
-  // gestiona en su propio flujo.
+  // sumas, restas y multiplicaciones; en las divisiones no hay foco
+  // automático (se empieza por la cifra del cociente).
   useEffect(() => {
     if (!FOCUS_FROM_RIGHT.includes(exercise.type)) return;
     const first = document.querySelector(
