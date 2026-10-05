@@ -1,1 +1,283 @@
-[]
+[
+  {
+    "id": 302,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuál es el ave de mayor envergadura que sigue viva actualmente?",
+    "respuesta": "El ave que mide más de una punta de un ala hasta la de la otra es el albatros"
+  },
+  {
+    "id": 303,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuáles son los cinco reinos en que podemos dividir a los diferentes seres vivos?",
+    "respuesta": "Existen diferentes clasificaciones de los seres vivos en diferentes reinos",
+    "detalle": "si bien el sistema más común de clasificación integra una separación de los seres vivos en cinco grandes reinos: reino monera (bacterias y algunas algas), reino protoctista (protozoos y amebas), reino fúngico (formado por los hongos y líquenes), reino vegetal (plantas) y reino animal (el cual nos incluye junto al resto de animales)"
+  },
+  {
+    "id": 306,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cómo se llama el ave rapaz que se alimenta fundamentalmente de huesos?",
+    "respuesta": "un tipo de buitre conocido como quebrantahuesos, el cual puede ser visto en algunas regiones montañosas de Europa, Asia y África"
+  },
+  {
+    "id": 307,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Qué especie de anfibio es conocida por su increíble capacidad para regenerar partes de su cuerpo que han sido dañadas o amputadas?",
+    "respuesta": "Es el ajolote, anfibio originario de México en grave peligro de extinción"
+  },
+  {
+    "id": 308,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Qué especie de árbol de uso frecuente en la llamada medicina tradicional china es un ejemplo de fósil viviente por sus antiquísimos orígenes?",
+    "respuesta": "El Gingko biloba cuenta con fósiles muy parecidos a su especie actual pertenecientes a la época de los dinosaurios",
+    "detalle": ". Durante muchos millones de años, la línea de ancestros de esta planta apenas ha sufrido cambios"
+  },
+  {
+    "id": 311,
+    "categoria": "Naturaleza",
+    "pregunta": "¿En qué archipiélago vive la única especie de cormorán que no es capaz de volar?",
+    "respuesta": "El cormorán de las Galápagos vive en el archipiélago que le da nombre, y depende de sus patas traseras tanto para andar como para nadar"
+  },
+  {
+    "id": 313,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cómo se llama la planta a partir de la cual suele ser elaborado el tequila?",
+    "respuesta": "La planta crasa a partir de la cual se hace el tequila es el agave"
+  },
+  {
+    "id": 317,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Qué período de la era paleozoica tuvo lugar entre el Devónico y el Pérmico?",
+    "respuesta": "Fue el periodo Carbonífero, el cual empezó hace 359 millones de años y terminó hace 299 millones de años"
+  },
+  {
+    "id": 357,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Qué tipo de tiburón es responsable del mayor número de ataques a humanos?",
+    "respuesta": "Los tiburones blancos",
+    "detalle": "pero el número de ataques es pequeño. Se han producido 59 ataques mortales de tiburón blanco desde -atención- el año 1580, según el Museo de Historia Natural de Florida"
+  },
+  {
+    "id": 366,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Qué maravilla natural se conoce comúnmente como \"los pulmones del mundo\"?",
+    "respuesta": "La selva amazónica"
+  },
+  {
+    "id": 375,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuál es la única hortaliza que también se clasifica como flor?",
+    "respuesta": "El brócoli"
+  },
+  {
+    "id": 376,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cómo se denomina el estudio de los fósiles?",
+    "respuesta": "Paleontología"
+  },
+  {
+    "id": 379,
+    "categoria": "Naturaleza",
+    "pregunta": "¿En qué escala se miden los terremotos?",
+    "respuesta": "La escala de Richter"
+  },
+  {
+    "id": 395,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuál es el mamífero más mortífero?",
+    "respuesta": "El hipopótamo"
+  },
+  {
+    "id": 396,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuál es el animal más mortífero del mundo?",
+    "respuesta": "El mosquito"
+  },
+  {
+    "id": 425,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cómo se denomina el proceso por el que las plantas liberan vapor de agua en el aire?",
+    "respuesta": "Transpiración"
+  },
+  {
+    "id": 455,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Qué parque nacional alberga la mayor población de Photinus carolinus -luciérnagas que parpadean sincronizadas- del hemisferio occidental?",
+    "respuesta": "El Parque Nacional de las Grandes Montañas Humeantes"
+  },
+  {
+    "id": 457,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuál es la flor más grande del mundo?",
+    "respuesta": "Rafflesia arnoldii, también conocida como la \"flor cadáver\" debido a que huele a, bueno, a cadáver"
+  },
+  {
+    "id": 469,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuál es el nombre (extremadamente metálico) de un grupo de cuervos?",
+    "respuesta": "Un asesinato de cuervos"
+  },
+  {
+    "id": 470,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuántos huesos tienen los tiburones?",
+    "respuesta": "¡Cero!"
+  },
+  {
+    "id": 472,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cómo se denomina el fenómeno meteorológico también llamado huracán de invierno?",
+    "respuesta": "Un ciclón bomba"
+  },
+  {
+    "id": 486,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuál es el único continente sin un volcán activo?",
+    "respuesta": "Australia"
+  },
+  {
+    "id": 498,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Qué animal tiene el corazón en la cabeza?",
+    "respuesta": "Camarón"
+  },
+  {
+    "id": 500,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cómo se denomina colectivamente a un grupo de flamencos?",
+    "respuesta": "Un flamboyán"
+  },
+  {
+    "id": 504,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Qué variedad de pimiento picante ostenta actualmente el récord Guinness de pimiento más picante?",
+    "respuesta": "Pimiento X"
+  },
+  {
+    "id": 623,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Qué animales marinos se cogen de la mano mientras duermen para no separarse?",
+    "respuesta": "Las nutrias marinas, y mi sistema es incapaz de procesar ese nivel de ternura"
+  },
+  {
+    "id": 626,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuánto tiempo viven las cigarras bajo tierra antes de salir a la superficie durante unas pocas semanas?",
+    "respuesta": "17 años"
+  },
+  {
+    "id": 629,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuál es la estructura viva más grande de la Tierra?",
+    "respuesta": "La Gran Barrera de Coral, situada frente a las costas de Queensland",
+    "detalle": "Australia)"
+  },
+  {
+    "id": 637,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Qué mamífero carece de cuerdas vocales?",
+    "respuesta": "La jirafa"
+  },
+  {
+    "id": 639,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Qué característica geológica se asocia con las fisuras, los respiraderos y los tapones?",
+    "respuesta": "Volcanes"
+  },
+  {
+    "id": 641,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuál es el animal más ruidoso de la Tierra?",
+    "respuesta": "El cachalote"
+  },
+  {
+    "id": 643,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuántos ojos tiene una abeja?",
+    "respuesta": "Cinco"
+  },
+  {
+    "id": 644,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Qué ave puede volar hacia atrás?",
+    "respuesta": "El colibrí"
+  },
+  {
+    "id": 645,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuál es la raza de perro más alta del mundo?",
+    "respuesta": "El gran danés"
+  },
+  {
+    "id": 656,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cómo se denomina colectivamente a una manada de perros carlinos?",
+    "respuesta": "Un gruñido"
+  },
+  {
+    "id": 659,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuál es la única especie animal hasta la fecha clasificada oficialmente como \"biológicamente inmortal\"?",
+    "respuesta": "La medusa Turritopsis dohrnii, también conocida como \"medusa inmortal\"",
+    "detalle": "hay un pequeño puñado de otros organismos con características que se cree que son similares a la inmortalidad biológica, pero hasta ahora, esta especie de medusa es la única comúnmente aceptada)"
+  },
+  {
+    "id": 703,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Hace cuánto se extinguieron los dinosaurios?",
+    "respuesta": "Hace 66 millones de años"
+  },
+  {
+    "id": 725,
+    "categoria": "Naturaleza",
+    "pregunta": "¿En qué etapa desaparecieron los dinosaurios?",
+    "respuesta": "Al final del Cretácico"
+  },
+  {
+    "id": 827,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cómo se llaman las crías de los conejos?",
+    "respuesta": "Gazapos"
+  },
+  {
+    "id": 829,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cómo se llama el proceso por el cual las plantas se alimentan?",
+    "respuesta": "Fotosíntesis"
+  },
+  {
+    "id": 842,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuál es el animal más rápido del mundo?",
+    "respuesta": "El guepardo"
+  },
+  {
+    "id": 848,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Qué gas liberan las plantas al hacer la fotosíntesis?",
+    "respuesta": "Oxígeno"
+  },
+  {
+    "id": 849,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuál es la serpiente más larga del mundo?",
+    "respuesta": "La pitón reticulada"
+  },
+  {
+    "id": 862,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Qué pigmento permite a las plantas hacer la fotosíntesis?",
+    "respuesta": "La clorofila"
+  },
+  {
+    "id": 864,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cómo se llama el estudio de los hongos?",
+    "respuesta": "Micología"
+  },
+  {
+    "id": 866,
+    "categoria": "Naturaleza",
+    "pregunta": "¿Cuál es el metal que se encuentra en el centro de la tierra?",
+    "respuesta": "El hierro"
+  }
+]

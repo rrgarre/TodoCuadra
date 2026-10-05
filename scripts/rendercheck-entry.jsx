@@ -16,6 +16,9 @@ import {
   resetRemote,
   resetTemplateCache,
 } from "../plantillas/templates.js";
+import TrivialScreen, {
+  TrivialJuego,
+} from "../src/components/layout/TrivialScreen.jsx";
 
 let failures = 0;
 function check(name, cond, extra = "") {
@@ -38,6 +41,16 @@ globalThis.__PLANTILLAS_MOCK__ = {
   "C:\\proy\\plantillas\\rota.json": {
     default: { titulo: "Rota", tipo: "calculo", ejercicios: [{ tipo: "arpita" }] },
   },
+};
+
+/* Preguntas simuladas del Trivial: el banco real (primaria.json), una
+ * categoría vacía (pendiente de rellenar) y un fichero roto para el aviso. */
+globalThis.__PREGUNTAS_MOCK__ = {
+  "C:\\proy\\preguntas\\primaria.json": {
+    default: JSON.parse(readFileSync("preguntas/primaria.json", "utf8")),
+  },
+  "C:\\proy\\preguntas\\geografia.json": { default: [] },
+  "C:\\proy\\preguntas\\rota.json": { default: { titulo: "No soy una lista" } },
 };
 
 /* localStorage simulada, por clave: el progreso de cada hoja y la
@@ -84,6 +97,10 @@ function render(state, opts = {}) {
   check("portada: botón Resetear todo", html.includes("Resetear todo"));
   check("portada: zona Cálculo en el menú", html.includes("🧮 Cálculo"));
   check("portada: zona Lógica en el menú", html.includes("🧩 Lógica"));
+  check(
+    "portada: zona Trivial en el menú",
+    html.includes("🎯 Trivial") && html.includes('aria-label="Jugar al Trivial"')
+  );
   check("portada: secciones desplegadas bajo la ficha en uso", html.includes("section-list--hija"));
   check("portada: la ficha de Cálculo está en uso", html.includes('aria-label="Ejercicios de hoy: ficha en uso"'));
   check("portada: la ficha de Lógica se puede usar", html.includes('aria-label="Usar la ficha Lógica"'));
@@ -418,6 +435,90 @@ function render(state, opts = {}) {
     { sheetId: l.id }
   );
   check("resumen de la hoja Lógica: 15 ejercicios", htmlLSummary.includes(">15<"), htmlLSummary.slice(0, 200));
+}
+
+/* ---------------- Apartado Trivial ---------------- */
+
+{
+  // Pantalla de categorías (fase inicial del contenedor).
+  const tCat = renderToString(React.createElement(TrivialScreen, { onExit() {} }));
+  check(
+    "trivial: categorías con «Todas» y con «Primaria»",
+    tCat.includes("🎯 Trivial") &&
+      tCat.includes("Todas las categorías") &&
+      tCat.includes('aria-label="Jugar la categoría Primaria"'),
+    tCat.slice(0, 300)
+  );
+  check(
+    "trivial: la categoría sin preguntas sale desactivada y avisada",
+    tCat.includes('disabled="" aria-label="Jugar la categoría Geografia"') &&
+      tCat.includes("Aún sin preguntas"),
+    tCat.slice(0, 400)
+  );
+  check(
+    "trivial: el fichero roto deja aviso con su ruta",
+    tCat.includes("preguntas/rota.json"),
+    tCat.slice(0, 400)
+  );
+
+  // Juego: la pregunta con sus botones, sin respuesta hasta pedirla.
+  const pregunta = {
+    key: "preguntas/primaria.json#1",
+    pregunta: "¿Cuántas patas tiene una araña?",
+    respuesta: "8",
+    detalle: "Las arañas son arácnidos: tienen ocho patas.",
+    categoria: "Primaria",
+  };
+  const props = {
+    titulo: "Primaria",
+    pregunta,
+    solucion: false,
+    onMostrar() {},
+    onSiguiente() {},
+    onVolver() {},
+  };
+  const tJuego = renderToString(React.createElement(TrivialJuego, props));
+  check(
+    "trivial: el juego muestra la pregunta y sus botones",
+    tJuego.includes("¿Cuántas patas tiene una araña?") &&
+      tJuego.includes("Mostrar solución") &&
+      tJuego.includes("Cambiar categoría") &&
+      tJuego.includes("Primaria"),
+    tJuego.slice(0, 300)
+  );
+  check(
+    "trivial: sin solución vista aún no aparece «Siguiente»",
+    !tJuego.includes("Siguiente"),
+    tJuego.slice(0, 400)
+  );
+  check(
+    "trivial: sin pedir la solución no se ve la respuesta",
+    !tJuego.includes("arácnidos") && !tJuego.includes(">8<"),
+    tJuego.slice(0, 400)
+  );
+  check(
+    "trivial: sin temporizadores, contadores ni progreso",
+    !/Pregunta \d|\d+\s*\/\s*\d+|<progress|<time/.test(tJuego)
+  );
+
+  const tSol = renderToString(
+    React.createElement(TrivialJuego, { ...props, solucion: true })
+  );
+  check(
+    "trivial: al mostrar la solución aparece respuesta y detalle",
+    tSol.includes(">8<") && tSol.includes("arácnidos"),
+    tSol.slice(0, 400)
+  );
+  check(
+    "trivial: visto el detalle, aparece «Siguiente»",
+    tSol.includes("Siguiente ›"),
+    tSol.slice(0, 400)
+  );
+  check(
+    "trivial: «Mostrar solución» queda pulsado tras verse",
+    tSol.includes('class="btn" disabled=""'),
+    tSol.slice(0, 400)
+  );
 }
 
 /* ---------------- Fichas remotas (caché en localStorage) ---------------- */

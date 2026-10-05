@@ -1,1 +1,652 @@
-[]
+[
+  {
+    "id": 250,
+    "categoria": "Música",
+    "pregunta": "¿Quién fue el famoso cantante del grupo musical Queen?",
+    "respuesta": "Freddie Mercury",
+    "detalle": "fue el cantante de este grupo"
+  },
+  {
+    "id": 254,
+    "categoria": "Música",
+    "pregunta": "¿De qué grupo es la canción “Smells like a teen spirit”?",
+    "respuesta": "Esta canción es una de las más conocidas del grupo Nirvana"
+  },
+  {
+    "id": 255,
+    "categoria": "Música",
+    "pregunta": "¿A qué banda de música metal pertenece el disco Master of Puppets?",
+    "respuesta": "Metallica la banda que lanzó este álbum en el año 1986"
+  },
+  {
+    "id": 260,
+    "categoria": "Música",
+    "pregunta": "¿Qué banda de rock latinoamericana adoptó en sus inicios el nombre de \"Los Estereotipos\"?",
+    "respuesta": "Soda Stereo",
+    "detalle": "famoso grupo de rock argentino"
+  },
+  {
+    "id": 263,
+    "categoria": "Música",
+    "pregunta": "¿Qué famoso dúo musical participó en la banda sonora de la película \"Tron: Legacy\"?",
+    "respuesta": "El dúo de música electrónica Daft Punk"
+  },
+  {
+    "id": 296,
+    "categoria": "Música",
+    "pregunta": "¿Qué pianista y cantante de jazz compuso un álbum titulado “Glad Rag Doll”?",
+    "respuesta": "Este disco es de Diana Krall"
+  },
+  {
+    "id": 362,
+    "categoria": "Música",
+    "pregunta": "¿Cuál es el himno nacional oficial de los Estados Unidos de América?",
+    "respuesta": "The Star Spangled Banner"
+  },
+  {
+    "id": 516,
+    "categoria": "Música",
+    "pregunta": "¿En qué grupo musical está supuestamente basada la película Dreamgirls?",
+    "respuesta": "Aunque la película es una mezcla ficticia de múltiples grupos de canto femeninos liderados por la Motown, se cree que se inspira más en las Supremes"
+  },
+  {
+    "id": 556,
+    "categoria": "Música",
+    "pregunta": "Amy Winehouse, Jimi Hendrix y Janis Joplin, ¿a qué desafortunado grupo pertenecen?",
+    "respuesta": "El Club de los 27"
+  },
+  {
+    "id": 557,
+    "categoria": "Música",
+    "pregunta": "¿A quién, además de a Britney Spears, besó Madonna en los VMA de 2003?",
+    "respuesta": "Christina Aguilera"
+  },
+  {
+    "id": 558,
+    "categoria": "Música",
+    "pregunta": "¿Qué canción ostenta el título del primer vídeo musical estrenado en MTV?",
+    "respuesta": "Video Killed the Radio Star de The Buggles"
+  },
+  {
+    "id": 559,
+    "categoria": "Música",
+    "pregunta": "¿Con qué álbum comenzó Beyoncé su carrera en solitario?",
+    "respuesta": "Dangerously In Love"
+  },
+  {
+    "id": 560,
+    "categoria": "Música",
+    "pregunta": "¿Cuál es el nombre artístico de Stefani Joanne Angelina Germanotta?",
+    "respuesta": "Lady Gaga"
+  },
+  {
+    "id": 561,
+    "categoria": "Música",
+    "pregunta": "¿Quién cantó la primera versión grabada de \"Strange Fruit\", una canción de protesta clásica e inquietante contra el racismo y la violencia contra los cuerpos negros?",
+    "respuesta": "Billie Holiday"
+  },
+  {
+    "id": 562,
+    "categoria": "Música",
+    "pregunta": "¿Quién fue la primera mujer incluida en el Salón de la Fama del Rock & Roll?",
+    "respuesta": "Aretha Franklin"
+  },
+  {
+    "id": 563,
+    "categoria": "Música",
+    "pregunta": "¿Qué artista musical tocó la friolera de 27 instrumentos diferentes en su álbum de debut, \"For You\"?",
+    "respuesta": "Prince"
+  },
+  {
+    "id": 564,
+    "categoria": "Música",
+    "pregunta": "¿Dónde se formó el grupo ABBA?",
+    "respuesta": "Suecia"
+  },
+  {
+    "id": 565,
+    "categoria": "Música",
+    "pregunta": "¿Qué sencillo de los Beatles fue nº 1 en las listas Billboard durante más tiempo?",
+    "respuesta": "Hey Jude"
+  },
+  {
+    "id": 566,
+    "categoria": "Música",
+    "pregunta": "¿Cuál era el verdadero nombre de pila de Notorious BIG?",
+    "respuesta": "Christopher"
+  },
+  {
+    "id": 567,
+    "categoria": "Música",
+    "pregunta": "¿Qué edad tenía Taylor Swift cuando se llevó a casa su primer Grammy al Álbum del Año?",
+    "respuesta": "20"
+  },
+  {
+    "id": 568,
+    "categoria": "Música",
+    "pregunta": "¿Starchild, Demon, Spaceman (o Space Ace) y Catman son los personajes sobre el escenario de qué banda?",
+    "respuesta": "KISS"
+  },
+  {
+    "id": 569,
+    "categoria": "Música",
+    "pregunta": "¿Cuántos miembros tiene BTS?",
+    "respuesta": "Siete"
+  },
+  {
+    "id": 570,
+    "categoria": "Música",
+    "pregunta": "¿Cuál fue el primer single nº 1 de The Beach Boys, de un total de cuatro?",
+    "respuesta": "I Get Around"
+  },
+  {
+    "id": 571,
+    "categoria": "Música",
+    "pregunta": "¿Qué instrumento toca Lizzo?",
+    "respuesta": "La flauta"
+  },
+  {
+    "id": 572,
+    "categoria": "Música",
+    "pregunta": "¿Qué artista musical se puso en la piel de todos los personajes en una representación televisada de West Side Story en 1978?",
+    "respuesta": "Cher"
+  },
+  {
+    "id": 573,
+    "categoria": "Música",
+    "pregunta": "¿Cuál es el grupo musical más longevo que sigue contando con su formación original?",
+    "respuesta": "U2"
+  },
+  {
+    "id": 574,
+    "categoria": "Música",
+    "pregunta": "¿Cuál es el álbum más vendido de todos los tiempos en Estados Unidos?",
+    "respuesta": "Their Greatest Hits",
+    "detalle": "1971-1975)\" de los Eagles - ojalá estuviéramos de broma"
+  },
+  {
+    "id": 575,
+    "categoria": "Música",
+    "pregunta": "¿Cómo murió Otis Redding?",
+    "respuesta": "En un accidente de avión"
+  },
+  {
+    "id": 576,
+    "categoria": "Música",
+    "pregunta": "¿Qué famoso artista country tuvo un éxito en 1957 con \"Walkin' After Midnight\"?",
+    "respuesta": "Patsy Cline"
+  },
+  {
+    "id": 577,
+    "categoria": "Música",
+    "pregunta": "En 2017, ¿qué sencillo encabezó las listas de éxitos en 47 países simultáneamente?",
+    "respuesta": "Despacito"
+  },
+  {
+    "id": 578,
+    "categoria": "Música",
+    "pregunta": "A quién superó Beyoncé en 2021 en el título de artista femenina con más Grammys?",
+    "respuesta": "Alison Krauss"
+  },
+  {
+    "id": 579,
+    "categoria": "Música",
+    "pregunta": "¿Cómo se llama el cuarto álbum de estudio de Led Zeppelin, que incluye la canción Stairway to Heaven?",
+    "respuesta": "¡No tiene título! Aunque lo más habitual es referirse a él como Led Zeppelin IV"
+  },
+  {
+    "id": 581,
+    "categoria": "Música",
+    "pregunta": "¿Quién es la persona más joven en ganar un premio Grammy al Álbum del Año?",
+    "respuesta": "Billie Eilish",
+    "detalle": "tenía 18 años)"
+  },
+  {
+    "id": 582,
+    "categoria": "Música",
+    "pregunta": "¿Quién lanzó la canción Uptown Funk, que, en 2015, pasó 14 semanas consecutivas en el número 1 de la lista Billboard Hot 100?",
+    "respuesta": "Mark Ronson",
+    "detalle": "la canción cuenta con la colaboración de Bruno Mars, pero fue el single principal del cuarto álbum de estudio de Ronson"
+  },
+  {
+    "id": 583,
+    "categoria": "Música",
+    "pregunta": "¿Cuál fue la primera canción escrita por Olivia Rodrigo en entrar en el Billboard Hot 100?",
+    "respuesta": "All I Want\"",
+    "detalle": "Rodrigo la escribió para High School Musical: The Musical: The Series, y entró en el Billboard Hot 100 en enero de 2020"
+  },
+  {
+    "id": 584,
+    "categoria": "Música",
+    "pregunta": "¿Cuántos de los 10 álbumes más vendidos de 2023 fueron álbumes de Taylor Swift?",
+    "respuesta": "Cinco"
+  },
+  {
+    "id": 585,
+    "categoria": "Música",
+    "pregunta": "¿Quién es la primera mujer negra con un crédito como única compositora en un éxito country número 1?",
+    "respuesta": "Tracy Chapman, a través de la versión de Luke Combs de su éxito \"Fast Car"
+  },
+  {
+    "id": 586,
+    "categoria": "Música",
+    "pregunta": "¿Quién ganó el Grammy 2024 al Disco del Año?",
+    "respuesta": "Miley Cyrus por \"Flowers"
+  },
+  {
+    "id": 587,
+    "categoria": "Música",
+    "pregunta": "¿Cuántos álbumes en solitario ha publicado Lauryn Hill, que saltó a la fama como parte del trío de hip-hop The Fugees?",
+    "respuesta": "Uno",
+    "detalle": "a pesar de la repercusión de su primer álbum en solitario, \"The Miseducation of Lauryn Hill\", Hill no ha vuelto a publicar otro trabajo en solitario"
+  },
+  {
+    "id": 588,
+    "categoria": "Música",
+    "pregunta": "¿Cómo se llama la influyente banda punk formada por Kathleen Hanna a principios de los 90?",
+    "respuesta": "Bikini Kill"
+  },
+  {
+    "id": 589,
+    "categoria": "Música",
+    "pregunta": "¿Quiénes son los tres miembros del supergrupo indie boygenius, una banda que ha sido llamada \"los Beatles para bisexuales torturados\"?",
+    "respuesta": "Julien Baker, Phoebe Bridgers y Lucy Dacus"
+  },
+  {
+    "id": 590,
+    "categoria": "Música",
+    "pregunta": "¿Cuáles son los nombres de pila de los cinco miembros de los Backstreet Boys?",
+    "respuesta": "Nick, AJ, Brian, Kevin, y Howie"
+  },
+  {
+    "id": 591,
+    "categoria": "Música",
+    "pregunta": "¿Qué famosa cantante de origen tejano fue popularmente llamada la \"Reina del Tejano\" durante su demasiado corta vida?",
+    "respuesta": "Selena Quintanilla-Pérez"
+  },
+  {
+    "id": 592,
+    "categoria": "Música",
+    "pregunta": "¿Quién compuso la \"Sonata Claro de Luna\"?",
+    "respuesta": "Ludwig van Beethoven"
+  },
+  {
+    "id": 593,
+    "categoria": "Música",
+    "pregunta": "¿Qué canción interpretó famosamente Tom Holland para su aparición en Lip Sync Battle en 2017?",
+    "respuesta": "Umbrella\" de Rihanna",
+    "detalle": "si eres una de las 10 personas del planeta que no ha visto este vídeo, hazte un favor y míralo ahora"
+  },
+  {
+    "id": 620,
+    "categoria": "Música",
+    "pregunta": "¿Qué hito cultural de 1981 cambió la forma de consumir y promocionar la música?",
+    "respuesta": "El lanzamiento de la MTV"
+  },
+  {
+    "id": 654,
+    "categoria": "Música",
+    "pregunta": "¿Qué artista musical actual pasó 13 años como gimnasta de competición, ostentando el título de quinta gimnasta de EE.UU. durante su segundo año de instituto?",
+    "respuesta": "SZA"
+  },
+  {
+    "id": 686,
+    "categoria": "Música",
+    "pregunta": "¿Qué artista se convirtió en el primer rapero en ganar un Premio Pulitzer?",
+    "respuesta": "Kendrick Lamar"
+  },
+  {
+    "id": 687,
+    "categoria": "Música",
+    "pregunta": "¿Cuál es el nombre legal de Rihanna?",
+    "respuesta": "Robyn Rihanna Fenty"
+  },
+  {
+    "id": 688,
+    "categoria": "Música",
+    "pregunta": "¿Los ojos de qué actriz fueron el tema principal de una exitosa canción de 1981?",
+    "respuesta": "Bette Davis"
+  },
+  {
+    "id": 693,
+    "categoria": "Música",
+    "pregunta": "¿En qué año murió Freddie Mercury?",
+    "respuesta": "En 1991"
+  },
+  {
+    "id": 1067,
+    "categoria": "Música",
+    "pregunta": "¿Cómo se llama realmente The Weeknd?",
+    "respuesta": "Abel Tesfaye"
+  },
+  {
+    "id": 1068,
+    "categoria": "Música",
+    "pregunta": "¿Cuál es el disco más vendido de la historia?",
+    "respuesta": "Thriller', de Michael Jackson"
+  },
+  {
+    "id": 1069,
+    "categoria": "Música",
+    "pregunta": "¿Qué cantante americana tiene un Óscar?",
+    "respuesta": "Lady Gaga"
+  },
+  {
+    "id": 1070,
+    "categoria": "Música",
+    "pregunta": "¿Cuál es el nombre real de Eminem?",
+    "respuesta": "Marshall Mathers"
+  },
+  {
+    "id": 1071,
+    "categoria": "Música",
+    "pregunta": "¿Cómo se llama el himno nacional de Francia?",
+    "respuesta": "La Marsellesa"
+  },
+  {
+    "id": 1072,
+    "categoria": "Música",
+    "pregunta": "¿En qué año murió Elvis Presley?",
+    "respuesta": "En 1977"
+  },
+  {
+    "id": 1073,
+    "categoria": "Música",
+    "pregunta": "¿En qué puesto quedó Chanel en Eurovisión?",
+    "respuesta": "En el tercer puesto"
+  },
+  {
+    "id": 1074,
+    "categoria": "Música",
+    "pregunta": "¿Cuántos agujeros tiene una flauta dulce?",
+    "respuesta": "Ocho"
+  },
+  {
+    "id": 1075,
+    "categoria": "Música",
+    "pregunta": "¿A qué banda española le volvía loco la madre de José?",
+    "respuesta": "A El Canto del Loco"
+  },
+  {
+    "id": 1076,
+    "categoria": "Música",
+    "pregunta": "¿Cuál es el nombre artístico de Robyn Fenty?",
+    "respuesta": "Rihanna"
+  },
+  {
+    "id": 1077,
+    "categoria": "Música",
+    "pregunta": "¿Quién saltó a la fama en 2008 con el lanzamiento del single 'I Kissed a Girl'?",
+    "respuesta": "Katy Perry"
+  },
+  {
+    "id": 1078,
+    "categoria": "Música",
+    "pregunta": "¿Cuál fue el nombre artístico de José Monje Cruz?",
+    "respuesta": "Camarón de la Isla"
+  },
+  {
+    "id": 1079,
+    "categoria": "Música",
+    "pregunta": "¿Cuál es el nombre de pila del compositor clásico Vivaldi?",
+    "respuesta": "Antonio"
+  },
+  {
+    "id": 1080,
+    "categoria": "Música",
+    "pregunta": "¿A que edad murió el cantante Kurt Cobain?",
+    "respuesta": "A los 27 años"
+  },
+  {
+    "id": 1081,
+    "categoria": "Música",
+    "pregunta": "¿Qué canción hizo popular a Billie Eilish?",
+    "respuesta": "Bad Guy"
+  },
+  {
+    "id": 1082,
+    "categoria": "Música",
+    "pregunta": "¿Cuáles son los premios más importantes de la música?",
+    "respuesta": "Los Grammy"
+  },
+  {
+    "id": 1083,
+    "categoria": "Música",
+    "pregunta": "¿Quién compuso la mítica canción 'Knockin’ on Heaven’s Door'?",
+    "respuesta": "Bob Dylan"
+  },
+  {
+    "id": 1084,
+    "categoria": "Música",
+    "pregunta": "¿Cuál es el nombre real de David Bowie?",
+    "respuesta": "David Robert Jones"
+  },
+  {
+    "id": 1085,
+    "categoria": "Música",
+    "pregunta": "¿Quién cantaba la canción 'Hey Jude'?",
+    "respuesta": "The Beatles"
+  },
+  {
+    "id": 1086,
+    "categoria": "Música",
+    "pregunta": "¿Cuál es el himno de la Unión Europea?",
+    "respuesta": "La 'Oda a la Alegría"
+  },
+  {
+    "id": 1087,
+    "categoria": "Música",
+    "pregunta": "¿De quién es la canción 'Love me Tender'?",
+    "respuesta": "De Elvis Presley"
+  },
+  {
+    "id": 1088,
+    "categoria": "Música",
+    "pregunta": "¿Cómo se llaman los fans de Ariana Grande?",
+    "respuesta": "Arianators"
+  },
+  {
+    "id": 1089,
+    "categoria": "Música",
+    "pregunta": "¿Quién es considerada la reina del 'pop'?",
+    "respuesta": "Madonna"
+  },
+  {
+    "id": 1090,
+    "categoria": "Música",
+    "pregunta": "¿Dónde fue descubierto Justin Bieber?",
+    "respuesta": "YouTube"
+  },
+  {
+    "id": 1091,
+    "categoria": "Música",
+    "pregunta": "¿Cuál es la banda más famosa de K-Pop?",
+    "respuesta": "BTS"
+  },
+  {
+    "id": 1092,
+    "categoria": "Música",
+    "pregunta": "¿Quién cantó la canción 'Girls Just Wanna Have Fun'?",
+    "respuesta": "Cindy Lauper"
+  },
+  {
+    "id": 1093,
+    "categoria": "Música",
+    "pregunta": "¿Cómo se llamaba el primer éxito de las Spice Girls?",
+    "respuesta": "Wannabe"
+  },
+  {
+    "id": 1094,
+    "categoria": "Música",
+    "pregunta": "¿Quién cantó la canción 'Barbie Girl'?",
+    "respuesta": "Aqua"
+  },
+  {
+    "id": 1095,
+    "categoria": "Música",
+    "pregunta": "¿Con qué músico coincidió Fernando Alonso en el instituto?",
+    "respuesta": "Con Melendi"
+  },
+  {
+    "id": 1097,
+    "categoria": "Música",
+    "pregunta": "¿Quién era el cantante de Linkin Park?",
+    "respuesta": "Chester Bennington"
+  },
+  {
+    "id": 1098,
+    "categoria": "Música",
+    "pregunta": "¿Quién fue el artista musical que más vendió en los años 90?",
+    "respuesta": "Mariah Carey"
+  },
+  {
+    "id": 1099,
+    "categoria": "Música",
+    "pregunta": "¿Quién fue el ex-Beatle que consiguió un éxito con Stevie Wonder en 1982?",
+    "respuesta": "Paul McCartney"
+  },
+  {
+    "id": 1100,
+    "categoria": "Música",
+    "pregunta": "¿Quién cantó la exitosa canción 'Touch of Grey'?",
+    "respuesta": "Grateful Dead"
+  },
+  {
+    "id": 1101,
+    "categoria": "Música",
+    "pregunta": "¿Quién compuso la banda sonora de 'Harry Potter y la piedra filosofal'?",
+    "respuesta": "John Williams"
+  },
+  {
+    "id": 1102,
+    "categoria": "Música",
+    "pregunta": "¿Cuántas veces ha ganado España Eurovisión?",
+    "respuesta": "Dos veces"
+  },
+  {
+    "id": 1103,
+    "categoria": "Música",
+    "pregunta": "¿Y Suecia?",
+    "respuesta": "Siete"
+  },
+  {
+    "id": 1104,
+    "categoria": "Música",
+    "pregunta": "¿Con quién ha hecho Shakira su canción más polémica?",
+    "respuesta": "Con Bizarrap"
+  },
+  {
+    "id": 1105,
+    "categoria": "Música",
+    "pregunta": "¿Quién compuso la banda sonora de 'El Señor de los Anillos'?",
+    "respuesta": "Howard Shore"
+  },
+  {
+    "id": 1106,
+    "categoria": "Música",
+    "pregunta": "¿A qué banda pertenecía Beyoncé?",
+    "respuesta": "Destiny's Child"
+  },
+  {
+    "id": 1107,
+    "categoria": "Música",
+    "pregunta": "¿Cómo se llamaba el primer single de Britney Spears?",
+    "respuesta": "‘Baby One More Time’"
+  },
+  {
+    "id": 1108,
+    "categoria": "Música",
+    "pregunta": "¿Cuál es el verdadero nombre de Bad Bunny?",
+    "respuesta": "Benito Antonio Martínez Ocasio"
+  },
+  {
+    "id": 1109,
+    "categoria": "Música",
+    "pregunta": "¿En qué disco aparecen los Beatles cruzando una calle?",
+    "respuesta": "Abbey Road"
+  },
+  {
+    "id": 1110,
+    "categoria": "Música",
+    "pregunta": "¿Quién canta el tema 'La bachata'?",
+    "respuesta": "Manuel Turizo"
+  },
+  {
+    "id": 1111,
+    "categoria": "Música",
+    "pregunta": "¿Quién es el compositor de Concierto de Aranjuez?",
+    "respuesta": "Joaquín Rodrigo"
+  },
+  {
+    "id": 1112,
+    "categoria": "Música",
+    "pregunta": "¿De quién es la canción ‘Gasolina’?",
+    "respuesta": "De Daddy Yankee"
+  },
+  {
+    "id": 1113,
+    "categoria": "Música",
+    "pregunta": "¿En qué año murió George Michael?",
+    "respuesta": "2016"
+  },
+  {
+    "id": 1114,
+    "categoria": "Música",
+    "pregunta": "¿Quién es la cantante de 'I Will Always Love You'?",
+    "respuesta": "Whitney Houston"
+  },
+  {
+    "id": 1115,
+    "categoria": "Música",
+    "pregunta": "¿Cómo se llama la canción que interpreta Eddie en 'Stranger Things 4'?",
+    "respuesta": "‘Master of Puppets’ de Metallica"
+  },
+  {
+    "id": 1116,
+    "categoria": "Música",
+    "pregunta": "¿Qué cantante lleva el apodo de El Sol de México?",
+    "respuesta": "Luis Miguel"
+  },
+  {
+    "id": 1117,
+    "categoria": "Música",
+    "pregunta": "¿Cómo se llamaba el vocalista de Nirvana?",
+    "respuesta": "Kurt Cobain"
+  },
+  {
+    "id": 1118,
+    "categoria": "Música",
+    "pregunta": "¿Qué concurso musical lanzó a Aitana?",
+    "respuesta": "Operación Triunfo"
+  },
+  {
+    "id": 1119,
+    "categoria": "Música",
+    "pregunta": "¿Cuál es el título del primer disco de Camarón?",
+    "respuesta": "Al verte las flores lloran"
+  },
+  {
+    "id": 1120,
+    "categoria": "Música",
+    "pregunta": "¿Cuál fue la primera canción con la que triunfó Lola Índigo?",
+    "respuesta": "‘Yo ya no quiero ná’"
+  },
+  {
+    "id": 1121,
+    "categoria": "Música",
+    "pregunta": "¿En qué año se lanzó ‘Bomba’ de King África?",
+    "respuesta": "En el año 2000"
+  },
+  {
+    "id": 1122,
+    "categoria": "Música",
+    "pregunta": "¿Quién fue el artífice de la música de ‘La sirenita?",
+    "respuesta": "Alan Menken"
+  },
+  {
+    "id": 1186,
+    "categoria": "Música",
+    "pregunta": "¿Qué instrumento tocaba Paco de Lucía?",
+    "respuesta": "La guitarra española"
+  }
+]

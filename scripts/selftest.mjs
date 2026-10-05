@@ -20,6 +20,15 @@ import {
   refreshRemoteTemplates,
   resetTemplateCache,
 } from "../plantillas/templates.js";
+import {
+  parsePreguntas,
+  tituloDesdeRuta,
+  buildCategorias,
+  loadPreguntas,
+  resetPreguntasCache,
+  poolPreguntas,
+  siguientePregunta,
+} from "../preguntas/loader.js";
 
 let failures = 0;
 function check(name, cond, extra = "") {
@@ -912,6 +921,174 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   );
   globalThis.fetch = originalFetch;
   resetRemote();
+}
+
+/* ---------- Trivial (carpeta preguntas/) ---------- */
+{
+  // Formato estándar de una pregunta.
+  const bien = parsePreguntas(
+    [
+      { pregunta: "¿Uno?", respuesta: "1" },
+      { pregunta: "¿Dos?", respuesta: "2", detalle: " par ", categoria: "X", id: 7 },
+    ],
+    "preguntas/test.json"
+  );
+  check(
+    "trivial: pregunta mínima y completa válidas",
+    bien.errors.length === 0 &&
+      bien.preguntas.length === 2 &&
+      bien.preguntas[0].detalle === null &&
+      bien.preguntas[0].categoria === "Test" &&
+      bien.preguntas[1].categoria === "X" &&
+      bien.preguntas[1].detalle === "par",
+    JSON.stringify(bien)
+  );
+
+  const noLista = parsePreguntas({ pregunta: "¿Uno?" }, "preguntas/mala.json");
+  check(
+    "trivial: fichero que no es lista → error con la ruta",
+    noLista.preguntas.length === 0 &&
+      noLista.errors[0].includes("preguntas/mala.json"),
+    JSON.stringify(noLista.errors)
+  );
+
+  const rotas = parsePreguntas(
+    [{ respuesta: "solo respuesta" }, "no soy objeto", { pregunta: "¿Sin respuesta?" }],
+    "preguntas/geografia.json"
+  );
+  check(
+    "trivial: preguntas rotas se saltan y avisan con su posición",
+    rotas.preguntas.length === 0 &&
+      rotas.errors.length === 3 &&
+      rotas.errors[0].includes("la pregunta 1") &&
+      rotas.errors[0].includes('"pregunta"') &&
+      rotas.errors[2].includes("la pregunta 3") &&
+      rotas.errors[2].includes('"respuesta"'),
+    JSON.stringify(rotas.errors)
+  );
+
+  const vacias = parsePreguntas([], "preguntas/geografia.json");
+  check(
+    "trivial: fichero vacío sin errores",
+    vacias.errors.length === 0 && vacias.preguntas.length === 0
+  );
+
+  check(
+    "trivial: categoría por defecto del nombre del fichero",
+    tituloDesdeRuta("preguntas/deporte-pasatiempos-y-entretenimiento.json") ===
+      "Deporte Pasatiempos y Entretenimiento" &&
+      parsePreguntas(
+        [{ pregunta: "a", respuesta: "b" }],
+        "preguntas/ciencia-tecnologia-e-informatica.json"
+      ).preguntas[0].categoria === "Ciencia Tecnologia e Informatica",
+    tituloDesdeRuta("preguntas/deporte-pasatiempos-y-entretenimiento.json")
+  );
+
+  // Agrupación con mock de ficheros.
+  globalThis.__PREGUNTAS_MOCK__ = {
+    "C:\\proy\\preguntas\\animales.json": {
+      default: [
+        { pregunta: "P1", respuesta: "R1", categoria: "Animales" },
+        { pregunta: "P2", respuesta: "R2" },
+        { pregunta: "G1", respuesta: "GR", categoria: "Geografía" },
+      ],
+    },
+    "C:\\proy\\preguntas\\coches.json": {
+      default: [{ pregunta: "C1", respuesta: "CR", categoria: "Coches" }],
+    },
+    "C:\\proy\\preguntas\\geografia.json": { default: [] },
+    "C:\\proy\\preguntas\\historia.json": { default: [] },
+    "C:\\proy\\preguntas\\rota.json": { default: { no: "soy una lista" } },
+  };
+  resetPreguntasCache();
+  const { categorias, warnings } = loadPreguntas();
+  check(
+    "trivial: categorías agrupadas y ordenadas (con acentos mergeados)",
+    categorias.map((c) => c.titulo).join(",") ===
+      "Animales,Coches,Geografía,Historia",
+    JSON.stringify(categorias.map((c) => c.titulo))
+  );
+  check(
+    "trivial: la categoría del fichero vacío queda pendiente",
+    categorias.find((c) => c.titulo === "Historia")?.preguntas.length === 0 &&
+      categorias.find((c) => c.titulo === "Geografía")?.preguntas.length === 1,
+    JSON.stringify(categorias)
+  );
+  check(
+    "trivial: el fichero que no es lista deja aviso con su ruta",
+    warnings.length === 1 && warnings[0].includes("preguntas/rota.json"),
+    JSON.stringify(warnings)
+  );
+
+  // Regresión: una `categoria` con coma no coincide con el nombre del
+  // fichero; no debe nacer un grupo vacío duplicado (bug de deportes y
+  // ciencia y tecnología).
+  const conComa = buildCategorias({
+    "C:\\proy\\preguntas\\deporte-x.json": {
+      default: [
+        {
+          pregunta: "¿Quién gana?",
+          respuesta: "El que marca más goles",
+          categoria: "Deporte, pasatiempos y entretenimiento",
+        },
+      ],
+    },
+  });
+  check(
+    "trivial: categoria con coma → un solo grupo, con las preguntas",
+    conComa.categorias.length === 1 &&
+      conComa.categorias[0].titulo ===
+        "Deporte, pasatiempos y entretenimiento" &&
+      conComa.categorias[0].preguntas.length === 1,
+    JSON.stringify(conComa.categorias.map((c) => `${c.titulo}:${c.preguntas.length}`))
+  );
+
+  const fusion = buildCategorias({
+    "C:\\proy\\preguntas\\dep-a.json": {
+      default: [{ pregunta: "P1", respuesta: "R1", categoria: "Deporte, pasatiempos" }],
+    },
+    "C:\\proy\\preguntas\\dep-b.json": {
+      default: [{ pregunta: "P2", respuesta: "R2", categoria: "deporte pasatiempos." }],
+    },
+  });
+  check(
+    "trivial: categorías con puntuación distinta se fusionan",
+    fusion.categorias.length === 1 && fusion.categorias[0].preguntas.length === 2,
+    JSON.stringify(fusion.categorias.map((c) => `${c.titulo}:${c.preguntas.length}`))
+  );
+
+  const poolCat = poolPreguntas(categorias, "Animales");
+  const poolTodo = poolPreguntas(categorias, null);
+  check(
+    "trivial: pool por categoría y pool de todas",
+    poolCat.length === 2 && poolTodo.length === 4,
+    JSON.stringify({ cat: poolCat.length, todo: poolTodo.length })
+  );
+  const p1 = siguientePregunta(poolTodo, null);
+  const p2 = siguientePregunta(poolTodo, p1.key);
+  check(
+    "trivial: siguiente aleatoria dentro del pool y sin repetir la actual",
+    poolTodo.includes(p1) && Boolean(p2) && p2.key !== p1.key,
+    JSON.stringify({ p1: p1.key, p2: p2?.key })
+  );
+  check(
+    "trivial: sin preguntas → null",
+    siguientePregunta([], null) === null && siguientePregunta(null, null) === null
+  );
+
+  resetPreguntasCache();
+  delete globalThis.__PREGUNTAS_MOCK__;
+
+  // El banco real que se ha pasado, contra el formato estándar.
+  const prim = parsePreguntas(
+    JSON.parse(readFileSync("preguntas/primaria.json", "utf8")),
+    "preguntas/primaria.json"
+  );
+  check(
+    "trivial: primaria.json cumple el formato (200 preguntas)",
+    prim.errors.length === 0 && prim.preguntas.length === 200,
+    JSON.stringify(prim.errors.slice(0, 3))
+  );
 }
 
 /* ---------- Lógica: validación paso a paso ---------- */

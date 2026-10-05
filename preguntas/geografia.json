@@ -1,1 +1,793 @@
-[]
+[
+  {
+    "id": 224,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el río más caudaloso del mundo?",
+    "respuesta": "Si bien muchas personas lo confunden a veces con el más largo, el río más caudaloso del mundo es el Amazonas"
+  },
+  {
+    "id": 225,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el monte más alto del mundo?",
+    "respuesta": "El monte más alto del mundo es el Everest, en la cordillera del Himalaya"
+  },
+  {
+    "id": 226,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la lengua más hablada del mundo?",
+    "respuesta": "ta pregunta es el chino mandarín"
+  },
+  {
+    "id": 227,
+    "categoria": "Geografía",
+    "pregunta": "¿Cómo se llama la línea vertical imaginaria a partir del cual se miden las longitudes y que divide el mundo en dos mitades?",
+    "respuesta": "l meridiano de Greenwich"
+  },
+  {
+    "id": 228,
+    "categoria": "Geografía",
+    "pregunta": "¿Dónde podemos encontrar la Casa Rosada?",
+    "respuesta": "La Casa Rosada, de manera semejante a la Casa Blanca en Estados Unidos, es el edificio desde donde ejerce el presidente del Gobierno de Argentina y la sede del poder ejecutivo del país"
+  },
+  {
+    "id": 229,
+    "categoria": "Geografía",
+    "pregunta": "¿Entre qué países podemos encontrar el Estrecho de Bering?",
+    "respuesta": "El estrecho de Bering es conocido entre otras cosas por separar el continente americano del asiático, concretamente separa los territorios de Estados Unidos y Rusia"
+  },
+  {
+    "id": 230,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el país de mayor tamaño del mundo?",
+    "respuesta": "Rusia es el país de mayor tamaño del mundo, con un territorio de más de diecisiete millones de kilómetros cuadrados"
+  },
+  {
+    "id": 231,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué cordillera separa Europa de Asia?",
+    "respuesta": "Los montes Urales son considerados la frontera natural entre Europa y Asia"
+  },
+  {
+    "id": 232,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el nombre de la isla en la que vive la tribu no contactada menos conocida del mundo?",
+    "respuesta": "Esta isla es Sentinel del Norte, parte del archipiélago de las islas Andamán y perteneciente a la República de la India"
+  },
+  {
+    "id": 233,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la capital de Filipinas?",
+    "respuesta": "Manila, ciudad situada en la isla de Luzón"
+  },
+  {
+    "id": 234,
+    "categoria": "Geografía",
+    "pregunta": "¿Además del alemán, el italiano y el francés, ¿qué otro idioma es hablado en ciertas regiones de Suiza?",
+    "respuesta": "En el este de Suiza se habla también el romache, una lengua románica"
+  },
+  {
+    "id": 235,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la capital de Mongolia?",
+    "respuesta": "Ulán Bator, que es también la ciudad más poblada del país"
+  },
+  {
+    "id": 236,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el país europeo del que provienen las familias de la mayor parte de los habitantes de Argentina?",
+    "respuesta": "Es italia, muy por delante de España"
+  },
+  {
+    "id": 237,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué país se habla mayoritariamente el idioma tagálog?",
+    "respuesta": "Este idioma es originario de Filipinas"
+  },
+  {
+    "id": 238,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la capital de Letonia?",
+    "respuesta": "Este país báltico tiene Riga por capital"
+  },
+  {
+    "id": 239,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la ciudad más poblada de África?",
+    "respuesta": "El Cairo",
+    "detalle": "dado que tiene casi 20 millones de habitantes"
+  },
+  {
+    "id": 241,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el idioma de la Europa continental reconocido como una de las lenguas oficiales de Sudáfrica?",
+    "respuesta": "Es el afrikáans, un idioma derivado del neerlandés"
+  },
+  {
+    "id": 243,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el nombre de la capital de Albania?",
+    "respuesta": "Tirana, ubicada en el centro de este país balcánico"
+  },
+  {
+    "id": 244,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué cordillera recorre el norte de Marruecos, Túnez y Argelia?",
+    "respuesta": "Es la cordillera del Atlas, de más de 2000 kilómetros de longitud"
+  },
+  {
+    "id": 246,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué montaña es uno de los símbolos nacionales de Armenia?",
+    "respuesta": "Es el monte Ararat, lugar en el que según la doctrina cristiana descansa el Arca de Noé"
+  },
+  {
+    "id": 352,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué país es a la vez una isla y un continente?",
+    "respuesta": "Australia"
+  },
+  {
+    "id": 360,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el océano más grande de la Tierra?",
+    "respuesta": "El Océano Pacífico"
+  },
+  {
+    "id": 364,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué estado norteamericano es el más grande (por superficie)?",
+    "respuesta": "Alaska"
+  },
+  {
+    "id": 386,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la capital de la India?",
+    "respuesta": "Nueva Delhi"
+  },
+  {
+    "id": 387,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué dos estados de EE.UU. comparten más fronteras con otros estados?",
+    "respuesta": "Tennessee y Missouri"
+  },
+  {
+    "id": 388,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué dos países tienen la frontera internacional compartida más larga?",
+    "respuesta": "Canadá y Estados Unidos"
+  },
+  {
+    "id": 392,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la cadena montañosa más larga sobre el agua?",
+    "respuesta": "Los Andes"
+  },
+  {
+    "id": 399,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué ciudad se descubrieron las primeras infecciones por COVID-19?",
+    "respuesta": "Wuhan, China"
+  },
+  {
+    "id": 402,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué río atraviesa París?",
+    "respuesta": "El Sena"
+  },
+  {
+    "id": 403,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la capital de Iowa?",
+    "respuesta": "Des Moines"
+  },
+  {
+    "id": 404,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la lengua más hablada en Brasil?",
+    "respuesta": "Portugués"
+  },
+  {
+    "id": 410,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué estado de EE.UU. se encuentra el Área 51?",
+    "respuesta": "Nevada"
+  },
+  {
+    "id": 412,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué ciudad y estado se encuentra la Universidad de Harvard?",
+    "respuesta": "Cambridge, Massachusetts"
+  },
+  {
+    "id": 419,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué país es conocido como el País del Sol Naciente?",
+    "respuesta": "Japón"
+  },
+  {
+    "id": 434,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué número de islas principales componen el archipiélago de las islas Hawai?",
+    "respuesta": "Ocho islas principales",
+    "detalle": "¡más un montón de islas e islotes más pequeños para un total de 137 islas!)"
+  },
+  {
+    "id": 437,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué país tiene el idioma nacional con el alfabeto más largo?",
+    "respuesta": "Camboya",
+    "detalle": "su lengua nacional, el jemer, tiene 74 caracteres"
+  },
+  {
+    "id": 439,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué ciudad intercontinental está dividida en dos partes separadas por el estrecho del Bósforo, con la mitad de la ciudad en Europa y la otra mitad en Asia?",
+    "respuesta": "Estambul, Turquía"
+  },
+  {
+    "id": 440,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué país tiene el mayor número de husos horarios del mundo?",
+    "respuesta": "Francia",
+    "detalle": "incluyendo sus territorios colonizados y su reclamación territorial en la Antártida, Francia representa 13 husos horarios"
+  },
+  {
+    "id": 464,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la parte más profunda conocida del océano?",
+    "respuesta": "La Fosa de las Marianas, que tiene una profundidad máxima de 36.070 pies"
+  },
+  {
+    "id": 468,
+    "categoria": "Geografía",
+    "pregunta": "¿Dónde se registró la temperatura más alta de la historia de la Tierra, según la Organización Meteorológica Mundial?",
+    "respuesta": "Death Valley, California",
+    "detalle": "donde se alcanzaron los 134 grados Fahrenheit en julio de 1913)"
+  },
+  {
+    "id": 471,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la capital de Singapur?",
+    "respuesta": "Singapur",
+    "detalle": "es una ciudad-estado insular)"
+  },
+  {
+    "id": 476,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué país tiene el mayor número de ciudadanos mayores de 65 años?",
+    "respuesta": "Japón"
+  },
+  {
+    "id": 480,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué ciudad está construida sobre las ruinas de la ciudad azteca de Tenochtitlan?",
+    "respuesta": "Ciudad de México, México"
+  },
+  {
+    "id": 484,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la isla más grande del Mediterráneo?",
+    "respuesta": "Sicilia"
+  },
+  {
+    "id": 490,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué capital europea está construida sobre 14 islas conectadas por más de 50 puentes?",
+    "respuesta": "Estocolmo, Suecia"
+  },
+  {
+    "id": 494,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué país tiene más lugares declarados Patrimonio de la Humanidad por la UNESCO?",
+    "respuesta": "Italia"
+  },
+  {
+    "id": 499,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué capital europea es conocida como la \"Ciudad de las Cien Torres\"?",
+    "respuesta": "Praga, República Checa"
+  },
+  {
+    "id": 633,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el país más pequeño del mundo?",
+    "respuesta": "Ciudad del Vaticano"
+  },
+  {
+    "id": 636,
+    "categoria": "Geografía",
+    "pregunta": "¿Dónde se encuentra el edificio más alto del mundo?",
+    "respuesta": "Dubái, donde se alza el Burj Khalifa con una altura de 2.717 pies"
+  },
+  {
+    "id": 648,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué estado de EE.UU. sólo tiene dos escaleras mecánicas?",
+    "respuesta": "Wyoming"
+  },
+  {
+    "id": 649,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué país se encuentra, de principio a fin, la carretera más larga?",
+    "respuesta": "EE.UU.",
+    "detalle": "La Ruta 20 cubre 3.365 millas. Si nos fijamos en las carreteras que no están contenidas en un solo país, la carretera más larga es la Carretera Panamericana con 19.000 millas"
+  },
+  {
+    "id": 650,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué país se encuentra la universidad más antigua del mundo?",
+    "respuesta": "Italia",
+    "detalle": "se encuentra en la ciudad de Bolonia, la Universidad de Bolonia fue fundada en 1088"
+  },
+  {
+    "id": 651,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué país tiene la costa más larga del mundo?",
+    "respuesta": "Canadá, con 125.570 millas de costa"
+  },
+  {
+    "id": 652,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué país se encuentra la oficina de correos más alta del mundo?",
+    "respuesta": "India",
+    "detalle": "la oficina de correos de Hikkim, Himachal Pradesh, se encuentra a una altitud de 14.567 pies"
+  },
+  {
+    "id": 740,
+    "categoria": "Geografía",
+    "pregunta": "¿Tras la latinización de las lenguas, ¿cuál fue la otra que sobrevivió hasta nuestros días?",
+    "respuesta": "Euskera"
+  },
+  {
+    "id": 756,
+    "categoria": "Geografía",
+    "pregunta": "¿Dónde se encuentra la Sagrada Familia?",
+    "respuesta": "En Barcelona"
+  },
+  {
+    "id": 757,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la ciudad de los rascacielos?",
+    "respuesta": "Nueva York"
+  },
+  {
+    "id": 758,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué provincia de España se encuentra el parque temático de PortAventura?",
+    "respuesta": "Tarragona"
+  },
+  {
+    "id": 759,
+    "categoria": "Geografía",
+    "pregunta": "¿Dónde está la Casa Blanca?",
+    "respuesta": "En Washington D.C"
+  },
+  {
+    "id": 760,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el continente más extenso del planeta?",
+    "respuesta": "Asia"
+  },
+  {
+    "id": 763,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la línea más larga del metro de Madrid?",
+    "respuesta": "La línea 12"
+  },
+  {
+    "id": 764,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el lugar más frío de la Tierra?",
+    "respuesta": "La Antártida"
+  },
+  {
+    "id": 765,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el río más largo de Europa?",
+    "respuesta": "El Volga"
+  },
+  {
+    "id": 766,
+    "categoria": "Geografía",
+    "pregunta": "¿Dónde se encuentra el Museo del Louvre?",
+    "respuesta": "En París"
+  },
+  {
+    "id": 767,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué ciudad europea está el Atomium?",
+    "respuesta": "En Bruselas"
+  },
+  {
+    "id": 768,
+    "categoria": "Geografía",
+    "pregunta": "¿Cómo se llama el río más famoso de Egipto?",
+    "respuesta": "El Nilo"
+  },
+  {
+    "id": 769,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué país se encuentra el desierto de Atacama?",
+    "respuesta": "En Chile"
+  },
+  {
+    "id": 770,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la ciudad más poblada de Andalucía?",
+    "respuesta": "Sevilla"
+  },
+  {
+    "id": 771,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el país más poblado de África?",
+    "respuesta": "Nigeria"
+  },
+  {
+    "id": 774,
+    "categoria": "Geografía",
+    "pregunta": "¿A qué país pertenece la isla de Creta?",
+    "respuesta": "Grecia"
+  },
+  {
+    "id": 775,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el país más visitado del mundo?",
+    "respuesta": "Francia"
+  },
+  {
+    "id": 776,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el país con menos habitantes del mundo?",
+    "respuesta": "La Ciudad del Vaticano"
+  },
+  {
+    "id": 777,
+    "categoria": "Geografía",
+    "pregunta": "¿A qué país pertenece Groenlandia?",
+    "respuesta": "Dinamarca"
+  },
+  {
+    "id": 780,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál era la ciudad más cercana a la central nuclear de Chernóbil?",
+    "respuesta": "Prípiat"
+  },
+  {
+    "id": 781,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la ciudad más poblada del mundo?",
+    "respuesta": "Tokio"
+  },
+  {
+    "id": 782,
+    "categoria": "Geografía",
+    "pregunta": "¿Dónde está Transilvania?",
+    "respuesta": "En Rumanía"
+  },
+  {
+    "id": 783,
+    "categoria": "Geografía",
+    "pregunta": "¿Cómo se llama el desierto de Aragón?",
+    "respuesta": "Los Monegros"
+  },
+  {
+    "id": 784,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué río pasa por Valladolid?",
+    "respuesta": "El río Pisuerga"
+  },
+  {
+    "id": 785,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué dos países de América del Sur no tienen litoral?",
+    "respuesta": "Bolivia y Paraguay"
+  },
+  {
+    "id": 786,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué ciudad tuvo una vez el nombre de Leningrado?",
+    "respuesta": "San Petersburgo"
+  },
+  {
+    "id": 787,
+    "categoria": "Geografía",
+    "pregunta": "Nombra un país que no tenga río.",
+    "respuesta": "Ciudad del Vaticano"
+  },
+  {
+    "id": 788,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué lugar está el Taj Mahal?",
+    "respuesta": "En Agra, en India"
+  },
+  {
+    "id": 789,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuántos países tiene Europa?",
+    "respuesta": "50"
+  },
+  {
+    "id": 790,
+    "categoria": "Geografía",
+    "pregunta": "¿Dónde está el monte Vesubio?",
+    "respuesta": "En Nápoles"
+  },
+  {
+    "id": 791,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la capital de Turquía?",
+    "respuesta": "Ankara"
+  },
+  {
+    "id": 792,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuántos habitantes tiene Pekín?",
+    "respuesta": "21 millones"
+  },
+  {
+    "id": 793,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la capital de Kenia?",
+    "respuesta": "Nairobi"
+  },
+  {
+    "id": 794,
+    "categoria": "Geografía",
+    "pregunta": "¿Cómo se llama el desierto más famoso de México?",
+    "respuesta": "Sonora"
+  },
+  {
+    "id": 795,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué río pasa por Roma?",
+    "respuesta": "El Tíber"
+  },
+  {
+    "id": 796,
+    "categoria": "Geografía",
+    "pregunta": "¿Dónde está Tombuctú?",
+    "respuesta": "En Malí, África"
+  },
+  {
+    "id": 797,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuántos estados tiene Estados Unidos?",
+    "respuesta": "50"
+  },
+  {
+    "id": 798,
+    "categoria": "Geografía",
+    "pregunta": "¿Es más grande Canadá o Estados Unidos?",
+    "respuesta": "Canadá"
+  },
+  {
+    "id": 799,
+    "categoria": "Geografía",
+    "pregunta": "¿Dónde se encuentra la montaña de Tindaya?",
+    "respuesta": "En Fuerteventura"
+  },
+  {
+    "id": 800,
+    "categoria": "Geografía",
+    "pregunta": "¿Si vas a esquiar a Sankt Moritz, ¿en qué país estás esquiando?",
+    "respuesta": "En Suiza"
+  },
+  {
+    "id": 801,
+    "categoria": "Geografía",
+    "pregunta": "¿Tiene Malta salida al mar?",
+    "respuesta": "Sí"
+  },
+  {
+    "id": 802,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué país están las ruinas de Petra?",
+    "respuesta": "En Jordania"
+  },
+  {
+    "id": 803,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el idioma oficial de Jamaica?",
+    "respuesta": "El inglés"
+  },
+  {
+    "id": 804,
+    "categoria": "Geografía",
+    "pregunta": "¿Dónde se encuentra Pretoria?",
+    "respuesta": "En Sudáfrica"
+  },
+  {
+    "id": 805,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la ciudad más al sur del mundo?",
+    "respuesta": "Puerto Williams, en Chile"
+  },
+  {
+    "id": 806,
+    "categoria": "Geografía",
+    "pregunta": "¿El Mar Muerto es un mar?",
+    "respuesta": "No, es un lago"
+  },
+  {
+    "id": 808,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuántos países tiene África?",
+    "respuesta": "54 países"
+  },
+  {
+    "id": 812,
+    "categoria": "Geografía",
+    "pregunta": "¿A qué país pertenece la Isla de Pascua?",
+    "respuesta": "A Chile"
+  },
+  {
+    "id": 813,
+    "categoria": "Geografía",
+    "pregunta": "¿Dónde se encuentra Santa María del Naranco?",
+    "respuesta": "En Oviedo"
+  },
+  {
+    "id": 814,
+    "categoria": "Geografía",
+    "pregunta": "¿A qué provincia gallega pertenece Sanxenxo?",
+    "respuesta": "Pontevedra"
+  },
+  {
+    "id": 815,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué provincia está Trujillo?",
+    "respuesta": "En Cáceres"
+  },
+  {
+    "id": 816,
+    "categoria": "Geografía",
+    "pregunta": "¿La Muralla China está al norte o al sur?",
+    "respuesta": "Al Norte"
+  },
+  {
+    "id": 817,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la capital de Nigeria?",
+    "respuesta": "Abuya"
+  },
+  {
+    "id": 818,
+    "categoria": "Geografía",
+    "pregunta": "¿Qué país tiene más islas?",
+    "respuesta": "Suecia (270.000)"
+  },
+  {
+    "id": 821,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el único continente que forma parte de los cuatro hemisferios?",
+    "respuesta": "África"
+  },
+  {
+    "id": 822,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué país se encuentra el Salto Ángel, la catarata más grande del mundo?",
+    "respuesta": "En Venezuela"
+  },
+  {
+    "id": 823,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la capital del estado de Nueva York?",
+    "respuesta": "Albany"
+  },
+  {
+    "id": 824,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué continente se encuentra el mayor desierto del mundo?",
+    "respuesta": "En la Antártida"
+  },
+  {
+    "id": 825,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuántos colores tiene la bandera de Sudáfrica?",
+    "respuesta": "Seis"
+  },
+  {
+    "id": 826,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la única bandera que no tiene cuatro lados?",
+    "respuesta": "La de Nepal"
+  },
+  {
+    "id": 1143,
+    "categoria": "Geografía",
+    "pregunta": "¿Cómo se llama el estrecho que separa España del continente africano?",
+    "respuesta": "El Estrecho de Gibraltar"
+  },
+  {
+    "id": 1145,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuántos kilómetros de costa hay en España?",
+    "respuesta": "Casi 8000km"
+  },
+  {
+    "id": 1147,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es conocida como la “Ciudad de las Tres Culturas”?",
+    "respuesta": "Toledo"
+  },
+  {
+    "id": 1149,
+    "categoria": "Geografía",
+    "pregunta": "¿Dónde está el único desierto de Europa?",
+    "respuesta": "En Almería"
+  },
+  {
+    "id": 1150,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué lago subterráneo puedes ver un concierto de música clásica?",
+    "respuesta": "En las Cuevas del Drach"
+  },
+  {
+    "id": 1156,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuántos parques nacionales hay en España?",
+    "respuesta": "España alberga 16 parques nacionales"
+  },
+  {
+    "id": 1161,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuántos idiomas oficiales hay en España?",
+    "respuesta": "Seis",
+    "detalle": "el castellano, el aranés, el catalán, el valenciano, el euskera y el gallego"
+  },
+  {
+    "id": 1163,
+    "categoria": "Geografía",
+    "pregunta": "¿Dónde se encuentra la Alhambra?",
+    "respuesta": "En Granada"
+  },
+  {
+    "id": 1166,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la provincia más fría de España?",
+    "respuesta": "Teruel"
+  },
+  {
+    "id": 1171,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es el idioma más viejo de España?",
+    "respuesta": "El Euskera"
+  },
+  {
+    "id": 1174,
+    "categoria": "Geografía",
+    "pregunta": "¿Dónde acaba el Camino de Santiago?",
+    "respuesta": "En Santiago de Compostela"
+  },
+  {
+    "id": 1183,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué ciudad están las Casas Colgantes?",
+    "respuesta": "En Cuenca"
+  },
+  {
+    "id": 1189,
+    "categoria": "Geografía",
+    "pregunta": "¿Dónde está la Universidad Pompeu Fabra?",
+    "respuesta": "En Barcelona"
+  },
+  {
+    "id": 1192,
+    "categoria": "Geografía",
+    "pregunta": "¿A cuánta altitud está Madrid?",
+    "respuesta": "657 metros sobre el nivel del mar"
+  },
+  {
+    "id": 1193,
+    "categoria": "Geografía",
+    "pregunta": "¿Cuál es la isla más pequeña de España?",
+    "respuesta": "La isla de Tabarca"
+  },
+  {
+    "id": 1194,
+    "categoria": "Geografía",
+    "pregunta": "¿En qué ciudad del mundo puedes encontrar una estatua dedicada a un oso y otra a un demonio?",
+    "respuesta": "Madrid",
+    "detalle": "El Oso y el Madroño, en la Puerta del Sol, y el Ángel Caído —una figura de Lucifer— en el Paseo de Coches del Retiro."
+  }
+]

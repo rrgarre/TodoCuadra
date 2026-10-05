@@ -1,1 +1,417 @@
-[]
+[
+  {
+    "id": 211,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cómo se llama el filósofo español conocido por su desarrollo de la teoría del cierre categorial?",
+    "respuesta": "Gustavo Bueno Martínez",
+    "detalle": "conocido por sus trabajos sobre el materialismo filosófico"
+  },
+  {
+    "id": 215,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué filósofo de la Antigua Grecia creía que el elemento del que están compuestas todas las cosas es el agua?",
+    "respuesta": "En la Antigua Grecia era muy frecuente preguntarse acerca del elemento original que daba forma a la realidad",
+    "detalle": ". En este caso, fue Tales de Mileto quien propuso que este elemento primordial podía ser el agua"
+  },
+  {
+    "id": 216,
+    "categoria": "Cultura general",
+    "pregunta": "¿En qué idioma están escritos los manuscritos más antiguos pertenecientes a la parte de la Biblia que hoy conocemos como Nuevo Testamento?",
+    "respuesta": "Están escritos en una variante del griego antiguo"
+  },
+  {
+    "id": 219,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué filósofo danés es considerado el principal precursor del existencialismo?",
+    "respuesta": "Søren Kierkegaard desarrolló planteamientos existencialistas muy parecidos a los que más tarde impulsarían intelectuales como Jean-Paul Sartre o Gabriel Marcel"
+  },
+  {
+    "id": 240,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cómo se llama el plato de puchero típico de Hungría hecho a partir de carne, cebolla y pimientos?",
+    "respuesta": "Es el gulash, uno de los platos más conocidos de la cultura húngara"
+  },
+  {
+    "id": 242,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué grupo étnico ha desarrollado una mitología en la que tiene mucha importancia el concepto de “Tiempo del Sueño”?",
+    "respuesta": "Los aborígenes australianos consideran que en el pasado existió una época a la que se refieren con este nombre, en la que entidades divinas crearon la realidad"
+  },
+  {
+    "id": 245,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cómo se llama el plato típico de la cocina rusa elaborado con bolas de carne picada envueltas en masa?",
+    "respuesta": "l pelmeni, o pilmini, una comida de aspecto similar a los tortellini"
+  },
+  {
+    "id": 353,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cómo se llama el río más largo del mundo?",
+    "respuesta": "El Nilo"
+  },
+  {
+    "id": 358,
+    "categoria": "Cultura general",
+    "pregunta": "En el Reino Unido, ¿cómo se conoce el día después de Navidad?",
+    "respuesta": "Boxing Day"
+  },
+  {
+    "id": 365,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuántas rayas tiene Adidas en su logotipo?",
+    "respuesta": "Tres"
+  },
+  {
+    "id": 371,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuál es la bebida más consumida en el mundo que no es agua?",
+    "respuesta": "Té"
+  },
+  {
+    "id": 378,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué cereal para el desayuno está representado por un tucán de dibujos animados desde 1963?",
+    "respuesta": "Froot Loops"
+  },
+  {
+    "id": 385,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cómo se llaman las 22 primeras cartas de una baraja de tarot?",
+    "respuesta": "Los Arcanos Mayores"
+  },
+  {
+    "id": 394,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuántos metros hay en un patio?",
+    "respuesta": "Tres"
+  },
+  {
+    "id": 398,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué cobertura masticable para postres está hecha de tártaro y claras de huevo y suele encontrarse en las tartas?",
+    "respuesta": "Merengue"
+  },
+  {
+    "id": 405,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuántos colores hay en una bolsa normal de M&Ms?",
+    "respuesta": "Seis"
+  },
+  {
+    "id": 407,
+    "categoria": "Cultura general",
+    "pregunta": "¿En qué parte de la pirámide alimenticia se encuentran las berenjenas?",
+    "respuesta": "En la sección de las frutas"
+  },
+  {
+    "id": 408,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué bebida alcohólica se elabora con bayas de enebro?",
+    "respuesta": "Ginebra"
+  },
+  {
+    "id": 409,
+    "categoria": "Cultura general",
+    "pregunta": "¿Durante cuántas noches se celebra Hanukkah?",
+    "respuesta": "Ocho"
+  },
+  {
+    "id": 411,
+    "categoria": "Cultura general",
+    "pregunta": "¿A qué cadena de comida rápida estadounidense se atribuye la introducción de la primera ventanilla de autoservicio?",
+    "respuesta": "In-N-Out Burger"
+  },
+  {
+    "id": 416,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué significa BMW (en inglés)?",
+    "respuesta": "Bavarian Motor Works"
+  },
+  {
+    "id": 421,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuáles son los tres signos de agua del zodíaco?",
+    "respuesta": "Piscis, Cáncer, Escorpio"
+  },
+  {
+    "id": 422,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué animal se puede ver en el logotipo de Porsche?",
+    "respuesta": "Caballo"
+  },
+  {
+    "id": 426,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué plato estrella del menú dio a conocer en 1957 a la actual segunda cadena de hamburgueserías de comida rápida del mundo?",
+    "respuesta": "El Whopper"
+  },
+  {
+    "id": 428,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué color es el opuesto al azul en la rueda de colores?",
+    "respuesta": "Naranja"
+  },
+  {
+    "id": 429,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cómo se llama el plato de col fermentada típico de la cocina coreana?",
+    "respuesta": "Kimchi"
+  },
+  {
+    "id": 431,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué nombre recibe la carne de ciervo en el menú de un restaurante?",
+    "respuesta": "Venado"
+  },
+  {
+    "id": 436,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuántos colores tenía la bandera del Orgullo original, que ondeó en el Desfile del Día de la Libertad Gay de San Francisco en 1978?",
+    "respuesta": "Ocho",
+    "detalle": "las franjas rosa y turquesa de la bandera se suprimieron posteriormente por motivos de producción)"
+  },
+  {
+    "id": 452,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué producto fabricado para surfistas en Australia acabó convirtiéndose en un elemento básico de la moda de las celebridades de todo el mundo a principios de la década de 2000?",
+    "respuesta": "Uggs"
+  },
+  {
+    "id": 454,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué autor de best-sellers y estrella de la televisión tuvo una carrera anterior como agente secreto, durante la cual contribuyó al desarrollo de un repelente de tiburones aún en uso para evitar que los tiburones curiosos detonaran explosivos submarinos?",
+    "respuesta": "Julia Child"
+  },
+  {
+    "id": 458,
+    "categoria": "Cultura general",
+    "pregunta": "¿Dónde se inventó el café, según la mayoría de los investigadores y una leyenda popular sobre un pastor de cabras?",
+    "respuesta": "Etiopía"
+  },
+  {
+    "id": 459,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué palabra de la lengua inglesa está mal escrita en todos los diccionarios?",
+    "respuesta": "Incorrectamente",
+    "detalle": "sé sincera, ¡sabemos que te hemos pillado con esta!)"
+  },
+  {
+    "id": 460,
+    "categoria": "Cultura general",
+    "pregunta": "La poetisa Emily Dickinson tiene una prima sexta, tres veces menor que ella, famosa por escribir las llamadas \"canciones de pluma\".",
+    "respuesta": "Taylor Swift"
+  },
+  {
+    "id": 466,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuál es el signo directamente opuesto a Escorpio en el zodíaco?",
+    "respuesta": "Tauro"
+  },
+  {
+    "id": 467,
+    "categoria": "Cultura general",
+    "pregunta": "¿Quién es la persona más joven en ganar un Premio Nobel?",
+    "respuesta": "Malala Yousafzai, ¡que ganó con 17 años!"
+  },
+  {
+    "id": 481,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuál es el eslogan de Apple Inc?",
+    "respuesta": "Piensa diferente"
+  },
+  {
+    "id": 483,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuáles son los dos ingredientes principales del clásico plato francés coq au vin?",
+    "respuesta": "Pollo",
+    "detalle": "¡punto extra si has adivinado específicamente gallo! - y vino tinto"
+  },
+  {
+    "id": 485,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué plato a base de carne picada, cebolla y avena es el plato nacional de Escocia?",
+    "respuesta": "Haggis"
+  },
+  {
+    "id": 495,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuál era el propósito original del plástico de burbujas?",
+    "respuesta": "Papel pintado con textura"
+  },
+  {
+    "id": 505,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué especia, procedente de la flor del azafrán, es la más cara por peso en todo el mundo?",
+    "respuesta": "Azafrán"
+  },
+  {
+    "id": 599,
+    "categoria": "Cultura general",
+    "pregunta": "En la mitología griega, ¿quién era conocido como el mensajero de los dioses?",
+    "respuesta": "Hermes"
+  },
+  {
+    "id": 617,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué fenómeno implica a personas que informan de falsos recuerdos compartidos, llamado así por un famoso líder sudafricano?",
+    "respuesta": "El Efecto Mandela"
+  },
+  {
+    "id": 624,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué tipo de flor se utilizaba antiguamente como moneda?",
+    "respuesta": "Los tulipanes, cuyos bulbos se utilizaban como moneda en Holanda"
+  },
+  {
+    "id": 625,
+    "categoria": "Cultura general",
+    "pregunta": "¿En qué país más de la mitad de la gente cree en los elfos?",
+    "respuesta": "Islandia"
+  },
+  {
+    "id": 628,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuál es el animal nacional de Escocia?",
+    "respuesta": "El unicornio"
+  },
+  {
+    "id": 638,
+    "categoria": "Cultura general",
+    "pregunta": "Según la mitología griega, ¿quién fue la primera mujer sobre la Tierra?",
+    "respuesta": "Pandora"
+  },
+  {
+    "id": 640,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué país consume más chocolate per cápita?",
+    "respuesta": "Suiza"
+  },
+  {
+    "id": 642,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuál fue el primer juguete anunciado en televisión?",
+    "respuesta": "Mr. Potato Head"
+  },
+  {
+    "id": 653,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuál es la única letra que no aparece en el nombre de ningún estado de EE.UU.?",
+    "respuesta": "Q"
+  },
+  {
+    "id": 655,
+    "categoria": "Cultura general",
+    "pregunta": "En Japón, ¿cómo se llama el pez globo comestible, famoso por sus toxinas potencialmente letales si no se prepara correctamente?",
+    "respuesta": "Fugu"
+  },
+  {
+    "id": 657,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué invento estadounidense de finales del siglo XIX pretendía \"atajar las crisis nacionales gemelas de la indigestión y la masturbación\"?",
+    "respuesta": "Copos de maíz"
+  },
+  {
+    "id": 660,
+    "categoria": "Cultura general",
+    "pregunta": "¿La cara de qué político estadounidense se utilizó para probar la inteligencia de los cuervos?",
+    "respuesta": "Dick Cheney",
+    "detalle": "en un famoso estudio se utilizaron máscaras de la cara del ex vicepresidente"
+  },
+  {
+    "id": 662,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuál es el único alimento que no se estropea?",
+    "respuesta": "La miel"
+  },
+  {
+    "id": 664,
+    "categoria": "Cultura general",
+    "pregunta": "¿En qué país el tiburón fermentado, que huele mucho a amoníaco, se considera un manjar nacional?",
+    "respuesta": "Islandia"
+  },
+  {
+    "id": 694,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué día es la fiesta nacional de Estados Unidos?",
+    "respuesta": "El 4 de julio"
+  },
+  {
+    "id": 705,
+    "categoria": "Cultura general",
+    "pregunta": "Según la Biblia, ¿cuántos años vivió Matusalén?",
+    "respuesta": "969 años"
+  },
+  {
+    "id": 761,
+    "categoria": "Cultura general",
+    "pregunta": "¿A cuántos kilómetros equivale una milla?",
+    "respuesta": "1.6 km"
+  },
+  {
+    "id": 762,
+    "categoria": "Cultura general",
+    "pregunta": "¿Dónde se inventó la pizza?",
+    "respuesta": "En Nápoles"
+  },
+  {
+    "id": 809,
+    "categoria": "Cultura general",
+    "pregunta": "¿De dónde es originario el queso brie?",
+    "respuesta": "De Francia"
+  },
+  {
+    "id": 819,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué festividad se celebra el 26 de diciembre en Irlanda?",
+    "respuesta": "San Esteban"
+  },
+  {
+    "id": 820,
+    "categoria": "Cultura general",
+    "pregunta": "¿Y cuándo se celebra San Patricio?",
+    "respuesta": "El 17 de marzo"
+  },
+  {
+    "id": 836,
+    "categoria": "Cultura general",
+    "pregunta": "¿De dónde sale el aceite de oliva?",
+    "respuesta": "De las aceitunas"
+  },
+  {
+    "id": 990,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuál es el primer libro de la Biblia?",
+    "respuesta": "El Génesis"
+  },
+  {
+    "id": 996,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuál es el libro sagrado del Islam?",
+    "respuesta": "El Corán"
+  },
+  {
+    "id": 998,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué religión tiene la Torá como su libro sagrado?",
+    "respuesta": "El judaísmo"
+  },
+  {
+    "id": 999,
+    "categoria": "Cultura general",
+    "pregunta": "¿Qué filósofo alemán escribió sobre la teoría del superhombre?",
+    "respuesta": "Friedrich Nietzsche"
+  },
+  {
+    "id": 1008,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuál es el primer color mencionado en la Biblia?",
+    "respuesta": "El verde"
+  },
+  {
+    "id": 1195,
+    "categoria": "Cultura general",
+    "pregunta": "¿Cuál es el país más grande de Europa después de Rusia?",
+    "respuesta": "Francia",
+    "detalle": "Dudosa: con los territorios de ultramar Francia suma 643.801 km² y supera a Ucrania (603.550 km²); solo con territorio europeo el segundo sería Ucrania."
+  }
+]

@@ -129,6 +129,11 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
   ficha guarda su progreso por separado (`juego-de-calcular:<ficha>:v1`), la ficha en uso
   queda marcada con *✓ En uso* y al elegir otra se retoma su progreso (o empieza si es la
   primera vez).
+- **Apartado Trivial** (zona 🎯 en la portada): preguntas al azar de `preguntas/`,
+  eligiendo **una categoría** o **todas mezcladas**. En pantalla solo la pregunta y un
+  botón **Mostrar solución** (a demanda: respuesta + detalle); **Siguiente** aparece
+  solo tras ver la respuesta: **sin temporizadores, contadores ni marcador**, y sin
+  fin (se sale con *‹ Inicio*).
 - **Accesibilidad**: objetivos táctiles ≥ 44 px, foco visible, etiquetas y `aria-label` en
   las casillas (*«Cifra 1 del cociente»*, *«Llevada de las decenas»*…), estados comunicados
   con icono + texto, contraste alto.
@@ -146,9 +151,12 @@ plantillas/               # TODO lo de las fichas: JSON + la lógica que los ent
   calculo.json            # ficha «Ejercicios de hoy» (sheet-001): 31 ejercicios + 4 trucos
   logica.json             # ficha «Lógica»: 15 retos (series, comparaciones, enigmas,
                           #   deducciones y eliminatorias)
+preguntas/                # apartado Trivial: un JSON por categoría (formato estándar)
+  loader.js               # valida, agrupa por categoría y sortea al azar
+  primaria.json           # «Primaria»: 200 preguntas (las demás, pendientes: `[]`)
 src/
   main.jsx                # arranque
-  App.jsx                 # pantallas: portada → secciones → resumen
+  App.jsx                 # pantallas: portada → secciones → resumen (+ Trivial)
   styles/                 # tokens, base, pantallas y ejercicios (CSS plano)
   data/sheets/
     index.js              # registro de fichas + helpers (items por sección, índice)
@@ -158,7 +166,7 @@ src/
     validation.js         # comprobación paso a paso y mensajes en español
     storage.js            # lectura/escritura versionada de localStorage (+ hoja activa)
   components/
-    layout/               # HomeScreen, SectionScreen, SummaryScreen, TopBar
+    layout/               # HomeScreen, SectionScreen, SummaryScreen, TrivialScreen, TopBar
     common/               # ExerciseCard, DigitGrid, DigitCell, Feedback, Progress…
     exercises/            # Addition, Subtraction, Multiplication, Division,
                           # WordProblem, MentalCalculation, MentalTip, Logica
@@ -312,6 +320,34 @@ Comportamiento:
   portada.
 - Si una ficha remota repite el `id` de una local, **gana la local**.
 
+## Trivial (`preguntas/*.json`)
+
+Apartado de preguntas tipo quiz (zona **🎯 Trivial** de la portada). Al entrar se elige
+**una categoría** o **🎲 Todas las categorías** (todo mezclado y al azar).
+
+**Formato estándar**: cada fichero es la lista `[ ... ]` de sus preguntas:
+
+| Campo | Obligatorio | Descripción |
+| --- | --- | --- |
+| `pregunta` | ✅ | enunciado de la pregunta (texto) |
+| `respuesta` | ✅ | respuesta corta que se muestra al pulsar **Mostrar solución** |
+| `detalle` | ❌ | explicación opcional que aparece debajo de la respuesta |
+| `categoria` | ❌ | nombre de la categoría; si falta, se usa la del fichero (`geografia.json` → «Geografia»); mayúsculas y acentos no importan |
+| `id` | ❌ | se ignora (la app genera sus propias claves) |
+
+Reglas del juego:
+
+- **Sin temporizadores, sin contadores y sin marcador**: solo la pregunta y **Mostrar
+  solución** (a demanda); **«Siguiente» no aparece hasta que se ha visto la respuesta**.
+- «Siguiente» sortea otra al azar del mismo conjunto y **el juego no se acaba nunca**
+  (puede repetir); se sale con *‹ Inicio* o se cambia de categoría con *Cambiar
+  categoría*.
+- Un fichero `[]` es válido: su categoría aparece desactivada (*Aún sin preguntas*).
+- Una pregunta que no cumple el formato se salta y deja un aviso en pantalla (ruta del
+  fichero + posición); un fichero que no es una lista no se carga.
+- Para añadir una categoría: crea `preguntas/mi-categoria.json` con `[ ... ]` y recarga.
+  La app lee la carpeta entera con `import.meta.glob` (sin backend).
+
 ## Lista de verificación (sección 31)
 
 | Comprobación | Estado |
@@ -327,6 +363,8 @@ Comportamiento:
 | Ficha rota → **aviso en la portada** con su ruta y el error, sin romper la app | ✅ fichero inválido en el mock de render: se salta y aparece el aviso |
 | **Portada por zonas** (🧮 Cálculo, 🧩 Lógica) con las secciones de la ficha activa desplegadas debajo; ficha de una sola sección se abre directa | ✅ render de portada y de la ficha Lógica; `SET_SHEET` queda en la portada con el progreso cargado |
 | **Fichas remotas**: lectura en vivo de una carpeta de GitHub, validadas con las mismas reglas, con caché en `localStorage` y aviso de las erróneas | ✅ descarga simulada (listado + base64), fusión local-gana-a-remota, fallo con/sin caché y portada con la ficha remota |
+| Apartado **Trivial** (🎯 en portada): categoría o todas mezcladas al azar, pregunta + **Mostrar solución** a demanda, **«Siguiente» solo tras ver la respuesta**, sin temporizadores ni contadores | ✅ `parsePreguntas` + sorteo; render de categorías, de la pregunta con sus botones (sin «Siguiente» hasta ver el detalle) y de la solución bajo demanda (sin restos de contador ni de tiempo) |
+| Trivial: categoría **vacía** desactivada y fichero roto con **aviso por ruta** | ✅ mocks con `geografia.json` (`[]`) y `rota.json` (que no es lista); `primaria.json` validado entero (200) |
 | **Varias fichas**: cambiar de ficha con progreso independiente y ficha activa recordada | ✅ `SET_SHEET` + clave `hoja-activa`; portada, resumen y render de la ficha Lógica comprobados |
 | Problemas de 2 pasos guiados y de 3 pasos con elección de operación | ✅ render de los 4 + validación de cada modo |
 | Cálculo mental con pista al segundo fallo | ✅ tests de validación |

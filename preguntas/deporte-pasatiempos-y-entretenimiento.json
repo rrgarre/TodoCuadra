@@ -1,1 +1,710 @@
-[]
+[
+  {
+    "id": 258,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cómo se llama la protagonista de la saga de videojuegos \"The Legend of Zelda\"?",
+    "respuesta": "A pesar de que el nombre propio del título sea otro, el protagonista de estos videojuegos se llama Link"
+  },
+  {
+    "id": 270,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cómo se llama la práctica de quedarse tumbado boca abajo y manteniendo la rigidez del cuerpo, la cual se hizo viral a través de Internet mediante fotos y vídeos?",
+    "respuesta": "Se llama \"planking"
+  },
+  {
+    "id": 271,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuál es el primer videojuego de la saga Donkey Kong que tenía imágenes en 3D?",
+    "respuesta": "A pesar de que sus videojuegos anteriores tenían estética tridimensional, el primero en tener 3D real fue \"Donkey Kong 64"
+  },
+  {
+    "id": 318,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuándo se celebró la primera Copa Mundial de Fútbol?",
+    "respuesta": "La primera Copa Mundial se celebró en 1930, siendo Uruguay el primer país en ser campeón del Mundo"
+  },
+  {
+    "id": 319,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Quién fue el campeón mundial de ajedrez entre los años 1972 y 1974, y el vencedor del “encuentro del siglo” contra el campeón soviético Boris Vasilievich Spassky?",
+    "respuesta": "Bobby Fischer, cuyo nombre real era Robert James Fischer"
+  },
+  {
+    "id": 320,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Quién es considerado el mejor jugador de baloncesto de todos los tiempos?",
+    "respuesta": "Aunque las preferencias personales pueden variar la respuesta, la mayor parte de profesionales y aficionados van a coincidir en una misma persona",
+    "detalle": "Michael Jordan"
+  },
+  {
+    "id": 321,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Quién fue la primera mujer en ganar una medalla olímpica?",
+    "respuesta": "Dentro de las olimpiadas modernas, la primera mujer en ser campeona olímpica y ganar una medalla fue Charlotte Cooper, quien se hizo con el oro en tenis femenino y en tenis mixto",
+    "detalle": "junto a Reginald Doherty) en los juegos olímpicos de París de 1900"
+  },
+  {
+    "id": 322,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué atleta tiene el record plusmarca de velocidad en los 100 metros lisos?",
+    "respuesta": "El ser humano que tiene este récord, además del propio en los 200 metros lisos, es el jamaicano Usain Bolt"
+  },
+  {
+    "id": 323,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué equipo de fútbol ha ganado más Mundiales hasta el momento?",
+    "respuesta": "El equipo de fútbol con mayor número de mundiales en su haber es la selección de Brasil, la cual ha alzado la Copa Mundial hasta en cinco ocasiones"
+  },
+  {
+    "id": 324,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Quién fue Cobi?",
+    "respuesta": "Cobi",
+    "detalle": "fue la mascota de las Juegos Olímpicos de 1992, los cuales se celebraron en Barcelona, España. Fue creado por Javier Mariscal"
+  },
+  {
+    "id": 325,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué ajedrecista cubano fue campeón mundial de esta disciplina entre 1921 y 1927?",
+    "respuesta": "José Raúl Capablanca, apodado “el Mozart del ajedrez"
+  },
+  {
+    "id": 326,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿En qué ciudad española está el estadio de fútbol de Mestalla?",
+    "respuesta": "Es el estadio del Valencia Club de Fútbol, y está en Valencia"
+  },
+  {
+    "id": 327,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué tenista nacida en 1956 ganó 18 títulos de Grand Slam?",
+    "respuesta": "Fue la tenista checa Martina Navrátilová, una de las grandes representantes de este deporte"
+  },
+  {
+    "id": 328,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué deporte jugado con un bate y una pelota es el más popular en la India?",
+    "respuesta": "El deporte rey de este país es el críquet"
+  },
+  {
+    "id": 329,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿En qué ciudad nació el futbolista Lionel Messi?",
+    "respuesta": "Messi nació en la ciudad argentina de Rosario"
+  },
+  {
+    "id": 330,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Con qué mote se conoce al esquiador británico Michael Thomas Edwards?",
+    "respuesta": "El mote que le puso la prensa fue Eddie el Águila, o \"Eddie the Eagle"
+  },
+  {
+    "id": 331,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué jugador de golf nacido en la primera mitad del siglo XX cuenta con un mayor número de torneos majors ganados?",
+    "respuesta": "Jack Nicklaus, que actualmente es quien tiene el mayor número de majors en su palmarés"
+  },
+  {
+    "id": 332,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuál es el sobrenombre con el que se conoce al jugador profesional de Super Smash Bros. Jason Zimmerman?",
+    "respuesta": "El nombre que utiliza en los torneos es M2K, o Mew2King"
+  },
+  {
+    "id": 333,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué arte marcial de origen sudamericano fue desarrollado para parecerse a un baile?",
+    "respuesta": "Es la capoeira, inventado por brasileños de ascendencia africana"
+  },
+  {
+    "id": 334,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué jugador de fútbol dio pie a un movimiento conocido como la “gravesinha”?",
+    "respuesta": "Esta extraña maniobra fue hecha por el danés Thomas Gravesen"
+  },
+  {
+    "id": 335,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué nadador de élite estadounidense ganó cuatro medallas de oro y dos de plata en los Juegos Olímpicos de Londres de 2012?",
+    "respuesta": "Michael Phelps quien ganó todos esos títulos"
+  },
+  {
+    "id": 336,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿En qué ciudad italiana nació el piloto de motociclismo Valentino Rossi?",
+    "respuesta": "En la ciudad italiana de Urbino"
+  },
+  {
+    "id": 337,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cómo se llama el videojuego de estrategia cuyos torneos tienen un seguimiento masivo en Corea del Sur desde finales de los 90?",
+    "respuesta": "StarCraft, en el que ciertos torneos son retransmitidos incluso por la televisión pública de este país"
+  },
+  {
+    "id": 338,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué deportista español se proclamó Campeón de las Series Mundiales de Ultra Running en tres años consecutivos de 2012 a 2014?",
+    "respuesta": "Es el corredor de montaña Kilian Jornet"
+  },
+  {
+    "id": 339,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué arte marcial es conocido como “el boxeo tailandés”?",
+    "respuesta": "Es el muay thai, una de las artes marciales más peligrosas"
+  },
+  {
+    "id": 340,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿En qué equipo de fútbol estaba jugando David Beckham en el año 2007?",
+    "respuesta": "En Los Ángeles Galaxy"
+  },
+  {
+    "id": 341,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué jugador de la NBA ha ganado más campeonatos?",
+    "respuesta": "Bill Russell",
+    "detalle": ". Los 11 con los Boston Celtics"
+  },
+  {
+    "id": 342,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuál es el piloto de MotoGP nacido en España que más campeonatos ha conseguido?",
+    "respuesta": "Marc Márquez",
+    "detalle": ". El catalán sigue en activo, por lo que podría ampliar su palmarés"
+  },
+  {
+    "id": 343,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Quién es el único piloto de Fórmula 1 nacido en España que ha conseguido ganar el campeonato?",
+    "respuesta": "Fernando Alonso",
+    "detalle": ". El asturiano lo consiguió en dos ocasiones"
+  },
+  {
+    "id": 344,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿En qué franquicia de la NBA desarrolló toda su carrera profesional Kobe Bryant?",
+    "respuesta": "En Los Ángeles Lakers"
+  },
+  {
+    "id": 345,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuál es el tenista que ha ganado en más ocasiones el título de Roland Garros?",
+    "respuesta": "Rafael Nadal"
+  },
+  {
+    "id": 346,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué futbolista, cuya demarcación era portero, pasó de jugar en el primer equipo del Fútbol Club Barcelona a probar suerte en el equipo de los Barcelona Dragons de fútbol americano?",
+    "respuesta": "Jesús Angoy tuvo esta excéntrica y curiosa trayectoria"
+  },
+  {
+    "id": 347,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué conocido boxeador inició su trayectoria profesional con el nombre de Cassius Clay?",
+    "respuesta": "Cassius Clay era el nombre original de Muhammad Ali",
+    "detalle": ". Se cambió de nombre al convertirse al islam"
+  },
+  {
+    "id": 348,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuál es el baloncestista más alto que ha participado en la ACB?",
+    "respuesta": "Christ Koumadje",
+    "detalle": ". El jugador chadiano se alzaba hasta los 224 centímetros"
+  },
+  {
+    "id": 349,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué periodista deportivo popularizó la expresión \"Jugón\" para referirse a cracks tanto del fútbol como del baloncesto?",
+    "respuesta": "Andrés Montes"
+  },
+  {
+    "id": 350,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué futbolista argentino era apodado \"El Conejito\"?",
+    "respuesta": "Este sobrenombre se le daba a Javier Saviola, delantero de River Plate, Barcelona y Real Madrid, entre otros equipos"
+  },
+  {
+    "id": 351,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué entrenador español logró el primer (y único) sextete al ganar los seis campeonatos posibles en una única temporada?",
+    "respuesta": "Josep Guardiola, dirigiendo al Fútbol Club Barcelona en la temporada 2008-2009"
+  },
+  {
+    "id": 356,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuál de las hermanas Williams ha ganado más títulos de Grand Slam?",
+    "respuesta": "Serena"
+  },
+  {
+    "id": 367,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué país ganó la Copa Mundial Femenina de la FIFA en 2019?",
+    "respuesta": "Estados Unidos"
+  },
+  {
+    "id": 368,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué icónico jugador de béisbol rompió la barrera de la segregación racial de las Grandes Ligas en 1947?",
+    "respuesta": "Jackie Robinson"
+  },
+  {
+    "id": 389,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué ciudad acogió los Juegos Olímpicos de Invierno de 2014?",
+    "respuesta": "Sochi, Rusia"
+  },
+  {
+    "id": 400,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "En ajedrez, ¿en qué dirección puede moverse un alfil?",
+    "respuesta": "En diagonal, hacia delante o hacia atrás"
+  },
+  {
+    "id": 418,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Quién ostenta el título de máximo anotador de todos los tiempos en la División I de baloncesto de la NCAA?",
+    "respuesta": "Caitlin Clark"
+  },
+  {
+    "id": 497,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuál es la única jugada de ajedrez en la que pueden intervenir dos piezas a la vez?",
+    "respuesta": "Enroque"
+  },
+  {
+    "id": 503,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué franquicia de videojuegos musicales protagonizó Cloud Strife?",
+    "respuesta": "Final Fantasy VII",
+    "detalle": "Cloud Strife)"
+  },
+  {
+    "id": 627,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Dónde está la montaña rusa más alta del mundo?",
+    "respuesta": "Nueva Jersey",
+    "detalle": "en Six Flags Great Adventure - es la montaña rusa Kingda Ka, con una altura de 456 pies)"
+  },
+  {
+    "id": 658,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué actriz se hizo viral por mentir sobre su amor por las limas?",
+    "respuesta": "Dakota Johnson"
+  },
+  {
+    "id": 683,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuál era el nombre de nacimiento de la leyenda del boxeo Muhammad Ali?",
+    "respuesta": "Cassius Clay"
+  },
+  {
+    "id": 685,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué famoso actor descubrió que su \"hermana\" era en realidad su madre a los 37 años?",
+    "respuesta": "Jack Nicholson"
+  },
+  {
+    "id": 701,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuándo saltó Felix Baumgartner?",
+    "respuesta": "En 2012"
+  },
+  {
+    "id": 1020,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Quién es el máximo goleador de la historia del fútbol?",
+    "respuesta": "Cristiano Ronaldo"
+  },
+  {
+    "id": 1021,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Dónde se celebraron los Juegos Olímpicos del año 1992?",
+    "respuesta": "Barcelona"
+  },
+  {
+    "id": 1022,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿En qué país se encuentra el estadio de Wembley?",
+    "respuesta": "En Reino Unido (Londres)"
+  },
+  {
+    "id": 1023,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cómo se llama el estadio del F.C. Barcelona?",
+    "respuesta": "Camp Nou"
+  },
+  {
+    "id": 1024,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuántas veces ha ganado España un Mundial?",
+    "respuesta": "Una"
+  },
+  {
+    "id": 1025,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Quién es el atleta con más medallas olímpicas?",
+    "respuesta": "Michael Phelps",
+    "detalle": "23 oros, 3 platas y 2 bronces)"
+  },
+  {
+    "id": 1026,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuántos anillos hay en la bandera olímpica?",
+    "respuesta": "Cinco"
+  },
+  {
+    "id": 1027,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuál es el deporte más practicado del mundo?",
+    "respuesta": "La natación"
+  },
+  {
+    "id": 1028,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué equipo juega en el Parque de los Príncipes?",
+    "respuesta": "El PSG"
+  },
+  {
+    "id": 1029,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Quién ha sido el futbolista más caro de la historia?",
+    "respuesta": "Neymar",
+    "detalle": "222 millones)"
+  },
+  {
+    "id": 1030,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué atleta tiene el récord de los 100 metros lisos?",
+    "respuesta": "Usain Bolt"
+  },
+  {
+    "id": 1031,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuál es el equipo de la NBA con más títulos?",
+    "respuesta": "Los Boston Celtics"
+  },
+  {
+    "id": 1032,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Quién ganó el Mundial de 2022?",
+    "respuesta": "Argentina"
+  },
+  {
+    "id": 1033,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuánto dura una maratón?",
+    "respuesta": "42 km"
+  },
+  {
+    "id": 1034,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuántos jugadores hay en un equipo de béisbol?",
+    "respuesta": "9"
+  },
+  {
+    "id": 1035,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿En qué equipo jugó Michael Jordan la mayor parte de su carrera?",
+    "respuesta": "Chicago Bulls"
+  },
+  {
+    "id": 1036,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuáles son los dos deportes nacionales de Canadá?",
+    "respuesta": "Hockey sobre hielo y lacrosse"
+  },
+  {
+    "id": 1037,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué país ganó la Copa del Mundo 2018?",
+    "respuesta": "Francia"
+  },
+  {
+    "id": 1038,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Quién fue el número 1 de tenis en 2008?",
+    "respuesta": "Rafael Nadal"
+  },
+  {
+    "id": 1039,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cómo se llama el lugar donde se realizan las carreras de caballos?",
+    "respuesta": "Hipódromo"
+  },
+  {
+    "id": 1040,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuántos títulos de motociclismo tiene Valentino Rossi?",
+    "respuesta": "Nueve"
+  },
+  {
+    "id": 1041,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuáles son las tres grandes vueltas del ciclismo?",
+    "respuesta": "El Tour de Francia, la Vuelta a España y el Giro de Italia"
+  },
+  {
+    "id": 1042,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuál es el deporte nacional de Japón?",
+    "respuesta": "El sumo"
+  },
+  {
+    "id": 1043,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿En qué ciudad se encuentra el estadio popularmente conocido como La Bombonera?",
+    "respuesta": "En Buenos Aires"
+  },
+  {
+    "id": 1044,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué número llevaba a la espalda Raúl González del Real Madrid?",
+    "respuesta": "El 7"
+  },
+  {
+    "id": 1045,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué significan las siglas ATP en el ámbito deportivo?",
+    "respuesta": "Asociación de Tenistas Profesionales"
+  },
+  {
+    "id": 1046,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué pieza de ajedrez puede hacer un movimiento en forma de L?",
+    "respuesta": "El caballo"
+  },
+  {
+    "id": 1047,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuánto dura la prórroga en un partido de fútbol?",
+    "respuesta": "30 minutos"
+  },
+  {
+    "id": 1048,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuáles son los colores de los Juegos Olímpicos?",
+    "respuesta": "Azul, Rojo, Amarillo, Verde y Negro"
+  },
+  {
+    "id": 1049,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuántos campeonatos ganó Michael Jordan con los Chicago Bulls?",
+    "respuesta": "6"
+  },
+  {
+    "id": 1050,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuánto dura un 'round' de boxeo masculino?",
+    "respuesta": "3 minutos"
+  },
+  {
+    "id": 1051,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué deporte se juega anualmente en París en el torneo de Roland Garros?",
+    "respuesta": "Tenis"
+  },
+  {
+    "id": 1052,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué estilo de natación es más rápido?",
+    "respuesta": "Crol"
+  },
+  {
+    "id": 1053,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿A qué distancia se encuentra la línea de tres puntos en el baloncesto?",
+    "respuesta": "6.75 metros"
+  },
+  {
+    "id": 1054,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿En qué deporte se conoce al árbitro como juez de silla?",
+    "respuesta": "Tenis"
+  },
+  {
+    "id": 1055,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuántos integrantes tiene un equipo de vóley playa?",
+    "respuesta": "Dos"
+  },
+  {
+    "id": 1056,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿A qué deporte se le llama “ballet acuático”?",
+    "respuesta": "Natación sincronizada"
+  },
+  {
+    "id": 1057,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuál es el récord mundial de Usain Bolt en 100 metros lisos?",
+    "respuesta": "9,58 segundos"
+  },
+  {
+    "id": 1058,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Quién fue el primer español campeón de la NBA?",
+    "respuesta": "Pau Gasol"
+  },
+  {
+    "id": 1059,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué deporte practica Simone Biles?",
+    "respuesta": "Gimnasia"
+  },
+  {
+    "id": 1060,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuántas veces ha ganado Rafael Nadal el torneo de Wimbledon?",
+    "respuesta": "Dos"
+  },
+  {
+    "id": 1061,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué selección perdió la final del Mundial de fútbol femenino en 2019?",
+    "respuesta": "Países Bajos"
+  },
+  {
+    "id": 1062,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿En qué escudería competía Michael Schumacher en Fórmula 1?",
+    "respuesta": "Ferrari"
+  },
+  {
+    "id": 1063,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuánto dura un partido de rugby?",
+    "respuesta": "80 minutos"
+  },
+  {
+    "id": 1064,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuántas medallas consiguió Ana Peleteiro en Tokio?",
+    "respuesta": "Una"
+  },
+  {
+    "id": 1065,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Quién ganó la liga española de fútbol en 2022?",
+    "respuesta": "El Real Madrid"
+  },
+  {
+    "id": 1066,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cómo murió Kobe Bryant?",
+    "respuesta": "En un accidente de helicóptero"
+  },
+  {
+    "id": 1123,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿En qué año murió Diana de Gales?",
+    "respuesta": "En 1997"
+  },
+  {
+    "id": 1124,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Quién actuó en la Superbowl de 2023?",
+    "respuesta": "Rihanna"
+  },
+  {
+    "id": 1126,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿En qué año se casaron J. Lo y Ben Affleck?",
+    "respuesta": "En 2022"
+  },
+  {
+    "id": 1127,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿En qué año se casaron Meghan Markle y el príncipe Harry?",
+    "respuesta": "En 2018"
+  },
+  {
+    "id": 1128,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿En qué año se casaron el rey Felipe VI y la reina Letizia?",
+    "respuesta": "2004"
+  },
+  {
+    "id": 1129,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Quién es la creadora de la firma 'Rare Beauty'?",
+    "respuesta": "Selena Gómez"
+  },
+  {
+    "id": 1130,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿En qué premios dio un bofetón Will Smith a Chris Rock?",
+    "respuesta": "En los Oscars 2022"
+  },
+  {
+    "id": 1131,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Quién fue el primer marido de Isabel Preysler?",
+    "respuesta": "Julio Iglesias"
+  },
+  {
+    "id": 1132,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Con qué político se relacionó a Marilyn Monroe?",
+    "respuesta": "Con John F. Kennedy"
+  },
+  {
+    "id": 1133,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Dónde se casaron Kourtney Kardashian y Travis Barker?",
+    "respuesta": "En Italia"
+  },
+  {
+    "id": 1134,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿A qué se dedica Sara Sálamo, la mujer de Isco?",
+    "respuesta": "Es actriz"
+  },
+  {
+    "id": 1135,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cómo se llama Dulceida?",
+    "respuesta": "Aida"
+  },
+  {
+    "id": 1138,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Qué deporte jugaba Miguel Ángel Silvestre antes de ser actor?",
+    "respuesta": "Tenis"
+  },
+  {
+    "id": 1139,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuál es el segundo nombre de Selena Gomez?",
+    "respuesta": "Marie"
+  },
+  {
+    "id": 1140,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cómo se llama la madre de Dakota Johnson?",
+    "respuesta": "Melanie Griffith"
+  },
+  {
+    "id": 1141,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Dónde nació Georgina Rodríguez?",
+    "respuesta": "Buenos Aires"
+  },
+  {
+    "id": 1142,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Dónde se casó María Pombo?",
+    "respuesta": "En Cantabria"
+  },
+  {
+    "id": 1170,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿En qué estadio juega el Real Madrid?",
+    "respuesta": "En el Santiago Bernabéu"
+  },
+  {
+    "id": 1191,
+    "categoria": "Deporte, pasatiempos y entretenimiento",
+    "pregunta": "¿Cuántas medallas consiguió España en los Juegos Olímpicos de París 2024?",
+    "respuesta": "18"
+  }
+]

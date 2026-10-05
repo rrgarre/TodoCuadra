@@ -1,1 +1,501 @@
-[]
+[
+  {
+    "id": 285,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cómo se llama el famoso psicólogo estadounidense autor del libro “Más allá de la libertad y la dignidad”?",
+    "respuesta": "El autor de esta obra fue Burrhus Frederic Skinner, uno de los principales representantes del conductismo"
+  },
+  {
+    "id": 298,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es la velocidad de la luz?",
+    "respuesta": "La luz viaja aproximadamente a 300.000.000 km/s",
+    "detalle": "si bien técnicamente lo hace 299.792.458 km/s, solemos redondearlo)"
+  },
+  {
+    "id": 299,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué gas nos protege de la radiación solar, concretamente de la radiación ultravioleta, formando una capa en la atmósfera?",
+    "respuesta": "ta pregunta es el ozono"
+  },
+  {
+    "id": 300,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es el nombre técnico del miedo o fobia a las alturas?",
+    "respuesta": "Una de las fobias más comunes, este miedo recibe el nombre de acrofobia"
+  },
+  {
+    "id": 301,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "La fórmula E=mc2, ¿en qué teoría científica aparece?",
+    "respuesta": "Esta fórmula es una de las más conocidas y básicas de Albert Einstein, y forma parte de su teoría de la relatividad general",
+    "detalle": ". Explica la equivalencia entre masa y energía"
+  },
+  {
+    "id": 304,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es el principal tipo de célula que forma parte del sistema nervioso de humanos y otros animales?",
+    "respuesta": "La unidad básica y el principal tipo de célula",
+    "detalle": "que no la única) que forma parte del sistema nervioso es la neurona"
+  },
+  {
+    "id": 305,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Por qué fue famosa Marie Curie?",
+    "respuesta": "Marie Curie es especialmente conocida por el descubrimiento de la radiactividad, un mérito por el que consiguió un Premio Nobel de Física en 1903",
+    "detalle": "compartido con su marido y Henri Becquerel)"
+  },
+  {
+    "id": 309,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuáles son las bases nitrogenadas del ADN?",
+    "respuesta": "Son la guanina, la adenina, la timina y la citosina"
+  },
+  {
+    "id": 310,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Alrededor de qué planeta orbitan los satélites Ganímedes, Calisto, Ío y Europa?",
+    "respuesta": "Estos cuerpos celestes giran alrededor de Júpiter, el gran planeta gaseoso"
+  },
+  {
+    "id": 312,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Con qué denominación se conoce la línea dibujada por las estrellas Alnitak, Alnilam y Mintaka vistas desde nuestro planeta?",
+    "respuesta": "Estos tres astros forman el cinturón de Orión"
+  },
+  {
+    "id": 314,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cómo se llama el tipo de célula nerviosa más abundante en el cerebro humano?",
+    "respuesta": "Las células más numerosas en esta parte del cuerpo humano no son las neuronas",
+    "detalle": "sino las células gliales, o la glía"
+  },
+  {
+    "id": 315,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cómo se llama el investigador que de manera paralela a Charles Darwin y por coincidencia desarrolló una teoría de la evolución casi idéntica a la del darwinismo?",
+    "respuesta": "Su nombre era Alfred Russell Wallace, y como Darwin, también era británico"
+  },
+  {
+    "id": 316,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué nombre recibe el sistema de transcripción fonética usado en el chino mandarín?",
+    "respuesta": "Este sistema para transformar los ideogramas del chino a la escritura alfabética es llamado pinyin"
+  },
+  {
+    "id": 361,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué gas constituye la mayor parte de la atmósfera terrestre?",
+    "respuesta": "El nitrógeno"
+  },
+  {
+    "id": 370,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cómo se denomina el miedo a las arañas?",
+    "respuesta": "Aracnofobia"
+  },
+  {
+    "id": 382,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es el planeta más pequeño de nuestro sistema solar?",
+    "respuesta": "Mercurio"
+  },
+  {
+    "id": 390,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿En qué año salió a la venta el primer iPhone?",
+    "respuesta": "2007"
+  },
+  {
+    "id": 401,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es el atajo de teclado para la función de pegar en la mayoría de los ordenadores?",
+    "respuesta": "Ctrl+V"
+  },
+  {
+    "id": 413,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es la única vocal de un teclado estándar que no se encuentra en la línea superior de las letras?",
+    "respuesta": "A"
+  },
+  {
+    "id": 415,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿En qué parte del cuerpo humano se encuentra el hueso más pequeño?",
+    "respuesta": "La oreja"
+  },
+  {
+    "id": 420,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es el único metal que es líquido a temperatura ambiente?",
+    "respuesta": "Mercurio"
+  },
+  {
+    "id": 424,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es el símbolo químico del oxígeno?",
+    "respuesta": "O"
+  },
+  {
+    "id": 433,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es la unidad de memoria más pequeña de los ordenadores?",
+    "respuesta": "Un bit, abreviatura de dígito binario"
+  },
+  {
+    "id": 438,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué significa \"HTTP\"?",
+    "respuesta": "Protocolo de transferencia de hipertexto"
+  },
+  {
+    "id": 443,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿De qué elemento están compuestos predominantemente los seres humanos?",
+    "respuesta": "Carbono"
+  },
+  {
+    "id": 447,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Quién inventó la World Wide Web?",
+    "respuesta": "Tim Berners-Lee"
+  },
+  {
+    "id": 448,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cómo se denomina el miedo a quedarse sin teléfono móvil o no poder utilizarlo?",
+    "respuesta": "Nomofobia"
+  },
+  {
+    "id": 465,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué elemento representa el símbolo químico Au?",
+    "respuesta": "Oro"
+  },
+  {
+    "id": 473,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cómo se denomina el fenómeno solar que se produce el 20 ó 21 de marzo de cada año?",
+    "respuesta": "El equinoccio de primavera"
+  },
+  {
+    "id": 474,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es el grupo sanguíneo más raro?",
+    "respuesta": "AB negativo"
+  },
+  {
+    "id": 475,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿En qué fase entra la luna después de estar llena?",
+    "respuesta": "Gibosa creciente"
+  },
+  {
+    "id": 477,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿A qué temperatura hierve el agua?",
+    "respuesta": "212 grados Fahrenheit o 100 grados Celsius"
+  },
+  {
+    "id": 478,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué significa ADN?",
+    "respuesta": "Ácido desoxirribonucleico"
+  },
+  {
+    "id": 479,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué planeta de nuestro sistema solar tiene más lunas?",
+    "respuesta": "Júpiter"
+  },
+  {
+    "id": 482,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuántas costillas hay en el cuerpo humano?",
+    "respuesta": "Veinticuatro"
+  },
+  {
+    "id": 489,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué significa \"Wi-Fi\"?",
+    "respuesta": "Nada, en realidad"
+  },
+  {
+    "id": 491,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es la única letra que no aparece en la tabla periódica?",
+    "respuesta": "J"
+  },
+  {
+    "id": 493,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué constante matemática se conoce como la proporción áurea?",
+    "respuesta": "Phi (≈1,618)"
+  },
+  {
+    "id": 496,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cómo se llama el hueso más largo del cuerpo humano?",
+    "respuesta": "Fémur"
+  },
+  {
+    "id": 501,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué enfermedad está causada por una carencia de vitamina C?",
+    "respuesta": "El escorbuto"
+  },
+  {
+    "id": 502,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿En qué año se envió el primer correo electrónico?",
+    "respuesta": "1971"
+  },
+  {
+    "id": 612,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cómo se llamaba el primer satélite artificial de la Tierra, lanzado en 1957?",
+    "respuesta": "Sputnik 1"
+  },
+  {
+    "id": 630,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué planeta es el más caliente del sistema solar?",
+    "respuesta": "Venus"
+  },
+  {
+    "id": 631,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿De qué hueso carecen los bebés al nacer?",
+    "respuesta": "La rótula"
+  },
+  {
+    "id": 632,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué planeta tiene más gravedad?",
+    "respuesta": "Júpiter"
+  },
+  {
+    "id": 646,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es la sustancia natural más dura del mundo?",
+    "respuesta": "Un diamante"
+  },
+  {
+    "id": 647,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué decía el primer mensaje enviado por telegrama, es decir, el primer mensaje de texto?",
+    "respuesta": "Respuesta\" \"What hath God wrought\", enviado por Samuel Morse en 1844"
+  },
+  {
+    "id": 680,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué celebridad dio nombre en 1996 al primer animal clonado del mundo, una oveja?",
+    "respuesta": "Dolly Parton"
+  },
+  {
+    "id": 718,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál fue el primer metal que el hombre empleó?",
+    "respuesta": "El cobre"
+  },
+  {
+    "id": 753,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué hito informático de 1969 cambiaría radicalmente el curso de la historia de la humanidad?",
+    "respuesta": "Internet"
+  },
+  {
+    "id": 828,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuántas válvulas tiene el corazón humano?",
+    "respuesta": "Cuatro",
+    "detalle": "mitral, tricúspide, aórtica y pulmonar"
+  },
+  {
+    "id": 830,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es el músculo más fuerte del cuerpo humano?",
+    "respuesta": "El masetero"
+  },
+  {
+    "id": 831,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuántos elementos hay en la tabla periódica?",
+    "respuesta": "118 elementos"
+  },
+  {
+    "id": 832,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuánto vale el número pi?",
+    "respuesta": "3.1416"
+  },
+  {
+    "id": 833,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué elemento de la tabla periódica tiene como símbolo He?",
+    "respuesta": "Helio"
+  },
+  {
+    "id": 834,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué es más grande, un átomo o una célula?",
+    "respuesta": "Una célula"
+  },
+  {
+    "id": 835,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuántos lados tiene un heptadecágono?",
+    "respuesta": "Diecisete"
+  },
+  {
+    "id": 837,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cómo se llama el satélite más grande de Saturno?",
+    "respuesta": "Titán"
+  },
+  {
+    "id": 838,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es el hueso más pequeño del cuerpo humano?",
+    "respuesta": "El estribo"
+  },
+  {
+    "id": 839,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es el metal más caro del mundo?",
+    "respuesta": "El rodio"
+  },
+  {
+    "id": 840,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cómo se llama el triángulo que tiene sus tres lados iguales?",
+    "respuesta": "Equilátero"
+  },
+  {
+    "id": 841,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es el nombre de especie de los seres humanos?",
+    "respuesta": "Homo sapiens sapiens"
+  },
+  {
+    "id": 843,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuáles son los cinco tipos de sabores primarios?",
+    "respuesta": "Dulce, amargo, ácido, salado y umami"
+  },
+  {
+    "id": 844,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es la segunda estrella más próxima a la Tierra?",
+    "respuesta": "Próxima Centauri"
+  },
+  {
+    "id": 845,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué órgano del cuerpo consume más energía?",
+    "respuesta": "El cerebro"
+  },
+  {
+    "id": 846,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuántos dientes tiene un humano adulto?",
+    "respuesta": "32"
+  },
+  {
+    "id": 847,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué descubrieron Marie Curie y su esposo Pierre?",
+    "respuesta": "La radioactividad"
+  },
+  {
+    "id": 850,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Por qué partículas está formado un átomo?",
+    "respuesta": "Protones, neutrones y electrones"
+  },
+  {
+    "id": 851,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué grasas son más saludables? ¿Las saturadas o las insaturadas?",
+    "respuesta": "Las insaturadas"
+  },
+  {
+    "id": 852,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué enfermedad provocó la muerte de Stephen Hawking?",
+    "respuesta": "La ELA",
+    "detalle": "Esclerosis Lateral Amiotrófica)"
+  },
+  {
+    "id": 853,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Quién ideó las leyes de la herencia genética?",
+    "respuesta": "Gregor Mendel"
+  },
+  {
+    "id": 854,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Por qué moléculas está formada el agua?",
+    "respuesta": "Dos de hidrógeno y una de oxígeno"
+  },
+  {
+    "id": 855,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "De los cinco sentidos, ¿cuál es el que se desarrolla primero?",
+    "respuesta": "El olfato"
+  },
+  {
+    "id": 856,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es la galaxia más cercana a la nuestra?",
+    "respuesta": "Andrómeda"
+  },
+  {
+    "id": 857,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué pigmento da color a nuestra piel?",
+    "respuesta": "La melanina"
+  },
+  {
+    "id": 858,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Quién postuló las leyes del movimiento?",
+    "respuesta": "Isaac Newton"
+  },
+  {
+    "id": 859,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Quién formuló la Teoría de la Relatividad?",
+    "respuesta": "Albert Einstein"
+  },
+  {
+    "id": 860,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Qué edad tiene el Universo?",
+    "respuesta": "13.800 millones de años"
+  },
+  {
+    "id": 861,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cómo se llama al resultado de una multiplicación?",
+    "respuesta": "Producto"
+  },
+  {
+    "id": 863,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cada cuántos años pasa por la tierra el cometa Halley?",
+    "respuesta": "Cada 75 años"
+  },
+  {
+    "id": 865,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuántas vertebras posee el cuerpo humano?",
+    "respuesta": "33"
+  },
+  {
+    "id": 867,
+    "categoria": "Ciencia, tecnología e informática",
+    "pregunta": "¿Cuál es la estrella más grande conocida?",
+    "respuesta": "UY Scuti"
+  }
+]

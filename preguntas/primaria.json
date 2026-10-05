@@ -1,0 +1,1255 @@
+[
+  {
+    "id": 1,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántas patas tiene una araña?",
+    "respuesta": "8",
+    "detalle": "Las arañas no son insectos: son arácnidos y tienen ocho patas."
+  },
+  {
+    "id": 2,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es el animal terrestre más rápido?",
+    "respuesta": "El guepardo",
+    "detalle": "Puede superar los 100 km/h, aunque solo durante unos segundos."
+  },
+  {
+    "id": 3,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es el animal más grande que ha existido?",
+    "respuesta": "La ballena azul",
+    "detalle": "Puede medir unos 30 metros de largo: más que un autobús."
+  },
+  {
+    "id": 4,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué mamífero puede volar de verdad?",
+    "respuesta": "El murciélago"
+  },
+  {
+    "id": 5,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántos corazones tiene un pulpo?",
+    "respuesta": "Tres",
+    "detalle": "Dos le bombean sangre a las branquias y uno al resto del cuerpo."
+  },
+  {
+    "id": 6,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama un grupo de leones?",
+    "respuesta": "Una manada"
+  },
+  {
+    "id": 7,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es el animal terrestre más pesado?",
+    "respuesta": "El elefante",
+    "detalle": "El elefante africano puede pesar más de seis toneladas."
+  },
+  {
+    "id": 8,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué animal puede vivir más de cien años?",
+    "respuesta": "La tortuga",
+    "detalle": "Las tortugas gigantes pueden vivir más de 150 años."
+  },
+  {
+    "id": 9,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué animal duerme de pie?",
+    "respuesta": "El caballo",
+    "detalle": "La jirafa también duerme de pie, y muy poco cada día."
+  },
+  {
+    "id": 10,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué animal marino se parece a un pequeño caballo?",
+    "respuesta": "El caballito de mar"
+  },
+  {
+    "id": 11,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué insecto produce la miel?",
+    "respuesta": "La abeja"
+  },
+  {
+    "id": 12,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama la casa donde las abejas guardan la miel?",
+    "respuesta": "El panal"
+  },
+  {
+    "id": 13,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué mariposa emigra cada año de Canadá a México?",
+    "respuesta": "La mariposa monarca",
+    "detalle": "Recorre miles de kilómetros para pasar el invierno."
+  },
+  {
+    "id": 14,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué ave del polo sur no puede volar?",
+    "respuesta": "El pingüino",
+    "detalle": "Tampoco pueden volar avestruces ni kiwis."
+  },
+  {
+    "id": 15,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué animal es famoso por su cuello largo?",
+    "respuesta": "La jirafa"
+  },
+  {
+    "id": 16,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es el animal terrestre más pesado después del elefante?",
+    "respuesta": "El rinoceronte",
+    "detalle": "Puede pesar más de dos toneladas."
+  },
+  {
+    "id": 17,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué pez es el más grande del mundo?",
+    "respuesta": "El tiburón ballena",
+    "detalle": "Mide más de 12 metros, pero es inofensivo y se alimenta de plancton."
+  },
+  {
+    "id": 18,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué animal cambia de color para camuflarse?",
+    "respuesta": "El camaleón"
+  },
+  {
+    "id": 19,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué animal hiberna durante el invierno?",
+    "respuesta": "El oso",
+    "detalle": "También hibernan la marmota y el erizo."
+  },
+  {
+    "id": 20,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué roedor construye represas con ramas y barro?",
+    "respuesta": "El castor"
+  },
+  {
+    "id": 21,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué animal con bolsa salta en Australia?",
+    "respuesta": "El canguro"
+  },
+  {
+    "id": 22,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué ave pone los huevos más grandes?",
+    "respuesta": "El avestruz",
+    "detalle": "Sus huevos pesan más de un kilogramo."
+  },
+  {
+    "id": 23,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué animal tiene rayas blancas y negras?",
+    "respuesta": "La cebra"
+  },
+  {
+    "id": 24,
+    "categoria": "Primaria",
+    "pregunta": "¿De qué planta se alimentan los pandas?",
+    "respuesta": "Del bambú"
+  },
+  {
+    "id": 25,
+    "categoria": "Primaria",
+    "pregunta": "¿Con qué órganos respiran los peces?",
+    "respuesta": "Las branquias"
+  },
+  {
+    "id": 26,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué animal de granja pone los huevos que comemos?",
+    "respuesta": "La gallina"
+  },
+  {
+    "id": 27,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama el proceso por el que las serpientes se mudan la piel?",
+    "respuesta": "La muda"
+  },
+  {
+    "id": 28,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántas patas tiene un insecto?",
+    "respuesta": "Seis"
+  },
+  {
+    "id": 29,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué animal marino mamífero tiene aletas y no es un pez?",
+    "respuesta": "El delfín",
+    "detalle": "Las ballenas también son mamíferos: crían a sus crías con leche."
+  },
+  {
+    "id": 30,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué mamífero pone huevos?",
+    "respuesta": "El ornitorrinco",
+    "detalle": "También pone huevos el equidna, un pequeño mamífero con espinas."
+  },
+  {
+    "id": 31,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué planeta vivimos?",
+    "respuesta": "En la Tierra"
+  },
+  {
+    "id": 32,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es el planeta más cercano al Sol?",
+    "respuesta": "Mercurio"
+  },
+  {
+    "id": 33,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué planeta es conocido como el Planeta Rojo?",
+    "respuesta": "Marte"
+  },
+  {
+    "id": 34,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es el planeta más grande del sistema solar?",
+    "respuesta": "Júpiter",
+    "detalle": "Cabrían más de 1.300 Tierras dentro de él."
+  },
+  {
+    "id": 35,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué planeta es famoso por sus anillos?",
+    "respuesta": "Saturno"
+  },
+  {
+    "id": 36,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es la estrella más cercana a la Tierra?",
+    "respuesta": "El Sol"
+  },
+  {
+    "id": 37,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuánto tarda la Tierra en dar una vuelta al Sol?",
+    "respuesta": "Un año",
+    "detalle": "Exactamente, 365 días."
+  },
+  {
+    "id": 38,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuánto tarda la Tierra en girar sobre sí misma?",
+    "respuesta": "Un día",
+    "detalle": "Lo hace en 24 horas, y por eso amanece y anochece."
+  },
+  {
+    "id": 39,
+    "categoria": "Primaria",
+    "pregunta": "¿A qué planeta pertenece nuestra Luna?",
+    "respuesta": "A la Tierra"
+  },
+  {
+    "id": 40,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama la galaxia en la que vivimos?",
+    "respuesta": "La Vía Láctea"
+  },
+  {
+    "id": 41,
+    "categoria": "Primaria",
+    "pregunta": "¿De qué color es el cielo durante el día?",
+    "respuesta": "Azul",
+    "detalle": "La atmósfera dispersa la luz azul del Sol más que los demás colores."
+  },
+  {
+    "id": 42,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué gas respiramos para vivir?",
+    "respuesta": "El oxígeno"
+  },
+  {
+    "id": 43,
+    "categoria": "Primaria",
+    "pregunta": "¿De qué dos gases está formada el agua?",
+    "respuesta": "Hidrógeno y oxígeno",
+    "detalle": "Dos átomos de hidrógeno y uno de oxígeno: H2O."
+  },
+  {
+    "id": 44,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántos días tiene un año bisiesto?",
+    "respuesta": "366",
+    "detalle": "Se añade un día más al mes de febrero."
+  },
+  {
+    "id": 45,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántos continentes hay en la Tierra?",
+    "respuesta": "Siete",
+    "detalle": "Asia, África, América del Norte, América del Sur, Europa, Oceanía y Antártida."
+  },
+  {
+    "id": 46,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es el océano más grande del mundo?",
+    "respuesta": "El océano Pacífico"
+  },
+  {
+    "id": 47,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es el desierto cálido más extenso del mundo?",
+    "respuesta": "El Sáhara",
+    "detalle": "Ocupa casi todo el norte de África."
+  },
+  {
+    "id": 48,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué cordillera se encuentra el monte Everest?",
+    "respuesta": "El Himalaya"
+  },
+  {
+    "id": 49,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es la montaña más alta del planeta?",
+    "respuesta": "El Everest",
+    "detalle": "Mide unos 8.848 metros sobre el nivel del mar."
+  },
+  {
+    "id": 50,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué causa los rayos durante una tormenta?",
+    "respuesta": "Las descargas eléctricas entre las nubes"
+  },
+  {
+    "id": 51,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántos huesos tiene una persona adulta?",
+    "respuesta": "206"
+  },
+  {
+    "id": 52,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué órgano bombea la sangre por el cuerpo?",
+    "respuesta": "El corazón"
+  },
+  {
+    "id": 53,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántas cámaras tiene el corazón humano?",
+    "respuesta": "Cuatro",
+    "detalle": "Dos aurículas y dos ventrículos."
+  },
+  {
+    "id": 54,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué órgano nos permite pensar y recordar?",
+    "respuesta": "El cerebro"
+  },
+  {
+    "id": 55,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es el órgano más grande del cuerpo humano?",
+    "respuesta": "La piel"
+  },
+  {
+    "id": 56,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué vitamina produce la piel al tomar el sol?",
+    "respuesta": "La vitamina D",
+    "detalle": "Ayuda a tener los huesos fuertes."
+  },
+  {
+    "id": 57,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué mineral abunda en la leche y fortalece los huesos?",
+    "respuesta": "El calcio"
+  },
+  {
+    "id": 58,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántos dientes tiene una persona adulta?",
+    "respuesta": "32",
+    "detalle": "De niños tenemos 20 dientes de leche y de adultos 32."
+  },
+  {
+    "id": 59,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántos sentidos tiene el ser humano?",
+    "respuesta": "Cinco",
+    "detalle": "Vista, oído, olfato, gusto y tacto."
+  },
+  {
+    "id": 60,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué par de órganos usamos para respirar?",
+    "respuesta": "Los pulmones"
+  },
+  {
+    "id": 61,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué instrumento mide la temperatura?",
+    "respuesta": "El termómetro"
+  },
+  {
+    "id": 62,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué instrumento registra los terremotos?",
+    "respuesta": "El sismógrafo"
+  },
+  {
+    "id": 63,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué gas de la atmósfera nos protege de la radiación del sol?",
+    "respuesta": "El ozono",
+    "detalle": "Forma la capa de ozono, en lo alto de la atmósfera."
+  },
+  {
+    "id": 64,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama el gran bloque de hielo que flota en el mar?",
+    "respuesta": "El iceberg"
+  },
+  {
+    "id": 65,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuáles son los tres estados del agua?",
+    "respuesta": "Sólido, líquido y gaseoso",
+    "detalle": "Hielo, agua y vapor."
+  },
+  {
+    "id": 66,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué le ocurre al agua cuando hierve?",
+    "respuesta": "Se convierte en vapor",
+    "detalle": "Hierve a 100 grados Celsius."
+  },
+  {
+    "id": 67,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué fuerza nos mantiene pegados a la Tierra?",
+    "respuesta": "La gravedad"
+  },
+  {
+    "id": 68,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué es un imán?",
+    "respuesta": "Un cuerpo que atrae el hierro y otros metales"
+  },
+  {
+    "id": 69,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama el resultado de una multiplicación?",
+    "respuesta": "El producto"
+  },
+  {
+    "id": 70,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama el resultado de una división?",
+    "respuesta": "El cociente"
+  },
+  {
+    "id": 71,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es la capital de España?",
+    "respuesta": "Madrid"
+  },
+  {
+    "id": 72,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es la capital de Francia?",
+    "respuesta": "París"
+  },
+  {
+    "id": 73,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es la capital de Italia?",
+    "respuesta": "Roma"
+  },
+  {
+    "id": 74,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es la capital de Alemania?",
+    "respuesta": "Berlín"
+  },
+  {
+    "id": 75,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es la capital de Portugal?",
+    "respuesta": "Lisboa"
+  },
+  {
+    "id": 76,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es la capital de Japón?",
+    "respuesta": "Tokio"
+  },
+  {
+    "id": 77,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué país está la Torre Eiffel?",
+    "respuesta": "Francia"
+  },
+  {
+    "id": 78,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué país está la Gran Muralla?",
+    "respuesta": "China"
+  },
+  {
+    "id": 79,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué dos países separa el Estrecho de Gibraltar?",
+    "respuesta": "España y Marruecos"
+  },
+  {
+    "id": 80,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es la capital de Argentina?",
+    "respuesta": "Buenos Aires"
+  },
+  {
+    "id": 81,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es el río más largo de España?",
+    "respuesta": "El Ebro"
+  },
+  {
+    "id": 82,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué ciudad está la Sagrada Familia?",
+    "respuesta": "Barcelona"
+  },
+  {
+    "id": 83,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué ciudad italiana es conocida como la ciudad de los canales?",
+    "respuesta": "Venecia",
+    "detalle": "Allí se viaja en góndola en lugar de en coche."
+  },
+  {
+    "id": 84,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué país se encuentran las ruinas de Machu Picchu?",
+    "respuesta": "Perú"
+  },
+  {
+    "id": 85,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué país está la Estatua de la Libertad?",
+    "respuesta": "Estados Unidos",
+    "detalle": "Está en Nueva York y se la regaló Francia."
+  },
+  {
+    "id": 86,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es la capital de Estados Unidos?",
+    "respuesta": "Washington D. C."
+  },
+  {
+    "id": 87,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es la capital de México?",
+    "respuesta": "Ciudad de México"
+  },
+  {
+    "id": 88,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué continente está Egipto?",
+    "respuesta": "África"
+  },
+  {
+    "id": 89,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué país tiene forma de bota?",
+    "respuesta": "Italia"
+  },
+  {
+    "id": 90,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es la isla más grande de España?",
+    "respuesta": "Mallorca"
+  },
+  {
+    "id": 91,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué año llegó Cristóbal Colón a América?",
+    "respuesta": "1492"
+  },
+  {
+    "id": 92,
+    "categoria": "Primaria",
+    "pregunta": "¿Quién fue el primer hombre en pisar la Luna?",
+    "respuesta": "Neil Armstrong",
+    "detalle": "Lo hizo en 1969 con la misión Apolo 11."
+  },
+  {
+    "id": 93,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué civilización construyó las pirámides de Giza?",
+    "respuesta": "La civilización egipcia"
+  },
+  {
+    "id": 94,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué ciudad romana quedó enterrada por el volcán Vesubio?",
+    "respuesta": "Pompeya",
+    "detalle": "El volcán la cubrió de ceniza en el año 79."
+  },
+  {
+    "id": 95,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué barco famoso se hundió en 1912?",
+    "respuesta": "El Titanic"
+  },
+  {
+    "id": 96,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué reina española financió el viaje de Colón?",
+    "respuesta": "Isabel la Católica"
+  },
+  {
+    "id": 97,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué civilización construyó Chichén Itzá, en México?",
+    "respuesta": "Los mayas"
+  },
+  {
+    "id": 98,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama la espada del rey Arturo?",
+    "respuesta": "Excalibur"
+  },
+  {
+    "id": 99,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué ciudad-estado vivían los guerreros espartanos?",
+    "respuesta": "Esparta"
+  },
+  {
+    "id": 100,
+    "categoria": "Primaria",
+    "pregunta": "¿Quiénes dieron la primera vuelta al mundo?",
+    "respuesta": "Magallanes y Elcano",
+    "detalle": "Elcano terminó el viaje tras la muerte de Magallanes."
+  },
+  {
+    "id": 101,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántos jugadores tiene un equipo de fútbol en el campo?",
+    "respuesta": "11"
+  },
+  {
+    "id": 102,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántos jugadores por equipo juegan al baloncesto?",
+    "respuesta": "5"
+  },
+  {
+    "id": 103,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántos anillos tiene la bandera olímpica?",
+    "respuesta": "Cinco",
+    "detalle": "Sus colores son azul, amarillo, negro, verde y rojo."
+  },
+  {
+    "id": 104,
+    "categoria": "Primaria",
+    "pregunta": "¿Cada cuántos años se celebran los Juegos Olímpicos?",
+    "respuesta": "Cada cuatro años",
+    "detalle": "Los de verano y los de invierno se alternan, así que cada dos años hay Juegos."
+  },
+  {
+    "id": 105,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué deporte se juega con una raqueta y una pelota amarilla?",
+    "respuesta": "El tenis"
+  },
+  {
+    "id": 106,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama cuando el marcador está empatado a 40 en tenis?",
+    "respuesta": "Cuarenta iguales",
+    "detalle": "En inglés se dice 'deuce'."
+  },
+  {
+    "id": 107,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuánto mide una maratón?",
+    "respuesta": "42,195 kilómetros",
+    "detalle": "Unos 42 kilómetros."
+  },
+  {
+    "id": 108,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué deporte se mete la pelota dentro de una canasta?",
+    "respuesta": "El baloncesto"
+  },
+  {
+    "id": 109,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué deporte se juega con un tablero y 16 piezas por jugador?",
+    "respuesta": "El ajedrez"
+  },
+  {
+    "id": 110,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántos jugadores por equipo hay en una pista de voleibol?",
+    "respuesta": "Seis"
+  },
+  {
+    "id": 111,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué deporte se mete el balón en la zona de ensayo?",
+    "respuesta": "El rugby",
+    "detalle": "Ese tanto se llama 'try' o ensayo."
+  },
+  {
+    "id": 112,
+    "categoria": "Primaria",
+    "pregunta": "¿De qué país es el sumo el deporte nacional?",
+    "respuesta": "Japón"
+  },
+  {
+    "id": 113,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué deporte se practica con un bate y es muy popular en India?",
+    "respuesta": "El críquet"
+  },
+  {
+    "id": 114,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué deporte te pones de pie sobre una tabla y aprovechas las olas?",
+    "respuesta": "El surf"
+  },
+  {
+    "id": 115,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama el deporte urbano que se practica sobre una tabla con ruedas?",
+    "respuesta": "El monopatín",
+    "detalle": "En muchos países se le llama 'skate'."
+  },
+  {
+    "id": 116,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué deporte olímpico se compite con espadas?",
+    "respuesta": "La esgrima"
+  },
+  {
+    "id": 117,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué deporte se practica montando a caballo?",
+    "respuesta": "La equitación"
+  },
+  {
+    "id": 118,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué deporte combina natación, ciclismo y carrera?",
+    "respuesta": "El triatlón"
+  },
+  {
+    "id": 119,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué deporte se juega con un volante y una raqueta?",
+    "respuesta": "El bádminton"
+  },
+  {
+    "id": 120,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama el disco de caucho con el que se juega al hockey sobre hielo?",
+    "respuesta": "El puck"
+  },
+  {
+    "id": 121,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántas cuerdas tiene una guitarra?",
+    "respuesta": "Seis"
+  },
+  {
+    "id": 122,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántas cuerdas tiene un violín?",
+    "respuesta": "Cuatro"
+  },
+  {
+    "id": 123,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántas teclas tiene un piano de tamaño estándar?",
+    "respuesta": "88",
+    "detalle": "52 teclas blancas y 36 teclas negras."
+  },
+  {
+    "id": 124,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llaman las notas musicales en orden?",
+    "respuesta": "Do, re, mi, fa, sol, la y si"
+  },
+  {
+    "id": 125,
+    "categoria": "Primaria",
+    "pregunta": "¿A qué familia de instrumentos pertenece la trompeta?",
+    "respuesta": "A los instrumentos de viento-metal"
+  },
+  {
+    "id": 126,
+    "categoria": "Primaria",
+    "pregunta": "¿Quién compuso la pieza musical 'Para Elisa'?",
+    "respuesta": "Ludwig van Beethoven"
+  },
+  {
+    "id": 127,
+    "categoria": "Primaria",
+    "pregunta": "¿De qué grupo es la canción 'Hey Jude'?",
+    "respuesta": "Los Beatles"
+  },
+  {
+    "id": 128,
+    "categoria": "Primaria",
+    "pregunta": "¿De qué país es originaria la música reggae?",
+    "respuesta": "Jamaica"
+  },
+  {
+    "id": 129,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué baile típico de Andalucía se baila con castañuelas?",
+    "respuesta": "El flamenco"
+  },
+  {
+    "id": 130,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué cantante colombiana cantó 'Waka Waka', himno del Mundial de 2010?",
+    "respuesta": "Shakira"
+  },
+  {
+    "id": 131,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama la princesa de 'Frozen' que tiene poderes de hielo?",
+    "respuesta": "Elsa"
+  },
+  {
+    "id": 132,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llaman los dos amigos que ayudan a Simba en 'El Rey León'?",
+    "respuesta": "Timón y Pumba"
+  },
+  {
+    "id": 133,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama el vaquero de 'Toy Story'?",
+    "respuesta": "Woody"
+  },
+  {
+    "id": 134,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama la película de Pixar que transcurre dentro de la mente de una niña?",
+    "respuesta": "Del revés",
+    "detalle": "En ella cobran vida emociones como la alegría o la tristeza."
+  },
+  {
+    "id": 135,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué león es el villano de 'El Rey León'?",
+    "respuesta": "Scar"
+  },
+  {
+    "id": 136,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué ciudad viven los Simpson?",
+    "respuesta": "Springfield"
+  },
+  {
+    "id": 137,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué forma es la casa donde vive Bob Esponja, bajo el mar?",
+    "respuesta": "Una piña"
+  },
+  {
+    "id": 138,
+    "categoria": "Primaria",
+    "pregunta": "¿Quién creó a Mickey Mouse?",
+    "respuesta": "Walt Disney"
+  },
+  {
+    "id": 139,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué clase de criatura es la princesa Ariel?",
+    "respuesta": "Una sirena"
+  },
+  {
+    "id": 140,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama la película de Disney ambientada en la Polinesia y protagonizada por Moana?",
+    "respuesta": "Moana",
+    "detalle": "En España se estrenó con el título 'Vaiana'."
+  },
+  {
+    "id": 141,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama la serie de Netflix en la que unos niños se enfrentan a criaturas de otro mundo?",
+    "respuesta": "Stranger Things"
+  },
+  {
+    "id": 142,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué concurso de televisión busca cantantes en España?",
+    "respuesta": "Operación Triunfo"
+  },
+  {
+    "id": 143,
+    "categoria": "Primaria",
+    "pregunta": "¿De qué serie de animación japonesa son personajes Ash y Pikachu?",
+    "respuesta": "Pokémon"
+  },
+  {
+    "id": 144,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama el protagonista de 'Pokémon'?",
+    "respuesta": "Ash Ketchum"
+  },
+  {
+    "id": 145,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué tipo de energía domina Pikachu?",
+    "respuesta": "La eléctrica"
+  },
+  {
+    "id": 146,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es el nombre del protagonista de 'Dragon Ball'?",
+    "respuesta": "Goku"
+  },
+  {
+    "id": 147,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama el monstruo grande y azul de 'Monsters, Inc.'?",
+    "respuesta": "Sully",
+    "detalle": "Su amigo Mike Wazowski es el monstruo verde de un solo ojo."
+  },
+  {
+    "id": 148,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué actor interpreta a Harry Potter en las películas?",
+    "respuesta": "Daniel Radcliffe"
+  },
+  {
+    "id": 149,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama la serie infantil en la que viven Big Bird y Elmo?",
+    "respuesta": "Barrio Sésamo"
+  },
+  {
+    "id": 150,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama el gato de 'Tom y Jerry'?",
+    "respuesta": "Tom"
+  },
+  {
+    "id": 151,
+    "categoria": "Primaria",
+    "pregunta": "¿Quién escribió 'Don Quijote de la Mancha'?",
+    "respuesta": "Miguel de Cervantes"
+  },
+  {
+    "id": 152,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama el caballo de Don Quijote?",
+    "respuesta": "Rocinante"
+  },
+  {
+    "id": 153,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántos enanitos viven con Blancanieves?",
+    "respuesta": "Siete"
+  },
+  {
+    "id": 154,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué le ocurre a la nariz de Pinocho cuando miente?",
+    "respuesta": "Se le alarga"
+  },
+  {
+    "id": 155,
+    "categoria": "Primaria",
+    "pregunta": "¿A quién sigue Alicia por la madriguera en 'Alicia en el país de las maravillas'?",
+    "respuesta": "Al Conejo Blanco"
+  },
+  {
+    "id": 156,
+    "categoria": "Primaria",
+    "pregunta": "¿A qué ciudad viajan los niños con Peter Pan?",
+    "respuesta": "Londres"
+  },
+  {
+    "id": 157,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama la escuela de magia a la que va Harry Potter?",
+    "respuesta": "Hogwarts"
+  },
+  {
+    "id": 158,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama el oso que cuida a Mowgli en 'El libro de la selva'?",
+    "respuesta": "Baloo"
+  },
+  {
+    "id": 159,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué personaje de cómic es el Caballero Oscuro de Gotham?",
+    "respuesta": "Batman"
+  },
+  {
+    "id": 160,
+    "categoria": "Primaria",
+    "pregunta": "¿Quién creó a Mortadelo y Filemón?",
+    "respuesta": "Francisco Ibáñez"
+  },
+  {
+    "id": 161,
+    "categoria": "Primaria",
+    "pregunta": "¿Quién pintó la 'Mona Lisa'?",
+    "respuesta": "Leonardo da Vinci"
+  },
+  {
+    "id": 162,
+    "categoria": "Primaria",
+    "pregunta": "¿Quién pintó el 'Guernica'?",
+    "respuesta": "Pablo Picasso"
+  },
+  {
+    "id": 163,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué museo de Madrid se guarda el 'Guernica'?",
+    "respuesta": "El Museo Reina Sofía"
+  },
+  {
+    "id": 164,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuáles son los tres colores primarios?",
+    "respuesta": "Rojo, amarillo y azul"
+  },
+  {
+    "id": 165,
+    "categoria": "Primaria",
+    "pregunta": "¿Quién esculpió 'El pensador'?",
+    "respuesta": "Auguste Rodin"
+  },
+  {
+    "id": 166,
+    "categoria": "Primaria",
+    "pregunta": "¿Quién pintó 'La noche estrellada'?",
+    "respuesta": "Vincent van Gogh"
+  },
+  {
+    "id": 167,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué pintor español surrealista, famoso por su bigote, pintó 'La persistencia de la memoria'?",
+    "respuesta": "Salvador Dalí"
+  },
+  {
+    "id": 168,
+    "categoria": "Primaria",
+    "pregunta": "¿Quién pintó 'Las Meninas'?",
+    "respuesta": "Diego Velázquez"
+  },
+  {
+    "id": 169,
+    "categoria": "Primaria",
+    "pregunta": "¿Quién pintó 'El nacimiento de Venus'?",
+    "respuesta": "Sandro Botticelli"
+  },
+  {
+    "id": 170,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama el dibujo previo que hace un artista antes de una obra?",
+    "respuesta": "El boceto"
+  },
+  {
+    "id": 171,
+    "categoria": "Primaria",
+    "pregunta": "¿De qué fruto se hace el chocolate?",
+    "respuesta": "Del cacao"
+  },
+  {
+    "id": 172,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué masa redonda con queso y tomate es típica de Italia?",
+    "respuesta": "La pizza"
+  },
+  {
+    "id": 173,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué plato español de arroz con azafrán es típico de Valencia?",
+    "respuesta": "La paella"
+  },
+  {
+    "id": 174,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué fruta se seca para obtener las pasas?",
+    "respuesta": "La uva"
+  },
+  {
+    "id": 175,
+    "categoria": "Primaria",
+    "pregunta": "¿De qué producto lácteo se hace la mantequilla?",
+    "respuesta": "De la nata"
+  },
+  {
+    "id": 176,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué desayuno español de masa frita se moja en chocolate?",
+    "respuesta": "Los churros"
+  },
+  {
+    "id": 177,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué sopa fría española se hace con tomate?",
+    "respuesta": "El gazpacho"
+  },
+  {
+    "id": 178,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama la fruta tropical cubierta de piñas?",
+    "respuesta": "La piña",
+    "detalle": "También se llama ananá en algunos países."
+  },
+  {
+    "id": 179,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué tubérculo se usa para hacer las patatas fritas?",
+    "respuesta": "La patata"
+  },
+  {
+    "id": 180,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué postre de leche cuajada, típico en España, se cubre de caramelo?",
+    "respuesta": "El flan"
+  },
+  {
+    "id": 181,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántas letras tiene el abecedario español?",
+    "respuesta": "27",
+    "detalle": "La última letra es la 'ñ'."
+  },
+  {
+    "id": 182,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántos días tiene un año?",
+    "respuesta": "365",
+    "detalle": "En un año bisiesto, 366."
+  },
+  {
+    "id": 183,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántas semanas tiene un año?",
+    "respuesta": "52",
+    "detalle": "52 semanas y un día."
+  },
+  {
+    "id": 184,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántos minutos tiene un día?",
+    "respuesta": "1.440"
+  },
+  {
+    "id": 185,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuánto es 7 por 8?",
+    "respuesta": "56"
+  },
+  {
+    "id": 186,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuánto es 12 por 12?",
+    "respuesta": "144"
+  },
+  {
+    "id": 187,
+    "categoria": "Primaria",
+    "pregunta": "¿Cómo se llama una palabra que se lee igual al derecho y al revés?",
+    "respuesta": "Palíndromo",
+    "detalle": "Por ejemplo, 'anilina' o 'reconocer'."
+  },
+  {
+    "id": 188,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué moneda se usa en España?",
+    "respuesta": "El euro"
+  },
+  {
+    "id": 189,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué día del año comienza el invierno en el hemisferio norte?",
+    "respuesta": "El 21 de diciembre",
+    "detalle": "Es el solsticio de invierno: el día más corto del año."
+  },
+  {
+    "id": 190,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuántos grados tiene un ángulo recto?",
+    "respuesta": "90 grados"
+  },
+  {
+    "id": 191,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es la capital de Canadá?",
+    "respuesta": "Ottawa"
+  },
+  {
+    "id": 192,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuál es la capital de Brasil?",
+    "respuesta": "Brasilia"
+  },
+  {
+    "id": 193,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué país es famoso por sus canguros?",
+    "respuesta": "Australia"
+  },
+  {
+    "id": 194,
+    "categoria": "Primaria",
+    "pregunta": "¿Cuáles son los cuatro puntos cardinales?",
+    "respuesta": "Norte, sur, este y oeste"
+  },
+  {
+    "id": 195,
+    "categoria": "Primaria",
+    "pregunta": "¿Hacia qué punto señala siempre una brújula?",
+    "respuesta": "El norte"
+  },
+  {
+    "id": 196,
+    "categoria": "Primaria",
+    "pregunta": "¿Quién inventó la bombilla eléctrica?",
+    "respuesta": "Thomas Edison"
+  },
+  {
+    "id": 197,
+    "categoria": "Primaria",
+    "pregunta": "¿Quién descubrió la penicilina?",
+    "respuesta": "Alexander Fleming"
+  },
+  {
+    "id": 198,
+    "categoria": "Primaria",
+    "pregunta": "¿Qué día se celebra el Día de los Santos Inocentes?",
+    "respuesta": "El 28 de diciembre"
+  },
+  {
+    "id": 199,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué noche se comen las doce uvas para tener suerte?",
+    "respuesta": "En Nochevieja",
+    "detalle": "La noche del 31 de diciembre."
+  },
+  {
+    "id": 200,
+    "categoria": "Primaria",
+    "pregunta": "¿En qué estación florecen los árboles?",
+    "respuesta": "La primavera"
+  }
+]

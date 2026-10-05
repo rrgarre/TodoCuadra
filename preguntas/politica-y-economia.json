@@ -1,1 +1,88 @@
-[]
+[
+  {
+    "id": 208,
+    "categoria": "Política y economía",
+    "pregunta": "¿En qué año se creó la Organización de las Naciones Unidas?",
+    "respuesta": "Esta organización fue creada en 1945, mismo año del fin de la Segunda Guerra Mundial",
+    "detalle": "si bien en 1942 ya empezó a acuñarse y utilizarse el término"
+  },
+  {
+    "id": 373,
+    "categoria": "Política y economía",
+    "pregunta": "¿Cuántos jueces forman parte del Tribunal Supremo de Estados Unidos?",
+    "respuesta": "Nueve"
+  },
+  {
+    "id": 397,
+    "categoria": "Política y economía",
+    "pregunta": "¿En qué año se falló el histórico caso de derechos civiles y LGBTQ+ Obergefell contra Hodges?",
+    "respuesta": "2015",
+    "detalle": "se conoce más comúnmente como el caso de la igualdad matrimonial"
+  },
+  {
+    "id": 427,
+    "categoria": "Política y economía",
+    "pregunta": "¿Qué enmienda a la Constitución de EE.UU. abolió la esclavitud, aunque sólo fuera de nombre y no de hecho?",
+    "respuesta": "La 13ª Enmienda"
+  },
+  {
+    "id": 432,
+    "categoria": "Política y economía",
+    "pregunta": "¿Cuántos países forman la Unión Europea?",
+    "respuesta": "27"
+  },
+  {
+    "id": 691,
+    "categoria": "Política y economía",
+    "pregunta": "¿En qué año se aprobó la actual Constitución española?",
+    "respuesta": "En 1978"
+  },
+  {
+    "id": 711,
+    "categoria": "Política y economía",
+    "pregunta": "¿Quién creó el Partido Comunista?",
+    "respuesta": "Lenin"
+  },
+  {
+    "id": 713,
+    "categoria": "Política y economía",
+    "pregunta": "¿Cuándo se fundó la OTAN?",
+    "respuesta": "En 1949"
+  },
+  {
+    "id": 738,
+    "categoria": "Política y economía",
+    "pregunta": "¿Quién fundó el socialismo científico?",
+    "respuesta": "Karl Marx"
+  },
+  {
+    "id": 750,
+    "categoria": "Política y economía",
+    "pregunta": "¿En qué año se celebraron las primeras elecciones bajo la nueva constitución?",
+    "respuesta": "1979"
+  },
+  {
+    "id": 778,
+    "categoria": "Política y economía",
+    "pregunta": "¿Cuál es la moneda oficial de Japón?",
+    "respuesta": "El yen"
+  },
+  {
+    "id": 811,
+    "categoria": "Política y economía",
+    "pregunta": "¿Cuál es la moneda de México?",
+    "respuesta": "El peso mexicano"
+  },
+  {
+    "id": 1144,
+    "categoria": "Política y economía",
+    "pregunta": "¿Qué moneda se usaba antes del Euro en España?",
+    "respuesta": "La peseta fue la moneda oficial entre 1868 y 2001"
+  },
+  {
+    "id": 1185,
+    "categoria": "Política y economía",
+    "pregunta": "¿Cómo se llama el Rey de España?",
+    "respuesta": "Felipe VI"
+  }
+]

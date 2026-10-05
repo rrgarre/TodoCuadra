@@ -14,7 +14,7 @@ import { loadSheetState } from "../../utils/storage.js";
  * ficha se activa y sus secciones se despliegan justo debajo; si la
  * ficha tiene una sola sección, se abre directa a los ejercicios.
  */
-export default function HomeScreen() {
+export default function HomeScreen({ onOpenTrivial }) {
   const { sheet, state, dispatch, reset, setSheet } = useSheet();
   const hasProgress = useMemo(
     () => Object.keys(state.progress).length > 0,
@@ -160,6 +160,30 @@ export default function HomeScreen() {
             </ul>
           </section>
         ))}
+
+        {/* Apartado Trivial: preguntas al azar por categoría (sin fichas). */}
+        <section className="zona">
+          <h2 className="zona-title">🎯 Trivial</h2>
+          <ul className="section-list">
+            <li>
+              <button
+                type="button"
+                className="section-card"
+                aria-label="Jugar al Trivial"
+                onClick={onOpenTrivial}
+              >
+                <span className="section-icon" aria-hidden="true">
+                  🎯
+                </span>
+                <span className="section-body">
+                  <strong>Preguntas al azar</strong>
+                  <span>Elige una categoría o mézclalas todas</span>
+                </span>
+                <span className="section-cta">Jugar</span>
+              </button>
+            </li>
+          </ul>
+        </section>
 
         {warnings.length > 0 && (
           <div className="plantilla-aviso" role="alert">

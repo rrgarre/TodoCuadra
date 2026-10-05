@@ -1,1 +1,1148 @@
-[]
+[
+  {
+    "id": 247,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿A quién interpretaba John Travolta en “Grease”?",
+    "respuesta": "El nombre del personaje de Travolta en esta película era Danny Zuko, líder de la banda T-Birds, quien se enamoraba de Sandy en la conocida película"
+  },
+  {
+    "id": 248,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué conocido cómico imitó a Hitler en la película “El Gran Dictador”?",
+    "respuesta": "ta pregunta es Charles Chaplin, y la película fue un éxito a pesar de estrenarse durante la aún por entonces en curso Segunda Guerra Mundial"
+  },
+  {
+    "id": 249,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién fue el director y a la vez protagonista de la película “Ciudadano Kane”?",
+    "respuesta": "Orson Welles fue tanto director como actor protagonista",
+    "detalle": "además de guionista y productor) de esta obra de culto, considerada por algunos una de las mejores películas de la historia"
+  },
+  {
+    "id": 251,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama la madre de Simba en la película de Disney “El Rey León”?",
+    "respuesta": "Si bien no es tan popular como otros personajes de la película, el nombre de la madre de Simba es Sarabi"
+  },
+  {
+    "id": 252,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama la ciudad donde se encuentra el Mago de Oz?",
+    "respuesta": "La ciudad en la que la pequeña Dorothy encuentra al Mago de Oz recibe el nombre de Ciudad Esmeralda"
+  },
+  {
+    "id": 253,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuáles fueron los tres primeros componentes de “Los payasos de la tele”?",
+    "respuesta": "Los tres primeros payasos en formar parte de este grupo fueron Gaby, Fofó y Miliki",
+    "detalle": ". Posteriormente se unirían Milikito y Rody"
+  },
+  {
+    "id": 256,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Por qué película superventas de los años 90 es conocido el director y productor James Cameron?",
+    "respuesta": "Cameron es responsable de la creación de Titanic, uno de los clásicos del cine de esa época"
+  },
+  {
+    "id": 257,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué película de Christopher Nolan narra la historia de un hombre con amnesia anterógrada, que no puede crear nuevos recuerdos a partir de lo que le va ocurriendo?",
+    "respuesta": "Memento”, protagonizada por Guy Pearce"
+  },
+  {
+    "id": 262,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿A qué saga de películas pertenece el personaje conocido como Jack Sparrow?",
+    "respuesta": "Jack Sparrow es uno de los personajes principales de \"Piratas del Caribe"
+  },
+  {
+    "id": 264,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama el protagonista de la serie de animación japonesa \"Cowboy Bebop\"?",
+    "respuesta": "Se llama Spike, o Spike Spiegel"
+  },
+  {
+    "id": 265,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama el antagonista principal de la película de Disney \"El Rey León\"?",
+    "respuesta": "El león al que Simba se enfrenta se llama Scar"
+  },
+  {
+    "id": 266,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué actor, guionista y monologuista inglés guionizó la versión británica de la serie \"The Office\"?",
+    "respuesta": "Ricky Gervais, que saltó a la fama mundial con esta serie"
+  },
+  {
+    "id": 267,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué país transcurre la acción de la película \"Chappie\"?",
+    "respuesta": "La historia de esta película de ciencia ficción transcurre en Sudáfrica"
+  },
+  {
+    "id": 268,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué famoso youtuber hispanohablante tiene su propia serie de animación?",
+    "respuesta": "Es el youtuber español El Rubius, protagonista de la serie \"Virtual Hero"
+  },
+  {
+    "id": 272,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama el líder de los Autobots en \"Transformers\"?",
+    "respuesta": "Su nombre es Optimus Prime"
+  },
+  {
+    "id": 273,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué serie producida por Netflix tiene como uno de sus antagonistas principales una entidad llamada \"Demogorgon\"?",
+    "respuesta": "Demogorgon es el nombre con el que los niños de la serie Stranger Things llaman al monstruo que los ataca en la primera temporada"
+  },
+  {
+    "id": 293,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué película muda de ciencia ficción fue creada por Fritz Lang en 1927?",
+    "respuesta": "Metrópolis” uno de los clásicos del cine mudo alemán"
+  },
+  {
+    "id": 354,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuántas películas de El Señor de los Anillos hay?",
+    "respuesta": "Tres"
+  },
+  {
+    "id": 363,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién fue la primera princesa Disney?",
+    "respuesta": "Blancanieves",
+    "detalle": "¡la película se estrenó en 1937!"
+  },
+  {
+    "id": 372,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuántas Cheetah Girls hay en la serie de películas del mismo título?",
+    "respuesta": "Cuatro"
+  },
+  {
+    "id": 391,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuáles son los nombres de pila de los cuatro personajes principales de Las chicas de oro?",
+    "respuesta": "Sophia, Dorothy, Rose y Blanche"
+  },
+  {
+    "id": 393,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué año Netflix, que antes se dedicaba al alquiler de DVD, introdujo los servicios de streaming?",
+    "respuesta": "2007"
+  },
+  {
+    "id": 414,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuál es el programa de televisión de animación estadounidense más longevo?",
+    "respuesta": "Los Simpson"
+  },
+  {
+    "id": 441,
+    "categoria": "Cine y televisión",
+    "pregunta": "El Código Hays y sus directrices de \"moralidad\", utilizadas para censurar las películas de Hollywood, ¿estuvieron en vigor hasta cuándo?",
+    "respuesta": "1968",
+    "detalle": "el código comenzó a aplicarse en 1930"
+  },
+  {
+    "id": 442,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué película ostenta el récord de ser la más taquillera de todos los tiempos en Irlanda?",
+    "respuesta": "Barbie",
+    "detalle": "pensabas que íbamos a decir algo irlandés, ¿verdad?)"
+  },
+  {
+    "id": 444,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Los Goo Goo Dolls escribieron Iris para qué película?",
+    "respuesta": "City of Angels, lo que significa que, sí, la letra de \"Iris\" trata realmente del argumento de una película de Nicholas Cage"
+  },
+  {
+    "id": 445,
+    "categoria": "Cine y televisión",
+    "pregunta": "Nombra tres películas basadas en atracciones de Walt Disney World. (Nombrar varias películas de la misma franquicia no cuenta).",
+    "respuesta": "Tower of Terror, la serie Piratas del Caribe, Misión a Marte, Los osos del campo, La mansión encantada, Tomorrowland, Jungle Cruise"
+  },
+  {
+    "id": 449,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuál era el título provisional de la película convertida en fenómeno Everything Everywhere All At Once?",
+    "respuesta": "Una mujer intenta hacer sus impuestos, que, francamente, es increíble"
+  },
+  {
+    "id": 450,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién es la persona más joven en ganar un Oscar?",
+    "respuesta": "Tatum O'Neal, que ganó el de mejor actriz de reparto a los 10 años por su papel en Luna de papel"
+  },
+  {
+    "id": 463,
+    "categoria": "Cine y televisión",
+    "pregunta": "Con su victoria póstuma en los Grammy de 1994, ¿qué estrella de Hollywood se unió a una lista de sólo 19 ganadores del EGOT?",
+    "respuesta": "Audrey Hepburn",
+    "detalle": "su Grammy fue por Mejor Álbum de Palabra Hablada para Niños, ¿y quién sabía siquiera que existía esa categoría?"
+  },
+  {
+    "id": 506,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿De qué película es la canción nominada al Oscar Viaje al pasado?",
+    "respuesta": "Anastasia"
+  },
+  {
+    "id": 507,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién interpreta al Hada Madrina en la versión de 1997 de Cenicienta, protagonizada por Brandy?",
+    "respuesta": "Whitney Houston"
+  },
+  {
+    "id": 508,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuántos hijos tiene la familia Von Trapp en Sonrisas y lágrimas?",
+    "respuesta": "Siete"
+  },
+  {
+    "id": 509,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuál es la película más taquillera de todos los tiempos?",
+    "respuesta": "Avatar"
+  },
+  {
+    "id": 510,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿A qué tono concreto dedica un monólogo la Miranda Priestly de Meryl Streep en El diablo viste de Prada?",
+    "respuesta": "Cerúleo"
+  },
+  {
+    "id": 511,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué famoso documental retrata la escena de los salones de baile de Nueva York en el momento álgido de la epidemia de sida, a mediados y finales de la década de 1980?",
+    "respuesta": "París está ardiendo"
+  },
+  {
+    "id": 512,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuál fue el primer largometraje de animación de la historia?",
+    "respuesta": "Blancanieves y los siete enanitos"
+  },
+  {
+    "id": 513,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama el personaje interpretado perfectamente por Jeff Goldblum en Parque Jurásico y bastante menos perfectamente por Goldblum en El mundo perdido: Parque Jurásico?",
+    "respuesta": "Ian Malcolm"
+  },
+  {
+    "id": 514,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama el icónico baile que empieza con un \"salto a la izquierda\" en The Rocky Horror Picture Show?",
+    "respuesta": "The Time Warp"
+  },
+  {
+    "id": 515,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué ciudad ficticia está ambientada Tiburón?",
+    "respuesta": "Amity Island"
+  },
+  {
+    "id": 517,
+    "categoria": "Cine y televisión",
+    "pregunta": "En Titanic, ¿de dónde es Jack Dawson?",
+    "respuesta": "Chippewa Falls, Wisconsin"
+  },
+  {
+    "id": 518,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué significa la calificación \"R\" en las películas?",
+    "respuesta": "Restringida"
+  },
+  {
+    "id": 519,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué película es el primer crédito cinematográfico de Alan Rickman?",
+    "respuesta": "Jungla de Cristal"
+  },
+  {
+    "id": 520,
+    "categoria": "Cine y televisión",
+    "pregunta": "El diseñador de vestuario de Romy & Michele's High School Reunion también hizo el vestuario de ¿qué otra película icónica de los 90?",
+    "respuesta": "Clueless"
+  },
+  {
+    "id": 521,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién es la única princesa Disney inspirada en una persona real?",
+    "respuesta": "Pocahontas",
+    "detalle": "aunque dadas las inexactitudes históricas de Disney, vamos a seguir adelante y llamar a este capital-Losamente inspirado"
+  },
+  {
+    "id": 522,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuántos soles tiene el planeta Tatooine, el hogar de Luke, en La guerra de las galaxias?",
+    "respuesta": "Dos"
+  },
+  {
+    "id": 523,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuál fue la primera -y todavía única- película de terror en ganar el Oscar a la Mejor Película?",
+    "respuesta": "El silencio de los corderos"
+  },
+  {
+    "id": 524,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué película fue la primera de habla no inglesa en ganar el Oscar a la mejor película?",
+    "respuesta": "Parásito"
+  },
+  {
+    "id": 525,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama el hotel de Psicosis?",
+    "respuesta": "El Motel Bates"
+  },
+  {
+    "id": 526,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuántas veces se ha rehecho la película Ha nacido una estrella?",
+    "respuesta": "Cuatro veces"
+  },
+  {
+    "id": 527,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Por qué el personaje de Ally Sheedy está detenido en El club de los cinco?",
+    "respuesta": "Ella \"no tenía nada mejor que hacer"
+  },
+  {
+    "id": 528,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién fue la primera actriz negra en ganar un Oscar?",
+    "respuesta": "Hattie McDaniel, que ganó el premio a la mejor actriz de reparto en 1940 por su papel en Lo que el viento se llevó"
+  },
+  {
+    "id": 529,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué tres películas comparten el título de ganadora de más Oscars?",
+    "respuesta": "El Señor de los Anillos",
+    "detalle": "El Retorno del Rey, Ben-Hur y Titanic"
+  },
+  {
+    "id": 530,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama el personaje de Tom Cruise en la serie Misión Imposible?",
+    "respuesta": "Ethan Hunt"
+  },
+  {
+    "id": 531,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué icónica actriz del viejo Hollywood es famosa por decir \"cuando soy buena, soy muy buena, pero cuando soy mala, soy mejor\"?",
+    "respuesta": "Mae West"
+  },
+  {
+    "id": 532,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué grupo de música de los años 2000 tiene un papel central en la película de Mary Kate y Ashley New York Minute?",
+    "respuesta": "Simple Plan"
+  },
+  {
+    "id": 533,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué baila el actor Barry Keoghan al final de Saltburn, dando a la canción una importante segunda vida dos décadas después de su lanzamiento inicial?",
+    "respuesta": "Murder on the Dancefloor de Sophie Ellis-Bextor"
+  },
+  {
+    "id": 534,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama la nación africana ficticia que aparece en la película de Marvel Pantera Negra?",
+    "respuesta": "Wakanda"
+  },
+  {
+    "id": 535,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué película de 2011 cuenta con Ryan Gosling y Emma Stone como intereses amorosos y un movimiento de baile sacado directamente de Dirty Dancing?",
+    "respuesta": "Crazy, Stupid, Love"
+  },
+  {
+    "id": 536,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama el personaje que interpreta Michael Cera en la película Barbie 2023?",
+    "respuesta": "Allan"
+  },
+  {
+    "id": 537,
+    "categoria": "Cine y televisión",
+    "pregunta": "En los Juegos del Hambre, ¿cómo se llama la nación ficticia donde se desarrolla la historia?",
+    "respuesta": "Panem"
+  },
+  {
+    "id": 538,
+    "categoria": "Cine y televisión",
+    "pregunta": "Tras The Joy Luck Club en 1993, ¿cuál fue la siguiente gran película de Hollywood protagonizada por un reparto predominantemente asiático?",
+    "respuesta": "Crazy Rich Asians en 2018, es decir, 25 años después de El club de la buena suerte"
+  },
+  {
+    "id": 539,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué película de comedia adolescente de 2019 fue dirigida, en su debut como directora, por Olivia Wilde?",
+    "respuesta": "Booksmart"
+  },
+  {
+    "id": 540,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Dónde viaja Lizzie McGuire en la película Lizzie McGuire para su viaje de graduación?",
+    "respuesta": "Roma, y hablando en serio, ¿qué grupo de niños de 14 años cuyos padres no están en el 1% consiguen ir a Italia para graduarse de 8º curso?"
+  },
+  {
+    "id": 541,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama el campamento de rock al que asisten Mitchie Torres, de Demi Lovato, y Shane Gray, de Joe Jonas, en la clásica película original de Disney Channel Camp Rock?",
+    "respuesta": "Camp Rock",
+    "detalle": "¡perdón-no-perdón por la pregunta trampa del trivial!)"
+  },
+  {
+    "id": 542,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuál es el apellido de las tres hermanas brujas en la clásica película de Halloween Hocus Pocus?",
+    "respuesta": "Sanderson"
+  },
+  {
+    "id": 543,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué canción bailan icónicamente Diane Keaton, Goldie Hawn y Bette Midler al final de El club de las primeras esposas?",
+    "respuesta": "You Don't Own Me\" de Lesley Gore"
+  },
+  {
+    "id": 544,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿A qué se dedica el padre del Alan Parrish de Robin Williams en Jumanji?",
+    "respuesta": "Es dueño de una fábrica de zapatos"
+  },
+  {
+    "id": 545,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama la mejor amiga de Andie (Molly Ringwald) en Pretty in Pink?",
+    "respuesta": "Duckie"
+  },
+  {
+    "id": 546,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿De qué va disfrazada Cady a la fiesta de Halloween en Mean Girls?",
+    "respuesta": "¡Cualquier variación de \"novia de Frankenstein\", \"novia zombi\" o \"novia terrorífica\" sirve!"
+  },
+  {
+    "id": 547,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué obra de Shakespeare se basa 10 Things I Hate About You?",
+    "respuesta": "La fierecilla domada"
+  },
+  {
+    "id": 548,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama la amable y cariñosa profesora de Matilda?",
+    "respuesta": "Miss Honey"
+  },
+  {
+    "id": 549,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién gana el famoso partido de baloncesto \"Te juego el corazón\" al final de Love & Basketball?",
+    "respuesta": "Monica"
+  },
+  {
+    "id": 550,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama la tierra mágica de la que proceden Tia y Tamara Mowry en Twitches?",
+    "respuesta": "Coventry"
+  },
+  {
+    "id": 551,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuál fue la primera película de Mary Kate y Ashley?",
+    "respuesta": "To Grandma's House We Go",
+    "detalle": "1992), una película para televisión. Su primer largometraje fue It Takes Two (1995)"
+  },
+  {
+    "id": 552,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿A quién interpreta Sarah Michelle Gellar en la película Buffy Cazavampiros de 1992?",
+    "respuesta": "A nadie",
+    "detalle": "la película se estrenó cinco años antes que la serie de televisión y, aunque también está escrita por Joss Whedon, por lo demás es una producción totalmente ajena a ella"
+  },
+  {
+    "id": 553,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿De qué tipo de sangre está cubierta Carrie después de ser coronada reina del baile en la película Carrie?",
+    "respuesta": "Sangre de cerdo"
+  },
+  {
+    "id": 554,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuántas cartas escribió Lara Jean en la exitosa serie de Netflix A todos los chicos que he amado?",
+    "respuesta": "Cinco"
+  },
+  {
+    "id": 555,
+    "categoria": "Cine y televisión",
+    "pregunta": "De una lista de decenas de reglas, ¿cuál es la regla nº 1 para sobrevivir al apocalipsis zombi en la película Zombieland?",
+    "respuesta": "Cardio",
+    "detalle": "el más famoso \"doble tap\" es la regla nº 2)"
+  },
+  {
+    "id": 670,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién fue la primera mujer en ganar un Oscar al mejor director?",
+    "respuesta": "Kathryn Bigelow, que ganó en 2010 por The Hurt Locker"
+  },
+  {
+    "id": 676,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuál fue el primer largometraje del director Spike Lee, adaptado posteriormente como serie de Netflix?",
+    "respuesta": "She's Gotta Have It"
+  },
+  {
+    "id": 677,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuál es el nombre de la película más asociada a la fecha 2 de febrero?",
+    "respuesta": "El día de la marmota"
+  },
+  {
+    "id": 678,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué programa de televisión empezaron Ryan Gosling y Christina Aguilera?",
+    "respuesta": "El Club de Mickey Mouse"
+  },
+  {
+    "id": 679,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién tiene el récord de victorias en la categoría de Presentador Destacado de un Reality o Programa de Competición del Primetime Emmy?",
+    "respuesta": "RuPaul"
+  },
+  {
+    "id": 682,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién es la actriz con la carrera televisiva más larga?",
+    "respuesta": "Betty White"
+  },
+  {
+    "id": 684,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuál era el nombre más conocido de la actriz nacida Norma Jeane Mortenson?",
+    "respuesta": "Marilyn Monroe"
+  },
+  {
+    "id": 889,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién dirigió 'Origen'?",
+    "respuesta": "Christopher Nolan"
+  },
+  {
+    "id": 890,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Por qué película ganó Leonardo DiCaprio su primer Óscar?",
+    "respuesta": "El Renacido"
+  },
+  {
+    "id": 891,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién protagonizó la película 'El Pianista'?",
+    "respuesta": "Adrien Brody"
+  },
+  {
+    "id": 892,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuál fue la primera película de Disney?",
+    "respuesta": "Blancanieves y los siete enanitos' (1937)"
+  },
+  {
+    "id": 893,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuántas películas de 'Harry Potter' se han hecho?",
+    "respuesta": "Ocho"
+  },
+  {
+    "id": 894,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién ha protagonizado la saga de 'Indiana Jones'?",
+    "respuesta": "Harrison Ford"
+  },
+  {
+    "id": 895,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué actor español ganó un Óscar por 'No es país para viejos'?",
+    "respuesta": "Javier Bardem"
+  },
+  {
+    "id": 896,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué actriz protagonizó 'Desayuno con diamantes'?",
+    "respuesta": "Audrey Hepburn"
+  },
+  {
+    "id": 897,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién es el enemigo más famoso de Batman?",
+    "respuesta": "El Joker"
+  },
+  {
+    "id": 898,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién dirigió la trilogía de 'El Padrino'?",
+    "respuesta": "Francis Ford Coppola"
+  },
+  {
+    "id": 899,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué actriz ha ganado el mayor número de Premios Óscar?",
+    "respuesta": "Katharine Hepburn (cinco)"
+  },
+  {
+    "id": 900,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué actor ha ganado el mayor número de Premios Óscar?",
+    "respuesta": "Daniel Day-Lewis (tres)"
+  },
+  {
+    "id": 901,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuál fue la primera película de terror en color?",
+    "respuesta": "La maldición de Frankenstein"
+  },
+  {
+    "id": 902,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué color está presente en casi todas las tomas de 'El Resplandor'?",
+    "respuesta": "El rojo"
+  },
+  {
+    "id": 903,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿A qué año viajan Marty y Doc en 'Regreso al futuro II'?",
+    "respuesta": "2015"
+  },
+  {
+    "id": 904,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué ciudad está ambientada 'Pretty Woman'?",
+    "respuesta": "Los Ángeles"
+  },
+  {
+    "id": 905,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué película de terror fue el debut de Johnny Depp?",
+    "respuesta": "Pesadilla en la Elm Street"
+  },
+  {
+    "id": 906,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué película se escucha la frase \"En ocasiones veo muertos\"?",
+    "respuesta": "El Sexto Sentido"
+  },
+  {
+    "id": 907,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién dirigió 'Charada'?",
+    "respuesta": "Alfred Hitchcock"
+  },
+  {
+    "id": 908,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién interpretó a Hermione Granger en 'Harry Potter'?",
+    "respuesta": "Emma Watson"
+  },
+  {
+    "id": 909,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué ciudad se ambiente 'Cazafantasmas'?",
+    "respuesta": "En Nueva York"
+  },
+  {
+    "id": 910,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué actriz encarnó a la hermana de Elliot en 'E.T.'?",
+    "respuesta": "Drew Barrymore"
+  },
+  {
+    "id": 911,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué año se estreno 'Eduardo Manostijeras'?",
+    "respuesta": "1990"
+  },
+  {
+    "id": 912,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién dirigió 'Memorias de África'?",
+    "respuesta": "Sydney Pollack"
+  },
+  {
+    "id": 913,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿A qué saga pertenece el personaje de Katniss Everdeen?",
+    "respuesta": "A 'Los Juegos del Hambre"
+  },
+  {
+    "id": 914,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama la casa de los Weasley en 'Harry Potter'?",
+    "respuesta": "La Madriguera"
+  },
+  {
+    "id": 915,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿A qué mítica actriz interpreta Ana de Armas en 'Blonde'?",
+    "respuesta": "Marilyn Monroe"
+  },
+  {
+    "id": 916,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué año se estrenó 'La naranja mecánica'?",
+    "respuesta": "1971"
+  },
+  {
+    "id": 917,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Dónde se rodó 'Casablanca'?",
+    "respuesta": "En Estados Unidos"
+  },
+  {
+    "id": 918,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Por qué película ganó Penélope Cruz su primer Oscar?",
+    "respuesta": "Vicky Cristina Barcelona"
+  },
+  {
+    "id": 919,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién interpretó a Miércoles Addams en la peli de los 90?",
+    "respuesta": "Christina Ricci"
+  },
+  {
+    "id": 920,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llamaba el planeta del que venía Alf?",
+    "respuesta": "Melmac"
+  },
+  {
+    "id": 921,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama la mujer de Shrek?",
+    "respuesta": "Fiona"
+  },
+  {
+    "id": 922,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué ciudad olímpica transcurre la mayor parte de 'Misión Imposible 2'?",
+    "respuesta": "Sidney"
+  },
+  {
+    "id": 923,
+    "categoria": "Cine y televisión",
+    "pregunta": "En la película 'Mascotas', ¿qué clase de animales eran Max y Duke?",
+    "respuesta": "Perros"
+  },
+  {
+    "id": 924,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién interpretó a Eduardo Manostijeras?",
+    "respuesta": "Johnny Depp"
+  },
+  {
+    "id": 925,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién protagonizó la película 'Gladiator'?",
+    "respuesta": "Russell Crowe"
+  },
+  {
+    "id": 926,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué película ganó el primer Óscar del cine español?",
+    "respuesta": "Volver a empezar', de José Luis Garci"
+  },
+  {
+    "id": 927,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuál es la película que ha obtenido mayor número de premios Goya?",
+    "respuesta": "Mar Adentro' (14)"
+  },
+  {
+    "id": 928,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué actor interpreta al personaje de Thor en el Universo Cinematográfico de Marvel?",
+    "respuesta": "Chris Hemsworth"
+  },
+  {
+    "id": 929,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué país nació la actriz Margot Robbie?",
+    "respuesta": "Australia"
+  },
+  {
+    "id": 930,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿De qué película es la canción \"I'll Make a Man Out of You\"?",
+    "respuesta": "Mulán"
+  },
+  {
+    "id": 931,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué personaje han interpretado tanto Glenn Close como Emma Stone?",
+    "respuesta": "Cruella de Vil"
+  },
+  {
+    "id": 932,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué película aparece la gaviota Scuttle?",
+    "respuesta": "En La Sirenita"
+  },
+  {
+    "id": 933,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué año se estrenó Cenicienta?",
+    "respuesta": "En 1950"
+  },
+  {
+    "id": 934,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuántos \"Óscar a la mejor canción original\" ha ganado Disney?",
+    "respuesta": "14"
+  },
+  {
+    "id": 935,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿De qué color son los zapatos de Mickey Mouse?",
+    "respuesta": "Amarillos"
+  },
+  {
+    "id": 936,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuántos premios Goya ganó 'La Sociedad de la Nieve'?",
+    "respuesta": "12"
+  },
+  {
+    "id": 937,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué año ganó el Oscar a mejor película extranjera 'Mar Adentro'?",
+    "respuesta": "En 2005"
+  },
+  {
+    "id": 938,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿De dónde es Emily Cooper, la protagonista de ‘Emily in Paris’?",
+    "respuesta": "De Chicago"
+  },
+  {
+    "id": 939,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Dónde vive Carrie Bradshaw?",
+    "respuesta": "En Nueva York"
+  },
+  {
+    "id": 940,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama el personaje principal de ‘You’?",
+    "respuesta": "Joe Goldberg"
+  },
+  {
+    "id": 941,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuál fue la serie de Netflix más vista en 2020?",
+    "respuesta": "‘La Casa de Papel’"
+  },
+  {
+    "id": 942,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuál es el parentesco de Monica y Ross en ‘Friends’?",
+    "respuesta": "Son hermanos"
+  },
+  {
+    "id": 943,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién interpreta a Miércoles Addams en la serie de Netflix?",
+    "respuesta": "Jenna Ortega"
+  },
+  {
+    "id": 944,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llamaba el lobo de Jon Nieve?",
+    "respuesta": "Fantasma"
+  },
+  {
+    "id": 945,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué título tenía Regé-Jean Page en ‘Los Bridgerton’?",
+    "respuesta": "El Duque de Hasting"
+  },
+  {
+    "id": 946,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuántos episodios tiene la serie ‘Gossip Girl’?",
+    "respuesta": "121"
+  },
+  {
+    "id": 947,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué actriz protagoniza 'Las escalofriantes aventuras de Sabrina'?",
+    "respuesta": "Kiernan Shipka"
+  },
+  {
+    "id": 948,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama el protagonista de ‘Bola de Dragón’?",
+    "respuesta": "Goku"
+  },
+  {
+    "id": 949,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué familia vive en la ciudad de Springfield?",
+    "respuesta": "Los Simpsons"
+  },
+  {
+    "id": 950,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué malvado brujo tiene un gato llamado Azrael?",
+    "respuesta": "Gargamel"
+  },
+  {
+    "id": 951,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿De qué color es el pelo de Naruto?",
+    "respuesta": "Rubio"
+  },
+  {
+    "id": 952,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿De quiénes son amigos Pato, Elly, Pajaroto y Loula?",
+    "respuesta": "De Pocoyó"
+  },
+  {
+    "id": 953,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama la cabra que acompaña a Heidi?",
+    "respuesta": "Copito de Nieve"
+  },
+  {
+    "id": 954,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quiénes crean el Club de la Canica?",
+    "respuesta": "Zipi y Zape"
+  },
+  {
+    "id": 955,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿De qué serie es popular el personaje de Michael Scofield?",
+    "respuesta": "‘Prison Break’"
+  },
+  {
+    "id": 956,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué actor interpretó a Pablo Escobar en la serie 'Narcos'?",
+    "respuesta": "Wagner Moura"
+  },
+  {
+    "id": 957,
+    "categoria": "Cine y televisión",
+    "pregunta": "Nombra a los personajes principales de ‘Friends’.",
+    "respuesta": "Ross, Rachel, Joey, Chandler, Monica y Phoebe"
+  },
+  {
+    "id": 958,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿A qué instituto van los personajes de ‘Élite’?",
+    "respuesta": "A las Encinas"
+  },
+  {
+    "id": 959,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿De qué serie es popular el personaje de Don Draper?",
+    "respuesta": "‘Mad Men’"
+  },
+  {
+    "id": 960,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién interpreta al personaje de Carrie Bradshaw en ‘Sexo en Nueva York’?",
+    "respuesta": "Sarah Jessica Parker"
+  },
+  {
+    "id": 961,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué serie española se dio a conocer la actriz Ana de Armas?",
+    "respuesta": "‘El Internado’"
+  },
+  {
+    "id": 962,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué ciudad vive la familia Banks en ‘El Príncipe de Bel-Air’?",
+    "respuesta": "En Los Ángeles"
+  },
+  {
+    "id": 963,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿De qué serie es popular el personaje de Walter White?",
+    "respuesta": "‘Breaking Bad’"
+  },
+  {
+    "id": 964,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cuál es el pueblo natal de Paquita Salas?",
+    "respuesta": "Navarrete"
+  },
+  {
+    "id": 965,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿De qué serie es la popular expresión “Winter is coming\"?",
+    "respuesta": "‘Juego de Tronos’"
+  },
+  {
+    "id": 966,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama el personaje de Úrsula Corberó en ‘La Casa de Papel’?",
+    "respuesta": "Tokio"
+  },
+  {
+    "id": 967,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué serie se hicieron populares los personajes Eleven y Mike?",
+    "respuesta": "‘Stranger Things’"
+  },
+  {
+    "id": 968,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién cantaba la sintonía de la serie ‘Los Serrano’?",
+    "respuesta": "Fran Perea"
+  },
+  {
+    "id": 969,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿De qué serie es popular el personaje de Lorelai Gilmore?",
+    "respuesta": "‘Las chicas Gilmore’"
+  },
+  {
+    "id": 970,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué ciudad transcurre la serie ‘La Casa de las Flores’?",
+    "respuesta": "Ciudad de México"
+  },
+  {
+    "id": 971,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué serie se hizo popular la actriz Elsa Pataky?",
+    "respuesta": "‘Al salir de clase’"
+  },
+  {
+    "id": 972,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿A qué se dedicaba Emilio en 'Aquí no hay quien viva'?",
+    "respuesta": "Era el portero del edificio"
+  },
+  {
+    "id": 973,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién es el actor que interpreta a Jon Nieve en ‘Juego de Tronos’?",
+    "respuesta": "Kit Harington"
+  },
+  {
+    "id": 974,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién interpretó a Daenerys Targaryen en la serie ‘Juego de Tronos’?",
+    "respuesta": "Emilia Clarke"
+  },
+  {
+    "id": 975,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿De qué serie es popular el personaje de Jack Bauer?",
+    "respuesta": "‘24’"
+  },
+  {
+    "id": 976,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué instrumento toca Lisa Simpson?",
+    "respuesta": "El saxofón"
+  },
+  {
+    "id": 977,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿De qué serie es popular el personaje de Piper Chapman?",
+    "respuesta": "‘Orange is the New Black’"
+  },
+  {
+    "id": 978,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué actriz interpretó a Claire Underwood en la serie 'House of Cards'?",
+    "respuesta": "Robin Wright"
+  },
+  {
+    "id": 979,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué actor interpretó a Michael Scott en la serie 'The Office'?",
+    "respuesta": "Steve Carell"
+  },
+  {
+    "id": 980,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué actor interpretó a Tony Soprano en la serie 'Los Soprano'?",
+    "respuesta": "James Gandolfini"
+  },
+  {
+    "id": 981,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué serie de televisión seguía a una familia adinerada en Denver?",
+    "respuesta": "‘Dinastía’"
+  },
+  {
+    "id": 982,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llamaba la serie en la que Emilio Aragón interpretaba a un doctor en los años 90?",
+    "respuesta": "‘Médico de familia’"
+  },
+  {
+    "id": 983,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué serie española se dio a conocer Javier Calvo?",
+    "respuesta": "‘Física o química’"
+  },
+  {
+    "id": 984,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué serie de televisión tenía el lema '¿Quién mató a Laura Palmer'?",
+    "respuesta": "‘Twin Peaks’"
+  },
+  {
+    "id": 985,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama el ‘spin-off’ de ‘Breaking Bad’?",
+    "respuesta": "‘Better Call Saul’"
+  },
+  {
+    "id": 986,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué actor protagoniza ‘Memento Mori’?",
+    "respuesta": "Yon González"
+  },
+  {
+    "id": 987,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿En qué serie de Netflix los protagonistas tenían que superar pruebas para seguir con vida?",
+    "respuesta": "‘El juego del calamar’"
+  },
+  {
+    "id": 1096,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Qué película musical protagonizó Zac Efron?",
+    "respuesta": "High School Musical"
+  },
+  {
+    "id": 1125,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama la serie que protagonizan Aitana y Miguel Bernardeau?",
+    "respuesta": "La última"
+  },
+  {
+    "id": 1136,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Cómo se llama el actor de 'Breaking Bad' que sale en la temporada 6 de 'Black Mirror'?",
+    "respuesta": "Aaron Paul"
+  },
+  {
+    "id": 1137,
+    "categoria": "Cine y televisión",
+    "pregunta": "¿Quién dirige la película 'Barbie' con Margot Robbie?",
+    "respuesta": "Greta Gerwig"
+  }
+]

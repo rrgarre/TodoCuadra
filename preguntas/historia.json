@@ -1,1 +1,751 @@
-[]
+[
+  {
+    "id": 201,
+    "categoria": "Historia",
+    "pregunta": "¿Quién fue el primer presidente de la democracia española tras el franquismo?",
+    "respuesta": "Adolfo Suárez"
+  },
+  {
+    "id": 202,
+    "categoria": "Historia",
+    "pregunta": "¿La invasión de qué fortaleza por parte de los revolucionarios es considerada como el punto de inicio de la Revolución Francesa?",
+    "respuesta": "ta pregunta es la toma de la Bastilla"
+  },
+  {
+    "id": 203,
+    "categoria": "Historia",
+    "pregunta": "¿En qué año el hombre pisó la Luna por primera vez?",
+    "respuesta": "La nave Apolo 11 llegó a la Luna en el año 1969, siendo ese año cuando Neil Armstrong dio “un pequeño paso para el hombre, un gran paso para la humanidad"
+  },
+  {
+    "id": 204,
+    "categoria": "Historia",
+    "pregunta": "¿Qué evento se considera que desencadenó la Primera Guerra Mundial?",
+    "respuesta": "El asesinato del archiduque Francisco Fernando de Habsburgo por parte de un activista serbio fue el detonante de las hostilidades",
+    "detalle": "si bien las causas finales son mucho más profundas"
+  },
+  {
+    "id": 205,
+    "categoria": "Historia",
+    "pregunta": "¿A partir de qué suceso consideramos que termina la Edad Antigua y empieza la Edad Media?",
+    "respuesta": "El momento histórico a partir del cual se considera que empieza la edad Media es la caída del Imperio Romano de Occidente, en el 476 d.C"
+  },
+  {
+    "id": 206,
+    "categoria": "Historia",
+    "pregunta": "¿Quién fue el primer presidente de Estados Unidos?",
+    "respuesta": "George Washington",
+    "detalle": "fue el primer presidente de los Estados Unidos"
+  },
+  {
+    "id": 207,
+    "categoria": "Historia",
+    "pregunta": "¿Cuánto duró la Guerra de los Cien Años?",
+    "respuesta": "A pesar de que el nombre de esta guerra parece indicar que ocurrió un siglo entre su inicio y su final, en realidad tuvo una duración de 116 años"
+  },
+  {
+    "id": 209,
+    "categoria": "Historia",
+    "pregunta": "¿Qué carabela no volvió del viaje en el que Colón arribó a América por primera vez?",
+    "respuesta": "ta pregunta es la Santa María"
+  },
+  {
+    "id": 210,
+    "categoria": "Historia",
+    "pregunta": "¿Cuál es la narración épica más antigua de la historia, encontrada en tablillas de arcilla sobre las que se usó escritura cuneiforme?",
+    "respuesta": "la Epopeya de Gilgamesh, perteneciente a las historias creadas por los sumerios y escrita por los acadios aproximadamente en el siglo XVIII a. C"
+  },
+  {
+    "id": 212,
+    "categoria": "Historia",
+    "pregunta": "¿Cómo se apellidaban los dos exploradores que dieron la primera vuelta al mundo?",
+    "respuesta": "El nombre de la conocida como expedición Magallanes-Elcano da la respuesta a esta pregunta"
+  },
+  {
+    "id": 213,
+    "categoria": "Historia",
+    "pregunta": "¿Qué faraón egipcio es conocido por haber intentado que su imperio pasase del politeísmo al monoteísmo a través del culto al dios Atón?",
+    "respuesta": "Amenhotep IV, también llamado Akenatón, quien trató de impulsar un cambio religioso en toda la estructura social bajo su reinado"
+  },
+  {
+    "id": 214,
+    "categoria": "Historia",
+    "pregunta": "¿Qué emperador romano es conocido entre otras cosas por haber intentado someterse a operaciones de cambio de sexo?",
+    "respuesta": "Marco Aurelio Antonino Augusto, también conocido como Eliogábalo, fue un joven emperador romano que rompió con muchos de los tabúes sobre la sexualidad que se tenían en Roma",
+    "detalle": "aunque también se hizo famoso por matar indiscriminadamente"
+  },
+  {
+    "id": 217,
+    "categoria": "Historia",
+    "pregunta": "¿Quién era el gran ministro británico cuando la India Británica fue sacudida por la hambruna de Bengala?",
+    "respuesta": "En esa época el gran ministro era Winston Churchill"
+  },
+  {
+    "id": 218,
+    "categoria": "Historia",
+    "pregunta": "¿Qué isla sirvió de prisión para Napoleón tras su derrota en la batalla de Waterloo?",
+    "respuesta": "La isla de Santa Elena fue el lugar en el que este gobernante francés fue confinado"
+  },
+  {
+    "id": 220,
+    "categoria": "Historia",
+    "pregunta": "¿Quiénes fueron, según la leyenda, los dos hermanos fundadores de la ciudad de Roma?",
+    "respuesta": "Son Rómulo y Remo, dos hombres que fueron criados por una loba"
+  },
+  {
+    "id": 221,
+    "categoria": "Historia",
+    "pregunta": "¿Cómo se llama el fundador de la religión conocida como Movimiento de los Santos de los Últimos Días, asociados al Libro de Mormón?",
+    "respuesta": "Joseph Smith Jr"
+  },
+  {
+    "id": 222,
+    "categoria": "Historia",
+    "pregunta": "¿Qué líder militar africano se hizo conocido por usar una táctica de guerra llamada formación de cuernos de búfalo?",
+    "respuesta": "Shaka Zulú, jefe tribal del pueblo zulú que dirigió un ejército contra el de los británicos a principios del siglo XIX, derrotándoles en varias ocasiones a pesar de no contar con su tecnología bélica"
+  },
+  {
+    "id": 223,
+    "categoria": "Historia",
+    "pregunta": "¿Para qué religión es especialmente importante el rey Haile Selassie I?",
+    "respuesta": "Haile Selassie I es considerado una de las reencarnaciones de dios según la religión rastafari"
+  },
+  {
+    "id": 355,
+    "categoria": "Historia",
+    "pregunta": "¿Quién es el único presidente de EE.UU. que ha ocupado el cargo durante más de dos mandatos?",
+    "respuesta": "Franklin D. Roosevelt"
+  },
+  {
+    "id": 374,
+    "categoria": "Historia",
+    "pregunta": "¿Qué imperio fue gobernado por el emperador Nerón?",
+    "respuesta": "El Imperio Romano"
+  },
+  {
+    "id": 383,
+    "categoria": "Historia",
+    "pregunta": "¿El tiroteo de quién, en 1914, inició la Primera Guerra Mundial?",
+    "respuesta": "Archiduque Francisco Fernando"
+  },
+  {
+    "id": 384,
+    "categoria": "Historia",
+    "pregunta": "¿Qué bar de Nueva York fue escenario en 1969 de una revuelta que se considera la chispa que desencadenó el movimiento moderno por los derechos LGBTQ+?",
+    "respuesta": "El Stonewall Inn"
+  },
+  {
+    "id": 406,
+    "categoria": "Historia",
+    "pregunta": "¿Qué presidente de Estados Unidos aparece en el billete de 2 dólares?",
+    "respuesta": "Thomas Jefferson"
+  },
+  {
+    "id": 435,
+    "categoria": "Historia",
+    "pregunta": "¿A quién se considera la primera mujer millonaria hecha a sí misma en Estados Unidos?",
+    "respuesta": "Madam C.J",
+    "detalle": ". Walker, una mujer negra y empresaria que creó un exitoso negocio de productos de belleza y cuidado del cabello a principios del siglo XX"
+  },
+  {
+    "id": 451,
+    "categoria": "Historia",
+    "pregunta": "¿En qué país de la actualidad vivía la antigua civilización a la que se atribuye la invención de la cerveza, entre otras muchas cosas, hace unos 5.000 años?",
+    "respuesta": "Irak",
+    "detalle": "a los sumerios se les atribuye más comúnmente la invención de la cerveza en la antigua Mesopotamia"
+  },
+  {
+    "id": 453,
+    "categoria": "Historia",
+    "pregunta": "Aunque el personaje de Bram Stoker se inspira en múltiples fuentes, incluido el folclore, ¿quién se considera el principal modelo real de Drácula?",
+    "respuesta": "Vlad el Empalador"
+  },
+  {
+    "id": 462,
+    "categoria": "Historia",
+    "pregunta": "¿Cómo se llamaba el barco que rescató a los pasajeros del Titanic horas después de que el barco \"insumergible\" se hundiera?",
+    "respuesta": "El Carpathia"
+  },
+  {
+    "id": 487,
+    "categoria": "Historia",
+    "pregunta": "¿Qué significa la \"D\" en D-Day?",
+    "respuesta": "Día",
+    "detalle": "es un marcador de posición militar)"
+  },
+  {
+    "id": 488,
+    "categoria": "Historia",
+    "pregunta": "¿Qué país inventó el papel tal y como lo conocemos hoy en día?",
+    "respuesta": "China"
+  },
+  {
+    "id": 492,
+    "categoria": "Historia",
+    "pregunta": "¿En qué década se llevó a cabo la última ejecución por guillotina en Francia?",
+    "respuesta": "Los años setenta"
+  },
+  {
+    "id": 594,
+    "categoria": "Historia",
+    "pregunta": "¿Quién fue, en 1903, la primera mujer en ganar un Premio Nobel?",
+    "respuesta": "Marie Curie"
+  },
+  {
+    "id": 595,
+    "categoria": "Historia",
+    "pregunta": "¿En qué año cayó el Muro de Berlín?",
+    "respuesta": "1989"
+  },
+  {
+    "id": 596,
+    "categoria": "Historia",
+    "pregunta": "¿Qué antigua civilización construyó la famosa ciudad de Machu Picchu en Perú?",
+    "respuesta": "La civilización Inca"
+  },
+  {
+    "id": 597,
+    "categoria": "Historia",
+    "pregunta": "¿En qué país nació el revolucionario marxista Che Guevara?",
+    "respuesta": "Argentina"
+  },
+  {
+    "id": 598,
+    "categoria": "Historia",
+    "pregunta": "¿Cuál fue el primer país que concedió el derecho de voto a las mujeres?",
+    "respuesta": "Nueva Zelanda",
+    "detalle": "en 1893, todas las mujeres de todas las razas y etnias que eran \"súbditas británicas\" en Nueva Zelanda obtuvieron el derecho al voto. Esto incluía a las mujeres indígenas, como las maoríes, pero excluía a los grupos que no tenían ciudadanía en Nueva Zelanda, como las mujeres chinas"
+  },
+  {
+    "id": 600,
+    "categoria": "Historia",
+    "pregunta": "¿Cuál era el apellido de soltera de Eleanor Roosevelt antes de casarse con FDR?",
+    "respuesta": "Roosevelt",
+    "detalle": "¡ella y Franklin eran primos quintos por línea directa!)"
+  },
+  {
+    "id": 601,
+    "categoria": "Historia",
+    "pregunta": "¿Qué país regaló a Estados Unidos la Estatua de la Libertad?",
+    "respuesta": "Francia"
+  },
+  {
+    "id": 602,
+    "categoria": "Historia",
+    "pregunta": "¿Cuántas esposas tuvo Enrique VIII?",
+    "respuesta": "Seis"
+  },
+  {
+    "id": 603,
+    "categoria": "Historia",
+    "pregunta": "¿A qué organización religiosa y política se unió Malcolm X en 1952, contribuyendo a su crecimiento exponencial antes de cortar lazos con ella en 1964?",
+    "respuesta": "La Nación del Islam"
+  },
+  {
+    "id": 604,
+    "categoria": "Historia",
+    "pregunta": "¿En qué año se puso a disposición del público en Estados Unidos la primera píldora anticonceptiva?",
+    "respuesta": "1960"
+  },
+  {
+    "id": 605,
+    "categoria": "Historia",
+    "pregunta": "¿En qué año se hundió el Titanic?",
+    "respuesta": "1912"
+  },
+  {
+    "id": 606,
+    "categoria": "Historia",
+    "pregunta": "¿Cuál era el apellido de soltera de la princesa Diana?",
+    "respuesta": "Spencer"
+  },
+  {
+    "id": 607,
+    "categoria": "Historia",
+    "pregunta": "¿Qué famoso activista fue incluido en la lista de los más buscados del FBI en 1970 tras ser acusado falsamente de conspirar para sacar de la cárcel a un miembro del Partido de las Panteras Negras?",
+    "respuesta": "Angela Davis"
+  },
+  {
+    "id": 608,
+    "categoria": "Historia",
+    "pregunta": "¿Cuál era el apellido de las cuatro hermanas dominicanas que se rebelaron contra la dictadura de Rafael Trujillo y fueron asesinadas por su activismo en 1960, como se recuerda en la obra de Julia Álvarez En el tiempo de las mariposas?",
+    "respuesta": "Mirabal"
+  },
+  {
+    "id": 609,
+    "categoria": "Historia",
+    "pregunta": "¿A qué antigua civilización se atribuye la invención del primer sistema de escritura conocido?",
+    "respuesta": "Los sumerios"
+  },
+  {
+    "id": 610,
+    "categoria": "Historia",
+    "pregunta": "¿Qué país fue conocido como Persia hasta 1935?",
+    "respuesta": "Irán"
+  },
+  {
+    "id": 611,
+    "categoria": "Historia",
+    "pregunta": "¿Quién fue la primera mujer en formar parte del Tribunal Supremo de Estados Unidos?",
+    "respuesta": "Sandra Day O'Connor"
+  },
+  {
+    "id": 613,
+    "categoria": "Historia",
+    "pregunta": "¿Qué antiguo código legal es una de las primeras leyes escritas conocidas?",
+    "respuesta": "El Código de Hammurabi"
+  },
+  {
+    "id": 614,
+    "categoria": "Historia",
+    "pregunta": "¿Qué confederación indígena influyó en la estructura de la democracia americana primitiva?",
+    "respuesta": "La Confederación Iroquesa",
+    "detalle": "Haudenosaunee)"
+  },
+  {
+    "id": 615,
+    "categoria": "Historia",
+    "pregunta": "¿Cuál era el nombre del asesino en serie no identificado que actuó en el norte de California a finales de la década de 1960 y que enviaba mensajes codificados a la prensa?",
+    "respuesta": "El Asesino del Zodiaco"
+  },
+  {
+    "id": 616,
+    "categoria": "Historia",
+    "pregunta": "¿Dónde se encontraban los restos del rey Ricardo III de Inglaterra desde 2011?",
+    "respuesta": "Debajo de un aparcamiento"
+  },
+  {
+    "id": 618,
+    "categoria": "Historia",
+    "pregunta": "¿Qué famoso monumento se salvó de la demolición a principios del siglo XX tras ser reutilizado como estructura de comunicaciones?",
+    "respuesta": "La Torre Eiffel"
+  },
+  {
+    "id": 619,
+    "categoria": "Historia",
+    "pregunta": "¿Qué sentencia del Tribunal Supremo de EE.UU. de 1954 declaró inconstitucional la segregación racial en las escuelas públicas?",
+    "respuesta": "Brown contra el Consejo de Educación"
+  },
+  {
+    "id": 621,
+    "categoria": "Historia",
+    "pregunta": "¿Qué protesta de 1989 en Pekín terminó violentamente y se convirtió en un símbolo de resistencia a pesar de la censura?",
+    "respuesta": "Las protestas de la plaza de Tiananmen"
+  },
+  {
+    "id": 622,
+    "categoria": "Historia",
+    "pregunta": "¿Qué controvertido movimiento de teoría de la conspiración sugirió que más de un tirador estuvo implicado en el asesinato de JFK?",
+    "respuesta": "La teoría del “montículo de hierba"
+  },
+  {
+    "id": 634,
+    "categoria": "Historia",
+    "pregunta": "¿Cuántas pirámides de Giza se construyeron?",
+    "respuesta": "Tres"
+  },
+  {
+    "id": 661,
+    "categoria": "Historia",
+    "pregunta": "¿Cuál es la guerra más corta de la historia?",
+    "respuesta": "La guerra Anglo-Zanzíbar, que duró 38 minutos en 1896"
+  },
+  {
+    "id": 663,
+    "categoria": "Historia",
+    "pregunta": "¿Qué famosa reina histórica es hoy recordada, entre otras cosas, por su gusto X por los muebles?",
+    "respuesta": "Catalina la Grande"
+  },
+  {
+    "id": 689,
+    "categoria": "Historia",
+    "pregunta": "¿Cuándo acabó la II Guerra Mundial?",
+    "respuesta": "En 1945"
+  },
+  {
+    "id": 690,
+    "categoria": "Historia",
+    "pregunta": "¿Cuál era el apellido de la reina Isabel II de Inglaterra?",
+    "respuesta": "Windsor"
+  },
+  {
+    "id": 695,
+    "categoria": "Historia",
+    "pregunta": "¿En qué país se usó la primera bomba atómica?",
+    "respuesta": "En Japón",
+    "detalle": "Hiroshima)"
+  },
+  {
+    "id": 696,
+    "categoria": "Historia",
+    "pregunta": "¿Cuándo empezó la Primera Guerra Mundial?",
+    "respuesta": "En 1914"
+  },
+  {
+    "id": 697,
+    "categoria": "Historia",
+    "pregunta": "¿En qué año se produjo la Revolución Francesa?",
+    "respuesta": "En 1789"
+  },
+  {
+    "id": 698,
+    "categoria": "Historia",
+    "pregunta": "¿Cuántas veces ha estado el hombre en la Luna?",
+    "respuesta": "Seis"
+  },
+  {
+    "id": 699,
+    "categoria": "Historia",
+    "pregunta": "¿Qué presidente de Estados Unidos fue asesinado en Dallas?",
+    "respuesta": "John F. Kennedy"
+  },
+  {
+    "id": 700,
+    "categoria": "Historia",
+    "pregunta": "¿En qué año viajó al espacio el primer ser humano?",
+    "respuesta": "En 1961",
+    "detalle": "Yuri Gagarin)"
+  },
+  {
+    "id": 702,
+    "categoria": "Historia",
+    "pregunta": "¿Cuándo se inventó la imprenta?",
+    "respuesta": "En 1440"
+  },
+  {
+    "id": 704,
+    "categoria": "Historia",
+    "pregunta": "¿Cuál era el nombre de pila de Che Guevara?",
+    "respuesta": "Ernesto"
+  },
+  {
+    "id": 706,
+    "categoria": "Historia",
+    "pregunta": "¿En qué país nació Adolf Hitler?",
+    "respuesta": "Austria"
+  },
+  {
+    "id": 707,
+    "categoria": "Historia",
+    "pregunta": "¿Qué reina británica fue hija de los Reyes Católicos?",
+    "respuesta": "Catalina de Aragón"
+  },
+  {
+    "id": 708,
+    "categoria": "Historia",
+    "pregunta": "¿Cuál fue la primera civilización humana?",
+    "respuesta": "La civilización sumeria"
+  },
+  {
+    "id": 709,
+    "categoria": "Historia",
+    "pregunta": "¿Cuándo empezó la Revolución Rusa?",
+    "respuesta": "En 1917"
+  },
+  {
+    "id": 710,
+    "categoria": "Historia",
+    "pregunta": "¿Cuál fue el genocidio más grande de la historia?",
+    "respuesta": "El Holocausto"
+  },
+  {
+    "id": 712,
+    "categoria": "Historia",
+    "pregunta": "¿Qué famoso líder de Cuba estuvo 49 años en el poder?",
+    "respuesta": "Fidel Castro"
+  },
+  {
+    "id": 714,
+    "categoria": "Historia",
+    "pregunta": "¿En qué año fue asesinado Abraham Lincoln?",
+    "respuesta": "En 1865"
+  },
+  {
+    "id": 715,
+    "categoria": "Historia",
+    "pregunta": "¿Con cuántos años murió la Reina Isabel II?",
+    "respuesta": "Con 96 años"
+  },
+  {
+    "id": 716,
+    "categoria": "Historia",
+    "pregunta": "¿Cómo se llamaba en realidad El Cid Campeador?",
+    "respuesta": "Rodrigo Díaz de Vivar"
+  },
+  {
+    "id": 717,
+    "categoria": "Historia",
+    "pregunta": "¿En qué año fue el golpe de Estado de Tejero?",
+    "respuesta": "En 1981"
+  },
+  {
+    "id": 719,
+    "categoria": "Historia",
+    "pregunta": "¿Qué personaje fue conocido como el rey de Macedonia?",
+    "respuesta": "Alejandro Magno"
+  },
+  {
+    "id": 720,
+    "categoria": "Historia",
+    "pregunta": "¿Alrededor de qué mar vivieron los egipcios, los fenicios, los israelitas, los griegos y los romanos?",
+    "respuesta": "El mar Mediterráneo"
+  },
+  {
+    "id": 721,
+    "categoria": "Historia",
+    "pregunta": "¿En qué año se coronó a Isabel II?",
+    "respuesta": "1953"
+  },
+  {
+    "id": 722,
+    "categoria": "Historia",
+    "pregunta": "¿En qué año abdicó el rey Juan Carlos I?",
+    "respuesta": "En 2014"
+  },
+  {
+    "id": 723,
+    "categoria": "Historia",
+    "pregunta": "¿En qué continente surgió la Humanidad?",
+    "respuesta": "En África"
+  },
+  {
+    "id": 724,
+    "categoria": "Historia",
+    "pregunta": "¿En qué año cayó el Imperio Romano?",
+    "respuesta": "En el año 476"
+  },
+  {
+    "id": 726,
+    "categoria": "Historia",
+    "pregunta": "¿Quién descubrió Perú?",
+    "respuesta": "Francisco Pizarro"
+  },
+  {
+    "id": 727,
+    "categoria": "Historia",
+    "pregunta": "¿Quién fue el primer emperador romano?",
+    "respuesta": "César Augusto"
+  },
+  {
+    "id": 728,
+    "categoria": "Historia",
+    "pregunta": "¿En qué año murió Napoleón?",
+    "respuesta": "En 1821"
+  },
+  {
+    "id": 729,
+    "categoria": "Historia",
+    "pregunta": "¿Cuál fue la última dinastía en China?",
+    "respuesta": "La dinastía Qing"
+  },
+  {
+    "id": 730,
+    "categoria": "Historia",
+    "pregunta": "¿En qué año fue asesinado John F. Kennedy?",
+    "respuesta": "En 1963"
+  },
+  {
+    "id": 731,
+    "categoria": "Historia",
+    "pregunta": "¿En qué país se originó la civilización azteca?",
+    "respuesta": "En México"
+  },
+  {
+    "id": 732,
+    "categoria": "Historia",
+    "pregunta": "¿Dónde nació Juana de Arco?",
+    "respuesta": "En Francia"
+  },
+  {
+    "id": 733,
+    "categoria": "Historia",
+    "pregunta": "¿Qué países fueron los miembros de los Aliados en la Segunda Guerra Mundial?",
+    "respuesta": "Gran Bretaña, Francia, Rusia, China y Estados Unidos"
+  },
+  {
+    "id": 734,
+    "categoria": "Historia",
+    "pregunta": "Después de Lenin, ¿quién fue oficialmente el líder de la Unión Soviética?",
+    "respuesta": "Stalin"
+  },
+  {
+    "id": 735,
+    "categoria": "Historia",
+    "pregunta": "¿Quién fue la mujer más poderosa de la historia bizantina?",
+    "respuesta": "La emperatriz Teodora"
+  },
+  {
+    "id": 736,
+    "categoria": "Historia",
+    "pregunta": "¿Cuáles fueron los cuatro grandes inventos de China?",
+    "respuesta": "El papel, la brújula, la pólvora y la imprenta"
+  },
+  {
+    "id": 737,
+    "categoria": "Historia",
+    "pregunta": "¿Qué país de Asia es miembro del Eje en la Segunda Guerra Mundial?",
+    "respuesta": "Japón"
+  },
+  {
+    "id": 739,
+    "categoria": "Historia",
+    "pregunta": "¿Cómo se llaman los pobladores más antiguos de España y Europa?",
+    "respuesta": "Homo antecessor"
+  },
+  {
+    "id": 741,
+    "categoria": "Historia",
+    "pregunta": "¿En la conquista musulmana, ¿en qué año el Califato de Damasco tomó Toledo?",
+    "respuesta": "En el 711"
+  },
+  {
+    "id": 742,
+    "categoria": "Historia",
+    "pregunta": "¿Qué monarca convocó una Curia Regia extraordinaria que condujo al nacimiento de las Cortes?",
+    "respuesta": "Alfonso IX de León"
+  },
+  {
+    "id": 743,
+    "categoria": "Historia",
+    "pregunta": "¿Cómo se llamaba el emir musulmán que entregó las llaves de Granada a los Reyes Católicos?",
+    "respuesta": "Boabdil"
+  },
+  {
+    "id": 744,
+    "categoria": "Historia",
+    "pregunta": "¿A qué rey se le atribuye \"el imperio en el que nunca se pone el sol\"?",
+    "respuesta": "Carlos I"
+  },
+  {
+    "id": 745,
+    "categoria": "Historia",
+    "pregunta": "¿Qué rey envió a la Armada Invencible contra Inglaterra y perdió?",
+    "respuesta": "Felipe II"
+  },
+  {
+    "id": 746,
+    "categoria": "Historia",
+    "pregunta": "¿Quién fue la primera mujer de Carlos II \"el Hechizado\"?",
+    "respuesta": "Maria Luisa de Orleans"
+  },
+  {
+    "id": 747,
+    "categoria": "Historia",
+    "pregunta": "¿Bajo el reinado de quién se creó la Guardia Civil?",
+    "respuesta": "Isabel II"
+  },
+  {
+    "id": 748,
+    "categoria": "Historia",
+    "pregunta": "¿Quién fue el segundo presidente de la II República?",
+    "respuesta": "Manuel Azaña"
+  },
+  {
+    "id": 749,
+    "categoria": "Historia",
+    "pregunta": "¿Qué día encabezó Franco el alzamiento militar que inició la guerra civil?",
+    "respuesta": "17 de julio"
+  },
+  {
+    "id": 751,
+    "categoria": "Historia",
+    "pregunta": "¿Con qué nombre se conoce el escándalo que obligó al presidente estadounidense Richard Nixon a dimitir?",
+    "respuesta": "Watergate"
+  },
+  {
+    "id": 752,
+    "categoria": "Historia",
+    "pregunta": "¿Qué emperador romano legalizó el cristianismo?",
+    "respuesta": "Constantino"
+  },
+  {
+    "id": 754,
+    "categoria": "Historia",
+    "pregunta": "¿Cuál es el nombre de la famosa batalla donde Napoleón Bonaparte fue derrotado?",
+    "respuesta": "Waterloo"
+  },
+  {
+    "id": 755,
+    "categoria": "Historia",
+    "pregunta": "¿Qué facción dirigió Mao Zedong durante la guerra civil China?",
+    "respuesta": "Comunistas"
+  },
+  {
+    "id": 772,
+    "categoria": "Historia",
+    "pregunta": "¿En qué ciudad se entrevistaron Hitler y Franco?",
+    "respuesta": "Hendaya"
+  },
+  {
+    "id": 773,
+    "categoria": "Historia",
+    "pregunta": "¿De qué país se independizó Eslovenia?",
+    "respuesta": "Yugoslavia"
+  },
+  {
+    "id": 779,
+    "categoria": "Historia",
+    "pregunta": "¿Qué volcán sepultó la ciudad de Pompeya?",
+    "respuesta": "El Vesubio"
+  },
+  {
+    "id": 807,
+    "categoria": "Historia",
+    "pregunta": "¿Cuántas pirámides se conservan en Egipto?",
+    "respuesta": "118"
+  },
+  {
+    "id": 1153,
+    "categoria": "Historia",
+    "pregunta": "¿Qué años abarca el Siglo de Oro?",
+    "respuesta": "Entre 1492 y 1681"
+  },
+  {
+    "id": 1155,
+    "categoria": "Historia",
+    "pregunta": "¿Cuál es la peregrinación más antigua de España y Europa?",
+    "respuesta": "El camino de Santiago"
+  },
+  {
+    "id": 1157,
+    "categoria": "Historia",
+    "pregunta": "¿Cuándo visitó Hispania el famoso emperador romano Julio César?",
+    "respuesta": "Julio César llegó al actual territorio español en el año 69 a. C"
+  },
+  {
+    "id": 1160,
+    "categoria": "Historia",
+    "pregunta": "¿Quién creó la bandera española?",
+    "respuesta": "Antonio Valdés y Fernández Bazán en 1785"
+  },
+  {
+    "id": 1165,
+    "categoria": "Historia",
+    "pregunta": "¿Qué fue La Movida Madrileña?",
+    "respuesta": "Un movimiento cultural de Madrid durante la transición española a la democracia"
+  },
+  {
+    "id": 1167,
+    "categoria": "Historia",
+    "pregunta": "¿Cuántas catedrales hay en España?",
+    "respuesta": "88"
+  },
+  {
+    "id": 1169,
+    "categoria": "Historia",
+    "pregunta": "¿Quién gobernó España entre 2011 y 2018?",
+    "respuesta": "Mariano Rajoy"
+  },
+  {
+    "id": 1182,
+    "categoria": "Historia",
+    "pregunta": "¿Qué colores forman la bandera española republicana?",
+    "respuesta": "Rojo, amarillo y morado"
+  },
+  {
+    "id": 1187,
+    "categoria": "Historia",
+    "pregunta": "¿Cómo se llamaban las carabelas que usó Cristóbal Colón para llegar a América?",
+    "respuesta": "La Niña, la Pinta y la Santa María"
+  }
+]

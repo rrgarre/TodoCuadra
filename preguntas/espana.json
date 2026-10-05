@@ -1,0 +1,110 @@
+[
+  {
+    "id": 635,
+    "categoria": "España",
+    "pregunta": "¿Cuál es el plato más conocido de España?",
+    "respuesta": "Paella"
+  },
+  {
+    "id": 692,
+    "categoria": "España",
+    "pregunta": "¿Qué día es la fiesta de la Hispanidad?",
+    "respuesta": "El 12 de octubre"
+  },
+  {
+    "id": 1148,
+    "categoria": "España",
+    "pregunta": "¿Sabes cómo se llama la fiesta en la que se tiran toneladas de tomates?",
+    "respuesta": "La Tomatina de Buñol"
+  },
+  {
+    "id": 1151,
+    "categoria": "España",
+    "pregunta": "¿En qué ciudad se celebra más el Carnaval en España?",
+    "respuesta": "En Santa Cruz de Tenerife"
+  },
+  {
+    "id": 1158,
+    "categoria": "España",
+    "pregunta": "¿Cuál es la flor nacional?",
+    "respuesta": "El clavel"
+  },
+  {
+    "id": 1162,
+    "categoria": "España",
+    "pregunta": "¿Cuál es el baile más famoso de España?",
+    "respuesta": "El flamenco"
+  },
+  {
+    "id": 1164,
+    "categoria": "España",
+    "pregunta": "¿Dónde se celebra la Feria de Abril?",
+    "respuesta": "En Sevilla"
+  },
+  {
+    "id": 1172,
+    "categoria": "España",
+    "pregunta": "¿Con qué se visten los toreros antes de salir al ruedo para torear?",
+    "respuesta": "Con un traje de luces"
+  },
+  {
+    "id": 1173,
+    "categoria": "España",
+    "pregunta": "¿Dónde se celebran las Fallas?",
+    "respuesta": "En Valencia"
+  },
+  {
+    "id": 1175,
+    "categoria": "España",
+    "pregunta": "¿Cómo se llaman las carreras ante los toros que se hacen en varias ciudades?",
+    "respuesta": "Encierros"
+  },
+  {
+    "id": 1176,
+    "categoria": "España",
+    "pregunta": "¿Quiénes traen regalos a los niños el día 6 de enero, según la tradición?",
+    "respuesta": "Los Reyes Magos"
+  },
+  {
+    "id": 1177,
+    "categoria": "España",
+    "pregunta": "¿Qué se toman los españoles en Nochevieja?",
+    "respuesta": "Doce uvas"
+  },
+  {
+    "id": 1178,
+    "categoria": "España",
+    "pregunta": "¿Qué es típico hacer durante la noche de San Juan?",
+    "respuesta": "Hacer hogueras"
+  },
+  {
+    "id": 1179,
+    "categoria": "España",
+    "pregunta": "¿Qué instrumento tocan las mujeres que bailan sevillanas?",
+    "respuesta": "Las castañuelas"
+  },
+  {
+    "id": 1180,
+    "categoria": "España",
+    "pregunta": "¿Cómo se llama la comida que ponen en los bares al pedir una bebida?",
+    "respuesta": "Tapa"
+  },
+  {
+    "id": 1181,
+    "categoria": "España",
+    "pregunta": "¿De qué región es típico el gazpacho?",
+    "respuesta": "De Andalucía"
+  },
+  {
+    "id": 1184,
+    "categoria": "España",
+    "pregunta": "¿De qué región son típicas las migas?",
+    "respuesta": "De Castilla-La Mancha"
+  },
+  {
+    "id": 1188,
+    "categoria": "España",
+    "pregunta": "¿Qué se celebra en España el 6 de diciembre?",
+    "respuesta": "El Día de la Constitución"
+  }
+]

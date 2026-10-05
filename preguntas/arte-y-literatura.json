@@ -1,1 +1,619 @@
-[]
+[
+  {
+    "id": 259,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cómo se llama el protagonista de la serie de cómics The Sandman, de Neil Gaiman?",
+    "respuesta": "El protagonista es Morfeo, encarnación de los sueños y las narraciones"
+  },
+  {
+    "id": 261,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién es el guionista de la novela gráfica \"Watchmen\"?",
+    "respuesta": "El autor de esta historia es Alan Moore"
+  },
+  {
+    "id": 269,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cómo se llama el manga de Kentaro Miura protagonizado por Guts (o Gatsu, en algunas traducciones)?",
+    "respuesta": "Es la serie de libros de fantasía titulada \"Berserk"
+  },
+  {
+    "id": 274,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió la Ilíada y la Odisea?",
+    "respuesta": "Si bien se discute si fue realmente un ser humano real, ambas obras son atribuidas a Homero"
+  },
+  {
+    "id": 275,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué novela escribió Miguel de Cervantes y es considerada como una de los máximos exponentes de la literatura española y universal?",
+    "respuesta": "El ingenioso hidalgo Don Quijote de la Mancha"
+  },
+  {
+    "id": 276,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué gran artista es conocido por haber pintado la Capilla Sixtina?",
+    "respuesta": "ta pregunta, de cultura general, es Miguel Angel"
+  },
+  {
+    "id": 277,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿De qué estilo arquitectónico es la catedral de Notre Dame?",
+    "respuesta": "La catedral de Notre Dame es probablemente uno de los exponentes más conocidos del estilo gótico"
+  },
+  {
+    "id": 278,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿De qué obra de Shakespeare forma parte el soliloquio “Ser o no ser, esa es la cuestión”?",
+    "respuesta": "Este soliloquio, uno de los más conocidos del dramaturgo inglés, forma parte de la obra Hamlet"
+  },
+  {
+    "id": 279,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió “La colmena”?",
+    "respuesta": "Camilo José Cela"
+  },
+  {
+    "id": 280,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué nombre tenía el caballo de Don Quijote de la Mancha?",
+    "respuesta": "El caballo de este personaje, uno de los máximos exponentes de la literatura española en todo el mundo, recibía el nombre de Rocinante"
+  },
+  {
+    "id": 281,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿En qué país fue considerado Gulliver un gigante durante sus viajes?",
+    "respuesta": "Aunque a lo largo de sus viajes Gulliver llegaría a visitar una gran cantidad de naciones con diferentes tipos de ciudadanos, una de las partes más conocidas de su historia y en la que Gulliver fue considerado un gigante es la que transcurre en el país de Liliput"
+  },
+  {
+    "id": 282,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿De qué país es originario el tipo de poesía conocido como haiku?",
+    "respuesta": "El haiku es un género de poesía proveniente de Japón"
+  },
+  {
+    "id": 283,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué escritor hispanoparlante recibió el apodo de “el manco de Lepanto”?",
+    "respuesta": "Fue nada más y nada menos que Miguel de Cervantes, posiblemente el escritor español más famoso de la historia"
+  },
+  {
+    "id": 284,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué animal mitológico da nombre a uno de los libros más conocidos de Thomas Hobbes?",
+    "respuesta": "La bestia marina Leviatán da pie a una de las metáforas que este filósofo usó para referirse a un tipo de soberanía absoluta"
+  },
+  {
+    "id": 286,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cómo se llama el libro en el que se basa la película \"Blade Runner\"?",
+    "respuesta": "El título de esta obra escrita por Philip K. Dick es “¿Sueñan los androides con ovejas eléctricas?"
+  },
+  {
+    "id": 287,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cómo se llama el pintor noruego autor de la obra “El Grito”?",
+    "respuesta": "Edvard Munch, uno de los precursores del expresionismo en pintura"
+  },
+  {
+    "id": 288,
+    "categoria": "Arte y Literatura",
+    "pregunta": "En la obra de fantasía de J. R. R. Tolkien, ¿qué nombre recibe el balrog que lucha contra Gandalf en el reino de Moria?",
+    "respuesta": "Esta bestia es conocida como el Daño de Durin",
+    "detalle": "dado que terminó con la vida del rey Durin VI"
+  },
+  {
+    "id": 289,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿En qué otro idioma, además del castellano, escribió la novelista y poetisa Rosalía de Castro?",
+    "respuesta": "Escribía también en Gallego"
+  },
+  {
+    "id": 290,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió la novela “La Conjura de los Necios?”.",
+    "respuesta": "Esta novela ganadora de un Premio Pulitzer fue escrita por John Kennedy Toole"
+  },
+  {
+    "id": 291,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿En qué continente nació Arya Stark, personaje de la saga de libros Canción de hielo y Fuego de George R. R. Martin?",
+    "respuesta": "El continente se llama Westeros"
+  },
+  {
+    "id": 292,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué personaje del universo literario de Harry Potter tiene una rata llamada Scabbers?",
+    "respuesta": "Ron Weasley, al menos durante los primeros libros"
+  },
+  {
+    "id": 294,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿De qué personaje ficticio estaba enamorado el Quijote?",
+    "respuesta": "De una labradora llamada Dulcinea"
+  },
+  {
+    "id": 295,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué pintor hizo el cuadro llamado “La joven de la perla”?",
+    "respuesta": "l pintor holandés Johannes Vermeer"
+  },
+  {
+    "id": 297,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué poetisa de la Antigüedad hizo la obra “Oda a Afrodita”?",
+    "respuesta": "Safo, o Safo de Mitilene"
+  },
+  {
+    "id": 359,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué artista pintó La noche estrellada?",
+    "respuesta": "Vincent van Gogh"
+  },
+  {
+    "id": 369,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuál es el apodo de cuatro palabras con el que se conoce al personaje principal de la serie Harry Potter?",
+    "respuesta": "El niño que vivió"
+  },
+  {
+    "id": 377,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cómo se llama el protagonista del clásico de J.D. Salinger El guardián entre el centeno?",
+    "respuesta": "Holden Caulfield"
+  },
+  {
+    "id": 380,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuáles son los apellidos de las familias enfrentadas en Romeo y Julieta?",
+    "respuesta": "Los Montesco y los Capuleto"
+  },
+  {
+    "id": 381,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió la novela clásica estadounidense Sus ojos miraban a Dios?",
+    "respuesta": "Zora Neale Hurston"
+  },
+  {
+    "id": 417,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué escritor escribió Las aventuras de Sherlock Holmes?",
+    "respuesta": "Arthur Conan Doyle"
+  },
+  {
+    "id": 423,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Dónde vivían Winnie the Pooh y su pandilla, escenario de sus aventuras con Christopher Robin?",
+    "respuesta": "El Bosque de los Cien Acres"
+  },
+  {
+    "id": 430,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué franquicia de libros y películas superventas se creó originalmente como fanfiction de Crepúsculo bajo el seudónimo Snowqueen Icedragon?",
+    "respuesta": "50 Sombras de Grey"
+  },
+  {
+    "id": 446,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué ganador del Premio Nobel de Literatura y de la Medalla Presidencial de la Libertad de EE.UU. dijo que se había pasado \"toda su vida de escritor intentando que la mirada blanca no fuera la dominante en ninguno de mis libros\"?",
+    "respuesta": "Toni Morrison"
+  },
+  {
+    "id": 456,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué dos textos de terror fundamentales debemos al aburrimiento absoluto de que nos llueva durante las vacaciones?",
+    "respuesta": "Frankenstein y El vampiro",
+    "detalle": "precursor del Drácula de Bram Stoker)"
+  },
+  {
+    "id": 461,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿A qué ganador del Premio Pulitzer se atribuye la acuñación del término \"colorismo \" en 1982?",
+    "respuesta": "Alice Walker"
+  },
+  {
+    "id": 580,
+    "categoria": "Arte y Literatura",
+    "pregunta": "Ariana Grande comenzó su carrera a los 15 años, ¿en qué musical de Broadway?",
+    "respuesta": "13"
+  },
+  {
+    "id": 665,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuál es el espectáculo de Broadway más taquillero de todos los tiempos?",
+    "respuesta": "El Rey León"
+  },
+  {
+    "id": 666,
+    "categoria": "Arte y Literatura",
+    "pregunta": "El autor de la serie de cuatro libros de gran éxito de ventas conocida como las Novelas Napolitanas, ahora una serie de HBO, ¿con qué seudónimo publica sus obras?",
+    "respuesta": "Elena Ferrante"
+  },
+  {
+    "id": 667,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuál es el nombre más popular del retrato titulado oficialmente \"La Gioconda\", pintado en Florencia en 1503?",
+    "respuesta": "La Gioconda"
+  },
+  {
+    "id": 668,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuál fue el primer libro publicado por Jane Austen?",
+    "respuesta": "Sentido y sensibilidad"
+  },
+  {
+    "id": 669,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cómo se llamaba el hotel poseído en la novela (y película) de Steven King El resplandor, basado en el Hotel Stanley de Colorado?",
+    "respuesta": "The Overlook Hotel"
+  },
+  {
+    "id": 671,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuál es el espectáculo de Broadway que lleva más tiempo en cartel?",
+    "respuesta": "El Fantasma de la Ópera, que finalmente cerró en abril de 2023 tras un récord de 13.981 representaciones"
+  },
+  {
+    "id": 672,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cómo se llaman las cuatro hermanas March en Mujercitas?",
+    "respuesta": "Meg, Jo, Beth y Amy"
+  },
+  {
+    "id": 673,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué famoso movimiento artístico co-creó Pablo Picasso?",
+    "respuesta": "Cubismo"
+  },
+  {
+    "id": 674,
+    "categoria": "Arte y Literatura",
+    "pregunta": "En Las Crónicas de Narnia, ¿a cambio de qué traiciona Edmund a su familia y a Aslan después de conocer a la Bruja Blanca?",
+    "respuesta": "Delicias turcas",
+    "detalle": "nuestro chico traicionó realmente a todos sus hermanos y trajo el invierno eterno a Narnia a cambio del equivalente turco a los gusanos de goma"
+  },
+  {
+    "id": 675,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuál es el nombre del antiguo poeta griego que inspiró la acuñación del término lesbianismo?",
+    "respuesta": "Safo"
+  },
+  {
+    "id": 681,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿A qué artista se atribuye esta famosa cita? \"Yo soy mi propia musa. Soy el tema que mejor conozco. El tema que quiero conocer mejor\"?",
+    "respuesta": "Frida Kahlo"
+  },
+  {
+    "id": 810,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién mandó construir el parque de El Capricho de Madrid?",
+    "respuesta": "La Duquesa de Osuna"
+  },
+  {
+    "id": 868,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién pintó 'La última cena'?",
+    "respuesta": "Leonardo da Vinci"
+  },
+  {
+    "id": 869,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿En qué año nació Salvador Dalí?",
+    "respuesta": "En 1904"
+  },
+  {
+    "id": 870,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Dónde nació Van Gogh?",
+    "respuesta": "Zundert, Países Bajos"
+  },
+  {
+    "id": 871,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿En qué museo se encuentra la obra original 'La noche estrellada', de Van Gogh?",
+    "respuesta": "En el Museo de Arte Moderno de Nueva York"
+  },
+  {
+    "id": 872,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién es el padre del arte pop?",
+    "respuesta": "Andy Warhol"
+  },
+  {
+    "id": 873,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién pintó la obra 'Diego y yo'?",
+    "respuesta": "Frida Kahlo"
+  },
+  {
+    "id": 874,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuándo surgió el vanguardismo?",
+    "respuesta": "A inicios del siglo XX"
+  },
+  {
+    "id": 875,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Dónde está el 'Guernica'?",
+    "respuesta": "En el museo Reina Sofía de Madrid"
+  },
+  {
+    "id": 876,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuál es el museo más antiguo de España?",
+    "respuesta": "El Museo Nacional de Ciencias Naturales"
+  },
+  {
+    "id": 877,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuál es el nombre del cuadro más famoso de Edvard Munch?",
+    "respuesta": "El grito"
+  },
+  {
+    "id": 878,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cómo se llama la escultura más famosa de Auguste Rodin?",
+    "respuesta": "El pensador"
+  },
+  {
+    "id": 879,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cómo se llama el cuadro más famoso de Gustav Klimt?",
+    "respuesta": "El beso"
+  },
+  {
+    "id": 880,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿En qué siglo vivió Diego Velázquez?",
+    "respuesta": "En el XVII"
+  },
+  {
+    "id": 881,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué pintor era conocido por salpicar o gotear pintura sobre lienzo?",
+    "respuesta": "Jackson Pollock"
+  },
+  {
+    "id": 882,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué artista pintó 'La ronda de noche'?",
+    "respuesta": "Rembrandt"
+  },
+  {
+    "id": 883,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué artista pintó la inquietante 'Persistencia de la memoria'?",
+    "respuesta": "Dalí"
+  },
+  {
+    "id": 884,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿En qué año se cree que da Vinci pintó la Mona Lisa?",
+    "respuesta": "1503"
+  },
+  {
+    "id": 885,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuál fue el primer nombre del pintor Matisse?",
+    "respuesta": "Henry"
+  },
+  {
+    "id": 886,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿De qué país era el famoso escultor Auguste Rodin?",
+    "respuesta": "Francia"
+  },
+  {
+    "id": 887,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Claude Monet fue el fundador de qué escuela de pintura?",
+    "respuesta": "Impresionismo"
+  },
+  {
+    "id": 888,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué tipo de arte produce Annie Leibovitz?",
+    "respuesta": "Fotografía"
+  },
+  {
+    "id": 988,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió 'El Quijote'?",
+    "respuesta": "Miguel de Cervantes"
+  },
+  {
+    "id": 989,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió 'Hamlet'?",
+    "respuesta": "William Shakespeare"
+  },
+  {
+    "id": 991,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió la famosa novela de 'Drácula'?",
+    "respuesta": "Bram Stoker"
+  },
+  {
+    "id": 992,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió 'Cien años de soledad'?",
+    "respuesta": "Gabriel García Márquez"
+  },
+  {
+    "id": 993,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió la ‘Divina Comedia’?",
+    "respuesta": "Dante Alighieri"
+  },
+  {
+    "id": 994,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió 'Harry Potter'?",
+    "respuesta": "J. K. Rowling"
+  },
+  {
+    "id": 995,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuál es el libro más vendido de la historia?",
+    "respuesta": "La Biblia"
+  },
+  {
+    "id": 997,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió 'Cumbres borrascosas'?",
+    "respuesta": "Emily Brontë"
+  },
+  {
+    "id": 1000,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió 'La muerte del comendador'?",
+    "respuesta": "Haruki Murakami"
+  },
+  {
+    "id": 1001,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuál es el libro francés más vendido de la historia?",
+    "respuesta": "El Principito"
+  },
+  {
+    "id": 1002,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuándo se celebra el Día Mundial del Libro?",
+    "respuesta": "El 23 de abril"
+  },
+  {
+    "id": 1003,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuál es la nacionalidad de Pablo Neruda?",
+    "respuesta": "Chileno"
+  },
+  {
+    "id": 1004,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió 'Ulises'?",
+    "respuesta": "James Joyce"
+  },
+  {
+    "id": 1005,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió 'El lazarillo de Tormes'?",
+    "respuesta": "Su autor es anónimo"
+  },
+  {
+    "id": 1006,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió 'Sin noticias de Gurb'?",
+    "respuesta": "Eduardo Mendoza"
+  },
+  {
+    "id": 1007,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió 'Mafalda'?",
+    "respuesta": "Salvador Lavado Tejón"
+  },
+  {
+    "id": 1009,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuándo se publicó la primera parte de 'Don Quijote de la Mancha'?",
+    "respuesta": "En 1605"
+  },
+  {
+    "id": 1010,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién creó los cómics de 'Spider-Man'?",
+    "respuesta": "Stan Lee"
+  },
+  {
+    "id": 1011,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió 'Casa de muñecas'?",
+    "respuesta": "Henrik Ibsen"
+  },
+  {
+    "id": 1012,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién es la alcahueta más famosa de la literatura española?",
+    "respuesta": "La Celestina"
+  },
+  {
+    "id": 1013,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuál fue la primera obra de Umberto Eco?",
+    "respuesta": "El nombre de la rosa"
+  },
+  {
+    "id": 1014,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿En qué idioma escribía Samuel Beckett?",
+    "respuesta": "En francés"
+  },
+  {
+    "id": 1015,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió 'La isla del tesoro'?",
+    "respuesta": "Robert Louis Stevenson"
+  },
+  {
+    "id": 1016,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿En qué ciudad vivían Romeo y Julieta?",
+    "respuesta": "Verona"
+  },
+  {
+    "id": 1017,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Quién escribió ‘La metamorfosis’?",
+    "respuesta": "Franz Kafka"
+  },
+  {
+    "id": 1018,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuál es la escritora denominada ícono del feminismo?",
+    "respuesta": "Virginia Woolf"
+  },
+  {
+    "id": 1019,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué es el género epistolar?",
+    "respuesta": "Son obras de ficción que están escritas en forma de cartas"
+  },
+  {
+    "id": 1146,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuál es el primer lugar del mundo donde se descubrió el Arte Rupestre del Paleolítico superior?",
+    "respuesta": "Las Cuevas de Altamira"
+  },
+  {
+    "id": 1152,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuál es el edificio más antiguo de España?",
+    "respuesta": "Es la Naveta des Tudons",
+    "detalle": ". Esta edificación data del año 1000 a. C. y se ubica en Menorca"
+  },
+  {
+    "id": 1154,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Dónde nació Pablo Picasso?",
+    "respuesta": "En Málaga"
+  },
+  {
+    "id": 1159,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Qué pintor español se destacó en la corriente surrealista?",
+    "respuesta": "Salvador Dalí"
+  },
+  {
+    "id": 1168,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿Cuántos españoles han ganado el Premio Nobel de Literatura?",
+    "respuesta": "Cinco",
+    "detalle": "José Echegaray y Eizaguirre, Jacinto Benavente, Juan Ramón Jiménez, Vicente Aleixandre y Camilo José Cela"
+  },
+  {
+    "id": 1190,
+    "categoria": "Arte y Literatura",
+    "pregunta": "¿En qué museo está la Dama de Elche?",
+    "respuesta": "En el Museo Arqueológico Nacional"
+  }
+]
