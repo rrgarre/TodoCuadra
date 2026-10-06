@@ -118,6 +118,15 @@ function render(state, opts = {}) {
     "portada: la ficha en uso se puede recoger sin navegar",
     html.includes('aria-label="Recoger los apartados de Hoja de práctica"')
   );
+  const posFlecha = html.indexOf('class="ficha-toggle"');
+  const posIcono = html.indexOf('class="section-icon"');
+  check(
+    "portada: la flecha va incrustada a la izquierda, dentro de la tarjeta",
+    html.includes("section-card ficha-cabecera") &&
+      posFlecha > -1 &&
+      posIcono > -1 &&
+      posFlecha < posIcono
+  );
 }
 
 {

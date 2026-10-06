@@ -125,7 +125,7 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
   con confirmación) borra el progreso y deja la hoja en blanco.
 - **Menú por asignaturas**: la portada lista las **asignaturas** (zonas) — hoy 📐
   *Matemáticas* con todas sus fichas; *Lengua* u otras aparecerán cuando haya—. Cada
-  tarjeta tiene una **zona propia (la flecha)** que solo **despliega o recoge sus
+  tarjeta lleva **incrustada a la izquierda una flecha** que solo **despliega o recoge sus
   apartados** sin salir del menú, y el resto de la tarjeta **activa la ficha** (al
   activarla, sus apartados se despliegan debajo; si la ficha tiene una sola sección, se
   abre directa a los ejercicios). Cada ficha es de **una sola asignatura** y
@@ -371,7 +371,7 @@ Reglas del juego:
 | Nuevo tipo **Lógica**: series, comparaciones (mayor/menor/igual), enigmas, deducciones (casillas etiquetadas) y eliminatorias (opciones) con pista al segundo fallo | ✅ componente `Logica.jsx` + validación; los 15 retos renderizan y se corrigen |
 | **Fichas** en `plantillas/*.json`: cabecera `titulo`/`tipo` (asignatura `mates`, con lógica integrada), ids y grupos automáticos, `secciones` y resultados calculados | ✅ `parseTemplate` + registro `FORMATOS`; decenas de casos válidos/inválidos, ficha mixta y paridad 1:1 de `HojaDePracticas.json` con la antigua hoja en código |
 | Ficha rota → **aviso en la portada** con su ruta y el error, sin romper la app | ✅ fichero inválido en el mock de render: se salta y aparece el aviso |
-| **Menú por asignaturas** (📐 Matemáticas con sus fichas, 🎯 Trivial debajo): cada ficha con su **zona propia para desplegar o recoger sus apartados** y el resto de la tarjeta para activarla (ficha de una sola sección, se abre directa) | ✅ render de portada (`aria-expanded` de desplegado/plegado) y de la ficha de Lógica; `SET_SHEET` queda en la portada con el progreso cargado |
+| **Menú por asignaturas** (📐 Matemáticas con sus fichas, 🎯 Trivial debajo): cada tarjeta con su **flecha incrustada a la izquierda para desplegar o recoger sus apartados** y el resto para activarla (ficha de una sola sección, se abre directa) | ✅ render de portada (`aria-expanded` y orden flecha→contenido) y de la ficha de Lógica; `SET_SHEET` queda en la portada con el progreso cargado |
 | **Fichas remotas**: lectura en vivo de una carpeta de GitHub, validadas con las mismas reglas, con caché en `localStorage` y aviso de las erróneas | ✅ descarga simulada (listado + base64), fusión local-gana-a-remota, fallo con/sin caché y portada con la ficha remota |
 | Apartado **Trivial** (🎯 en portada): categoría o todas mezcladas al azar, pregunta + **Mostrar solución** a demanda, **«Siguiente» solo tras ver la respuesta**, sin temporizadores ni contadores | ✅ `parsePreguntas` + sorteo; render de categorías, de la pregunta con sus botones (sin «Siguiente» hasta ver el detalle) y de la solución bajo demanda (sin restos de contador ni de tiempo) |
 | Trivial: categoría **vacía** desactivada y fichero roto con **aviso por ruta** | ✅ mocks con `geografia.json` (`[]`) y `rota.json` (que no es lista); `primaria.json` validado entero (200) |

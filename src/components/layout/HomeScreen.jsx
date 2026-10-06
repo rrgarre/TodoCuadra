@@ -11,9 +11,10 @@ import { loadSheetState } from "../../utils/storage.js";
 /**
  * Portada por asignaturas: cada zona es una asignatura (Matemáticas,
  * Lengua…) y dentro lista sus fichas con su progreso. Cada tarjeta
- * tiene una zona propia (la flecha) que solo despliega o recoge sus
- * apartados sin salir del menú; el resto de la tarjeta activa la ficha
- * y, si tiene una sola sección, se abre directa a los ejercicios.
+ * lleva incrustada a la izquierda una flecha que solo despliega o
+ * recoge sus apartados sin salir del menú; el resto de la tarjeta
+ * activa la ficha y, si tiene una sola sección, se abre directa a
+ * los ejercicios.
  */
 export default function HomeScreen({ onOpenTrivial }) {
   const { sheet, state, dispatch, reset, setSheet } = useSheet();
@@ -139,12 +140,30 @@ export default function HomeScreen({ onOpenTrivial }) {
                 const desplegada = abiertas.has(ficha.s.id);
                 return (
                   <li key={ficha.s.id}>
-                    <div className="ficha-fila">
+                    <div
+                      className={`section-card ficha-cabecera${
+                        ficha.active ? " section-card--activa" : ""
+                      }`}
+                    >
+                      {/* Flecha incrustada: solo despliega o recoge. */}
                       <button
                         type="button"
-                        className={`section-card${
-                          ficha.active ? " section-card--activa" : ""
-                        }`}
+                        className="ficha-toggle"
+                        aria-expanded={desplegada}
+                        aria-label={`${
+                          desplegada ? "Recoger" : "Desplegar"
+                        } los apartados de ${ficha.s.title}`}
+                        onClick={() => alternarFicha(ficha.s.id)}
+                      >
+                        <span aria-hidden="true">
+                          {desplegada ? "▾" : "▸"}
+                        </span>
+                      </button>
+
+                      {/* El resto de la tarjeta: activa la ficha. */}
+                      <button
+                        type="button"
+                        className="ficha-zona"
                         disabled={ficha.active && !soloUna}
                         aria-label={
                           ficha.active
@@ -168,21 +187,6 @@ export default function HomeScreen({ onOpenTrivial }) {
                         </span>
                         <span className="section-cta">
                           {ficha.active ? "✓ En uso" : "Usar"}
-                        </span>
-                      </button>
-
-                      {/* Zona propia: solo despliega o recoge la info. */}
-                      <button
-                        type="button"
-                        className="ficha-toggle"
-                        aria-expanded={desplegada}
-                        aria-label={`${
-                          desplegada ? "Recoger" : "Desplegar"
-                        } los apartados de ${ficha.s.title}`}
-                        onClick={() => alternarFicha(ficha.s.id)}
-                      >
-                        <span aria-hidden="true">
-                          {desplegada ? "▾" : "▸"}
                         </span>
                       </button>
                     </div>
