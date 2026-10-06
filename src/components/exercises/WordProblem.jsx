@@ -1,23 +1,35 @@
 import ExerciseCard from "../common/ExerciseCard.jsx";
-import NumberInput from "../common/NumberInput.jsx";
+import ProblemKeypad from "./ProblemKeypad.jsx";
 import { OP_SYMBOL, OP_NAME } from "../../utils/calculations.js";
 
 /**
- * Problemas matemáticos.
+ * Problemas matemáticos: el alumno desarrolla el problema desde cero
+ * en un panel de líneas, escribiendo con una botonera (no hay campos
+ * de texto: en el móvil no se abre el teclado del sistema).
  *
- * mode "guided"  → se muestran las operaciones y solo se rellenan los
- *                  resultados (problemas de 2 pasos).
- * mode "choose"  → el alumno elige la operación, introduce los números y
- *                  el resultado (problemas de 3 pasos).
+ * Los botones de resultados adjuntan el nombre de cada magnitud a la
+ * operación en curso («a op b = r → nombre»); se comprueba **una sola
+ * vez, al final**.
+ *
  * Si el JSON trae "resultados", bajo el enunciado se lista el nombre de
- * cada resultado parcial (la magnitud de cada paso) y el del final.
+ * cada resultado parcial (la magnitud de cada paso) y el del final, y
+ * esos nombres son también botones de la botonera.
  */
 export default function WordProblem({ exercise, controller }) {
-  const { values, step, stepsDone, revealed, status, setWordStep, setGuidedAnswer } =
-    controller;
+  const {
+    values,
+    revealed,
+    status,
+    devPress,
+    devBackspace,
+    devNewline,
+    devUndo,
+    devMagnitude,
+  } = controller;
 
-  const finished = revealed || status === "correct";
-  const prevDone = (i) => stepsDone.includes(i) || finished;
+  const lines = Array.isArray(values.lines) ? values.lines : [];
+  const current = typeof values.current === "string" ? values.current : "";
+  const locked = revealed || status === "correct";
 
   const solution = (
     <>
@@ -32,155 +44,6 @@ export default function WordProblem({ exercise, controller }) {
       <p className="solution-final">Respuesta: {exercise.answer}</p>
     </>
   );
-
-  function guidedExpression(st, i) {
-    const givenA = i === 0 || prevDone(i - 1) ? String(st.a) : "____";
-    return (
-      <>
-        <span className="given">{givenA}</span>
-        <span>{OP_SYMBOL[st.op]}</span>
-        <span className="given">{st.b}</span>
-        <span>=</span>
-      </>
-    );
-  }
-
-  function guidedBody() {
-    return (
-      <div className="wf-steps">
-        {exercise.plan.map((st, i) => {
-          const isCurrent = i === step && !finished;
-          const isDone = prevDone(i) && (i < step || finished);
-          const cls = isDone ? "is-done" : isCurrent ? "is-current" : "is-locked";
-          const answerValue =
-            isDone && revealed && status !== "correct"
-              ? String(st.result)
-              : values.answers[i];
-          return (
-            <div className={`wf-step ${cls}`} key={i}>
-              <span className="wf-step-label">
-                Paso {i + 1}
-                {isDone ? " ✓" : ""}
-              </span>
-              <div className="wf-expression">
-                {guidedExpression(st, i)}
-                <NumberInput
-                  id={`wf-${exercise.id}-${i}`}
-                  label={`Resultado del paso ${i + 1}`}
-                  value={answerValue}
-                  onValue={(v) => setGuidedAnswer(i, v)}
-                  disabled={!isCurrent}
-                />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
-
-  function chooseBody() {
-    const current = values.steps[step];
-    const ops = ["add", "sub", "mul", "div"];
-    return (
-      <div className="wf-steps">
-        {exercise.plan.map((st, i) => {
-          const isDone = prevDone(i);
-          if (isDone) {
-            return (
-              <div className="wf-step is-done" key={i}>
-                <span className="wf-step-label">
-                  Paso {i + 1} ✓
-                </span>
-                <div className="wf-expression">
-                  <span className="given">{st.a}</span>
-                  <span>{OP_SYMBOL[st.op]}</span>
-                  <span className="given">{st.b}</span>
-                  <span>=</span>
-                  <span className="given">{st.result}</span>
-                </div>
-              </div>
-            );
-          }
-          if (i !== step) {
-            return (
-              <div className="wf-step is-locked" key={i}>
-                <span className="wf-step-label">Paso {i + 1}</span>
-                <p>Se activará cuando termines los pasos anteriores.</p>
-              </div>
-            );
-          }
-
-          const prevResult = i > 0 ? exercise.plan[i - 1].result : null;
-          const phA = prevResult !== null && st.a === prevResult ? "resultado anterior" : "";
-          const phB = prevResult !== null && st.b === prevResult ? "resultado anterior" : "";
-
-          return (
-            <div className="wf-step is-current" key={i}>
-              <span className="wf-step-label">Paso {i + 1}</span>
-
-              <fieldset className="op-fieldset">
-                <legend>¿Qué operación necesitas realizar?</legend>
-                <div className="op-choices">
-                  {ops.map((op) => (
-                    <button
-                      key={op}
-                      type="button"
-                      className={`op-choice${
-                        current.op === op ? " is-selected" : ""
-                      }`}
-                      aria-pressed={current.op === op}
-                      onClick={() => setWordStep(i, "op", op)}
-                    >
-                      <span className="op-symbol" aria-hidden="true">
-                        {OP_SYMBOL[op]}
-                      </span>
-                      {OP_NAME[op]}
-                    </button>
-                  ))}
-                </div>
-              </fieldset>
-
-              <div className="wf-calc">
-                <span className="wf-field">
-                  <NumberInput
-                    id={`wf-a-${exercise.id}`}
-                    label={`Primer número del paso ${i + 1}`}
-                    value={current.nums[0]}
-                    placeholder={phA || undefined}
-                    onValue={(v) => setWordStep(i, "nums", [v, current.nums[1]])}
-                  />
-                </span>
-                <span className="op-symbol-lg" aria-hidden="true">
-                  {current.op ? OP_SYMBOL[current.op] : "?"}
-                </span>
-                <span className="wf-field">
-                  <NumberInput
-                    id={`wf-b-${exercise.id}`}
-                    label={`Segundo número del paso ${i + 1}`}
-                    value={current.nums[1]}
-                    placeholder={phB || undefined}
-                    onValue={(v) => setWordStep(i, "nums", [current.nums[0], v])}
-                  />
-                </span>
-                <span className="op-symbol-lg" aria-hidden="true">
-                  =
-                </span>
-                <span className="wf-field">
-                  <NumberInput
-                    id={`wf-r-${exercise.id}`}
-                    label={`Resultado del paso ${i + 1}`}
-                    value={current.answer}
-                    onValue={(v) => setWordStep(i, "answer", v)}
-                  />
-                </span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
 
   return (
     <ExerciseCard exercise={exercise} controller={controller} solution={solution}>
@@ -203,7 +66,35 @@ export default function WordProblem({ exercise, controller }) {
           </li>
         </ul>
       )}
-      {exercise.mode === "choose" ? chooseBody() : guidedBody()}
+
+      {/* Desarrollo: una operación por línea, escrito solo con la botonera. */}
+      <div className="wf-dev">
+        {lines.map((line, i) => (
+          <p className="wf-line" key={`line-${i}`}>
+            {line}
+          </p>
+        ))}
+        <p
+          className={`wf-line is-current${current ? "" : " is-empty"}`}
+          aria-live="polite"
+        >
+          {current ||
+            (lines.length === 0
+              ? "Escribe la primera operación con la botonera…"
+              : "")}
+          {!locked && <span className="wf-caret" aria-hidden="true" />}
+        </p>
+      </div>
+
+      <ProblemKeypad
+        magnitudes={exercise.resultados}
+        disabled={locked}
+        onKey={devPress}
+        onBackspace={devBackspace}
+        onNewline={devNewline}
+        onUndo={devUndo}
+        onMagnitude={devMagnitude}
+      />
     </ExerciseCard>
   );
 }

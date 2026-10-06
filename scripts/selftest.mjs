@@ -408,6 +408,8 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   );
 }
 {
+  // Problemas: desarrollo completo escrito con la botonera y una sola
+  // comprobación al final (línea a línea: «a op b = r → magnitud»).
   const ex = {
     id: "p", type: "wordProblem", mode: "choose",
     plan: [
@@ -415,13 +417,53 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
       { op: "add", a: 12, b: 24, result: 36 },
       { op: "sub", a: 36, b: 5, result: 31 },
     ],
+    resultados: {
+      parciales: ["Cromos de los sobres", "Cromos en total"],
+      final: "Cromos que tiene ahora",
+    },
   };
-  const needOp = validateStep(ex, { step: 0, values: { steps: [{ op: null, nums: ["", ""], answer: "" }] }, attempts: 0 });
-  check("problema 3 pasos: pide elegir operación", !needOp.ok && needOp.message.includes("Elige"), needOp.message);
-  const needNums = validateStep(ex, { step: 0, values: { steps: [{ op: "mul", nums: ["", ""], answer: "" }] }, attempts: 0 });
-  check("problema 3 pasos: pide números", !needNums.ok && needNums.message.includes("los dos números"), needNums.message);
-  const good = validateStep(ex, { step: 0, values: { steps: [{ op: "mul", nums: ["3", "8"], answer: "24" }] }, attempts: 0 });
-  check("problema 3 pasos: paso 1 correcto", good.ok, JSON.stringify(good));
+  const dev = (lines, current = "") => ({ step: 0, values: { lines, current }, attempts: 0 });
+  const L1 = "3 × 8 = 24 → Cromos de los sobres";
+  const L2 = "12 + 24 = 36 → Cromos en total";
+  const L3 = "36 − 5 = 31 → Cromos que tiene ahora";
+
+  const vacio = validateStep(ex, dev([]));
+  check("problema: desarrollo vacío pide la botonera", !vacio.ok && vacio.message.includes("botonera"), vacio.message);
+
+  const rota = validateStep(ex, dev(["3 × 824 → Cromos de los sobres"]));
+  check("problema: línea incompleta avisa", !rota.ok && rota.message.includes("línea 1"), rota.message);
+
+  const corto = validateStep(ex, dev([L1, L2]));
+  check("problema: faltan operaciones", !corto.ok && corto.message.includes("de 3"), corto.message);
+
+  const opMal = validateStep(ex, dev(["3 + 8 = 24 → Cromos de los sobres", L2, L3]));
+  check("problema: operación equivocada", !opMal.ok && opMal.message.includes("Piensa otra vez"), opMal.message);
+
+  const numsMal = validateStep(ex, dev(["3 × 9 = 24 → Cromos de los sobres", L2, L3]));
+  check("problema: números ajenos al problema", !numsMal.ok && numsMal.message.includes("no son los del problema"), numsMal.message);
+
+  const resMal = validateStep(ex, dev(["3 × 8 = 25 → Cromos de los sobres", L2, L3]));
+  check("problema: resultado que no cuadra", !resMal.ok && resMal.message.includes("no da ese resultado"), resMal.message);
+
+  const sinMag = validateStep(ex, dev(["3 × 8 = 24", L2, L3]));
+  check("problema: sin adjuntar el resultado", !sinMag.ok && sinMag.message.includes("Te falta adjuntar"), sinMag.message);
+
+  const magMal = validateStep(ex, dev(["3 × 8 = 24 → Cromos en total", L2, L3]));
+  check("problema: resultado que no corresponde", !magMal.ok && magMal.message.includes("no corresponde"), magMal.message);
+
+  const conActual = validateStep(ex, dev([L1, L2], L3));
+  check("problema: la línea en curso también se comprueba", conActual.ok, JSON.stringify(conActual));
+
+  const commutativa = validateStep(ex, dev(["8 × 3 = 24 → Cromos de los sobres", L2, L3]));
+  check("problema: multiplicación con el orden cambiado vale", commutativa.ok, JSON.stringify(commutativa));
+
+  const sinMagnitudes = validateStep(
+    { id: "q", type: "wordProblem", plan: [{ op: "add", a: 5, b: 3, result: 8 }] },
+    dev(["5 + 3 = 8"])
+  );
+  check("problema: sin «resultados» no se piden nombres", sinMagnitudes.ok, JSON.stringify(sinMagnitudes));
+
+  check("problema: un solo paso (comprobación única)", getStepsCount(ex) === 1);
 }
 {
   const ex = { id: "m", type: "mental", expr: "27 + 19", result: 46, hint: "Pista: suma 20 y resta 1." };

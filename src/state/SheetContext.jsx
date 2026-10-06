@@ -32,12 +32,8 @@ const SheetContext = createContext(null);
 
 function defaultValues(exercise) {
   if (exercise.type === "wordProblem") {
-    if (exercise.mode === "choose") {
-      return {
-        steps: exercise.plan.map(() => ({ op: null, nums: ["", ""], answer: "" })),
-      };
-    }
-    return { answers: exercise.plan.map(() => "") };
+    // Desarrollo escrito con la botonera: líneas confirmadas + línea en curso.
+    return { lines: [], current: "" };
   }
   if (
     exercise.type === "multiplication" ||
@@ -65,7 +61,7 @@ function makeEntry(exercise) {
 function successMessage(exercise) {
   switch (exercise.type) {
     case "wordProblem":
-      return "¡Correcto! Has resuelto el problema paso a paso.";
+      return "¡Correcto! Tu desarrollo entero es correcto.";
     case "multiplication":
     case "division":
       return "¡Correcto! Toda la operación está bien hecha.";
@@ -126,21 +122,57 @@ export function reducer(state, action) {
         },
       }));
 
-    case "SET_WORD_STEP":
+    // Botonera del problema: la línea se escribe pulsando teclas, sin
+    // campos de texto (en el móvil no se abre el teclado del sistema).
+    case "DEV": {
       return updateEntry(state, action.exercise, (entry) => {
-        const steps = entry.values.steps.map((s, i) =>
-          i === action.index ? { ...s, [action.field]: action.value } : s
-        );
-        return { ...entry, values: { ...entry.values, steps } };
-      });
+        const v = entry.values ?? {};
+        const lines = Array.isArray(v.lines) ? v.lines : [];
+        const current = typeof v.current === "string" ? v.current : "";
+        // Cada escritura normaliza la forma { lines, current } (el
+        // progreso guardado con el formato antiguo empieza de cero).
+        const set = (patch) => ({
+          ...entry,
+          values: { ...v, lines, current, ...patch },
+        });
 
-    case "SET_GUIDED_ANSWER":
-      return updateEntry(state, action.exercise, (entry) => {
-        const answers = entry.values.answers.map((v, i) =>
-          i === action.index ? action.value : v
-        );
-        return { ...entry, values: { ...entry.values, answers } };
+        switch (action.op) {
+          case "key":
+            return set({ current: current + action.key });
+          case "back":
+            return set({ current: current.slice(0, -1) });
+          case "newline": {
+            const line = current.trim();
+            if (!line) return entry;
+            return set({ lines: [...lines, line], current: "" });
+          }
+          case "undo":
+            if (current.trim()) return set({ current: "" });
+            if (lines.length === 0) return entry;
+            return set({ lines: lines.slice(0, -1) });
+          case "magnitude": {
+            const name = String(action.name ?? "").trim();
+            if (!name) return entry;
+            // El nombre se adjunta a la operación de la línea en curso
+            // (cuando ya lleva «=»); con la línea vacía, a la última
+            // confirmada. Solo una magnitud por línea.
+            if (current.includes("=") && !current.includes("→")) {
+              return set({ current: `${current.trimEnd()} → ${name}` });
+            }
+            if (current.trim()) return entry;
+            const last = lines[lines.length - 1];
+            if (!last || !last.includes("=") || last.includes("→")) {
+              return entry;
+            }
+            return set({
+              lines: [...lines.slice(0, -1), `${last} → ${name}`],
+            });
+          }
+          default:
+            return entry;
+        }
       });
+    }
 
     case "CHECK": {
       const exercise = action.exercise;
@@ -358,7 +390,17 @@ export function isItemDone(item, progress) {
 
 export function useExerciseController(exercise) {
   const { state, dispatch, goNext } = useSheet();
-  const entry = state.progress[exercise.id] ?? makeEntry(exercise);
+  let entry = state.progress[exercise.id] ?? makeEntry(exercise);
+  // Los problemas pasaron de pasos a botonera: el progreso guardado
+  // con el formato antiguo (steps/answers) empieza de cero.
+  if (
+    exercise.type === "wordProblem" &&
+    !Array.isArray(entry.values?.lines) &&
+    entry.status !== "correct" &&
+    !entry.revealed
+  ) {
+    entry = makeEntry(exercise);
+  }
   const stepsCount = getStepsCount(exercise);
 
   return {
@@ -377,10 +419,13 @@ export function useExerciseController(exercise) {
     setAnswer: (value) => dispatch({ type: "SET_ANSWER", exercise, value }),
     setCell: (cellId, value) =>
       dispatch({ type: "SET_CELL", exercise, cellId, value }),
-    setWordStep: (index, field, value) =>
-      dispatch({ type: "SET_WORD_STEP", exercise, index, field, value }),
-    setGuidedAnswer: (index, value) =>
-      dispatch({ type: "SET_GUIDED_ANSWER", exercise, index, value }),
+    // Botonera del problema: se escribe pulsando teclas, sin teclado.
+    devPress: (key) => dispatch({ type: "DEV", exercise, op: "key", key }),
+    devBackspace: () => dispatch({ type: "DEV", exercise, op: "back" }),
+    devNewline: () => dispatch({ type: "DEV", exercise, op: "newline" }),
+    devUndo: () => dispatch({ type: "DEV", exercise, op: "undo" }),
+    devMagnitude: (name) =>
+      dispatch({ type: "DEV", exercise, op: "magnitude", name }),
     resetItem: () => dispatch({ type: "RESET_ITEM", exercise }),
   };
 }

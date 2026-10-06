@@ -1,10 +1,11 @@
 /**
  * Validación de ejercicios.
  *
- * Las operaciones verticales (suma, resta, multiplicación y división) se
- * comprueban **de una sola vez, al final**; los problemas siguen paso a
- * paso. Los mensajes indican dónde está el error sin revelar la solución
- * (para eso está "Ver solución").
+ * Las operaciones verticales (suma, resta, multiplicación y división) y
+ * los problemas se comprueban **de una sola vez, al final**: el problema
+ * se desarrolla entero con la botonera (sin campos de texto) y se
+ * valida el desarrollo completo. Los mensajes indican dónde está el
+ * error sin revelar la solución (para eso está "Ver solución").
  */
 
 import {
@@ -15,7 +16,6 @@ import {
   normalizeAnswer,
   placeName,
   OP_NAME,
-  OP_SYMBOL,
 } from "./calculations.js";
 
 /** Nº de pasos de un ejercicio (1 si es de respuesta única). */
@@ -27,7 +27,8 @@ export function getStepsCount(exercise) {
       // y se comprueba solo al final.
       return 1;
     case "wordProblem":
-      return exercise.plan.length;
+      // Desarrollo entero y una sola comprobación al final.
+      return 1;
     default:
       return 1;
   }
@@ -68,9 +69,7 @@ export function validateStep(exercise, entry) {
         entry.attempts ?? 0
       );
     case "wordProblem":
-      return exercise.mode === "choose"
-        ? validatePlanStep(exercise, entry)
-        : validateGuidedStep(exercise, entry);
+      return validateDevelopment(exercise, entry);
     case "multiplication":
       return validateMultiplicationStep(exercise, entry);
     case "division":
@@ -206,57 +205,116 @@ function logicDeductionError(exercise, attempts) {
 
 /* ---- Problemas ---- */
 
-function validateGuidedStep(exercise, entry) {
-  const stepIndex = entry.step;
-  const plan = exercise.plan[stepIndex];
-  const entered = entry.values.answers[stepIndex];
-  if (String(entered ?? "").trim() === "") {
-    return fail(`Escribe el resultado del paso ${stepIndex + 1}.`);
-  }
-  if (sameAnswer(entered, plan.result)) return ok();
-  return fail(
-    `El paso ${stepIndex + 1} no es correcto. Realiza otra vez la operación con calma.`
+// Formato de una línea del desarrollo: «a op b = r», con el nombre del
+// resultado opcional («→ magnitud») que se adjunta con la botonera.
+const LINE_RE =
+  /^\s*(\d+)\s*([+\-−×÷*:])\s*(\d+)\s*=\s*(\d+)(?:\s*→\s*(.+))?\s*$/;
+const OP_BY_SYMBOL = {
+  "+": "add",
+  "-": "sub",
+  "−": "sub",
+  "*": "mul",
+  "×": "mul",
+  ":": "div",
+  "÷": "div",
+};
+
+/**
+ * El problema se desarrolla entero en el panel (una operación por
+ * línea) con la botonera y se valida de una sola vez, al final.
+ * Los mensajes no revelan la solución: señalan qué línea falla.
+ */
+function validateDevelopment(exercise, entry) {
+  const values = entry.values ?? {};
+  const committed = Array.isArray(values.lines) ? values.lines : [];
+  const current =
+    typeof values.current === "string" ? values.current.trim() : "";
+  const rawLines = [...committed, ...(current ? [current] : [])].filter(
+    (l) => String(l).trim() !== ""
   );
-}
 
-function validatePlanStep(exercise, entry) {
-  const k = entry.step;
-  const plan = exercise.plan[k];
-  const current = entry.values.steps[k];
-  const paso = `del paso ${k + 1}`;
-
-  if (!current.op) {
-    return fail(`Elige primero la operación que necesitas ${paso}.`);
-  }
-  if (current.op !== plan.op) {
+  if (rawLines.length === 0) {
     return fail(
-      `Has elegido ${OP_NAME[current.op]}. Piensa otra vez: ¿qué operación necesitas ${paso}?`
+      "Escribe las operaciones del desarrollo con la botonera antes de comprobar."
     );
   }
 
-  const [n0, n1] = current.nums.map((v) => String(v ?? "").trim());
-  if (n0 === "" || n1 === "") {
-    return fail(`Introduce los dos números ${paso}.`);
+  // 1) Cada línea debe ser una operación completa: a op b = r (→ magnitud).
+  const parsed = [];
+  for (let i = 0; i < rawLines.length; i++) {
+    const m = String(rawLines[i]).trim().match(LINE_RE);
+    if (!m) {
+      return fail(
+        `La línea ${i + 1} no es una operación completa: número, operación, número, = y resultado.`
+      );
+    }
+    parsed.push({
+      a: Number(m[1]),
+      op: OP_BY_SYMBOL[m[2]],
+      b: Number(m[3]),
+      result: Number(m[4]),
+      mag: m[5] ? m[5].trim() : null,
+    });
   }
-  const enteredSet = [Number(n0), Number(n1)];
-  const expectedSet = [plan.a, plan.b];
-  const sameNumbers = expectedSet.every((v) => enteredSet.includes(v));
-  if (!sameNumbers) {
-    return fail("Esos números no son los del problema. Vuelve a leerlo con atención.");
-  }
-  const commutative = plan.op === "add" || plan.op === "mul";
-  const ordered = enteredSet[0] === plan.a && enteredSet[1] === plan.b;
-  if (!ordered && !commutative) {
+
+  // 2) Una operación por cada paso del plan.
+  const plan = exercise.plan;
+  if (parsed.length !== plan.length) {
     return fail(
-      `Fíjate en el orden: primero ${plan.a}, después ${plan.b} (${OP_SYMBOL[plan.op]}).`
+      parsed.length > plan.length
+        ? `Tu desarrollo tiene ${parsed.length} operaciones; este problema se resuelve con ${plan.length}.`
+        : `Llevas ${parsed.length} de ${plan.length} operaciones: continúa con el desarrollo.`
     );
   }
 
-  if (String(current.answer ?? "").trim() === "") {
-    return fail("Escribe el resultado del cálculo.");
+  // 3) Operación a operación: símbolo, números, resultado y magnitud.
+  for (let i = 0; i < plan.length; i++) {
+    const st = plan[i];
+    const p = parsed[i];
+    const n = i + 1;
+
+    if (p.op !== st.op) {
+      return fail(
+        `En la operación ${n} has escrito ${OP_NAME[p.op]}. Piensa otra vez: ¿qué operación necesitas ahí?`
+      );
+    }
+
+    const commutative = st.op === "add" || st.op === "mul";
+    const sameNumbers =
+      (p.a === st.a && p.b === st.b) ||
+      (commutative && p.a === st.b && p.b === st.a);
+    if (!sameNumbers) {
+      return fail(
+        `Los números de la operación ${n} no son los del problema. Vuelve a leerlo con atención.`
+      );
+    }
+
+    if (p.result !== st.result) {
+      return fail(
+        `La operación ${n} no da ese resultado. Haz el cálculo otra vez con calma.`
+      );
+    }
+
+    const expected = exercise.resultados
+      ? i < plan.length - 1
+        ? exercise.resultados.parciales[i]
+        : exercise.resultados.final
+      : null;
+    if (expected) {
+      if (!p.mag) {
+        return fail(
+          `Te falta adjuntar el resultado de la operación ${n}: usa los botones de resultados.`
+        );
+      }
+      if (p.mag !== expected) {
+        return fail(
+          `El resultado «${p.mag}» no corresponde a la operación ${n}. Mira la lista bajo el enunciado.`
+        );
+      }
+    }
   }
-  if (sameAnswer(current.answer, plan.result)) return ok();
-  return fail("El cálculo no da ese resultado. Comprueba otra vez.");
+
+  return ok();
 }
 
 /* ---- Multiplicaciones ---- */

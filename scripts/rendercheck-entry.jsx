@@ -283,12 +283,33 @@ function render(state, opts = {}) {
 
   const atProb = findItem("prob-3");
   const htmlProb = render({ screen: "section", sectionIndex: atProb.s, itemIndex: atProb.i, progress: {} });
-  check("prob-3: pregunta la operación", htmlProb.includes("¿Qué operación necesitas realizar?"));
-  check("prob-3: las 4 operaciones", ["suma", "resta", "multiplicación", "división"].every((t) => htmlProb.includes(t)));
+  check(
+    "prob-3: botonera con dígitos, operaciones y «=» (sin campos de texto)",
+    htmlProb.includes("keypad-grid") &&
+      !htmlProb.includes("<input") &&
+      ["7", "8", "9", "0", "+", "−", "×", "÷", "="].every((t) =>
+        htmlProb.includes(`>${t}<`)
+      )
+  );
+  check("prob-3: las 4 operaciones (etiquetas de la botonera)", ["suma", "resta", "multiplicación", "división"].every((t) => htmlProb.includes(t)));
+  check(
+    "prob-3: controles Deshacer y Saltar de línea",
+    htmlProb.includes("Deshacer") && htmlProb.includes("Saltar de línea")
+  );
+  check(
+    "prob-3: los 3 nombres de resultados son botones",
+    (htmlProb.match(/key-mag/g) || []).length === 3,
+    `fueron ${(htmlProb.match(/key-mag/g) || []).length}`
+  );
 
   const atGuided = findItem("prob-1");
   const htmlG = render({ screen: "section", sectionIndex: atGuided.s, itemIndex: atGuided.i, progress: {} });
-  check("prob-1: estructura de pasos", htmlG.includes("Paso 1") && htmlG.includes("Paso 2"));
+  check(
+    "prob-1: desarrollo vacío con su aviso (sin pasos ni campos de texto)",
+    htmlG.includes("wf-dev") &&
+      htmlG.includes("Escribe la primera operación") &&
+      !htmlG.includes("<input")
+  );
   check(
     "prob-1: resultados parciales y final listados bajo el enunciado",
     htmlG.includes("problem-resultados") &&
@@ -673,7 +694,61 @@ function render(state, opts = {}) {
     JSON.stringify(mp.progress["mul-3"].feedback)
   );
   mp = reducer(mp, { type: "NEXT_STEP", exercise: mult });
-  check("NEXT_STEP sigue disponible (lo usan los problemas guiados)", mp.progress["mul-3"].step === 1 && mp.progress["mul-3"].feedback === null);
+  check("NEXT_STEP sigue disponible en el reducer", mp.progress["mul-3"].step === 1 && mp.progress["mul-3"].feedback === null);
+
+  // Botonera del problema: la línea se escribe pulsando teclas (sin teclado).
+  const wordProb = { id: "prob-1", type: "wordProblem", plan: [{ op: "add", a: 5, b: 3, result: 8 }] };
+  let dev = reducer(base, { type: "DEV", exercise: wordProb, op: "key", key: "5" });
+  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "key", key: "+" });
+  check(
+    "botonera: las teclas escriben en la línea actual",
+    dev.progress["prob-1"].values.current === "5+",
+    dev.progress["prob-1"].values.current
+  );
+  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "key", key: "3" });
+  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "key", key: "=" });
+  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "key", key: "8" });
+  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "magnitude", name: "Total" });
+  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "magnitude", name: "Otro" });
+  check(
+    "botonera: el resultado se adjunta a la línea con «=» y solo una vez",
+    dev.progress["prob-1"].values.current === "5+3=8 → Total",
+    dev.progress["prob-1"].values.current
+  );
+  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "back" });
+  check(
+    "botonera: borrar el último carácter",
+    dev.progress["prob-1"].values.current === "5+3=8 → Tota",
+    dev.progress["prob-1"].values.current
+  );
+  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "newline" });
+  check(
+    "botonera: saltar de línea confirma la línea",
+    dev.progress["prob-1"].values.current === "" &&
+      dev.progress["prob-1"].values.lines.length === 1,
+    JSON.stringify(dev.progress["prob-1"].values)
+  );
+  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "key", key: "9" });
+  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "undo" });
+  check(
+    "botonera: deshacer borra la línea en curso",
+    dev.progress["prob-1"].values.current === "" &&
+      dev.progress["prob-1"].values.lines.length === 1,
+    JSON.stringify(dev.progress["prob-1"].values)
+  );
+  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "undo" });
+  check(
+    "botonera: deshacer borra la última línea confirmada",
+    dev.progress["prob-1"].values.lines.length === 0,
+    JSON.stringify(dev.progress["prob-1"].values)
+  );
+  const sinIgual = reducer(base, { type: "DEV", exercise: wordProb, op: "key", key: "9" });
+  const sinIgual2 = reducer(sinIgual, { type: "DEV", exercise: wordProb, op: "magnitude", name: "Total" });
+  check(
+    "botonera: sin «=» no se adjunta el resultado",
+    sinIgual2.progress["prob-1"].values.current === "9",
+    sinIgual2.progress["prob-1"].values.current
+  );
 
   // REVEAL marca como visto.
   const revealed = reducer({ ...base, progress: { "sum-1": { ...multEntry, values: { cells: {} } } } }, { type: "REVEAL", exercise: sum });

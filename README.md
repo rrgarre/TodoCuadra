@@ -1,7 +1,7 @@
 # Juego de Calcular
 
 Aplicación web **100% frontend** para repasar matemáticas en **4º de Primaria** (España):
-operaciones en columna, problemas, cálculo mental y trucos, con corrección paso a paso.
+operaciones en columna, problemas, cálculo mental y trucos, con comprobación y explicaciones.
 
 - **Stack**: React + Vite + JavaScript + CSS (sin TypeScript, sin librerías de routing ni estado).
 - **Sin backend**: no hay servidor, API, base de datos, usuarios ni IA. El progreso se guarda
@@ -63,7 +63,7 @@ Ficha base de la serie (id `sheet-001`, asignatura **mates**); cualquier JSON nu
 | Sección | Items | Contenido |
 | --- | ---: | --- |
 | **Operaciones** | 19 | 5 sumas (p. ej. `348 + 276`), 5 restas (p. ej. `532 − 278`), 5 multiplicaciones —2 con multiplicador de una cifra (`236 × 4`, `457 × 6`) y 3 de dos cifras (`236 × 24`, `148 × 35`, `267 × 48`)— y 4 divisiones (`384÷3`, `924÷6`, `1008÷7` con cifra 0 intermedia y `918÷18` con divisor de dos cifras) |
-| **Problemas matemáticos** | 4 | 2 problemas de **dos pasos** (estructura de operaciones guiada con resultados vacíos) y 2 de **tres pasos** (la persona elige la operación, escribe los números y el resultado); bajo el enunciado se listan los nombres de los **resultados parciales** (las magnitudes de cada paso) y del **final** |
+| **Problemas matemáticos** | 4 | Los 4 se desarrollan **desde cero con una botonera** (dígitos, operaciones, `=`, **Deshacer** y **Saltar de línea**), sin campos de texto: en el móvil no se abre el teclado. Bajo el enunciado se listan los nombres de los **resultados parciales** y del **final**, que son botones para **adjuntar cada magnitud** a su operación. **Comprobación única al final** |
 | **Cálculo mental** | 12 | 8 ejercicios de respuesta rápida con pista progresiva + 4 trucos intercalados |
 | **Trucos de cálculo mental** | 4 | Los mismos 4 trucos explicados, reunidos en su propia sección |
 
@@ -73,7 +73,7 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
 ## Cómo se juega
 
 - **Un ejercicio por pantalla** con barra de progreso arriba; se avanza con *Comprobar* /
-  *Siguiente*, y siempre desde el principio de cada sección.
+  *Continuar*, y siempre desde el principio de cada sección.
 - **Reiniciar cada operación**: en sumas, restas, multiplicaciones y divisiones hay un
   botón **Reiniciar** que borra solo ese ejercicio (casillas, paso y avisos) para
   intentarlo de nuevo; no toca el resto del progreso de la hoja.
@@ -115,6 +115,11 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
     cabeza**, y tampoco se pinta el signo `−`.
   - Los mensajes señalan la casilla con lenguaje para niñas y niños:
     *«Piensa: 3 × 9 = 27. ¿Cuánto es 30 − 27?»*, *«Piensa: ¿cuántas veces cabe 18 en 91?»*…
+- **Problemas con botonera**: el desarrollo se escribe **sin campos de texto** (en el móvil
+  no se abre el teclado) con dígitos, operaciones, `=`, **Deshacer**, **Saltar de línea** y
+  los botones de **resultados** (los nombres de las magnitudes que ya se listan bajo el
+  enunciado, para adjuntarlos a cada operación); una sola pulsación de **Comprobar**
+  valida **el desarrollo entero, de una sola vez**.
 - **Corrección explicativa**: *Comprobar* señala la casilla con la cifra correcta y el por
   qué; distingue entre **procedimiento correcto con fallo de cálculo** y error de paso.
   *Ver solución* aparece solo bajo demanda y marca el ejercicio como *a revisar*.
@@ -141,7 +146,8 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
   las casillas (*«Cifra 1 del cociente»*, *«Llevada de las decenas»*…), estados comunicados
   con icono + texto, contraste alto.
 - **Responsive**: la retícula usa tamaños de casilla por media queries; en móvil se usa el
-  teclado numérico del sistema.
+  teclado numérico del sistema (salvo en los problemas, que se resuelven con su botonera
+  y no abren teclado).
 
 ## Estructura del proyecto
 
@@ -255,7 +261,7 @@ por tipo:
 | `tipo` | Campos | Condiciones |
 | --- | --- | --- |
 | `suma`, `resta`, `multiplicacion`, `division` | `a`, `b` | enteros ≥ 0; en resta `a ≥ b`; en división `b ≥ 1`; en multiplicación `b` de una o dos cifras |
-| `problema` | `texto`, `pasos` (`op`: `suma`/`resta`/`multiplicacion`/`division`, `a`, `b`), `modo` opcional (`guiado`/`eleccion`), `respuesta` opcional | los resultados de los pasos **se calculan solos**; si escribes `respuesta` debe coincidir con el último resultado |
+| `problema` | `texto`, `pasos` (`op`: `suma`/`resta`/`multiplicacion`/`division`, `a`, `b`), `modo` opcional (`guiado`/`eleccion`), `respuesta` opcional, `resultados` opcional (`{ parciales: [textos], final: texto }`) | los resultados de los pasos **se calculan solos**; si escribes `respuesta` debe coincidir con el último resultado. Con `resultados`, esos nombres se ofrecen como botones de la botonera y son obligatorios en la comprobación única |
 | `mental` | `expr`, `resultado`, `pista` opcional, `trucoId` opcional | `trucoId` enlaza con un `truco` de la misma ficha; si no existe, la ficha no se carga |
 | `truco` | `titulo`, `gancho`, `resumen`, `ejemplo` (`expr`, `pasos[]`), `explicacion` | todos obligatorios |
 | `logica` | `variante`, `enunciado`, `pista`/`explicacion` opcionales + según variante | `serie`: `elementos` (≥ 3 números) y `respuesta` (si la serie es aritmética se comprueba); `comparacion`: `izquierda`, `derecha` y `respuesta` = `mayor`/`menor`/`igual` (se comprueba); `enigma`: `respuesta` numérica; `eliminatoria`: `opciones` (≥ 2 textos distintos) y `respuesta` = texto exacto de la buena (tiene que estar entre las `opciones`); `deduccion`: `etiquetas` (≥ 2) y `respuesta` = un entero ≥ 0 por etiqueta (p. ej. `[2, 1]`) |
@@ -376,7 +382,7 @@ Reglas del juego:
 | Apartado **Trivial** (🎯 en portada): categoría o todas mezcladas al azar, pregunta + **Mostrar solución** a demanda, **«Siguiente» solo tras ver la respuesta**, sin temporizadores ni contadores | ✅ `parsePreguntas` + sorteo; render de categorías, de la pregunta con sus botones (sin «Siguiente» hasta ver el detalle) y de la solución bajo demanda (sin restos de contador ni de tiempo) |
 | Trivial: categoría **vacía** desactivada y fichero roto con **aviso por ruta** | ✅ mocks con `geografia.json` (`[]`) y `rota.json` (que no es lista); `primaria.json` validado entero (200) |
 | **Varias fichas**: cambiar de ficha con progreso independiente y ficha activa recordada | ✅ `SET_SHEET` + clave `hoja-activa`; portada, resumen y render de la ficha Lógica comprobados |
-| Problemas de 2 pasos guiados y de 3 pasos con elección de operación | ✅ render de los 4 + validación de cada modo + resultados parciales/final bajo el enunciado |
+| Problemas con botonera (sin campos de texto) y comprobación única al final | ✅ render de los 4 + validación completa del desarrollo |
 | Cálculo mental con pista al segundo fallo | ✅ tests de validación |
 | Trucos: intercalados en cálculo mental y en su sección | ✅ los 4 trucos renderizan en ambos sitios |
 | Progreso guardado en `localStorage` y retomado al recargar | ✅ `storage.js` versionado + tests de persistencia; botón **Resetear todo** en portada y resumen (retomada manual en navegador recomendada) |
