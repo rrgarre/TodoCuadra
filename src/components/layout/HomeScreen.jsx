@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useSheet, isItemDone } from "../../state/SheetContext.jsx";
 import {
   getSectionItems,
@@ -10,9 +10,10 @@ import { loadSheetState } from "../../utils/storage.js";
 
 /**
  * Portada por asignaturas: cada zona es una asignatura (Matemáticas,
- * Lengua…) y dentro lista sus fichas con su progreso. Al tocar una
- * ficha se activa y sus secciones se despliegan justo debajo; si la
- * ficha tiene una sola sección, se abre directa a los ejercicios.
+ * Lengua…) y dentro lista sus fichas con su progreso. Cada tarjeta
+ * tiene una zona propia (la flecha) que solo despliega o recoge sus
+ * apartados sin salir del menú; el resto de la tarjeta activa la ficha
+ * y, si tiene una sola sección, se abre directa a los ejercicios.
  */
 export default function HomeScreen({ onOpenTrivial }) {
   const { sheet, state, dispatch, reset, setSheet } = useSheet();
@@ -21,6 +22,10 @@ export default function HomeScreen({ onOpenTrivial }) {
     [state.progress]
   );
   const warnings = getTemplateWarnings();
+
+  // Fichas con sus apartados desplegados: la activa al arrancar; después,
+  // cada una se abre o cierra a mano, sin navegar a ningún sitio.
+  const [abiertas, setAbiertas] = useState(() => new Set([sheet.id]));
 
   // Todas las fichas con su progreso guardado.
   const fichas = useMemo(
@@ -32,7 +37,7 @@ export default function HomeScreen({ onOpenTrivial }) {
             : loadSheetState(s.id)?.progress ?? {};
         const items = s.sections.flatMap((sec) => getSectionItems(s, sec));
         const done = items.filter((it) => isItemDone(it, progress)).length;
-        return { s, done, total: items.length, active: s.id === sheet.id };
+        return { s, done, total: items.length, active: s.id === sheet.id, progress };
       }),
     [sheet.id, state.progress]
   );
@@ -52,18 +57,32 @@ export default function HomeScreen({ onOpenTrivial }) {
     [fichas]
   );
 
-  /** Tocar una ficha: se activa en su zona; si tiene una sola sección, se abre. */
+  /** Zona de la flecha: solo despliega o recoge los apartados de la ficha. */
+  const alternarFicha = (id) => {
+    setAbiertas((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  /** Tocar la tarjeta: activa la ficha (y despliega sus apartados); si
+   *  tiene una sola sección, se abre directa a los ejercicios. */
   const abrirFicha = (ficha) => {
-    if (ficha.s.id !== sheet.id) setSheet(ficha.s.id);
+    if (ficha.s.id !== sheet.id) {
+      setSheet(ficha.s.id);
+      setAbiertas((prev) => new Set(prev).add(ficha.s.id));
+    }
     if (ficha.s.sections.length === 1) {
       dispatch({ type: "OPEN_SECTION", sectionIndex: 0 });
     }
   };
 
-  /** Tarjeta de sección (solo se pinta de la ficha activa, anidada). */
-  const sectionCard = (section, index) => {
-    const items = getSectionItems(sheet, section);
-    const done = items.filter((item) => isItemDone(item, state.progress)).length;
+  /** Tarjeta de apartado de una ficha, con el progreso de esa ficha. */
+  const sectionCard = (ficha, section, index) => {
+    const items = getSectionItems(ficha.s, section);
+    const done = items.filter((item) => isItemDone(item, ficha.progress)).length;
     const all = items.length;
     const cta = done === 0 ? "Empezar" : done === all ? "Repasar" : "Continuar";
     return (
@@ -71,9 +90,10 @@ export default function HomeScreen({ onOpenTrivial }) {
         <button
           type="button"
           className="section-card"
-          onClick={() =>
-            dispatch({ type: "OPEN_SECTION", sectionIndex: index })
-          }
+          onClick={() => {
+            if (!ficha.active) setSheet(ficha.s.id);
+            dispatch({ type: "OPEN_SECTION", sectionIndex: index });
+          }}
         >
           <span className="section-icon" aria-hidden="true">
             {section.icon}
@@ -116,42 +136,62 @@ export default function HomeScreen({ onOpenTrivial }) {
               {lista.map((ficha) => {
                 const soloUna =
                   ficha.active && ficha.s.sections.length === 1;
+                const desplegada = abiertas.has(ficha.s.id);
                 return (
                   <li key={ficha.s.id}>
-                    <button
-                      type="button"
-                      className={`section-card${
-                        ficha.active ? " section-card--activa" : ""
-                      }`}
-                      disabled={ficha.active && !soloUna}
-                      aria-label={
-                        ficha.active
-                          ? `${ficha.s.title}: ficha en uso`
-                          : `Usar la ficha ${ficha.s.title}`
-                      }
-                      onClick={() => abrirFicha(ficha)}
-                    >
-                      <span className="section-icon" aria-hidden="true">
-                        {ficha.s.icon ?? "🗂️"}
-                      </span>
-                      <span className="section-body">
-                        <strong>{ficha.s.title}</strong>
-                        <span>
-                          {ficha.s.level}
-                          {ficha.s.template ? " · plantilla" : ""}
+                    <div className="ficha-fila">
+                      <button
+                        type="button"
+                        className={`section-card${
+                          ficha.active ? " section-card--activa" : ""
+                        }`}
+                        disabled={ficha.active && !soloUna}
+                        aria-label={
+                          ficha.active
+                            ? `${ficha.s.title}: ficha en uso`
+                            : `Usar la ficha ${ficha.s.title}`
+                        }
+                        onClick={() => abrirFicha(ficha)}
+                      >
+                        <span className="section-icon" aria-hidden="true">
+                          {ficha.s.icon ?? "🗂️"}
                         </span>
-                      </span>
-                      <span className="section-progress">
-                        {ficha.done}/{ficha.total}
-                      </span>
-                      <span className="section-cta">
-                        {ficha.active ? "✓ En uso" : "Usar"}
-                      </span>
-                    </button>
+                        <span className="section-body">
+                          <strong>{ficha.s.title}</strong>
+                          <span>
+                            {ficha.s.level}
+                            {ficha.s.template ? " · plantilla" : ""}
+                          </span>
+                        </span>
+                        <span className="section-progress">
+                          {ficha.done}/{ficha.total}
+                        </span>
+                        <span className="section-cta">
+                          {ficha.active ? "✓ En uso" : "Usar"}
+                        </span>
+                      </button>
 
-                    {ficha.active && (
+                      {/* Zona propia: solo despliega o recoge la info. */}
+                      <button
+                        type="button"
+                        className="ficha-toggle"
+                        aria-expanded={desplegada}
+                        aria-label={`${
+                          desplegada ? "Recoger" : "Desplegar"
+                        } los apartados de ${ficha.s.title}`}
+                        onClick={() => alternarFicha(ficha.s.id)}
+                      >
+                        <span aria-hidden="true">
+                          {desplegada ? "▾" : "▸"}
+                        </span>
+                      </button>
+                    </div>
+
+                    {desplegada && (
                       <ul className="section-list section-list--hija">
-                        {ficha.s.sections.map(sectionCard)}
+                        {ficha.s.sections.map((section, i) =>
+                          sectionCard(ficha, section, i)
+                        )}
                       </ul>
                     )}
                   </li>

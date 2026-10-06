@@ -19,6 +19,7 @@ import {
   fetchRemoteFiles,
   refreshRemoteTemplates,
   resetTemplateCache,
+  slugify,
 } from "../plantillas/templates.js";
 import {
   parsePreguntas,
@@ -432,45 +433,49 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
 
 /* ---------- Plantillas (carpeta plantillas/*.json) ---------- */
 {
-  const f = "plantillas/logica.json";
+  const f = "plantillas/FichaDeLogica01.json";
   const json = JSON.parse(readFileSync(f, "utf8"));
   const r = parseTemplate(json, f);
-  check("plantilla logica.json: válida", r.ok, JSON.stringify(r.errors));
+  check("FichaDeLogica01.json: válida", r.ok, JSON.stringify(r.errors));
   if (r.ok) {
     const sh = r.sheet;
-    check("plantilla logica.json: 15 retos de lógica", sh.logicExercises.length === 15, JSON.stringify(sh.logicExercises.length));
+    check("FichaDeLogica01.json: 15 retos de lógica", sh.logicExercises.length === 15, JSON.stringify(sh.logicExercises.length));
+    const slug = slugify(sh.title);
     check(
-      "plantilla logica.json: ids autogenerados",
-      sh.logicExercises[0].id === "logica-1" && sh.logicExercises[14].id === "logica-15",
+      "FichaDeLogica01.json: ids autogenerados (del slug del título)",
+      sh.logicExercises[0].id === `${slug}-1` && sh.logicExercises[14].id === `${slug}-15`,
       JSON.stringify(sh.logicExercises.map((e) => e.id))
     );
     const sec = sh.sections[0];
-    check("plantilla logica.json: sección «Lógica» con su icono", sec.title === "Lógica" && sec.icon === "🧩");
     check(
-      "plantilla logica.json: grupos Series, Comparaciones, Enigmas, Deducción y Eliminatoria",
+      "FichaDeLogica01.json: sección única con el título de la ficha y su icono",
+      sec.title === sh.title && sec.icon === "🧩"
+    );
+    check(
+      "FichaDeLogica01.json: grupos Series, Comparaciones, Enigmas, Deducción y Eliminatoria",
       sec.groups.map((g) => g.label).join(",") ===
         "Series,Comparaciones,Enigmas,Deducción,Eliminatoria" &&
         sec.groups.every((g) => g.ids.length === 3),
       JSON.stringify(sec.groups.map((g) => g.label))
     );
     check(
-      "plantilla logica.json: tipos internos y explicaciones",
+      "FichaDeLogica01.json: tipos internos y explicaciones",
       sh.logicExercises.every((e) => e.type === "logica") &&
         typeof sh.logicExercises[0].explanation === "string" &&
         typeof sh.logicExercises[3].explanation === "string"
     );
-    check("plantilla logica.json: formato mates", sh.formato === "mates", sh.formato);
+    check("FichaDeLogica01.json: formato mates", sh.formato === "mates", sh.formato);
 
     // Variantes nuevas: deducción (casillas etiquetadas) y eliminatoria (opciones).
     const deds = sh.logicExercises.filter((e) => e.variant === "deduccion");
     const elims = sh.logicExercises.filter((e) => e.variant === "eliminatoria");
     check(
-      "logica.json: 3 deducciones y 3 eliminatorias",
+      "FichaDeLogica01.json: 3 deducciones y 3 eliminatorias",
       deds.length === 3 && elims.length === 3,
       JSON.stringify({ deds: deds.length, elims: elims.length })
     );
     check(
-      "logica.json: la deducción del saco (patos y conejos)",
+      "FichaDeLogica01.json: la deducción del saco (patos y conejos)",
       deds[0] &&
         JSON.stringify(deds[0].labels) === JSON.stringify(["Patos", "Conejos"]) &&
         JSON.stringify(deds[0].answers) === JSON.stringify([2, 1]) &&
@@ -478,7 +483,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
       JSON.stringify(deds[0])
     );
     check(
-      "logica.json: la eliminatoria tiene la buena entre sus opciones",
+      "FichaDeLogica01.json: la eliminatoria tiene la buena entre sus opciones",
       elims.every((e) => e.options.length === 4 && e.options.includes(e.answer)) &&
         elims[0].answer === "Diego",
       JSON.stringify(elims[0])
@@ -656,7 +661,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
 
   // Cargador: la válida entra y la rota solo deja aviso (nunca rompe).
   const built = buildTemplateSheets({
-    "C:\\proy\\plantillas\\logica.json": { default: json },
+    "C:\\proy\\plantillas\\FichaDeLogica01.json": { default: json },
     "C:\\proy\\plantillas\\rota.json": { default: { titulo: "Rota", tipo: "mates", ejercicios: [{ tipo: "arpita" }] } },
   });
   check(
@@ -666,12 +671,12 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   );
 }
 
-/* ---------- Ficha base (mates.json, la que había en código) ---------- */
+/* ---------- Ficha base (HojaDePracticas.json, la que había en código) ---------- */
 {
-  const f = "plantillas/mates.json";
+  const f = "plantillas/HojaDePracticas.json";
   const json = JSON.parse(readFileSync(f, "utf8"));
   const r = parseTemplate(json, f);
-  check("ficha mates.json: válida", r.ok, JSON.stringify(r.errors));
+  check("ficha HojaDePracticas.json: válida", r.ok, JSON.stringify(r.errors));
   if (r.ok) {
     const sh = r.sheet;
     check(
@@ -859,12 +864,12 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   check("ids: repetido → error", !dup.ok && dup.errors[0].includes("se repite el id"), JSON.stringify(dup.errors));
 }
 
-/* ---------- Ficha de práctica (operaciones.json: 3 de cada) ---------- */
+/* ---------- Ficha de práctica (Operaciones01.json: 3 de cada) ---------- */
 {
-  const f = "plantillas/operaciones.json";
+  const f = "plantillas/Operaciones01.json";
   const json = JSON.parse(readFileSync(f, "utf8"));
   const r = parseTemplate(json, f);
-  check("ficha operaciones.json: válida", r.ok, JSON.stringify(r.errors));
+  check("ficha Operaciones01.json: válida", r.ok, JSON.stringify(r.errors));
   if (r.ok) {
     const sh = r.sheet;
     check(
@@ -923,14 +928,18 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   );
 
   // Fusionado: si una remota repite el id de una local, gana la local.
+  // La ficha local no trae "id": se genera del slug de su título.
+  const idLogica = "plantilla-ficha-de-logica-01";
   globalThis.__PLANTILLAS_MOCK__ = {
-    "C:\\proy\\plantillas\\logica.json": JSON.parse(readFileSync("plantillas/logica.json", "utf8")),
+    "C:\\proy\\plantillas\\FichaDeLogica01.json": JSON.parse(
+      readFileSync("plantillas/FichaDeLogica01.json", "utf8")
+    ),
   };
   applyRemoteFiles([
     {
       name: "clon.json",
       content: JSON.stringify({
-        titulo: "Clon", id: "plantilla-logica", tipo: "mates",
+        titulo: "Clon", id: idLogica, tipo: "mates",
         ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "¿5?", respuesta: 5 }],
       }),
     },
@@ -946,10 +955,10 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   const merged = loadTemplates();
   check(
     "remota: gana la local (mismo id) y la extra se suma",
-    merged.sheets.filter((s) => s.id === "plantilla-logica").length === 1 &&
+    merged.sheets.filter((s) => s.id === idLogica).length === 1 &&
       merged.sheets.some((s) => s.title === "Extra") &&
       !merged.sheets.some((s) => s.title === "Clon") &&
-      merged.warnings.some((w) => w.includes("ya existe una ficha local con el id «plantilla-logica»")),
+      merged.warnings.some((w) => w.includes(`ya existe una ficha local con el id «${idLogica}»`)),
     JSON.stringify({ sheets: merged.sheets.map((s) => s.title), warnings: merged.warnings })
   );
   resetRemote();

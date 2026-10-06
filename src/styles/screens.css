@@ -358,6 +358,42 @@
   box-shadow: var(--shadow-sm);
 }
 
+/* Cada ficha: su tarjeta y, al lado, la zona propia que solo
+ * despliega o recoge sus apartados (sin navegar). */
+.ficha-fila {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-2);
+}
+
+.ficha-fila .section-card {
+  width: auto;
+  flex: 1;
+  min-width: 0;
+}
+
+.ficha-toggle {
+  flex: 0 0 auto;
+  width: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-text-soft);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+}
+
+.ficha-toggle:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+  color: var(--color-primary);
+}
+
 /* Aviso de plantillas que no se han podido cargar. */
 .plantilla-aviso {
   margin-top: var(--space-4);

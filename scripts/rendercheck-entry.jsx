@@ -29,14 +29,14 @@ function check(name, cond, extra = "") {
   }
 }
 
-/* Plantillas simuladas: una válida (logica.json) y una rota, para
+/* Plantillas simuladas: una válida (FichaDeLogica01.json) y una rota, para
  * comprobar que la portada carga las buenas y avisa de las malas. */
 globalThis.__PLANTILLAS_MOCK__ = {
-  "C:\\proy\\plantillas\\mates.json": {
-    default: JSON.parse(readFileSync("plantillas/mates.json", "utf8")),
+  "C:\\proy\\plantillas\\HojaDePracticas.json": {
+    default: JSON.parse(readFileSync("plantillas/HojaDePracticas.json", "utf8")),
   },
-  "C:\\proy\\plantillas\\logica.json": {
-    default: JSON.parse(readFileSync("plantillas/logica.json", "utf8")),
+  "C:\\proy\\plantillas\\FichaDeLogica01.json": {
+    default: JSON.parse(readFileSync("plantillas/FichaDeLogica01.json", "utf8")),
   },
   "C:\\proy\\plantillas\\rota.json": {
     default: { titulo: "Rota", tipo: "mates", ejercicios: [{ tipo: "arpita" }] },
@@ -103,10 +103,21 @@ function render(state, opts = {}) {
   );
   check("portada: secciones desplegadas bajo la ficha en uso", html.includes("section-list--hija"));
   check("portada: la ficha base está en uso", html.includes('aria-label="Hoja de práctica: ficha en uso"'));
-  check("portada: la ficha de Lógica se puede usar", html.includes('aria-label="Usar la ficha Lógica"'));
+  check(
+    "portada: la ficha de Lógica se puede usar",
+    html.includes('aria-label="Usar la ficha Ficha de Lógica 01"')
+  );
   check("portada: tarjeta de la hoja Lógica (plantilla)", html.includes("Lógica") && html.includes("· plantilla"));
   check("portada: aviso de la plantilla rota", html.includes("plantillas/rota.json"));
   check("portada: la hoja en uso está marcada", html.includes("✓ En uso"));
+  check(
+    "portada: cada ficha con su zona para desplegar o recoger (aria-expanded)",
+    html.includes('aria-expanded="true"') && html.includes('aria-expanded="false"')
+  );
+  check(
+    "portada: la ficha en uso se puede recoger sin navegar",
+    html.includes('aria-label="Recoger los apartados de Hoja de práctica"')
+  );
 }
 
 {
@@ -356,10 +367,10 @@ function render(state, opts = {}) {
 /* ---------------- Hoja plantilla (Lógica) ---------------- */
 
 {
-  const l = getSheet("plantilla-logica");
+  const l = getSheet("plantilla-ficha-de-logica-01");
   check(
-    "hoja plantilla: existe, es plantilla y se llama Lógica",
-    Boolean(l) && l.template === true && l.sections[0].title === "Lógica"
+    "hoja plantilla: existe, es plantilla y se llama Ficha de Lógica 01",
+    Boolean(l) && l.template === true && l.sections[0].title === "Ficha de Lógica 01"
   );
   check("hoja plantilla: 15 retos", l.logicExercises.length === 15, JSON.stringify(l.logicExercises?.length));
 
@@ -376,7 +387,7 @@ function render(state, opts = {}) {
   );
   check(
     "portada de la hoja Lógica: su ficha (una sola sección) se puede tocar",
-    !htmlHome.includes('disabled="" aria-label="Lógica: ficha en uso"')
+    !htmlHome.includes('disabled="" aria-label="Ficha de Lógica 01: ficha en uso"')
   );
   check(
     "portada de la hoja Lógica: la otra ficha no despliega sus secciones",
@@ -663,25 +674,25 @@ function render(state, opts = {}) {
   check("RESET_ITEM sin progreso no cambia nada", riNoop === base);
 
   // SET_SHEET: cambiar de ficha (se queda en la portada, con su progreso).
-  const swFresh = reducer(base, { type: "SET_SHEET", sheetId: "plantilla-logica", saved: null });
+  const swFresh = reducer(base, { type: "SET_SHEET", sheetId: "plantilla-ficha-de-logica-01", saved: null });
   check(
     "SET_SHEET sin progreso guardado: vuelve a la portada",
-    swFresh.sheetId === "plantilla-logica" && swFresh.screen === "home" && swFresh.sectionIndex === 0 && swFresh.itemIndex === 0,
+    swFresh.sheetId === "plantilla-ficha-de-logica-01" && swFresh.screen === "home" && swFresh.sectionIndex === 0 && swFresh.itemIndex === 0,
     JSON.stringify(swFresh)
   );
   const swSaved = reducer(base, {
     type: "SET_SHEET",
-    sheetId: "plantilla-logica",
+    sheetId: "plantilla-ficha-de-logica-01",
     saved: { screen: "summary", sectionIndex: 2, itemIndex: 3, progress: { "logica-1": { status: "correct" } } },
   });
   check(
     "SET_SHEET con progreso guardado: lo conserva y sigue en la portada",
-    swSaved.sheetId === "plantilla-logica" && swSaved.screen === "home" &&
+    swSaved.sheetId === "plantilla-ficha-de-logica-01" && swSaved.screen === "home" &&
       Boolean(swSaved.progress["logica-1"]) && swSaved.itemIndex === 0 && swSaved.sectionIndex === 0,
     JSON.stringify(swSaved)
   );
-  const keepSheet = reducer({ ...base, sheetId: "plantilla-logica" }, { type: "RESET" });
-  check("RESET conserva la hoja activa", keepSheet.sheetId === "plantilla-logica");
+  const keepSheet = reducer({ ...base, sheetId: "plantilla-ficha-de-logica-01" }, { type: "RESET" });
+  check("RESET conserva la hoja activa", keepSheet.sheetId === "plantilla-ficha-de-logica-01");
 }
 
 console.log(failures === 0 ? "\nRENDER Y REDUCER CORRECTOS" : `\n${failures} FALLOS`);
