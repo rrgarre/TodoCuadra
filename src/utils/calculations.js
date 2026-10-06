@@ -464,6 +464,51 @@ export function buildDivision(dividend, divisor) {
   };
 }
 
+/**
+ * Casillas editables de «a op b» en el orden en que se escriben en
+ * papel —el mismo orden que usan las validaciones de las operaciones:
+ *
+ *  - sumas y restas: unidades → izquierda (fila del resultado);
+ *  - multiplicaciones: fila a fila (de arriba abajo) y, dentro de cada
+ *    una, de derecha a izquierda;
+ *  - divisiones: cifra del cociente → resto del paso (de izquierda a
+ *    derecha) → cifra que se baja para el paso siguiente.
+ *
+ * Devuelve [{ id, value }] con la cifra esperada en cada casilla; los
+ * problemas (su botonera) la usan para escribir casilla por casilla.
+ */
+const cellInfo = ({ id, value }) => ({ id, value });
+
+export function problemCells(a, op, b) {
+  if (op === "add") {
+    return buildAddition(a, b).resultCells.map(cellInfo);
+  }
+  if (op === "sub") {
+    return buildSubtraction(a, b).resultCells.map(cellInfo);
+  }
+  if (op === "mul") {
+    const model = buildMultiplication(a, b);
+    const cells = [];
+    for (const step of model.steps) {
+      const row = step.kind === "total" ? step.cells : step.partialCells;
+      for (const cell of [...row].reverse()) cells.push(cellInfo(cell));
+    }
+    return cells;
+  }
+  const model = buildDivision(a, b);
+  const cells = [];
+  for (let k = 0; k < model.steps.length; k++) {
+    const st = model.steps[k];
+    cells.push(cellInfo(st.quotientCell));
+    for (const cell of st.remainderCells) cells.push(cellInfo(cell));
+    const next = model.steps[k + 1];
+    if (next) {
+      for (const cell of next.bringDownCells) cells.push(cellInfo(cell));
+    }
+  }
+  return cells;
+}
+
 /* ------------------------------------------------------------------ */
 /* Utilidades varias                                                   */
 /* ------------------------------------------------------------------ */

@@ -6,8 +6,14 @@ import {
   buildSubtraction,
   additionStepsText,
   subtractionStepsText,
+  problemCells,
 } from "../src/utils/calculations.js";
-import { validateStep, getStepsCount } from "../src/utils/validation.js";
+import {
+  validateStep,
+  getStepsCount,
+  validateProblemStep,
+  lineText,
+} from "../src/utils/validation.js";
 import {
   parseTemplate,
   buildTemplateSheets,
@@ -463,7 +469,252 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   );
   check("problema: sin «resultados» no se piden nombres", sinMagnitudes.ok, JSON.stringify(sinMagnitudes));
 
-  check("problema: un solo paso (comprobación única)", getStepsCount(ex) === 1);
+  check("problema: un solo paso (la comprobación es operación a operación)", getStepsCount(ex) === 1);
+
+  // Formato transformado: líneas-objeto y línea en curso por fases.
+  const objDev = validateStep(
+    ex,
+    dev([
+      { expr: "3 × 8", result: "24", mag: "Cromos de los sobres" },
+      { expr: "12 + 24", result: "36", mag: "Cromos en total" },
+      { expr: "36 − 5", result: "31", mag: "Cromos que tiene ahora" },
+    ])
+  );
+  check("problema: operaciones transformadas (líneas-objeto)", objDev.ok, JSON.stringify(objDev));
+
+  const sinIgual = validateStep(ex, {
+    step: 0,
+    values: { lines: [], current: { expr: "3 × 8", eq: false, result: "", mag: null } },
+    attempts: 0,
+  });
+  check(
+    "problema: sin pulsar «=» pide terminar la operación",
+    !sinIgual.ok && sinIgual.message.includes("Termina"),
+    sinIgual.message
+  );
+
+  const sinResultado = validateStep(ex, {
+    step: 0,
+    values: { lines: [], current: { expr: "3 × 8", eq: true, result: "", mag: null } },
+    attempts: 0,
+  });
+  check(
+    "problema: tras «=» pide escribir el resultado",
+    !sinResultado.ok && sinResultado.message.includes("resultado"),
+    sinResultado.message
+  );
+
+  const objSinMag = validateStep(ex, {
+    step: 0,
+    values: {
+      lines: [
+        { expr: "3 × 8", result: "24", mag: null },
+        { expr: "12 + 24", result: "36", mag: "Cromos en total" },
+        { expr: "36 − 5", result: "31", mag: "Cromos que tiene ahora" },
+      ],
+      current: { expr: "", eq: false, result: "", mag: null },
+    },
+    attempts: 0,
+  });
+  check(
+    "problema: en formato objeto también pide la magnitud",
+    !objSinMag.ok && objSinMag.message.includes("Te falta adjuntar"),
+    objSinMag.message
+  );
+}
+{
+  /* Comprobación POR PASO de la botonera: la operación en curso,
+     con los mismos mensajes de las operaciones en las casillas. */
+  const ex = {
+    id: "p-paso",
+    type: "wordProblem",
+    plan: [
+      { op: "mul", a: 3, b: 8, result: 24 },
+      { op: "add", a: 12, b: 24, result: 36 },
+      { op: "sub", a: 36, b: 5, result: 31 },
+    ],
+    answer: 31,
+    resultados: {
+      parciales: ["Cromos de los sobres", "Cromos en total"],
+      final: "Cromos que tiene ahora",
+    },
+  };
+  const C = problemCells(3, "mul", 8); // casillas de 3 × 8 en orden de escritura
+  const fill = (cells) =>
+    Object.fromEntries(cells.map((c) => [c.id, String(c.value)]));
+  const good = fill(C);
+  const entry = (current, lines = []) => ({
+    step: 0,
+    values: { lines, current },
+    attempts: 0,
+  });
+  const cur = (patch) => ({
+    expr: "",
+    eq: false,
+    cells: {},
+    mag: null,
+    ...patch,
+  });
+
+  const vacio = validateProblemStep(ex, entry(cur({})));
+  check(
+    "paso: sin operación pide la botonera",
+    !vacio.ok && vacio.message.includes("botonera"),
+    vacio.message
+  );
+
+  const sinEq = validateProblemStep(ex, entry(cur({ expr: "3×8" })));
+  check(
+    "paso: sin «=» pide ponerla en vertical",
+    !sinEq.ok && sinEq.message.includes("vertical"),
+    sinEq.message
+  );
+
+  const rota = validateProblemStep(ex, entry(cur({ expr: "38", eq: true })));
+  check(
+    "paso: la operación pide número, operación y número",
+    !rota.ok && rota.message.includes("número, operación y número"),
+    rota.message
+  );
+
+  const opMal = validateProblemStep(ex, entry(cur({ expr: "3+8", eq: true })));
+  check(
+    "paso: operación equivocada",
+    !opMal.ok && opMal.message.includes("Piensa otra vez"),
+    opMal.message
+  );
+
+  const numsMal = validateProblemStep(
+    ex,
+    entry(cur({ expr: "3×9", eq: true, cells: good, mag: "Cromos de los sobres" }))
+  );
+  check(
+    "paso: números ajenos al problema",
+    !numsMal.ok && numsMal.message.includes("no son los del problema"),
+    numsMal.message
+  );
+
+  const celdaMal = validateProblemStep(
+    ex,
+    entry(
+      cur({
+        expr: "3×8",
+        eq: true,
+        cells: { ...good, [C[0].id]: "9" },
+        mag: "Cromos de los sobres",
+      })
+    )
+  );
+  check(
+    "paso: casilla mal avisa con el mismo mensaje que las operaciones",
+    !celdaMal.ok &&
+      celdaMal.message.includes("Revisa esta cifra") &&
+      celdaMal.cellIds.includes(C[0].id),
+    celdaMal.message
+  );
+
+  const sinMag = validateProblemStep(
+    ex,
+    entry(cur({ expr: "3×8", eq: true, cells: good }))
+  );
+  check(
+    "paso: sin magnitud la pide",
+    !sinMag.ok && sinMag.message.includes("Te falta adjuntar"),
+    sinMag.message
+  );
+
+  const magMal = validateProblemStep(
+    ex,
+    entry(
+      cur({ expr: "3×8", eq: true, cells: good, mag: "Cromos en total" })
+    )
+  );
+  check(
+    "paso: magnitud que no corresponde",
+    !magMal.ok && magMal.message.includes("no corresponde"),
+    magMal.message
+  );
+
+  const okPaso = validateProblemStep(
+    ex,
+    entry(
+      cur({ expr: "3×8", eq: true, cells: good, mag: "Cromos de los sobres" })
+    )
+  );
+  check(
+    "paso: correcto devuelve la línea confirmada",
+    okPaso.ok &&
+      JSON.stringify(okPaso.line) ===
+        JSON.stringify({
+          op: "mul",
+          a: 3,
+          b: 8,
+          result: 24,
+          mag: "Cromos de los sobres",
+        }),
+    JSON.stringify(okPaso.line)
+  );
+
+  const comm = validateProblemStep(
+    ex,
+    entry(
+      cur({
+        expr: "8×3",
+        eq: true,
+        cells: fill(problemCells(8, "mul", 3)),
+        mag: "Cromos de los sobres",
+      })
+    )
+  );
+  check(
+    "paso: multiplicación con el orden cambiado vale",
+    comm.ok && comm.line.a === 8 && comm.line.b === 3,
+    JSON.stringify(comm.line)
+  );
+
+  const completo = validateProblemStep(
+    ex,
+    entry(cur({ expr: "3×8", eq: true, cells: good, mag: "x" }), [
+      { op: "mul", a: 3, b: 8, result: 24, mag: "Cromos de los sobres" },
+      { op: "add", a: 12, b: 24, result: 36, mag: "Cromos en total" },
+      { op: "sub", a: 36, b: 5, result: 31, mag: "Cromos que tiene ahora" },
+    ])
+  );
+  check(
+    "paso: si ya hay N operaciones avisa",
+    !completo.ok && completo.message.includes("se resuelve con 3"),
+    completo.message
+  );
+
+  // Las líneas confirmadas pasan también por la comprobación entera.
+  const entero = validateStep(ex, {
+    step: 0,
+    values: {
+      lines: [
+        { op: "mul", a: 3, b: 8, result: 24, mag: "Cromos de los sobres" },
+        { op: "add", a: 12, b: 24, result: 36, mag: "Cromos en total" },
+        { op: "sub", a: 36, b: 5, result: 31, mag: "Cromos que tiene ahora" },
+      ],
+      current: null,
+    },
+    attempts: 0,
+  });
+  check(
+    "problema: la comprobación entera acepta las líneas confirmadas",
+    entero.ok,
+    JSON.stringify(entero)
+  );
+
+  check(
+    "problema: la línea confirmada se escribe como texto",
+    lineText({
+      op: "add",
+      a: 125,
+      b: 87,
+      result: 212,
+      mag: "Libros totales en la biblioteca",
+    }) === "125 + 87 = 212 → Libros totales en la biblioteca"
+  );
 }
 {
   const ex = { id: "m", type: "mental", expr: "27 + 19", result: 46, hint: "Pista: suma 20 y resta 1." };

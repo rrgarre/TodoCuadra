@@ -63,7 +63,7 @@ Ficha base de la serie (id `sheet-001`, asignatura **mates**); cualquier JSON nu
 | Sección | Items | Contenido |
 | --- | ---: | --- |
 | **Operaciones** | 19 | 5 sumas (p. ej. `348 + 276`), 5 restas (p. ej. `532 − 278`), 5 multiplicaciones —2 con multiplicador de una cifra (`236 × 4`, `457 × 6`) y 3 de dos cifras (`236 × 24`, `148 × 35`, `267 × 48`)— y 4 divisiones (`384÷3`, `924÷6`, `1008÷7` con cifra 0 intermedia y `918÷18` con divisor de dos cifras) |
-| **Problemas matemáticos** | 4 | Los 4 se desarrollan **desde cero con una botonera** (dígitos, operaciones, `=`, **Deshacer** y **Saltar de línea**), sin campos de texto: en el móvil no se abre el teclado. Bajo el enunciado se listan los nombres de los **resultados parciales** y del **final**, que son botones para **adjuntar cada magnitud** a su operación. **Comprobación única al final** |
+| **Problemas matemáticos** | 4 | Los 4 se desarrollan **desde cero con una botonera** (dígitos, operaciones, **Deshacer**), sin campos de texto: en el móvil no se abre el teclado. Al pulsar **`=`** la operación **se pone en vertical**, como en el apartado de Operaciones (dos renglones de datos y **una casilla por cifra**, escritas de derecha a izquierda como en papel); al terminar hay que **adjuntar** su magnitud y **Comprobar** valida **ese paso**, que confirma la línea. Bajo el enunciado se listan los nombres de los **resultados parciales** y del **final**, que son botones de la botonera. **Comprobación operación a operación** |
 | **Cálculo mental** | 12 | 8 ejercicios de respuesta rápida con pista progresiva + 4 trucos intercalados |
 | **Trucos de cálculo mental** | 4 | Los mismos 4 trucos explicados, reunidos en su propia sección |
 
@@ -116,10 +116,15 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
   - Los mensajes señalan la casilla con lenguaje para niñas y niños:
     *«Piensa: 3 × 9 = 27. ¿Cuánto es 30 − 27?»*, *«Piensa: ¿cuántas veces cabe 18 en 91?»*…
 - **Problemas con botonera**: el desarrollo se escribe **sin campos de texto** (en el móvil
-  no se abre el teclado) con dígitos, operaciones, `=`, **Deshacer**, **Saltar de línea** y
-  los botones de **resultados** (los nombres de las magnitudes que ya se listan bajo el
-  enunciado, para adjuntarlos a cada operación); una sola pulsación de **Comprobar**
-  valida **el desarrollo entero, de una sola vez**.
+  no se abre el teclado) con dígitos, operaciones y **Deshacer**. Al pulsar **`=`** la
+  operación **se pone en vertical, igual que en el apartado de Operaciones**: dos
+  renglones de datos y **una casilla por cifra que se rellena de derecha a izquierda**
+  siguiendo el algoritmo de papel (en divisiones, el trabajo entero: cociente, restos y
+  cifras bajadas). **Solo con todas las casillas llenas se puede adjuntar** el resultado
+  parcial o final con los botones de **resultados** (los nombres que ya se listan bajo el
+  enunciado) y, cuando está, la línea queda **sellada** con su magnitud. **Comprobar**
+  valida **esa operación paso a paso**: si está bien, la línea se confirma en el panel y se
+  pide la siguiente; con la última, el desarrollo entero se repasa de una vez.
 - **Corrección explicativa**: *Comprobar* señala la casilla con la cifra correcta y el por
   qué; distingue entre **procedimiento correcto con fallo de cálculo** y error de paso.
   *Ver solución* aparece solo bajo demanda y marca el ejercicio como *a revisar*.
@@ -173,13 +178,14 @@ src/
   state/SheetContext.jsx  # reducer de la app + persistencia en localStorage
   utils/
     calculations.js       # construye la retícula de cada operación y sus pasos
-    validation.js         # comprobación de las operaciones al final y mensajes en español
+    validation.js         # validación de las operaciones, comprobación por paso de los
+                          #   problemas y mensajes en español
     storage.js            # lectura/escritura versionada de localStorage (+ hoja activa)
   components/
     layout/               # HomeScreen, SectionScreen, SummaryScreen, TrivialScreen, TopBar
     common/               # ExerciseCard, DigitGrid, DigitCell, Feedback, Progress…
     exercises/            # Addition, Subtraction, Multiplication, Division,
-                          # WordProblem, MentalCalculation, MentalTip, Logica
+                          # VerticalStep, WordProblem, MentalCalculation, MentalTip, Logica
                           # + registry.js
 scripts/
   selftest.mjs            # suite de lógica (npm test)
@@ -261,7 +267,7 @@ por tipo:
 | `tipo` | Campos | Condiciones |
 | --- | --- | --- |
 | `suma`, `resta`, `multiplicacion`, `division` | `a`, `b` | enteros ≥ 0; en resta `a ≥ b`; en división `b ≥ 1`; en multiplicación `b` de una o dos cifras |
-| `problema` | `texto`, `pasos` (`op`: `suma`/`resta`/`multiplicacion`/`division`, `a`, `b`), `modo` opcional (`guiado`/`eleccion`), `respuesta` opcional, `resultados` opcional (`{ parciales: [textos], final: texto }`) | los resultados de los pasos **se calculan solos**; si escribes `respuesta` debe coincidir con el último resultado. Con `resultados`, esos nombres se ofrecen como botones de la botonera y son obligatorios en la comprobación única |
+| `problema` | `texto`, `pasos` (`op`: `suma`/`resta`/`multiplicacion`/`division`, `a`, `b`), `modo` opcional (`guiado`/`eleccion`), `respuesta` opcional, `resultados` opcional (`{ parciales: [textos], final: texto }`) | los resultados de los pasos **se calculan solos**; si escribes `respuesta` debe coincidir con el último resultado. Con `resultados`, esos nombres se ofrecen como botones de la botonera y son obligatorios en la comprobación de cada paso |
 | `mental` | `expr`, `resultado`, `pista` opcional, `trucoId` opcional | `trucoId` enlaza con un `truco` de la misma ficha; si no existe, la ficha no se carga |
 | `truco` | `titulo`, `gancho`, `resumen`, `ejemplo` (`expr`, `pasos[]`), `explicacion` | todos obligatorios |
 | `logica` | `variante`, `enunciado`, `pista`/`explicacion` opcionales + según variante | `serie`: `elementos` (≥ 3 números) y `respuesta` (si la serie es aritmética se comprueba); `comparacion`: `izquierda`, `derecha` y `respuesta` = `mayor`/`menor`/`igual` (se comprueba); `enigma`: `respuesta` numérica; `eliminatoria`: `opciones` (≥ 2 textos distintos) y `respuesta` = texto exacto de la buena (tiene que estar entre las `opciones`); `deduccion`: `etiquetas` (≥ 2) y `respuesta` = un entero ≥ 0 por etiqueta (p. ej. `[2, 1]`) |
@@ -382,12 +388,12 @@ Reglas del juego:
 | Apartado **Trivial** (🎯 en portada): categoría o todas mezcladas al azar, pregunta + **Mostrar solución** a demanda, **«Siguiente» solo tras ver la respuesta**, sin temporizadores ni contadores | ✅ `parsePreguntas` + sorteo; render de categorías, de la pregunta con sus botones (sin «Siguiente» hasta ver el detalle) y de la solución bajo demanda (sin restos de contador ni de tiempo) |
 | Trivial: categoría **vacía** desactivada y fichero roto con **aviso por ruta** | ✅ mocks con `geografia.json` (`[]`) y `rota.json` (que no es lista); `primaria.json` validado entero (200) |
 | **Varias fichas**: cambiar de ficha con progreso independiente y ficha activa recordada | ✅ `SET_SHEET` + clave `hoja-activa`; portada, resumen y render de la ficha Lógica comprobados |
-| Problemas con botonera (sin campos de texto) y comprobación única al final | ✅ render de los 4 + validación completa del desarrollo |
+| Problemas con botonera (sin campos de texto): «=» pone la operación en vertical y **Comprobar** valida cada paso con su magnitud adjunta | ✅ render de los 4 + validación por paso y repaso completo del desarrollo |
 | Cálculo mental con pista al segundo fallo | ✅ tests de validación |
 | Trucos: intercalados en cálculo mental y en su sección | ✅ los 4 trucos renderizan en ambos sitios |
 | Progreso guardado en `localStorage` y retomado al recargar | ✅ `storage.js` versionado + tests de persistencia; botón **Resetear todo** en portada y resumen (retomada manual en navegador recomendada) |
 | Uso en móvil (teclado numérico, casillas ≥ 44 px, sin scroll horizontal) | ✅ `inputmode="numeric"`, tamaños por media queries (probar en dispositivo recomendado) |
-| `npm run build` termina sin errores | ✅ build de producción OK (≈204 kB JS + 19 kB CSS) |
+| `npm run build` termina sin errores | ✅ build de producción OK (≈417 kB JS + 23 kB CSS) |
 | `npm install`, `npm run dev` y `npm run build` funcionan | ✅ verificado en Node 20 / Windows |
 
 > Las comprobaciones automatizadas cubren la lógica y el renderizado de todos los items;

@@ -1,11 +1,12 @@
 /**
  * Validación de ejercicios.
  *
- * Las operaciones verticales (suma, resta, multiplicación y división) y
- * los problemas se comprueban **de una sola vez, al final**: el problema
- * se desarrolla entero con la botonera (sin campos de texto) y se
- * valida el desarrollo completo. Los mensajes indican dónde está el
- * error sin revelar la solución (para eso está "Ver solución").
+ * Las operaciones verticales (suma, resta, multiplicación y división)
+ * se comprueban de una sola vez, al final. Los problemas se desarrollan
+ * con la botonera (sin campos de texto): cada operación se pone en
+ * vertical y se comprueba **paso a paso** con «Comprobar» —sin revelar
+ * la solución—; cuando una línea está bien se confirma en el panel y,
+ * al terminar, el desarrollo entero se repasa de una vez.
  */
 
 import {
@@ -16,6 +17,8 @@ import {
   normalizeAnswer,
   placeName,
   OP_NAME,
+  OP_SYMBOL,
+  computeOp,
 } from "./calculations.js";
 
 /** Nº de pasos de un ejercicio (1 si es de respuesta única). */
@@ -220,18 +223,74 @@ const OP_BY_SYMBOL = {
 };
 
 /**
- * El problema se desarrolla entero en el panel (una operación por
- * línea) con la botonera y se valida de una sola vez, al final.
- * Los mensajes no revelan la solución: señalan qué línea falla.
+ * Una línea del desarrollo: texto literal, objeto de fases antiguo
+ * { expr, result, mag } u objeto confirmado { op, a, b, result, mag }.
+ * Se exporta para pintar en el panel exactamente lo que se valida.
+ */
+export function lineText(raw) {
+  if (typeof raw === "string") return raw.trim();
+  if (raw && typeof raw === "object") {
+    const mag = String(raw.mag ?? "").trim();
+    const suffix = mag ? ` → ${mag}` : "";
+    if (raw.op && OP_SYMBOL[raw.op] && raw.a != null && raw.b != null) {
+      return `${raw.a} ${OP_SYMBOL[raw.op]} ${raw.b} = ${raw.result}${suffix}`;
+    }
+    const expr = String(raw.expr ?? "").trim();
+    const result = String(raw.result ?? "").trim();
+    if (!expr && !result) return "";
+    return `${expr} = ${result}${suffix}`;
+  }
+  return "";
+}
+
+/**
+ * «125+87» → { a, op, b } (acepta también −, *, :, «:» y espacios).
+ * Devuelve null si no es una operación completa de dos números.
+ */
+export function parseProblemExpr(expr) {
+  const m = /^\s*(\d+)\s*([+\-−×÷*:])\s*(\d+)\s*$/.exec(String(expr ?? ""));
+  if (!m) return null;
+  const op = OP_BY_SYMBOL[m[2]];
+  if (!op) return null;
+  return { a: Number(m[1]), op, b: Number(m[3]) };
+}
+
+/**
+ * Comprobación del desarrollo COMPLETO: todas las líneas confirmadas
+ * (más la en curso, si está escrita). Se repasa al confirmar la última
+ * operación y sirve también para progreso guardado con líneas de una
+ * versión anterior. Los mensajes no revelan la solución: señalan qué
+ * línea falla.
  */
 function validateDevelopment(exercise, entry) {
   const values = entry.values ?? {};
   const committed = Array.isArray(values.lines) ? values.lines : [];
-  const current =
-    typeof values.current === "string" ? values.current.trim() : "";
-  const rawLines = [...committed, ...(current ? [current] : [])].filter(
-    (l) => String(l).trim() !== ""
-  );
+  const cur = values.current;
+
+  // Línea en curso: objeto estructurado (fases expr/eq/result/mag) o
+  // texto literal (progreso con el formato anterior).
+  let currentText = "";
+  if (cur && typeof cur === "object") {
+    const expr = String(cur.expr ?? "").trim();
+    const result = String(cur.result ?? "").trim();
+    const mag = String(cur.mag ?? "").trim();
+    if (expr) {
+      if (!cur.eq) {
+        return fail("Termina la operación con «=» y escribe su resultado.");
+      }
+      if (!result) {
+        return fail("Escribe el resultado de la operación tras el «=».");
+      }
+      currentText = `${expr} = ${result}${mag ? ` → ${mag}` : ""}`;
+    }
+  } else if (typeof cur === "string" && cur.trim()) {
+    currentText = cur.trim();
+  }
+
+  const rawLines = [
+    ...committed.map(lineText),
+    ...(currentText ? [currentText] : []),
+  ].filter((l) => l && String(l).trim() !== "");
 
   if (rawLines.length === 0) {
     return fail(
@@ -315,6 +374,112 @@ function validateDevelopment(exercise, entry) {
   }
 
   return ok();
+}
+
+/* ---- Comprobación de cada paso de los problemas ---- */
+
+/**
+ * Comprueba la operación que está en curso (la línea actual de la
+ * botonera) contra el paso que toca del plan: primero el paso, la
+ * operación y los números; después las casillas, con los **mismos
+ * validadores y mensajes** que el apartado de operaciones; al final, el
+ * resultado y la magnitud adjunta.
+ *
+ * Si todo cuadra devuelve en `line` la línea confirmada a añadir al
+ * desarrollo ({ op, a, b, result, mag }).
+ */
+export function validateProblemStep(exercise, entry) {
+  const values = entry.values ?? {};
+  const lines = Array.isArray(values.lines) ? values.lines : [];
+  const n = lines.length + 1;
+  const st = exercise.plan[lines.length];
+  if (!st) {
+    return fail(
+      `Este problema se resuelve con ${exercise.plan.length} operaciones.`
+    );
+  }
+
+  const cur = values.current && typeof values.current === "object" ? values.current : null;
+  const expr = String(cur?.expr ?? "").trim();
+  if (!expr) return fail("Escribe la operación con la botonera antes de comprobar.");
+  if (!cur.eq) return fail("Pulsa «=» para poner la operación en vertical y resolverla.");
+
+  const p = parseProblemExpr(expr);
+  if (!p) {
+    return fail(
+      "La operación debe ser número, operación y número (por ejemplo 125+87)."
+    );
+  }
+  if (p.op !== st.op) {
+    return fail(
+      `En la operación ${n} has escrito ${OP_NAME[p.op]}. Piensa otra vez: ¿qué operación necesitas ahí?`
+    );
+  }
+
+  const commutative = st.op === "add" || st.op === "mul";
+  const sameNumbers =
+    (p.a === st.a && p.b === st.b) ||
+    (commutative && p.a === st.b && p.b === st.a);
+  if (!sameNumbers) {
+    return fail(
+      `Los números de la operación ${n} no son los del problema. Vuelve a leerlo con atención.`
+    );
+  }
+
+  const cellsCheck = validateModelCells(p, cur.cells ?? {});
+  if (!cellsCheck.ok) return cellsCheck;
+
+  const result = computeOp(p.op, p.a, p.b);
+  if (result !== st.result) {
+    return fail(
+      `La operación ${n} no da ese resultado. Haz el cálculo otra vez con calma.`
+    );
+  }
+
+  const expected = expectedMagnitude(exercise, lines.length);
+  const mag = String(cur.mag ?? "").trim();
+  if (expected) {
+    if (!mag) {
+      return fail(
+        `Te falta adjuntar el resultado de la operación ${n}: usa los botones de resultados.`
+      );
+    }
+    if (mag !== expected) {
+      return fail(
+        `El resultado «${mag}» no corresponde a la operación ${n}. Mira la lista bajo el enunciado.`
+      );
+    }
+  }
+
+  return {
+    ok: true,
+    message: "¡Correcto!",
+    cellIds: [],
+    line: { op: p.op, a: p.a, b: p.b, result, mag: mag || null },
+  };
+}
+
+/** Magnitud que toca adjuntar en el paso `index` (0-based), si la hay. */
+function expectedMagnitude(exercise, index) {
+  if (!exercise.resultados) return null;
+  return index < exercise.plan.length - 1
+    ? exercise.resultados.parciales[index] ?? null
+    : exercise.resultados.final ?? null;
+}
+
+/** Compara las casillas rellenas contra el modelo de «a op b». */
+function validateModelCells(p, cells) {
+  const entry = { values: { cells } };
+  switch (p.op) {
+    case "add":
+      return validateColumnAnswer(buildAddition(p.a, p.b), entry, "addition");
+    case "sub":
+      return validateColumnAnswer(buildSubtraction(p.a, p.b), entry, "subtraction");
+    case "mul":
+      return validateMultiplicationStep({ a: p.a, b: p.b }, entry);
+    default:
+      return validateDivisionStep({ a: p.a, b: p.b }, entry);
+  }
 }
 
 /* ---- Multiplicaciones ---- */

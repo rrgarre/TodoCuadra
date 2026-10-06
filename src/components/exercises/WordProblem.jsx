@@ -1,15 +1,21 @@
 import ExerciseCard from "../common/ExerciseCard.jsx";
 import ProblemKeypad from "./ProblemKeypad.jsx";
-import { OP_SYMBOL, OP_NAME } from "../../utils/calculations.js";
+import VerticalStep from "./VerticalStep.jsx";
+import { OP_SYMBOL, OP_NAME, problemCells } from "../../utils/calculations.js";
+import { parseProblemExpr, lineText } from "../../utils/validation.js";
 
 /**
  * Problemas matemáticos: el alumno desarrolla el problema desde cero
  * en un panel de líneas, escribiendo con una botonera (no hay campos
  * de texto: en el móvil no se abre el teclado del sistema).
  *
- * Los botones de resultados adjuntan el nombre de cada magnitud a la
- * operación en curso («a op b = r → nombre»); se comprueba **una sola
- * vez, al final**.
+ * Al pulsar «=» la operación **se pone en vertical**, como en el
+ * apartado de operaciones: dos renglones de datos y una casilla por
+ * cifra, que se rellena de derecha a izquierda con la botonera. Al
+ * terminar hay que **adjuntar** el resultado parcial o final (la
+ * magnitud) y el **Comprobar** de la tarjeta comprueba **ese paso**:
+ * si está bien, la línea se confirma en el desarrollo con su texto
+ * compacto y se pasa a la siguiente operación.
  *
  * Si el JSON trae "resultados", bajo el enunciado se lista el nombre de
  * cada resultado parcial (la magnitud de cada paso) y el del final, y
@@ -20,16 +26,45 @@ export default function WordProblem({ exercise, controller }) {
     values,
     revealed,
     status,
+    feedback,
     devPress,
     devBackspace,
-    devNewline,
     devUndo,
     devMagnitude,
   } = controller;
 
   const lines = Array.isArray(values.lines) ? values.lines : [];
-  const current = typeof values.current === "string" ? values.current : "";
+  const raw = values.current;
+  // La línea en curso es { expr, eq, cells, mag }; un texto literal es
+  // progreso con el formato anterior y se pinta tal cual.
+  const current =
+    raw && typeof raw === "object"
+      ? {
+          expr: typeof raw.expr === "string" ? raw.expr : "",
+          eq: Boolean(raw.eq),
+          cells:
+            raw.cells && typeof raw.cells === "object" ? raw.cells : {},
+          mag: typeof raw.mag === "string" ? raw.mag : null,
+        }
+      : null;
+  const legacy = typeof raw === "string" ? raw.trim() : "";
   const locked = revealed || status === "correct";
+  const exprText = current ? current.expr : legacy;
+  const showPlaceholder = lines.length === 0 && !exprText.trim() && !locked;
+
+  // Operación transformada: su rejilla vertical y las casillas que
+  // quedan por rellenar (se escriben en orden, de derecha a izquierda).
+  const parsed = current && current.eq ? parseProblemExpr(current.expr) : null;
+  const order = parsed
+    ? problemCells(parsed.a, parsed.op, parsed.b)
+    : [];
+  const filled = (id) =>
+    Boolean(current) && String(current.cells[id] ?? "").trim() !== "";
+  const activeCell = !locked && parsed && !current.mag
+    ? order.find((c) => !filled(c.id))
+    : null;
+  const errorIds =
+    feedback?.type === "error" ? (feedback.cellIds ?? []) : [];
 
   const solution = (
     <>
@@ -67,31 +102,54 @@ export default function WordProblem({ exercise, controller }) {
         </ul>
       )}
 
-      {/* Desarrollo: una operación por línea, escrito solo con la botonera. */}
+      {/* Desarrollo: una operación por línea. La confirmada se guarda
+          como texto compacto; la en curso se escribe o se resuelve en
+          vertical, según la fase. */}
       <div className="wf-dev">
         {lines.map((line, i) => (
           <p className="wf-line" key={`line-${i}`}>
-            {line}
+            {lineText(line)}
           </p>
         ))}
-        <p
-          className={`wf-line is-current${current ? "" : " is-empty"}`}
-          aria-live="polite"
-        >
-          {current ||
-            (lines.length === 0
-              ? "Escribe la primera operación con la botonera…"
-              : "")}
-          {!locked && <span className="wf-caret" aria-hidden="true" />}
-        </p>
+
+        {parsed ? (
+          <VerticalStep
+            a={parsed.a}
+            op={parsed.op}
+            b={parsed.b}
+            cells={current.cells}
+            activeId={activeCell ? activeCell.id : null}
+            errorIds={errorIds}
+            locked={locked}
+            revealed={revealed}
+          />
+        ) : (
+          <p
+            className={`wf-line is-current${exprText.trim() ? "" : " is-empty"}`}
+            aria-live="polite"
+          >
+            {exprText.trim() ||
+              (showPlaceholder
+                ? "Escribe la primera operación con la botonera…"
+                : locked
+                ? ""
+                : "Escribe la siguiente operación con la botonera…")}
+            {!locked && <span className="wf-caret" aria-hidden="true" />}
+          </p>
+        )}
+
+        {current && current.mag && <p className="wf-mag">→ {current.mag}</p>}
       </div>
 
       <ProblemKeypad
         magnitudes={exercise.resultados}
-        disabled={locked}
+        current={
+          current ?? { expr: legacy, eq: false, cells: {}, mag: null }
+        }
+        linesCount={lines.length}
+        locked={locked}
         onKey={devPress}
         onBackspace={devBackspace}
-        onNewline={devNewline}
         onUndo={devUndo}
         onMagnitude={devMagnitude}
       />

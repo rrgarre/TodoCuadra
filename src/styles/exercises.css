@@ -283,7 +283,7 @@
 .wf-dev {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--space-2);
   width: 100%;
   min-height: 72px;
   padding: var(--space-3) var(--space-4);
@@ -329,6 +329,60 @@
   }
 }
 
+/* Magnitud adjuntada a la operación en curso: la línea queda sellada
+   con su resultado parcial o final. */
+.wf-mag {
+  align-self: flex-start;
+  padding: 4px 10px;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-primary-dark);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* Casillas de la operación vertical en los problemas: spans rellenos
+   con la botonera (sin <input>: en el móvil no se abre el teclado).
+   Mismo dibujo que las casillas .digit de las operaciones, con la
+   casilla activa resaltada para seguir el orden de escritura. */
+.kcell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cell);
+  height: var(--cell);
+  font-family: var(--font-num);
+  font-size: calc(var(--cell) * 0.5);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  user-select: none;
+}
+
+/* Mismo azul de la cadena del resto en las divisiones; el error (más
+   abajo) sigue mandando sobre él. */
+.kcell.is-chain {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+}
+
+.kcell.is-error {
+  border-color: var(--color-danger);
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+/* La casilla que va ahora, con el mismo anillo de foco del resto. */
+.kcell.is-active {
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
 .keypad {
   display: grid;
   gap: var(--space-3);
@@ -342,8 +396,8 @@
 }
 
 .keypad-controls {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--space-2);
 }
 
@@ -414,6 +468,13 @@
   border-color: var(--color-primary);
   background: var(--color-primary-soft);
   color: var(--color-primary-dark);
+}
+
+/* El resultado que ya está adjuntado a la operación en curso. */
+.key-mag.is-pressed {
+  border-color: var(--color-success);
+  background: var(--color-success-soft);
+  color: var(--color-success);
 }
 
 /* ---- Cálculo mental ---- */

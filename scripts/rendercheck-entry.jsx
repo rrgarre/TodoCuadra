@@ -9,6 +9,7 @@ import { renderToString } from "react-dom/server";
 import { readFileSync } from "node:fs";
 import App from "../src/App.jsx";
 import { reducer } from "../src/state/SheetContext.jsx";
+import { problemCells } from "../src/utils/calculations.js";
 import { getSheet, getSectionItems, resetSheetCache } from "../src/data/sheets/index.js";
 import { sheetStateKey, ACTIVE_STORAGE_KEY } from "../src/utils/storage.js";
 import {
@@ -293,8 +294,8 @@ function render(state, opts = {}) {
   );
   check("prob-3: las 4 operaciones (etiquetas de la botonera)", ["suma", "resta", "multiplicación", "división"].every((t) => htmlProb.includes(t)));
   check(
-    "prob-3: controles Deshacer y Saltar de línea",
-    htmlProb.includes("Deshacer") && htmlProb.includes("Saltar de línea")
+    "prob-3: control Deshacer (sin «Saltar de línea»: la comprobación confirma)",
+    htmlProb.includes("Deshacer") && !htmlProb.includes("Saltar de línea")
   );
   check(
     "prob-3: los 3 nombres de resultados son botones",
@@ -323,6 +324,80 @@ function render(state, opts = {}) {
       htmlProb.includes("Parcial 2") &&
       htmlProb.includes("Cromos de los sobres") &&
       htmlProb.includes("Cromos que tiene ahora")
+  );
+
+  // Con progreso: una línea confirmada y la otra puesta en vertical por «=».
+  const devProgreso = {
+    "prob-1": {
+      values: {
+        lines: [
+          {
+            op: "add",
+            a: 125,
+            b: 87,
+            result: 212,
+            mag: "Libros totales en la biblioteca",
+          },
+        ],
+        current: { expr: "212−46", eq: true, cells: {}, mag: null },
+      },
+      status: "pending",
+      step: 0,
+      stepsDone: [],
+      feedback: null,
+      revealed: false,
+      attempts: 0,
+    },
+  };
+  const htmlTrans = render({
+    screen: "section",
+    sectionIndex: atGuided.s,
+    itemIndex: atGuided.i,
+    progress: devProgreso,
+  });
+  check(
+    "prob-1: al pulsar «=» la operación se pone en vertical (2 renglones + casillas)",
+    htmlTrans.includes("vgrid") &&
+      (htmlTrans.match(/kcell/g) || []).length === 3 &&
+      htmlTrans.includes("kcell is-active") &&
+      htmlTrans.includes("wf-caret") &&
+      !htmlTrans.includes("<input"),
+    `casillas: ${(htmlTrans.match(/kcell/g) || []).length}`
+  );
+  check(
+    "prob-1: la línea confirmada se guarda como texto compacto",
+    htmlTrans.includes("125 + 87 = 212 → Libros totales en la biblioteca") &&
+      !htmlTrans.includes("wf-op"),
+    "texto de la línea confirmada"
+  );
+
+  // Con todas las casillas rellenas y la magnitud adjuntada (sella).
+  const devSellado = {
+    "prob-1": {
+      ...devProgreso["prob-1"],
+      values: {
+        lines: devProgreso["prob-1"].values.lines,
+        current: {
+          expr: "212−46",
+          eq: true,
+          cells: { "res-0": "6", "res-1": "6", "res-2": "1" },
+          mag: "Libros que quedan",
+        },
+      },
+    },
+  };
+  const htmlSellado = render({
+    screen: "section",
+    sectionIndex: atGuided.s,
+    itemIndex: atGuided.i,
+    progress: devSellado,
+  });
+  check(
+    "prob-1: con las casillas llenas se adjunta la magnitud y la línea queda sellada",
+    htmlSellado.includes("wf-mag") &&
+      htmlSellado.includes("→ Libros que quedan") &&
+      htmlSellado.includes("is-pressed"),
+    "chip de magnitud y botón pulsado"
   );
 
   // Sumas y restas: casilla por cifra (sin campo único).
@@ -696,45 +771,93 @@ function render(state, opts = {}) {
   mp = reducer(mp, { type: "NEXT_STEP", exercise: mult });
   check("NEXT_STEP sigue disponible en el reducer", mp.progress["mul-3"].step === 1 && mp.progress["mul-3"].feedback === null);
 
-  // Botonera del problema: la línea se escribe pulsando teclas (sin teclado).
-  const wordProb = { id: "prob-1", type: "wordProblem", plan: [{ op: "add", a: 5, b: 3, result: 8 }] };
-  let dev = reducer(base, { type: "DEV", exercise: wordProb, op: "key", key: "5" });
-  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "key", key: "+" });
+  // Botonera del problema: la línea se escribe pulsando teclas (sin
+  // teclado); al pulsar «=» la operación se pone en vertical y las
+  // teclas rellenan sus casillas; «Comprobar» valida ese paso y
+  // confirma la línea en el desarrollo.
+  const wordProb = {
+    id: "prob-1",
+    type: "wordProblem",
+    plan: [{ op: "add", a: 5, b: 3, result: 8 }],
+    resultados: { parciales: ["Total"], final: "Todo" },
+  };
+  const press = (state, ex, keys) =>
+    keys.reduce(
+      (s, key) => reducer(s, { type: "DEV", exercise: ex, op: "key", key }),
+      state
+    );
+  const fillCells = (state, ex, a, op, b) =>
+    problemCells(a, op, b).reduce(
+      (s, cell) =>
+        reducer(s, {
+          type: "DEV",
+          exercise: ex,
+          op: "key",
+          key: String(cell.value),
+        }),
+      state
+    );
+
+  let dev = press(base, wordProb, ["5", "+", "3"]);
   check(
-    "botonera: las teclas escriben en la línea actual",
-    dev.progress["prob-1"].values.current === "5+",
-    dev.progress["prob-1"].values.current
+    "botonera: las teclas escriben la operación",
+    dev.progress["prob-1"].values.current.expr === "5+3",
+    JSON.stringify(dev.progress["prob-1"].values.current)
   );
-  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "key", key: "3" });
   dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "key", key: "=" });
-  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "key", key: "8" });
-  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "magnitude", name: "Total" });
-  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "magnitude", name: "Otro" });
   check(
-    "botonera: el resultado se adjunta a la línea con «=» y solo una vez",
-    dev.progress["prob-1"].values.current === "5+3=8 → Total",
-    dev.progress["prob-1"].values.current
+    "botonera: «=» pone la operación en vertical",
+    dev.progress["prob-1"].values.current.eq === true &&
+      dev.progress["prob-1"].values.current.expr === "5+3",
+    JSON.stringify(dev.progress["prob-1"].values.current)
+  );
+  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "key", key: "8" });
+  check(
+    "botonera: tras «=» las teclas escriben en las casillas",
+    Object.values(dev.progress["prob-1"].values.current.cells)[0] === "8",
+    JSON.stringify(dev.progress["prob-1"].values.current)
+  );
+
+  // Sin comprobar no hay línea: «Comprobar» exige la magnitud adjunta.
+  const sinMag = reducer(dev, { type: "CHECK", exercise: wordProb });
+  check(
+    "botonera: sin magnitud «Comprobar» no confirma la línea",
+    sinMag.progress["prob-1"].values.lines.length === 0 &&
+      sinMag.progress["prob-1"].feedback.type === "error" &&
+      sinMag.progress["prob-1"].feedback.message.includes("Te falta adjuntar"),
+    JSON.stringify(sinMag.progress["prob-1"].feedback)
+  );
+
+  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "magnitude", name: "Total" });
+  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "magnitude", name: "Todo" });
+  check(
+    "botonera: el resultado se adjunta y sella la línea",
+    dev.progress["prob-1"].values.current.mag === "Total",
+    JSON.stringify(dev.progress["prob-1"].values.current)
+  );
+  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "key", key: "9" });
+  check(
+    "botonera: con la línea sellada no se escribe más",
+    Object.values(dev.progress["prob-1"].values.current.cells)[0] === "8",
+    JSON.stringify(dev.progress["prob-1"].values.current)
   );
   dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "back" });
   check(
-    "botonera: borrar el último carácter",
-    dev.progress["prob-1"].values.current === "5+3=8 → Tota",
-    dev.progress["prob-1"].values.current
+    "botonera: borrar deshace en orden inverso (la magnitud primero)",
+    dev.progress["prob-1"].values.current.mag === null &&
+      Object.values(dev.progress["prob-1"].values.current.cells)[0] === "8",
+    JSON.stringify(dev.progress["prob-1"].values.current)
   );
-  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "newline" });
+  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "magnitude", name: "Todo" });
+  dev = reducer(dev, { type: "CHECK", exercise: wordProb });
   check(
-    "botonera: saltar de línea confirma la línea",
-    dev.progress["prob-1"].values.current === "" &&
-      dev.progress["prob-1"].values.lines.length === 1,
-    JSON.stringify(dev.progress["prob-1"].values)
-  );
-  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "key", key: "9" });
-  dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "undo" });
-  check(
-    "botonera: deshacer borra la línea en curso",
-    dev.progress["prob-1"].values.current === "" &&
-      dev.progress["prob-1"].values.lines.length === 1,
-    JSON.stringify(dev.progress["prob-1"].values)
+    "botonera: «Comprobar» valida el paso y confirma la línea",
+    dev.progress["prob-1"].values.lines.length === 1 &&
+      dev.progress["prob-1"].values.current.expr === "" &&
+      dev.progress["prob-1"].values.current.eq === false &&
+      dev.progress["prob-1"].status === "correct" &&
+      dev.progress["prob-1"].feedback.type === "ok",
+    JSON.stringify(dev.progress["prob-1"])
   );
   dev = reducer(dev, { type: "DEV", exercise: wordProb, op: "undo" });
   check(
@@ -742,12 +865,66 @@ function render(state, opts = {}) {
     dev.progress["prob-1"].values.lines.length === 0,
     JSON.stringify(dev.progress["prob-1"].values)
   );
+
+  // Comprobación por paso en un problema de dos operaciones.
+  const wordProb2 = {
+    id: "prob-2p",
+    type: "wordProblem",
+    plan: [
+      { op: "add", a: 5, b: 3, result: 8 },
+      { op: "add", a: 10, b: 5, result: 15 },
+    ],
+    resultados: { parciales: ["Total"], final: "Todo" },
+  };
+  let paso = press(base, wordProb2, ["5", "+", "3", "="]);
+  paso = fillCells(paso, wordProb2, 5, "add", 3);
+  paso = reducer(paso, { type: "DEV", exercise: wordProb2, op: "magnitude", name: "Total" });
+  paso = reducer(paso, { type: "CHECK", exercise: wordProb2 });
+  check(
+    "CHECK (problema): el paso correcto confirma la línea y pide la siguiente",
+    paso.progress["prob-2p"].values.lines.length === 1 &&
+      paso.progress["prob-2p"].status === "pending" &&
+      paso.progress["prob-2p"].feedback.type === "ok" &&
+      paso.progress["prob-2p"].feedback.message.includes("Paso 1 de 2"),
+    JSON.stringify(paso.progress["prob-2p"])
+  );
+
+  // La última operación con una casilla mal: señala la casilla y no
+  // confirma.
+  paso = press(paso, wordProb2, ["1", "0", "+", "5", "="]);
+  paso = press(paso, wordProb2, ["9", "9"]);
+  paso = reducer(paso, { type: "DEV", exercise: wordProb2, op: "magnitude", name: "Todo" });
+  paso = reducer(paso, { type: "CHECK", exercise: wordProb2 });
+  check(
+    "CHECK (problema): casilla incorrecta señala la casilla y no confirma",
+    paso.progress["prob-2p"].values.lines.length === 1 &&
+      paso.progress["prob-2p"].feedback.type === "error" &&
+      paso.progress["prob-2p"].feedback.cellIds.length > 0,
+    JSON.stringify(paso.progress["prob-2p"].feedback)
+  );
+
+  // La corregimos y, al comprobar el último paso, queda resuelto.
+  paso = reducer(paso, { type: "DEV", exercise: wordProb2, op: "back" }); // magnitud
+  paso = reducer(paso, { type: "DEV", exercise: wordProb2, op: "back" }); // casilla
+  paso = reducer(paso, { type: "DEV", exercise: wordProb2, op: "back" }); // casilla
+  paso = fillCells(paso, wordProb2, 10, "add", 5);
+  paso = reducer(paso, { type: "DEV", exercise: wordProb2, op: "magnitude", name: "Todo" });
+  paso = reducer(paso, { type: "CHECK", exercise: wordProb2 });
+  check(
+    "CHECK (problema): el último paso correcto resuelve el problema",
+    paso.progress["prob-2p"].values.lines.length === 2 &&
+      paso.progress["prob-2p"].status === "correct" &&
+      paso.progress["prob-2p"].feedback.type === "ok",
+    JSON.stringify(paso.progress["prob-2p"])
+  );
+
   const sinIgual = reducer(base, { type: "DEV", exercise: wordProb, op: "key", key: "9" });
   const sinIgual2 = reducer(sinIgual, { type: "DEV", exercise: wordProb, op: "magnitude", name: "Total" });
   check(
     "botonera: sin «=» no se adjunta el resultado",
-    sinIgual2.progress["prob-1"].values.current === "9",
-    sinIgual2.progress["prob-1"].values.current
+    sinIgual2.progress["prob-1"].values.current.expr === "9" &&
+      sinIgual2.progress["prob-1"].values.current.mag === null,
+    JSON.stringify(sinIgual2.progress["prob-1"].values.current)
   );
 
   // REVEAL marca como visto.
