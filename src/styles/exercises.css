@@ -240,6 +240,45 @@
   width: 100%;
 }
 
+/* Nombres de los resultados (magnitudes): parciales y final. */
+.problem-resultados {
+  display: grid;
+  gap: var(--space-2);
+  width: 100%;
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-alt);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  list-style: none;
+  font-size: 0.95rem;
+}
+
+.problem-resultados li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.resultado-tag {
+  flex: 0 0 auto;
+  min-width: 84px;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.problem-resultados .es-final .resultado-tag {
+  background: var(--color-primary);
+  color: #fff;
+}
+
 .wf-steps {
   display: grid;
   gap: var(--space-3);

@@ -168,6 +168,31 @@ function buildExercise(raw, def, n, err, id) {
         );
         return null;
       }
+      // Nombres de las magnitudes: el resultado de cada paso intermedio
+      // ("parciales") y el de la pregunta final ("final"). Opcional.
+      let resultados;
+      if (raw.resultados !== undefined) {
+        const r =
+          raw.resultados && typeof raw.resultados === "object" && !Array.isArray(raw.resultados)
+            ? raw.resultados
+            : {};
+        const parciales =
+          r.parciales === undefined
+            ? []
+            : Array.isArray(r.parciales)
+            ? r.parciales
+            : null;
+        if (parciales === null || !parciales.every((t) => hasText(t)) || !hasText(r.final)) {
+          err(
+            `el ejercicio ${n} ("problema"): "resultados" debe ser { parciales: [textos…], final: texto } con "final" obligatorio.`
+          );
+          return null;
+        }
+        resultados = {
+          parciales: parciales.map((t) => t.trim()),
+          final: r.final.trim(),
+        };
+      }
       return {
         id,
         type: "wordProblem",
@@ -175,6 +200,7 @@ function buildExercise(raw, def, n, err, id) {
         text: raw.texto.trim(),
         plan,
         answer,
+        ...(resultados ? { resultados } : {}),
       };
     }
 

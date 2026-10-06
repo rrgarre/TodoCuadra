@@ -595,6 +595,49 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
     JSON.stringify(probOk.errors)
   );
 
+  const resMalo = parseTemplate(
+    {
+      titulo: "X",
+      tipo: "mates",
+      ejercicios: [
+        { tipo: "problema", texto: "Tengo 5 canicas y recibo 3.", pasos: [{ op: "suma", a: 5, b: 3 }], resultados: {} },
+      ],
+    },
+    f2
+  );
+  check(
+    "problema: «resultados» sin final → error en español",
+    !resMalo.ok && resMalo.errors[0].includes('"resultados"'),
+    JSON.stringify(resMalo.errors)
+  );
+
+  const resOk = parseTemplate(
+    {
+      titulo: "X",
+      tipo: "mates",
+      ejercicios: [
+        {
+          tipo: "problema",
+          texto: "Tengo 5 canicas y recibo 3.",
+          pasos: [{ op: "suma", a: 5, b: 3 }],
+          resultados: { parciales: ["  Canicas en total  "], final: " Canicas que tengo " },
+        },
+      ],
+    },
+    f2
+  );
+  check(
+    "problema: «resultados» llega al ejercicio con los textos limpios",
+    resOk.ok &&
+      JSON.stringify(resOk.sheet.wordProblems[0].resultados) ===
+        JSON.stringify({ parciales: ["Canicas en total"], final: "Canicas que tengo" }),
+    JSON.stringify(resOk)
+  );
+  check(
+    "problema: sin «resultados» el campo no aparece",
+    probOk.ok && probOk.sheet.wordProblems[0].resultados === undefined
+  );
+
   const serieMala = parseTemplate(
     { titulo: "X", tipo: "mates", ejercicios: [{ tipo: "logica", variante: "serie", enunciado: "¿Qué sigue?", elementos: [2, 4, 6], respuesta: 9 }] },
     f2
@@ -721,6 +764,23 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
       "hoja: textos de los problemas intactos",
       sh.wordProblems.every((w) => w.text.length > 40) &&
         p1.text.startsWith("En la biblioteca del cole")
+    );
+    check(
+      "hoja: los 4 problemas nombran sus resultados (parciales + final)",
+      sh.wordProblems.every(
+        (w) =>
+          w.resultados &&
+          w.resultados.parciales.length === w.plan.length - 1 &&
+          w.resultados.parciales.every((t) => t.length > 3) &&
+          w.resultados.final.length > 3
+      ),
+      JSON.stringify(sh.wordProblems.map((w) => w.resultados))
+    );
+    check(
+      "prob-1: parcial «Libros totales en la biblioteca» y final «Libros que quedan»",
+      p1.resultados.parciales.join(" · ") === "Libros totales en la biblioteca" &&
+        p1.resultados.final === "Libros que quedan",
+      JSON.stringify(p1.resultados)
     );
 
     const m1 = sh.mentalCalculations.find((m) => m.id === "men-1");

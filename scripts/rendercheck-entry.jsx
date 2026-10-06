@@ -289,6 +289,20 @@ function render(state, opts = {}) {
   const atGuided = findItem("prob-1");
   const htmlG = render({ screen: "section", sectionIndex: atGuided.s, itemIndex: atGuided.i, progress: {} });
   check("prob-1: estructura de pasos", htmlG.includes("Paso 1") && htmlG.includes("Paso 2"));
+  check(
+    "prob-1: resultados parciales y final listados bajo el enunciado",
+    htmlG.includes("problem-resultados") &&
+      htmlG.indexOf("problem-resultados") > htmlG.indexOf("problem-text") &&
+      htmlG.includes("Libros totales en la biblioteca") &&
+      htmlG.includes("Libros que quedan")
+  );
+  check(
+    "prob-3: sus dos parciales y su final listados",
+    htmlProb.includes("Parcial 1") &&
+      htmlProb.includes("Parcial 2") &&
+      htmlProb.includes("Cromos de los sobres") &&
+      htmlProb.includes("Cromos que tiene ahora")
+  );
 
   // Sumas y restas: casilla por cifra (sin campo único).
   const atSum = findItem("sum-1");

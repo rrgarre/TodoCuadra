@@ -9,6 +9,8 @@ import { OP_SYMBOL, OP_NAME } from "../../utils/calculations.js";
  *                  resultados (problemas de 2 pasos).
  * mode "choose"  → el alumno elige la operación, introduce los números y
  *                  el resultado (problemas de 3 pasos).
+ * Si el JSON trae "resultados", bajo el enunciado se lista el nombre de
+ * cada resultado parcial (la magnitud de cada paso) y el del final.
  */
 export default function WordProblem({ exercise, controller }) {
   const { values, step, stepsDone, revealed, status, setWordStep, setGuidedAnswer } =
@@ -183,6 +185,24 @@ export default function WordProblem({ exercise, controller }) {
   return (
     <ExerciseCard exercise={exercise} controller={controller} solution={solution}>
       <p className="problem-text">{exercise.text}</p>
+      {exercise.resultados && (
+        <ul className="problem-resultados" aria-label="Resultados del problema">
+          {exercise.resultados.parciales.map((r, i) => (
+            <li key={`parcial-${i}`}>
+              <span className="resultado-tag">
+                {exercise.resultados.parciales.length > 1
+                  ? `Parcial ${i + 1}`
+                  : "Parcial"}
+              </span>
+              <span>{r}</span>
+            </li>
+          ))}
+          <li className="es-final">
+            <span className="resultado-tag">Final</span>
+            <span>{exercise.resultados.final}</span>
+          </li>
+        </ul>
+      )}
       {exercise.mode === "choose" ? chooseBody() : guidedBody()}
     </ExerciseCard>
   );

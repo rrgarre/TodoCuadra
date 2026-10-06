@@ -37,7 +37,11 @@
         { "op": "suma", "a": 125, "b": 87 },
         { "op": "resta", "a": 212, "b": 46 }
       ],
-      "respuesta": 166
+      "respuesta": 166,
+      "resultados": {
+        "parciales": ["Libros totales en la biblioteca"],
+        "final": "Libros que quedan"
+      }
     },
     {
       "id": "prob-2",
@@ -48,7 +52,11 @@
         { "op": "multiplicacion", "a": 5, "b": 24 },
         { "op": "division", "a": 120, "b": 6 }
       ],
-      "respuesta": 20
+      "respuesta": 20,
+      "resultados": {
+        "parciales": ["Total de lápices"],
+        "final": "Lápices por bandeja"
+      }
     },
     {
       "id": "prob-3",
@@ -60,7 +68,11 @@
         { "op": "suma", "a": 12, "b": 24 },
         { "op": "resta", "a": 36, "b": 5 }
       ],
-      "respuesta": 31
+      "respuesta": 31,
+      "resultados": {
+        "parciales": ["Cromos de los sobres", "Cromos en total"],
+        "final": "Cromos que tiene ahora"
+      }
     },
     {
       "id": "prob-4",
@@ -72,7 +84,11 @@
         { "op": "suma", "a": 72, "b": 30 },
         { "op": "resta", "a": 102, "b": 45 }
       ],
-      "respuesta": 57
+      "respuesta": 57,
+      "resultados": {
+        "parciales": ["Panes de las bandejas", "Panes en total"],
+        "final": "Panes que quedan"
+      }
     },
 
     { "id": "men-1", "tipo": "mental", "expr": "27 + 19", "resultado": 46, "trucoId": "tip-1", "pista": "Pista: en lugar de sumar 19, suma 20 y después resta 1." },
