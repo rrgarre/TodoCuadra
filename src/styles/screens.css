@@ -507,3 +507,149 @@
   color: var(--color-text-soft);
   line-height: 1.5;
 }
+
+/* ---------------- Números romanos (juego) ---------------- */
+
+/* Rango de números bajo cada dificultad. */
+.romanos-rango {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.romanos-nota {
+  margin-top: var(--space-4);
+  color: var(--color-text-soft);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Cabecera con la dificultad y el botón discreto de información. */
+.romanos-cab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.romanos-info-btn {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text-soft);
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.romanos-info-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary-dark);
+}
+
+.romanos-info-btn:focus-visible {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+/* El algoritmo en los dos sentidos, desplegado bajo la cabecera. */
+.romanos-info {
+  margin-bottom: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.romanos-info h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.romanos-info h3 + ol {
+  margin-top: var(--space-2);
+}
+
+.romanos-info ol {
+  margin: 0;
+  padding-left: 1.3em;
+}
+
+.romanos-info h3:not(:first-child) {
+  margin-top: var(--space-3);
+}
+
+/* Enunciado: instrucción y el número en grande (cifras o romanos). */
+.romanos-instruccion {
+  text-align: center;
+  font-weight: 700;
+  color: var(--color-text-soft);
+}
+
+.romanos-valor {
+  margin: var(--space-2) 0 var(--space-4);
+  text-align: center;
+  font-size: clamp(2.4rem, 10vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+}
+
+/* La respuesta escrita con la botonera (nunca un <input>). */
+.romanos-escribe {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.romanos-respuesta {
+  min-height: var(--tap-min);
+  margin-bottom: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  align-items: center;
+  border: 2px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-alt);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  overflow-wrap: anywhere;
+}
+
+.romanos-respuesta.is-vacio {
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+/* Acierto o fallo tras «Comprobar», siempre sin desvelar la respuesta. */
+.romanos-feedback {
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font-weight: 700;
+}
+
+.romanos-feedback.is-ok {
+  background: var(--color-success-soft);
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.romanos-feedback.is-mal {
+  background: var(--color-danger-soft);
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}

@@ -20,6 +20,10 @@ import {
 import TrivialScreen, {
   TrivialJuego,
 } from "../src/components/layout/TrivialScreen.jsx";
+import RomanosScreen, {
+  RomanosJuego,
+} from "../src/components/layout/RomanosScreen.jsx";
+import { construirPregunta } from "../src/utils/roman.js";
 
 let failures = 0;
 function check(name, cond, extra = "") {
@@ -661,6 +665,178 @@ function render(state, opts = {}) {
     "trivial: «Mostrar solución» queda pulsado tras verse",
     tSol.includes('class="btn" disabled=""'),
     tSol.slice(0, 400)
+  );
+}
+
+/* ---------------- Apartado Números romanos ---------------- */
+
+{
+  // Portada: la zona del juego, paralela a la del Trivial.
+  const home = render({ screen: "home", sectionIndex: 0, itemIndex: 0, progress: {} });
+  check(
+    "romanos: la portada ofrece la zona del juego",
+    home.includes("🔢 Números romanos") &&
+      home.includes('aria-label="Jugar a números romanos"'),
+    home.slice(0, 300)
+  );
+
+  // Pantalla inicial: las tres dificultades con su rango de números.
+  const pantalla = renderToString(React.createElement(RomanosScreen, { onExit() {} }));
+  check(
+    "romanos: al entrar se pide la dificultad",
+    pantalla.includes("Elige la dificultad") &&
+      pantalla.includes('aria-label="Jugar la dificultad Fácil"') &&
+      pantalla.includes('aria-label="Jugar la dificultad Medio"') &&
+      pantalla.includes('aria-label="Jugar la dificultad Difícil"'),
+    pantalla.slice(0, 400)
+  );
+  check(
+    "romanos: los rangos 1–20, 20–88 y 85–3500",
+    pantalla.includes("del 1 al 20") &&
+      pantalla.includes("del 20 al 88") &&
+      pantalla.includes("del 85 al 3500"),
+    pantalla.slice(0, 400)
+  );
+  check("romanos: ningún campo de texto en la pantalla", !pantalla.includes("<input"));
+
+  const handlers = {
+    onKey() {},
+    onBackspace() {},
+    onLimpiar() {},
+    onComprobar() {},
+    onMostrar() {},
+    onSiguiente() {},
+    onVolver() {},
+    onInfo() {},
+  };
+
+  // Turno respondiendo en romanos: teclado de letras, sin cifras sueltas.
+  const qLetras = construirPregunta(14, false);
+  const pLetras = {
+    titulo: "Fácil",
+    pregunta: qLetras,
+    respuesta: "XI",
+    resultado: null,
+    solucion: false,
+    info: false,
+    ...handlers,
+  };
+  const jLetras = renderToString(React.createElement(RomanosJuego, pLetras));
+  check(
+    "romanos: preguntado en cifras pide romanos y abre el teclado de letras",
+    jLetras.includes("Escribe este número en números romanos") &&
+      jLetras.includes(">14<") &&
+      jLetras.includes('aria-label="Teclado de respuesta"') &&
+      jLetras.includes('aria-label="letra M"') &&
+      !jLetras.includes(">7<"),
+    jLetras.slice(0, 500)
+  );
+  check(
+    "romanos: la respuesta escrita se muestra sin <input>",
+    jLetras.includes(">XI<") && !jLetras.includes("<input"),
+    jLetras.slice(0, 500)
+  );
+  check(
+    "romanos: con respuesta se puede comprobar y aún no hay «Siguiente»",
+    jLetras.includes('class="btn">Comprobar') &&
+      !jLetras.includes("Siguiente") &&
+      !jLetras.includes("¡Correcto!"),
+    jLetras.slice(0, 500)
+  );
+
+  // Sin respuesta escrita, «Comprobar» espera.
+  const jVacio = renderToString(
+    React.createElement(RomanosJuego, { ...pLetras, respuesta: "" })
+  );
+  check(
+    "romanos: sin respuesta escrita «Comprobar» está desactivado",
+    jVacio.includes('class="btn" disabled="">Comprobar'),
+    jVacio.slice(0, 500)
+  );
+
+  // Turno respondiendo en cifras: teclado de dígitos, sin letras.
+  const pDigitos = {
+    titulo: "Fácil",
+    pregunta: construirPregunta(14, true),
+    respuesta: "",
+    resultado: null,
+    solucion: false,
+    info: false,
+    ...handlers,
+  };
+  const jDigitos = renderToString(React.createElement(RomanosJuego, pDigitos));
+  check(
+    "romanos: preguntado en romano pide el número y abre el teclado de cifras",
+    jDigitos.includes("¿Qué número es?") &&
+      jDigitos.includes(">XIV<") &&
+      jDigitos.includes(">7<") &&
+      !jDigitos.includes('aria-label="letra M"'),
+    jDigitos.slice(0, 500)
+  );
+
+  // Acierto y fallo tras «Comprobar», sin desvelar nada en el fallo.
+  const jOk = renderToString(
+    React.createElement(RomanosJuego, { ...pLetras, resultado: "ok" })
+  );
+  check(
+    "romanos: acierto con «Comprobar» da su aviso y «Siguiente»",
+    jOk.includes("¡Correcto!") &&
+      jOk.includes("Siguiente ›") &&
+      jOk.includes('class="btn" disabled="">Comprobar'),
+    jOk.slice(0, 500)
+  );
+  const jMal = renderToString(
+    React.createElement(RomanosJuego, { ...pLetras, resultado: "mal" })
+  );
+  check(
+    "romanos: fallo avisa sin resolver y sin «Siguiente»",
+    jMal.includes("No es correcto") &&
+      !jMal.includes("Siguiente") &&
+      !jMal.includes("X + IV"),
+    jMal.slice(0, 500)
+  );
+
+  // Solución de apoyo: respuesta y desglose, y se pasa de turno.
+  const jSol = renderToString(
+    React.createElement(RomanosJuego, { ...pLetras, solucion: true })
+  );
+  check(
+    "romanos: al mostrar la solución aparecen respuesta y desglose",
+    jSol.includes(">XIV<") && jSol.includes("X + IV = 14"),
+    jSol.slice(0, 500)
+  );
+  check(
+    "romanos: vista la solución hay «Siguiente» y ya no se teclea",
+    jSol.includes("Siguiente ›") &&
+      !jSol.includes('aria-label="Teclado de respuesta"'),
+    jSol.slice(0, 500)
+  );
+
+  // El botón «ⓘ» despliega el algoritmo de los dos sentidos.
+  const pInfo = { ...pLetras, info: true };
+  const jInfo = renderToString(React.createElement(RomanosJuego, pInfo));
+  check(
+    "romanos: «ⓘ» discreto siempre visible",
+    jLetras.includes('aria-label="Información: cómo escribir y leer números romanos"'),
+    jLetras.slice(0, 300)
+  );
+  check(
+    "romanos: el algoritmo de ida y de vuelta tras el «ⓘ»",
+    jInfo.includes("Cómo se pasa de número a romano") &&
+      jInfo.includes("Cómo se leen") &&
+      jInfo.includes("M = 1000") &&
+      jInfo.includes("se resta"),
+    jInfo.slice(0, 500)
+  );
+  check(
+    "romanos: sin pedirlo, el algoritmo no ocupa la pantalla",
+    !jLetras.includes("M = 1000")
+  );
+
+  // Sin temporizadores, contadores ni progreso (como el Trivial).
+  check(
+    "romanos: sin temporizadores, contadores ni progreso",
+    !/<progress|<time|Pregunta \d|\d+\s*\/\s*\d+/.test(jLetras + jOk + jSol)
   );
 }
 

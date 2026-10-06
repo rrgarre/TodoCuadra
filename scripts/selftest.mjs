@@ -36,6 +36,16 @@ import {
   poolPreguntas,
   siguientePregunta,
 } from "../preguntas/loader.js";
+import {
+  toRoman,
+  fromRoman,
+  descomposicionRomana,
+  sortearNumero,
+  sortearPregunta,
+  construirPregunta,
+  respuestaCorrecta,
+  DIFICULTADES,
+} from "../src/utils/roman.js";
 
 let failures = 0;
 function check(name, cond, extra = "") {
@@ -722,6 +732,135 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   check("mental: primer error sin pista", !first.ok && !first.message.includes("Pista"));
   const second = validateStep(ex, { step: 0, values: { answer: "45" }, attempts: 1 });
   check("mental: segundo error con pista", !second.ok && second.message.includes("Pista"), second.message);
+}
+
+/* ---------- Números romanos (juego) ---------- */
+{
+  // Escritura: la forma canónica que se enseña en clase.
+  const escritos = [
+    [1, "I"], [4, "IV"], [9, "IX"], [14, "XIV"], [20, "XX"], [40, "XL"],
+    [58, "LVIII"], [88, "LXXXVIII"], [90, "XC"], [400, "CD"], [500, "D"],
+    [900, "CM"], [1994, "MCMXCIV"], [3500, "MMMD"],
+  ];
+  for (const [n, r] of escritos) {
+    check(`romanos: ${n} se escribe ${r}`, toRoman(n) === r, toRoman(n));
+  }
+  check("romanos: el 0 no tiene escritura romana", toRoman(0) === "");
+
+  // Lectura: acepta mayúsculas y espacios, pero solo la forma canónica.
+  check("romanos: «XIV» se lee 14", fromRoman("XIV") === 14);
+  check("romanos: «xiv» en minúsculas también", fromRoman("xiv") === 14);
+  check("romanos: « x i v » con espacios también", fromRoman(" x i v ") === 14);
+  check("romanos: «MCMXCIV» se lee 1994", fromRoman("MCMXCIV") === 1994);
+  check("romanos: «MMMD» se lee 3500", fromRoman("MMMD") === 3500);
+  check("romanos: «IIII» no es canónico", fromRoman("IIII") === null);
+  check("romanos: «XIIII» no es canónico", fromRoman("XIIII") === null);
+  check("romanos: «IC» no es canónico", fromRoman("IC") === null);
+  check("romanos: letras ajenas no valen", fromRoman("ABC") === null);
+  check("romanos: vacío no vale", fromRoman("") === null);
+
+  // Ida y vuelta en los extremos de todos los rangos del juego.
+  for (const n of [1, 20, 21, 88, 89, 499, 500, 3500]) {
+    check(`romanos: ida y vuelta de ${n}`, fromRoman(toRoman(n)) === n, toRoman(n));
+  }
+
+  // El desglose que se enseña al pedir la solución.
+  check(
+    "romanos: desglose de 14 → X + IV",
+    JSON.stringify(descomposicionRomana(14)) === '["X","IV"]'
+  );
+  check(
+    "romanos: desglose de 58 → L + V + III",
+    JSON.stringify(descomposicionRomana(58)) === '["L","V","III"]'
+  );
+  check(
+    "romanos: desglose de 47 → XL + V + II",
+    JSON.stringify(descomposicionRomana(47)) === '["XL","V","II"]'
+  );
+  check("romanos: sin desglose fuera de rango", descomposicionRomana(0).length === 0);
+
+  // Dificultades ofrecidas y sus rangos.
+  check(
+    "romanos: tres dificultades en orden",
+    DIFICULTADES.map((d) => d.id).join(",") === "facil,medio,dificil"
+  );
+  check(
+    "romanos: rangos 1–20, 20–88 y 85–3500",
+    DIFICULTADES[0].rango.includes("1 al 20") &&
+      DIFICULTADES[1].rango.includes("20 al 88") &&
+      DIFICULTADES[2].rango.includes("85 al 3500")
+  );
+
+  // Sorteo de números: siempre dentro del rango de su dificultad.
+  check("romanos: fácil mínimo 1", sortearNumero("facil", () => 0) === 1);
+  check("romanos: fácil máximo 20", sortearNumero("facil", () => 0.999999999) === 20);
+  check("romanos: medio mínimo 20", sortearNumero("medio", () => 0) === 20);
+  check("romanos: medio máximo 88", sortearNumero("medio", () => 0.999999999) === 88);
+  const tiradas = (...v) => () => v.shift();
+  check("romanos: difícil 50% inferior da 85", sortearNumero("dificil", tiradas(0.4, 0)) === 85);
+  check("romanos: difícil 50% inferior da 499", sortearNumero("dificil", tiradas(0.4, 0.999999999)) === 499);
+  check("romanos: difícil 50% superior da 500", sortearNumero("dificil", tiradas(0.5, 0)) === 500);
+  check("romanos: difícil 50% superior da 3500", sortearNumero("dificil", tiradas(0.5, 0.999999999)) === 3500);
+
+  // Reparto de la dificultad difícil a lo largo de muchas tiradas.
+  let i = 0;
+  const dadoFalso = () => ((i = (i + 1) * 7919 % 1000) / 1000) || 0.0001;
+  const muestras = Array.from({ length: 400 }, () => sortearNumero("dificil", dadoFalso));
+  check(
+    "romanos: difícil reparte por debajo y por encima de 500",
+    muestras.some((n) => n < 500) && muestras.some((n) => n >= 500)
+  );
+  check(
+    "romanos: difícil respeta 85–499 y 500–3500",
+    muestras.every((n) => (n >= 85 && n <= 499) || (n >= 500 && n <= 3500))
+  );
+
+  // Sentido de la pregunta: 50 % en romano y 50 % en cifras.
+  const enRoma = sortearPregunta("facil", tiradas(0, 0.4));
+  check("romanos: sentido romano → responder con cifras", enRoma.planteadoEnRomano === true);
+  check("romanos: sentido romano → teclado de cifras", enRoma.teclado === "digitos");
+  check("romanos: sentido romano → valor «I» y respuesta «1»", enRoma.valor === "I" && enRoma.respuesta === "1");
+  const enCifras = sortearPregunta("facil", tiradas(0, 0.6));
+  check("romanos: sentido cifras → responder en romanos", enCifras.planteadoEnRomano === false);
+  check("romanos: sentido cifras → teclado de letras", enCifras.teclado === "letras");
+  check("romanos: sentido cifras → valor «1» y respuesta «I»", enCifras.valor === "1" && enCifras.respuesta === "I");
+
+  // Enunciados y desgloses de cada sentido.
+  const q14r = construirPregunta(14, false);
+  check(
+    "romanos: planteado en cifras pide romanos",
+    q14r.instruccion.includes("romanos") && q14r.valor === "14" && q14r.respuesta === "XIV"
+  );
+  check("romanos: desglose al pasar a romanos", q14r.detalle === "X + IV = 14", q14r.detalle);
+  check(
+    "romanos: desglose 58 al pasar a romanos",
+    construirPregunta(58, false).detalle === "L + V + III = 58"
+  );
+  const q14d = construirPregunta(14, true);
+  check(
+    "romanos: planteado en romano pide el número",
+    q14d.instruccion.includes("número") && q14d.valor === "XIV" && q14d.respuesta === "14"
+  );
+  check("romanos: desglose al leerlos", q14d.detalle === "10 + 4 = 14", q14d.detalle);
+  check(
+    "romanos: desglose 58 al leerlos",
+    construirPregunta(58, true).detalle === "50 + 5 + 1 + 1 + 1 = 58"
+  );
+
+  // Comprobación de la respuesta escrita.
+  check("romanos: cifras aceptan «14»", respuestaCorrecta("14", q14d));
+  check("romanos: cifras aceptan «014»", respuestaCorrecta("014", q14d));
+  check("romanos: cifras aceptan « 14 »", respuestaCorrecta(" 14 ", q14d));
+  check("romanos: cifras aceptan «15»? no", !respuestaCorrecta("15", q14d));
+  check("romanos: cifras no aceptan romanos escritos", !respuestaCorrecta("XIV", q14d));
+  check("romanos: cifras no aceptan vacío", !respuestaCorrecta("", q14d));
+  check("romanos: romanos aceptan «XIV»", respuestaCorrecta("XIV", q14r));
+  check("romanos: romanos aceptan «xiv»", respuestaCorrecta("xiv", q14r));
+  check("romanos: romanos aceptan « XIV »", respuestaCorrecta(" XIV ", q14r));
+  check("romanos: romanos no aceptan «IIII»", !respuestaCorrecta("IIII", construirPregunta(4, false)));
+  check("romanos: romanos no aceptan «XIII» de más", !respuestaCorrecta("XIII", q14r));
+  check("romanos: romanos no aceptan cifras", !respuestaCorrecta("14", q14r));
+  check("romanos: romanos no aceptan vacío", !respuestaCorrecta("", q14r));
 }
 
 /* ---------- Plantillas (carpeta plantillas/*.json) ---------- */

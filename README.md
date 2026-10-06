@@ -45,13 +45,15 @@ Ejecuta dos suites sin dependencias adicionales:
 
 1. **`scripts/selftest.mjs`** — comprobaciones puras de lógica: columnas de la retícula,
    desplazamiento de las parciales, cocientes y restos de cada división, textos de las
-   explicaciones paso a paso y mensajes de validación, más el sistema de fichas
+   explicaciones paso a paso y mensajes de validación, la conversión de **números
+   romanos** (escritura, lectura, rangos de dificultad y sorteos) y el sistema de fichas
    (cabecera `titulo`/`tipo`, asignaturas, `secciones`, paridad de `HojaDePracticas.json` y
    lectura remota con su caché).
 2. **`scripts/rendercheck-entry.jsx`** — renderizado en servidor (`react-dom/server`) de las
    tres pantallas (portada, secciones, resumen) y de los **39 items** de la ficha, más
    pruebas del reducer (guardar casilla, comprobar, avanzar, revelar solución, reiniciar,
-   cambiar de ficha) y de la portada por zonas (fichas remotas incluidas).
+   cambiar de ficha), de la portada por zonas (fichas remotas incluidas) y de los dos
+   juegos aparte (Trivial y **Números romanos**).
 
 Ambas suites están en verde en esta versión, y `npm run build` compila sin errores.
 
@@ -147,6 +149,16 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
   botón **Mostrar solución** (a demanda: respuesta + detalle); **Siguiente** aparece
   solo tras ver la respuesta: **sin temporizadores, contadores ni marcador**, y sin
   fin (se sale con *‹ Inicio*).
+- **Apartado Números romanos** (zona 🔢 en la portada, paralelo al Trivial): se elige
+  la **dificultad** —*fácil* (1–20), *medio* (20–88) o *difícil* (85–3500, con la mitad
+  de los números por debajo del 500)— y cada turno plantea el número **la mitad de las
+  veces en cifras** (se responde en romanos) **y la mitad en romanos** (se responde en
+  cifras). La respuesta se escribe con una **botonera sin campos de texto** que se
+  adapta: letras **IVXLCDM** o cifras **0–9** (con ⌫ y Limpiar). **Comprobar** da el
+  acierto o el fallo **sin desvelar** la respuesta; **Mostrar solución** la enseña con
+  su desglose (`X + IV = 14`) y entonces aparece **Siguiente**. Un botón **ⓘ** discreto
+  despliega el algoritmo en los dos sentidos; **sin temporizadores, contadores ni
+  marcador**, y sin fin.
 - **Accesibilidad**: objetivos táctiles ≥ 44 px, foco visible, etiquetas y `aria-label` en
   las casillas (*«Cifra 1 del cociente»*, *«Llevada de las decenas»*…), estados comunicados
   con icono + texto, contraste alto.
@@ -171,7 +183,7 @@ preguntas/                # apartado Trivial: un JSON por categoría (formato es
   primaria.json           # «Primaria»: 200 preguntas (las demás, pendientes: `[]`)
 src/
   main.jsx                # arranque
-  App.jsx                 # pantallas: portada → secciones → resumen (+ Trivial)
+  App.jsx                 # pantallas: portada → secciones → resumen (+ Trivial y romanos)
   styles/                 # tokens, base, pantallas y ejercicios (CSS plano)
   data/sheets/
     index.js              # registro de fichas + helpers (items por sección, índice)
@@ -181,8 +193,10 @@ src/
     validation.js         # validación de las operaciones, comprobación por paso de los
                           #   problemas y mensajes en español
     storage.js            # lectura/escritura versionada de localStorage (+ hoja activa)
+    roman.js              # números romanos: conversión, dificultades y sorteos del juego
   components/
-    layout/               # HomeScreen, SectionScreen, SummaryScreen, TrivialScreen, TopBar
+    layout/               # HomeScreen, SectionScreen, SummaryScreen, TrivialScreen,
+                          # RomanosScreen, TopBar
     common/               # ExerciseCard, DigitGrid, DigitCell, Feedback, Progress…
     exercises/            # Addition, Subtraction, Multiplication, Division,
                           # VerticalStep, WordProblem, MentalCalculation, MentalTip, Logica
@@ -370,6 +384,35 @@ Reglas del juego:
 - Para añadir una categoría: crea `preguntas/mi-categoria.json` con `[ ... ]` y recarga.
   La app lee la carpeta entera con `import.meta.glob` (sin backend).
 
+## Números romanos (juego)
+
+Apartado paralelo al Trivial (zona **🔢 Números romanos** de la portada). No tiene
+ficheros de datos: todo se sortea en el cliente desde `src/utils/roman.js`.
+
+- **Dificultad al entrar**: *fácil* (1–20), *medio* (20–88) y *difícil* (85–3500). En
+  *difícil*, el sistema reparte el 50 % de los números por debajo del 500 (85–499) y el
+  otro 50 % entre 500 y 3500.
+- **Sentido al azar (50 %)**: la mitad de los turnos se plantea el número **en cifras**
+  y hay que responder **en romanos**; la otra mitad se plantea **en romanos** y hay que
+  responder **en cifras**.
+- **Respuesta con botonera** (sin campos de texto, fabricada como la de los problemas):
+  letras **IVXLCDM** cuando hay que escribir romanos, cifras **0–9** cuando hay que
+  escribir el número, con **⌫** (borrar la última) y **Limpiar** (la respuesta entera).
+- **Comprobación con «Comprobar»**: en romanos solo vale la forma canónica (`IIII`,
+  `IC`… no valen) y en cifras se admiten ceros a la izquierda (`014` = 14). El fallo
+  avisa **sin desvelar** la respuesta; **Mostrar solución** la enseña con su desglose
+  (`X + IV = 14` al pasar a romanos, `10 + 4 = 14` al leerlos) y entonces aparece
+  **Siguiente** para sortear otro turno.
+- **ⓘ discreto**: botón pequeño en la cabecera que despliega el algoritmo para pasar de
+  número a romano y para leerlos.
+- **Sin marcador**: sin temporizadores, contadores ni progreso guardado; el juego no se
+  acaba (puede repetir turno) y se sale con *‹ Inicio* o se cambia la dificultad en
+  cualquier momento.
+
+La escritura es canónica (símbolos de mayor a menor, repetidos como mucho tres veces y
+restas solo con IV, IX, XL, XC, CD y CM) en el rango 1–3999, suficiente para el máximo
+del juego (3500 = `MMMD`).
+
 ## Lista de verificación (sección 31)
 
 | Comprobación | Estado |
@@ -387,13 +430,14 @@ Reglas del juego:
 | **Fichas remotas**: lectura en vivo de una carpeta de GitHub, validadas con las mismas reglas, con caché en `localStorage` y aviso de las erróneas | ✅ descarga simulada (listado + base64), fusión local-gana-a-remota, fallo con/sin caché y portada con la ficha remota |
 | Apartado **Trivial** (🎯 en portada): categoría o todas mezcladas al azar, pregunta + **Mostrar solución** a demanda, **«Siguiente» solo tras ver la respuesta**, sin temporizadores ni contadores | ✅ `parsePreguntas` + sorteo; render de categorías, de la pregunta con sus botones (sin «Siguiente» hasta ver el detalle) y de la solución bajo demanda (sin restos de contador ni de tiempo) |
 | Trivial: categoría **vacía** desactivada y fichero roto con **aviso por ruta** | ✅ mocks con `geografia.json` (`[]`) y `rota.json` (que no es lista); `primaria.json` validado entero (200) |
+| Apartado **Números romanos** (🔢 en portada): tres dificultades con sus rangos, sentido **50 % cifras ↔ 50 % romanos**, botonera adaptable sin campos de texto, **Comprobar** sin desvelar, solución con desglose y «ⓘ» con el algoritmo | ✅ `roman.js` (escritura/lectura canónicas, rangos y sorteos por tiradas) + render de las tres dificultades, de los dos sentidos, del acierto/fallo, de la solución y del «ⓘ» |
 | **Varias fichas**: cambiar de ficha con progreso independiente y ficha activa recordada | ✅ `SET_SHEET` + clave `hoja-activa`; portada, resumen y render de la ficha Lógica comprobados |
 | Problemas con botonera (sin campos de texto): «=» pone la operación en vertical y **Comprobar** valida cada paso con su magnitud adjunta | ✅ render de los 4 + validación por paso y repaso completo del desarrollo |
 | Cálculo mental con pista al segundo fallo | ✅ tests de validación |
 | Trucos: intercalados en cálculo mental y en su sección | ✅ los 4 trucos renderizan en ambos sitios |
 | Progreso guardado en `localStorage` y retomado al recargar | ✅ `storage.js` versionado + tests de persistencia; botón **Resetear todo** en portada y resumen (retomada manual en navegador recomendada) |
 | Uso en móvil (teclado numérico, casillas ≥ 44 px, sin scroll horizontal) | ✅ `inputmode="numeric"`, tamaños por media queries (probar en dispositivo recomendado) |
-| `npm run build` termina sin errores | ✅ build de producción OK (≈417 kB JS + 23 kB CSS) |
+| `npm run build` termina sin errores | ✅ build de producción OK (≈425 kB JS + 25 kB CSS) |
 | `npm install`, `npm run dev` y `npm run build` funcionan | ✅ verificado en Node 20 / Windows |
 
 > Las comprobaciones automatizadas cubren la lógica y el renderizado de todos los items;

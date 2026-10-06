@@ -16,7 +16,7 @@ import { loadSheetState } from "../../utils/storage.js";
  * activa la ficha y, si tiene una sola sección, se abre directa a
  * los ejercicios.
  */
-export default function HomeScreen({ onOpenTrivial }) {
+export default function HomeScreen({ onOpenTrivial, onOpenRomanos }) {
   const { sheet, state, dispatch, reset, setSheet } = useSheet();
   const hasProgress = useMemo(
     () => Object.keys(state.progress).length > 0,
@@ -222,6 +222,30 @@ export default function HomeScreen({ onOpenTrivial }) {
                 <span className="section-body">
                   <strong>Preguntas al azar</strong>
                   <span>Elige una categoría o mézclalas todas</span>
+                </span>
+                <span className="section-cta">Jugar</span>
+              </button>
+            </li>
+          </ul>
+        </section>
+
+        {/* Números romanos: juego paralelo al Trivial, con sus dificultades. */}
+        <section className="zona">
+          <h2 className="zona-title">🔢 Números romanos</h2>
+          <ul className="section-list">
+            <li>
+              <button
+                type="button"
+                className="section-card"
+                aria-label="Jugar a números romanos"
+                onClick={onOpenRomanos}
+              >
+                <span className="section-icon" aria-hidden="true">
+                  🔢
+                </span>
+                <span className="section-body">
+                  <strong>Del número al romano y del romano al número</strong>
+                  <span>Elige la dificultad: fácil, medio o difícil</span>
                 </span>
                 <span className="section-cta">Jugar</span>
               </button>
