@@ -1,0 +1,25 @@
+{
+  "titulo": "Práctica de operaciones",
+  "tipo": "mates",
+  "id": "sheet-002",
+  "nivel": "4º Primaria",
+  "icono": "🔢",
+  "descripcion": "3 sumas, 3 restas, 3 multiplicaciones y 3 divisiones",
+  "ejercicios": [
+    { "id": "ope-sum-1", "tipo": "suma", "a": 457, "b": 368 },
+    { "id": "ope-sum-2", "tipo": "suma", "a": 1289, "b": 756 },
+    { "id": "ope-sum-3", "tipo": "suma", "a": 645, "b": 287 },
+
+    { "id": "ope-res-1", "tipo": "resta", "a": 724, "b": 386 },
+    { "id": "ope-res-2", "tipo": "resta", "a": 1500, "b": 673 },
+    { "id": "ope-res-3", "tipo": "resta", "a": 903, "b": 458 },
+
+    { "id": "ope-mul-1", "tipo": "multiplicacion", "a": 428, "b": 6 },
+    { "id": "ope-mul-2", "tipo": "multiplicacion", "a": 159, "b": 34 },
+    { "id": "ope-mul-3", "tipo": "multiplicacion", "a": 273, "b": 45 },
+
+    { "id": "ope-div-1", "tipo": "division", "a": 756, "b": 4 },
+    { "id": "ope-div-2", "tipo": "division", "a": 966, "b": 6 },
+    { "id": "ope-div-3", "tipo": "division", "a": 736, "b": 16 }
+  ]
+}

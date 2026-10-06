@@ -46,7 +46,7 @@ Ejecuta dos suites sin dependencias adicionales:
 1. **`scripts/selftest.mjs`** — comprobaciones puras de lógica: columnas de la retícula,
    desplazamiento de las parciales, cocientes y restos de cada división, textos de las
    explicaciones paso a paso y mensajes de validación, más el sistema de fichas
-   (cabecera `titulo`/`tipo`, formatos, `secciones`, paridad de `calculo.json` y
+   (cabecera `titulo`/`tipo`, asignaturas, `secciones`, paridad de `mates.json` y
    lectura remota con su caché).
 2. **`scripts/rendercheck-entry.jsx`** — renderizado en servidor (`react-dom/server`) de las
    tres pantallas (portada, secciones, resumen) y de los **39 items** de la ficha, más
@@ -55,9 +55,9 @@ Ejecuta dos suites sin dependencias adicionales:
 
 Ambas suites están en verde en esta versión, y `npm run build` compila sin errores.
 
-## Contenido: ficha "Ejercicios de hoy" (`plantillas/calculo.json`)
+## Contenido: ficha "Hoja de práctica" (`plantillas/mates.json`)
 
-Primera ficha de la serie (id `sheet-001`, formato **cálculo**); cualquier JSON nuevo en
+Ficha base de la serie (id `sheet-001`, asignatura **mates**); cualquier JSON nuevo en
 `plantillas/` se suma a la portada sin tocar los componentes.
 
 | Sección | Items | Contenido |
@@ -123,12 +123,13 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
 - **Progreso guardado** en `localStorage` (`juego-de-calcular:sheet-001:v1`): al volver a
   abrir la página se retoma donde se quedó; el botón **Resetear todo** (portada y resumen,
   con confirmación) borra el progreso y deja la hoja en blanco.
-- **Varias fichas por zonas**: la portada agrupa las fichas en **zonas por formato** —
-  🧮 *Cálculo* y 🧩 *Lógica*— y, al tocar una ficha, sus **secciones se despliegan justo
-  debajo** (si la ficha tiene una sola sección, se abre directa a los ejercicios). Cada
-  ficha guarda su progreso por separado (`juego-de-calcular:<ficha>:v1`), la ficha en uso
-  queda marcada con *✓ En uso* y al elegir otra se retoma su progreso (o empieza si es la
-  primera vez).
+- **Menú por asignaturas**: la portada lista las **asignaturas** (zonas) — hoy 📐
+  *Matemáticas* con todas sus fichas; *Lengua* u otras aparecerán cuando haya— y, al tocar
+  una ficha, sus **secciones se despliegan justo debajo** (si la ficha tiene una sola
+  sección, se abre directa a los ejercicios). Cada ficha es de **una sola asignatura** y
+  puede mezclar varios **motores** (tipos de ejercicio); guarda su progreso por separado
+  (`juego-de-calcular:<ficha>:v1`), la ficha en uso queda marcada con *✓ En uso* y al
+  elegir otra se retoma su progreso (o empieza si es la primera vez).
 - **Apartado Trivial** (zona 🎯 en la portada): preguntas al azar de `preguntas/`,
   eligiendo **una categoría** o **todas mezcladas**. En pantalla solo la pregunta y un
   botón **Mostrar solución** (a demanda: respuesta + detalle); **Siguiente** aparece
@@ -146,9 +147,10 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
 index.html
 vite.config.js
 plantillas/               # TODO lo de las fichas: JSON + la lógica que los entiende
-  templates.js            # formatos, parseo/validación, cargador local y lectura remota
+  templates.js            # asignaturas, parseo/validación, cargador local y lectura remota
   remotas.js              # config de la carpeta remota de GitHub (vacío = desactivada)
-  calculo.json            # ficha «Ejercicios de hoy» (sheet-001): 31 ejercicios + 4 trucos
+  mates.json              # ficha «Hoja de práctica» (sheet-001): 31 ejercicios + 4 trucos
+  operaciones.json        # ficha «Práctica de operaciones» (sheet-002): 3 de cada
   logica.json             # ficha «Lógica»: 15 retos (series, comparaciones, enigmas,
                           #   deducciones y eliminatorias)
 preguntas/                # apartado Trivial: un JSON por categoría (formato estándar)
@@ -183,19 +185,21 @@ scripts/
    remota de GitHub (opcional, ver *Fichas remotas*).
 
 Los tipos de ejercicio disponibles (`addition`, `subtraction`, `multiplication`, `division`,
-`wordProblem`, `mental`, `tip`, `logica`) se registran en `src/components/exercises/registry.js`;
-nuevos **formatos de ficha** (zonas del menú), en `FORMATOS` de `plantillas/templates.js`.
-En ambos casos no hace falta tocar el resto de la aplicación.
+`wordProblem`, `mental`, `tip`, `logica`) —los **motores**— se registran en
+`src/components/exercises/registry.js`; nuevas **asignaturas** (zonas del menú), en
+`FORMATOS` de `plantillas/templates.js`. En ambos casos no hace falta tocar el resto de la
+aplicación.
 
 ## Plantillas (`plantillas/*.json`)
 
 Las fichas permiten añadir hojas de ejercicios **solo con un fichero JSON en español**,
 sin tocar código. Todo lo que las entiende vive en la misma carpeta
-(`plantillas/templates.js`: formatos, parseo, cargador local y lectura remota), y
+(`plantillas/templates.js`: asignaturas, parseo, cargador local y lectura remota), y
 `plantillas/remotas.js` guarda la configuración de la carpeta remota.
 
 - La app lee los `.json` al arrancar (`import.meta.glob` de Vite), los valida y los lista
-  en la **portada por zonas** (una zona por formato: 🧮 Cálculo, 🧩 Lógica).
+  en la **portada por asignaturas** (una zona por asignatura: 📐 Matemáticas; Lengua,
+  cuando haya fichas suyas).
 - Cada ficha es **una hoja completa** con sus secciones, sus grupos y su **progreso propio**
   (se guarda aparte de las demás).
 - Si una ficha no valida, **no se carga ni a medias**: la portada muestra el aviso
@@ -212,8 +216,8 @@ Toda ficha empieza con una cabecera obligatoria:
 
 ```json
 {
-  "titulo": "Ejercicios de hoy",
-  "tipo": "calculo",
+  "titulo": "Hoja de práctica",
+  "tipo": "mates",
   "id": "sheet-001",
   "nivel": "4º Primaria",
   "icono": "📘",
@@ -222,27 +226,28 @@ Toda ficha empieza con una cabecera obligatoria:
 }
 ```
 
-- `titulo` y `tipo` son **obligatorios**; `tipo` decide la zona de la portada y qué tipos de
-  ejercicio admite la ficha. `id` (opcional) fija el id propio de la ficha —si no, se genera
-  del título—; `nivel`, `descripcion` e `icono` son opcionales.
-- Una ficha con un `tipo` desconocido o ejercicios de otro formato **no se carga** y se
+- `titulo` y `tipo` son **obligatorios**; `tipo` es la **asignatura** de la ficha (una ficha
+  es siempre de UNA sola asignatura): decide su zona en la portada y qué motores admite.
+  `id` (opcional) fija el id propio de la ficha —si no, se genera del título—; `nivel`,
+  `descripcion` e `icono` son opcionales.
+- Una ficha con un `tipo` desconocido o ejercicios de otra asignatura **no se carga** y se
   marca como errónea en la portada con su ruta.
 
-### Formatos
+### Asignaturas (formatos)
 
-| `tipo` | Zona | Ejercicios admitidos | Notas |
+| `tipo` | Zona | Motores admitidos | Notas |
 | --- | --- | --- | --- |
-| `calculo` | 🧮 Cálculo | `suma`, `resta`, `multiplicacion`, `division`, `problema`, `mental`, `truco` | admite además `secciones` personalizadas |
-| `logica` | 🧩 Lógica | `logica` | agrupa sola por `grupo`; no admite `secciones` |
+| `mates` | 📐 Matemáticas | `suma`, `resta`, `multiplicacion`, `division`, `problema`, `mental`, `truco`, `logica` | admite `secciones` personalizadas; una ficha puede mezclar varios motores |
 
-Añadir un formato nuevo (p. ej. `quiz`) es una entrada más en el registro `FORMATOS` de
-`plantillas/templates.js`.
+Una ficha es siempre de **una sola asignatura**. Añadir una asignatura nueva (p. ej.
+`lengua`) es una entrada más en el registro `FORMATOS` de `plantillas/templates.js` (y sus
+motores, en `src/components/exercises/registry.js`).
 
 ### Ejercicios
 
 `ejercicios` (obligatorio): lista no vacía. Los **ids se generan solos**
 (`logica-1`, `logica-2`…) salvo que cada ejercicio lleve su `id` (único). El `tipo` es
-obligatorio en cada ejercicio y debe pertenecer al formato de la ficha. Campos y condiciones
+obligatorio en cada ejercicio y debe pertenecer a la asignatura de la ficha. Campos y condiciones
 por tipo:
 
 | `tipo` | Campos | Condiciones |
@@ -255,7 +260,7 @@ por tipo:
 
 La agrupación por defecto es por `grupo` (si cada ejercicio lo lleva) o por tipo.
 
-### Secciones personalizadas (solo formato `calculo`)
+### Secciones personalizadas (formato `mates`)
 
 Con `secciones` describes tú mismo las secciones de la portada; cada una agrupa ids de la
 propia ficha (los mismos ids pueden aparecer en varias secciones):
@@ -280,16 +285,19 @@ propia ficha (los mismos ids pueden aparecer en varias secciones):
 
 ### Fichas incluidas
 
-- `plantillas/calculo.json` — **Ejercicios de hoy** (🧮, id `sheet-001`): las 4 secciones de
+- `plantillas/mates.json` — **Hoja de práctica** (📐, id `sheet-001`): las 4 secciones de
   siempre (19 operaciones, 4 problemas, 12 items de cálculo mental con trucos intercalados
   y los 4 trucos) — **39 items** = 31 ejercicios con corrección + 4 trucos.
-- `plantillas/logica.json` — **Lógica** (🧩): **15 retos** de cinco grupos: 3 **series**
+- `plantillas/logica.json` — **Lógica** (🧩, en la asignatura Matemáticas): **15 retos** de cinco grupos: 3 **series**
   numéricas para completar, 3 **comparaciones** (mayor/menor/igual, con botones), 3
   **enigmas** con respuesta numérica, 3 **deducciones** con una casilla etiquetada por
   cantidad (p. ej. «3 animales y 8 patas: ¿cuántos patos y cuántos conejos?» con casillas
   *Patos* y *Conejos*) y 3 **eliminatorias** (varias opciones y solo una buena, que hay que
   descartando encontrar) —nivel 4º de Primaria—, todos con pista al segundo fallo y
   explicación en *Ver solución*.
+- `plantillas/operaciones.json` — **Práctica de operaciones** (🔢, id `sheet-002`): 12
+  operaciones —3 sumas, 3 restas, 3 multiplicaciones y 3 divisiones— sin problemas ni
+  nada más; una sola sección con los 4 grupos que se abre directa.
 
 ### Fichas remotas (GitHub)
 
@@ -359,9 +367,9 @@ Reglas del juego:
 | Divisiones **sin pasos intermedios**: el alumno escribe todo (cociente, restos y cifras bajadas, con el cursor saltando del cociente al resto de izquierda a derecha) y se comprueba al final | ✅ las 4 divisiones, con cabecera `dividendo : divisor`, cociente, restos y cifras bajadas verificados |
 | Botón **Reiniciar** en cada ejercicio de operaciones (sin tocar el resto) | ✅ acción `RESET_ITEM` + botón en sumas/restas/multiplicaciones/divisiones (tests de reducer y render) |
 | Nuevo tipo **Lógica**: series, comparaciones (mayor/menor/igual), enigmas, deducciones (casillas etiquetadas) y eliminatorias (opciones) con pista al segundo fallo | ✅ componente `Logica.jsx` + validación; los 15 retos renderizan y se corrigen |
-| **Fichas** en `plantillas/*.json`: cabecera `titulo`/`tipo`, formatos `calculo`/`logica`, ids y grupos automáticos, `secciones` y resultados calculados | ✅ `parseTemplate` + registro `FORMATOS`; decenas de casos válidos/inválidos y paridad 1:1 de `calculo.json` con la antigua hoja en código |
+| **Fichas** en `plantillas/*.json`: cabecera `titulo`/`tipo` (asignatura `mates`, con lógica integrada), ids y grupos automáticos, `secciones` y resultados calculados | ✅ `parseTemplate` + registro `FORMATOS`; decenas de casos válidos/inválidos, ficha mixta y paridad 1:1 de `mates.json` con la antigua hoja en código |
 | Ficha rota → **aviso en la portada** con su ruta y el error, sin romper la app | ✅ fichero inválido en el mock de render: se salta y aparece el aviso |
-| **Portada por zonas** (🧮 Cálculo, 🧩 Lógica) con las secciones de la ficha activa desplegadas debajo; ficha de una sola sección se abre directa | ✅ render de portada y de la ficha Lógica; `SET_SHEET` queda en la portada con el progreso cargado |
+| **Menú por asignaturas** (📐 Matemáticas con sus fichas, 🎯 Trivial debajo) con las secciones de la ficha activa desplegadas debajo; ficha de una sola sección se abre directa | ✅ render de portada y de la ficha Lógica; `SET_SHEET` queda en la portada con el progreso cargado |
 | **Fichas remotas**: lectura en vivo de una carpeta de GitHub, validadas con las mismas reglas, con caché en `localStorage` y aviso de las erróneas | ✅ descarga simulada (listado + base64), fusión local-gana-a-remota, fallo con/sin caché y portada con la ficha remota |
 | Apartado **Trivial** (🎯 en portada): categoría o todas mezcladas al azar, pregunta + **Mostrar solución** a demanda, **«Siguiente» solo tras ver la respuesta**, sin temporizadores ni contadores | ✅ `parsePreguntas` + sorteo; render de categorías, de la pregunta con sus botones (sin «Siguiente» hasta ver el detalle) y de la solución bajo demanda (sin restos de contador ni de tiempo) |
 | Trivial: categoría **vacía** desactivada y fichero roto con **aviso por ruta** | ✅ mocks con `geografia.json` (`[]`) y `rota.json` (que no es lista); `primaria.json` validado entero (200) |

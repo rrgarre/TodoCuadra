@@ -9,8 +9,8 @@ import { FORMATOS } from "../../../plantillas/templates.js";
 import { loadSheetState } from "../../utils/storage.js";
 
 /**
- * Portada organizada por zonas: cada zona es un formato (Cálculo,
- * Lógica…) y dentro lista sus fichas con su progreso. Al tocar una
+ * Portada por asignaturas: cada zona es una asignatura (Matemáticas,
+ * Lengua…) y dentro lista sus fichas con su progreso. Al tocar una
  * ficha se activa y sus secciones se despliegan justo debajo; si la
  * ficha tiene una sola sección, se abre directa a los ejercicios.
  */
@@ -37,8 +37,8 @@ export default function HomeScreen({ onOpenTrivial }) {
     [sheet.id, state.progress]
   );
 
-  // Zonas del menú, en el orden del registro de formatos; solo las que
-  // tienen fichas (los formatos sin contenido aparecerán cuando haya).
+  // Asignaturas del menú, en el orden del registro FORMATOS; solo las
+  // que tienen fichas (Lengua y demás aparecerán cuando haya).
   const zonas = useMemo(
     () =>
       Object.entries(FORMATOS)
@@ -161,7 +161,7 @@ export default function HomeScreen({ onOpenTrivial }) {
           </section>
         ))}
 
-        {/* Apartado Trivial: preguntas al azar por categoría (sin fichas). */}
+        {/* Trivial: asignatura de juego (sin fichas): preguntas al azar. */}
         <section className="zona">
           <h2 className="zona-title">🎯 Trivial</h2>
           <ul className="section-list">

@@ -1,6 +1,6 @@
 /**
- * Registro tipo → componente de ejercicio.
- * Añadir un nuevo tipo de ejercicio = crear el componente y una línea aquí.
+ * Registro de motores: tipo de ejercicio → componente.
+ * Añadir un motor nuevo = crear el componente y una línea aquí.
  */
 import Addition from "./Addition.jsx";
 import Subtraction from "./Subtraction.jsx";

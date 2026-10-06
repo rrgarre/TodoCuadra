@@ -459,7 +459,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
         typeof sh.logicExercises[0].explanation === "string" &&
         typeof sh.logicExercises[3].explanation === "string"
     );
-    check("plantilla logica.json: formato logica", sh.formato === "logica", sh.formato);
+    check("plantilla logica.json: formato mates", sh.formato === "mates", sh.formato);
 
     // Variantes nuevas: deducción (casillas etiquetadas) y eliminatoria (opciones).
     const deds = sh.logicExercises.filter((e) => e.variant === "deduccion");
@@ -485,23 +485,23 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
     );
   }
 
-  // Registro de formatos: cada ficha declara su "tipo" y eso decide su zona.
+  // Registro de asignaturas: cada ficha declara su "tipo" (asignatura) y
+  // eso decide su zona y qué motores admite.
   check(
-    "formatos: registro con calculo y logica (y sin quiz todavía)",
-    Boolean(FORMATOS.calculo) && Boolean(FORMATOS.logica) && !FORMATOS.quiz &&
-      FORMATOS.calculo.bloque === "Cálculo" && FORMATOS.logica.bloque === "Lógica",
+    "asignaturas: registro con mates (sin quiz todavía ni logica aparte)",
+    Boolean(FORMATOS.mates) && !FORMATOS.logica && !FORMATOS.quiz &&
+      FORMATOS.mates.bloque === "Matemáticas" && FORMATOS.mates.icono === "📐",
     JSON.stringify(Object.keys(FORMATOS))
   );
   check(
-    "formatos: calculo admite operaciones, problemas, mental y trucos",
-    ["suma", "resta", "multiplicacion", "division", "problema", "mental", "truco"].every((t) =>
-      FORMATOS.calculo.tipos.includes(t)
+    "mates admite operaciones, problemas, mental, trucos y lógica",
+    ["suma", "resta", "multiplicacion", "division", "problema", "mental", "truco", "logica"].every((t) =>
+      FORMATOS.mates.tipos.includes(t)
     )
   );
-  check("formatos: logica solo admite logica", FORMATOS.logica.tipos.length === 1 && FORMATOS.logica.tipos[0] === "logica");
 
   const f2 = "plantillas/prueba.json";
-  const noTitulo = parseTemplate({ tipo: "calculo", ejercicios: [{ tipo: "suma", a: 1, b: 2 }] }, f2);
+  const noTitulo = parseTemplate({ tipo: "mates", ejercicios: [{ tipo: "suma", a: 1, b: 2 }] }, f2);
   check(
     "plantilla sin titulo: error en español con la ruta",
     !noTitulo.ok && noTitulo.errors.some((e) => e.includes(f2) && e.includes("titulo")),
@@ -518,33 +518,58 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   const tipoFichaMalo = parseTemplate({ titulo: "X", tipo: "quiz", ejercicios: [{ tipo: "suma", a: 1, b: 2 }] }, f2);
   check(
     "tipo de ficha desconocido: lista los formatos válidos",
-    !tipoFichaMalo.ok && tipoFichaMalo.errors.some((e) => e.includes("Formatos válidos: calculo, logica")),
+    !tipoFichaMalo.ok && tipoFichaMalo.errors.some((e) => e.includes("Formatos válidos: mates")),
     JSON.stringify(tipoFichaMalo.errors)
   );
 
-  const tipoMalo = parseTemplate({ titulo: "X", tipo: "calculo", ejercicios: [{ tipo: "arpita" }] }, f2);
+  const tipoMalo = parseTemplate({ titulo: "X", tipo: "mates", ejercicios: [{ tipo: "arpita" }] }, f2);
   check("tipo desconocido: lista los válidos", !tipoMalo.ok && tipoMalo.errors[0].includes("suma, resta"), JSON.stringify(tipoMalo.errors));
 
-  const fueraDeFormato = parseTemplate({ titulo: "X", tipo: "logica", ejercicios: [{ tipo: "suma", a: 1, b: 2 }] }, f2);
-  check(
-    "ejercicio fuera del formato: el tipo no pertenece a la ficha",
-    !fueraDeFormato.ok && fueraDeFormato.errors[0].includes("no pertenece al formato «logica»"),
-    JSON.stringify(fueraDeFormato.errors)
+  // Una ficha es de UNA sola asignatura: sus motores no pueden ser de otra.
+  FORMATOS["lengua-mock"] = {
+    bloque: "Lengua",
+    icono: "📝",
+    orden: 9,
+    tipos: ["logica"],
+    permiteSecciones: false,
+  };
+  const fueraDeAsignatura = parseTemplate(
+    { titulo: "X", tipo: "lengua-mock", ejercicios: [{ tipo: "suma", a: 1, b: 2 }] },
+    f2
   );
+  check(
+    "ejercicio fuera de la asignatura: el motor no pertenece a la ficha",
+    !fueraDeAsignatura.ok && fueraDeAsignatura.errors[0].includes("no pertenece al formato «lengua-mock»"),
+    JSON.stringify(fueraDeAsignatura.errors)
+  );
+  const secEnMock = parseTemplate(
+    {
+      titulo: "X", tipo: "lengua-mock",
+      ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "¿Cuánto es?", respuesta: 5 }],
+      secciones: [{ titulo: "Única", grupos: [{ etiqueta: "G", ids: ["x-1"] }] }],
+    },
+    f2
+  );
+  check(
+    "asignatura sin secciones: rechaza las escritas a mano",
+    !secEnMock.ok && secEnMock.errors[0].includes('no admite "secciones"'),
+    JSON.stringify(secEnMock.errors)
+  );
+  delete FORMATOS["lengua-mock"];
 
-  const restaMala = parseTemplate({ titulo: "X", tipo: "calculo", ejercicios: [{ tipo: "resta", a: 5, b: 9 }] }, f2);
+  const restaMala = parseTemplate({ titulo: "X", tipo: "mates", ejercicios: [{ tipo: "resta", a: 5, b: 9 }] }, f2);
   check("resta con a < b: rechazada", !restaMala.ok && restaMala.errors[0].includes("mayor o igual"), JSON.stringify(restaMala.errors));
 
-  const divCero = parseTemplate({ titulo: "X", tipo: "calculo", ejercicios: [{ tipo: "division", a: 10, b: 0 }] }, f2);
+  const divCero = parseTemplate({ titulo: "X", tipo: "mates", ejercicios: [{ tipo: "division", a: 10, b: 0 }] }, f2);
   check("división entre 0: rechazada", !divCero.ok && divCero.errors[0].includes("mayor que 0"), JSON.stringify(divCero.errors));
 
-  const mulLarga = parseTemplate({ titulo: "X", tipo: "calculo", ejercicios: [{ tipo: "multiplicacion", a: 12, b: 123 }] }, f2);
+  const mulLarga = parseTemplate({ titulo: "X", tipo: "mates", ejercicios: [{ tipo: "multiplicacion", a: 12, b: 123 }] }, f2);
   check("multiplicación con b de 3 cifras: rechazada", !mulLarga.ok && mulLarga.errors[0].includes("una o dos cifras"), JSON.stringify(mulLarga.errors));
 
   const probMala = parseTemplate(
     {
       titulo: "X",
-      tipo: "calculo",
+      tipo: "mates",
       ejercicios: [{ tipo: "problema", texto: "Tengo 5 canicas y recibo 3.", pasos: [{ op: "suma", a: 5, b: 3 }], respuesta: 9 }],
     },
     f2
@@ -554,7 +579,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   const probOk = parseTemplate(
     {
       titulo: "X",
-      tipo: "calculo",
+      tipo: "mates",
       ejercicios: [{ tipo: "problema", texto: "Tengo 5 canicas y recibo 3.", pasos: [{ op: "suma", a: 5, b: 3 }] }],
     },
     f2
@@ -566,26 +591,26 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   );
 
   const serieMala = parseTemplate(
-    { titulo: "X", tipo: "logica", ejercicios: [{ tipo: "logica", variante: "serie", enunciado: "¿Qué sigue?", elementos: [2, 4, 6], respuesta: 9 }] },
+    { titulo: "X", tipo: "mates", ejercicios: [{ tipo: "logica", variante: "serie", enunciado: "¿Qué sigue?", elementos: [2, 4, 6], respuesta: 9 }] },
     f2
   );
   check("serie con respuesta que no la sigue: rechazada", !serieMala.ok && serieMala.errors[0].includes("esperaba 8"), JSON.stringify(serieMala.errors));
 
   const compMala = parseTemplate(
-    { titulo: "X", tipo: "logica", ejercicios: [{ tipo: "logica", variante: "comparacion", enunciado: "Compara", izquierda: 456, derecha: 465, respuesta: "mayor" }] },
+    { titulo: "X", tipo: "mates", ejercicios: [{ tipo: "logica", variante: "comparacion", enunciado: "Compara", izquierda: 456, derecha: 465, respuesta: "mayor" }] },
     f2
   );
   check("comparación con respuesta que no cuadra: rechazada", !compMala.ok && compMala.errors[0].includes("menor"), JSON.stringify(compMala.errors));
 
   const sinResp = parseTemplate(
-    { titulo: "X", tipo: "logica", ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "¿Cuánto es?" }] },
+    { titulo: "X", tipo: "mates", ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "¿Cuánto es?" }] },
     f2
   );
   check("enigma sin respuesta: rechazado", !sinResp.ok && sinResp.errors[0].includes("respuesta"), JSON.stringify(sinResp.errors));
 
   const elimMala = parseTemplate(
     {
-      titulo: "X", tipo: "logica",
+      titulo: "X", tipo: "mates",
       ejercicios: [{ tipo: "logica", variante: "eliminatoria", enunciado: "¿Quién?", opciones: ["Berta", "Carlos"], respuesta: "Diego" }],
     },
     f2
@@ -597,7 +622,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   );
 
   const elimSinOpciones = parseTemplate(
-    { titulo: "X", tipo: "logica", ejercicios: [{ tipo: "logica", variante: "eliminatoria", enunciado: "¿Quién?", respuesta: "Diego" }] },
+    { titulo: "X", tipo: "mates", ejercicios: [{ tipo: "logica", variante: "eliminatoria", enunciado: "¿Quién?", respuesta: "Diego" }] },
     f2
   );
   check(
@@ -608,7 +633,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
 
   const dedMala = parseTemplate(
     {
-      titulo: "X", tipo: "logica",
+      titulo: "X", tipo: "mates",
       ejercicios: [{ tipo: "logica", variante: "deduccion", enunciado: "¿Cuántos?", etiquetas: ["Patos", "Conejos"], respuesta: [2] }],
     },
     f2
@@ -620,7 +645,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   );
 
   const dedSinEtiquetas = parseTemplate(
-    { titulo: "X", tipo: "logica", ejercicios: [{ tipo: "logica", variante: "deduccion", enunciado: "¿Cuántos?", respuesta: [2, 1] }] },
+    { titulo: "X", tipo: "mates", ejercicios: [{ tipo: "logica", variante: "deduccion", enunciado: "¿Cuántos?", respuesta: [2, 1] }] },
     f2
   );
   check(
@@ -632,7 +657,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   // Cargador: la válida entra y la rota solo deja aviso (nunca rompe).
   const built = buildTemplateSheets({
     "C:\\proy\\plantillas\\logica.json": { default: json },
-    "C:\\proy\\plantillas\\rota.json": { default: { titulo: "Rota", tipo: "calculo", ejercicios: [{ tipo: "arpita" }] } },
+    "C:\\proy\\plantillas\\rota.json": { default: { titulo: "Rota", tipo: "mates", ejercicios: [{ tipo: "arpita" }] } },
   });
   check(
     "cargador: válida carga y rota avisa con su ruta",
@@ -641,22 +666,22 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   );
 }
 
-/* ---------- Ficha de Cálculo (calculo.json, la que había en código) ---------- */
+/* ---------- Ficha base (mates.json, la que había en código) ---------- */
 {
-  const f = "plantillas/calculo.json";
+  const f = "plantillas/mates.json";
   const json = JSON.parse(readFileSync(f, "utf8"));
   const r = parseTemplate(json, f);
-  check("ficha calculo.json: válida", r.ok, JSON.stringify(r.errors));
+  check("ficha mates.json: válida", r.ok, JSON.stringify(r.errors));
   if (r.ok) {
     const sh = r.sheet;
     check(
-      "calculo: id propio, título, icono y formato",
-      sh.id === "sheet-001" && sh.title === "Ejercicios de hoy" &&
-        sh.icon === "📘" && sh.formato === "calculo",
+      "hoja: id propio, título, icono y formato",
+      sh.id === "sheet-001" && sh.title === "Hoja de práctica" &&
+        sh.icon === "📘" && sh.formato === "mates",
       JSON.stringify({ id: sh.id, title: sh.title, icon: sh.icon, formato: sh.formato })
     );
     check(
-      "calculo: 31 ejercicios + 4 trucos",
+      "hoja: 31 ejercicios + 4 trucos",
       sh.additions.length === 5 && sh.subtractions.length === 5 &&
         sh.multiplications.length === 5 && sh.divisions.length === 4 &&
         sh.wordProblems.length === 4 && sh.mentalCalculations.length === 8 &&
@@ -668,7 +693,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
       })
     );
     check(
-      "calculo: ids de extremos conservados (sum-1 … tip-4)",
+      "hoja: ids de extremos conservados (sum-1 … tip-4)",
       sh.additions[0].id === "sum-1" && sh.subtractions[4].id === "res-5" &&
         sh.multiplications[0].id === "mul-1" && sh.divisions[3].id === "div-4" &&
         sh.mentalCalculations[7].id === "men-8" && sh.tips[3].id === "tip-4"
@@ -677,18 +702,18 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
     const p1 = sh.wordProblems.find((w) => w.id === "prob-1");
     const p3 = sh.wordProblems.find((w) => w.id === "prob-3");
     check(
-      "calculo: prob-1 guiado con dos pasos y respuesta 166",
+      "hoja: prob-1 guiado con dos pasos y respuesta 166",
       p1 && p1.mode === "guided" && p1.plan.length === 2 && p1.answer === 166,
       JSON.stringify(p1)
     );
     check(
-      "calculo: prob-3 de elección con tres pasos y respuesta 31",
+      "hoja: prob-3 de elección con tres pasos y respuesta 31",
       p3 && p3.mode === "choose" && p3.plan.length === 3 && p3.answer === 31 &&
         p3.plan[0].op === "mul" && p3.plan[2].op === "sub",
       JSON.stringify(p3)
     );
     check(
-      "calculo: textos de los problemas intactos",
+      "hoja: textos de los problemas intactos",
       sh.wordProblems.every((w) => w.text.length > 40) &&
         p1.text.startsWith("En la biblioteca del cole")
     );
@@ -696,26 +721,26 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
     const m1 = sh.mentalCalculations.find((m) => m.id === "men-1");
     const m5 = sh.mentalCalculations.find((m) => m.id === "men-5");
     check(
-      "calculo: men-1 enlaza el truco tip-1 y lleva su pista",
+      "hoja: men-1 enlaza el truco tip-1 y lleva su pista",
       m1.tipId === "tip-1" && m1.result === 46 && m1.hint.includes("Pista: en lugar de sumar 19"),
       JSON.stringify(m1)
     );
-    check("calculo: men-5 no enlaza truco", !m5.tipId);
+    check("hoja: men-5 no enlaza truco", !m5.tipId);
     check(
-      "calculo: trucos completos con ejemplo",
+      "hoja: trucos completos con ejemplo",
       sh.tips[0].title === "Sumar 19 (o 29, 39…)" &&
         sh.tips[0].example.steps.length === 2 &&
         sh.tips.every((t) => t.type === "tip" && typeof t.explanation === "string")
     );
 
     check(
-      "calculo: 4 secciones con sus ids",
+      "hoja: 4 secciones con sus ids",
       sh.sections.length === 4 &&
         sh.sections.map((s) => s.id).join(",") === "operaciones,problemas,mental,tips",
       JSON.stringify(sh.sections.map((s) => s.id))
     );
     check(
-      "calculo: sección Operaciones con sus 4 grupos y sus ids",
+      "hoja: sección Operaciones con sus 4 grupos y sus ids",
       sh.sections[0].title === "Operaciones" && sh.sections[0].icon === "🧮" &&
         sh.sections[0].groups.map((g) => g.label).join(",") ===
           "Sumas,Restas,Multiplicaciones,Divisiones" &&
@@ -724,17 +749,17 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
       JSON.stringify(sh.sections[0].groups.map((g) => g.label))
     );
     check(
-      "calculo: la sección mental intercala los trucos en su orden",
+      "hoja: la sección mental intercala los trucos en su orden",
       JSON.stringify(sh.sections[2].groups[0].ids) ===
         JSON.stringify(["men-1", "tip-1", "men-2", "tip-2", "men-3", "men-4", "tip-3", "men-5", "men-6", "men-7", "tip-4", "men-8"]),
       JSON.stringify(sh.sections[2].groups[0].ids)
     );
     check(
-      "calculo: los trucos se repiten en su propia sección",
+      "hoja: los trucos se repiten en su propia sección",
       sh.sections[3].groups[0].ids.join(",") === "tip-1,tip-2,tip-3,tip-4"
     );
     check(
-      "calculo: nada queda fuera de secciones (35 ids cubiertos)",
+      "hoja: nada queda fuera de secciones (35 ids cubiertos)",
       new Set(sh.sections.flatMap((s) => s.groups.flatMap((g) => g.ids))).size === 35
     );
   }
@@ -744,7 +769,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   // secciones: id que no existe.
   const secRota = parseTemplate(
     {
-      titulo: "X", tipo: "calculo",
+      titulo: "X", tipo: "mates",
       ejercicios: [{ id: "a1", tipo: "suma", a: 1, b: 2 }],
       secciones: [{ titulo: "Única", grupos: [{ etiqueta: "G", ids: ["otro"] }] }],
     },
@@ -759,7 +784,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   // secciones: ejercicio que no aparece en ninguna.
   const secHueco = parseTemplate(
     {
-      titulo: "X", tipo: "calculo",
+      titulo: "X", tipo: "mates",
       ejercicios: [
         { id: "a1", tipo: "suma", a: 1, b: 2 },
         { id: "a2", tipo: "suma", a: 3, b: 4 },
@@ -774,24 +799,37 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
     JSON.stringify(secHueco.errors)
   );
 
-  // El formato logica agrupa solo: no admite secciones escritas a mano.
-  const secEnLogica = parseTemplate(
+  // Ficha mixta: varios motores de la MISMA asignatura, con secciones a mano.
+  const mixta = parseTemplate(
     {
-      titulo: "X", tipo: "logica",
-      ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "¿Cuánto es?", respuesta: 5 }],
-      secciones: [{ titulo: "Única", grupos: [{ etiqueta: "G", ids: ["x-1"] }] }],
+      titulo: "Examen mixto",
+      tipo: "mates",
+      ejercicios: [
+        { id: "m1", tipo: "multiplicacion", a: 12, b: 3 },
+        { id: "l1", tipo: "logica", variante: "enigma", enunciado: "¿Cuánto es 2 + 3?", respuesta: 5 },
+        { id: "p1", tipo: "problema", texto: "Tengo 5 canicas y recibo 3.", pasos: [{ op: "suma", a: 5, b: 3 }] },
+      ],
+      secciones: [
+        { titulo: "Operaciones", grupos: [{ etiqueta: "Multiplicaciones", ids: ["m1"] }] },
+        { titulo: "Retos", grupos: [{ etiqueta: "Lógica", ids: ["l1"] }, { etiqueta: "Problemas", ids: ["p1"] }] },
+      ],
     },
     f2
   );
   check(
-    "logica: no admite secciones personalizadas",
-    !secEnLogica.ok && secEnLogica.errors[0].includes('no admite "secciones"'),
-    JSON.stringify(secEnLogica.errors)
+    "ficha mixta: operaciones, lógica y problemas en una sola asignatura (mates)",
+    mixta.ok &&
+      mixta.sheet.formato === "mates" &&
+      mixta.sheet.multiplications.length === 1 &&
+      mixta.sheet.logicExercises.length === 1 &&
+      mixta.sheet.wordProblems.length === 1 &&
+      mixta.sheet.sections.length === 2,
+    JSON.stringify(mixta.errors)
   );
 
   // Un mental no puede apuntar a un truco que no existe.
   const trucoRoto = parseTemplate(
-    { titulo: "X", tipo: "calculo", ejercicios: [{ id: "m1", tipo: "mental", expr: "1 + 1", resultado: 2, trucoId: "tip-9" }] },
+    { titulo: "X", tipo: "mates", ejercicios: [{ id: "m1", tipo: "mental", expr: "1 + 1", resultado: 2, trucoId: "tip-9" }] },
     f2
   );
   check(
@@ -802,7 +840,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
 
   // Ids personalizados: de ficha y de ejercicio.
   const conId = parseTemplate(
-    { titulo: "X", id: "mi-ficha", tipo: "calculo", ejercicios: [{ id: "custom-1", tipo: "suma", a: 1, b: 2 }] },
+    { titulo: "X", id: "mi-ficha", tipo: "mates", ejercicios: [{ id: "custom-1", tipo: "suma", a: 1, b: 2 }] },
     f2
   );
   check(
@@ -812,13 +850,44 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   );
 
   const dup = parseTemplate(
-    { titulo: "X", tipo: "calculo", ejercicios: [
+    { titulo: "X", tipo: "mates", ejercicios: [
       { id: "x", tipo: "suma", a: 1, b: 2 },
       { id: "x", tipo: "suma", a: 3, b: 4 },
     ] },
     f2
   );
   check("ids: repetido → error", !dup.ok && dup.errors[0].includes("se repite el id"), JSON.stringify(dup.errors));
+}
+
+/* ---------- Ficha de práctica (operaciones.json: 3 de cada) ---------- */
+{
+  const f = "plantillas/operaciones.json";
+  const json = JSON.parse(readFileSync(f, "utf8"));
+  const r = parseTemplate(json, f);
+  check("ficha operaciones.json: válida", r.ok, JSON.stringify(r.errors));
+  if (r.ok) {
+    const sh = r.sheet;
+    check(
+      "operaciones: 3 de cada operación y nada más",
+      sh.id === "sheet-002" && sh.formato === "mates" &&
+        sh.additions.length === 3 && sh.subtractions.length === 3 &&
+        sh.multiplications.length === 3 && sh.divisions.length === 3 &&
+        sh.wordProblems.length === 0 && sh.mentalCalculations.length === 0 &&
+        sh.tips.length === 0 && sh.logicExercises.length === 0,
+      JSON.stringify({
+        sum: sh.additions.length, res: sh.subtractions.length,
+        mul: sh.multiplications.length, div: sh.divisions.length,
+      })
+    );
+    check(
+      "operaciones: una sola sección con los 4 grupos (se abre directa)",
+      sh.sections.length === 1 &&
+        sh.sections[0].groups.map((g) => g.label).join(",") ===
+          "Sumas,Restas,Multiplicaciones,Divisiones" &&
+        sh.sections[0].groups.every((g) => g.ids.length === 3),
+      JSON.stringify(sh.sections.map((s) => s.groups.map((g) => g.label)))
+    );
+  }
 }
 
 /* ---------- Fichas remotas (carpeta de GitHub con nombre aleatorio) ---------- */
@@ -828,7 +897,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
     {
       name: "abuela.json",
       content: JSON.stringify({
-        titulo: "Retos de la abuela", tipo: "logica",
+        titulo: "Retos de la abuela", tipo: "mates",
         ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "Ana piensa un número y le suma 3. ¿Cuál era si obtiene 10?", respuesta: 7 }],
       }),
     },
@@ -841,7 +910,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   check(
     "remota: la ficha válida se parsea con su formato",
     aplicadas.sheets.length === 1 &&
-      aplicadas.sheets[0].formato === "logica" &&
+      aplicadas.sheets[0].formato === "mates" &&
       aplicadas.sheets[0].logicExercises.length === 1,
     JSON.stringify(aplicadas)
   );
@@ -861,14 +930,14 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
     {
       name: "clon.json",
       content: JSON.stringify({
-        titulo: "Clon", id: "plantilla-logica", tipo: "logica",
+        titulo: "Clon", id: "plantilla-logica", tipo: "mates",
         ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "¿5?", respuesta: 5 }],
       }),
     },
     {
       name: "extra.json",
       content: JSON.stringify({
-        titulo: "Extra", tipo: "logica",
+        titulo: "Extra", tipo: "mates",
         ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "¿6?", respuesta: 6 }],
       }),
     },
@@ -906,7 +975,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
           status: 200,
           json: async () => ({
             content: base64({
-              titulo: "Descargada", tipo: "logica",
+              titulo: "Descargada", tipo: "mates",
               ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "¿9?", respuesta: 9 }],
             }),
           }),
@@ -944,7 +1013,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
     {
       name: "guardada.json",
       content: JSON.stringify({
-        titulo: "Guardada", tipo: "logica",
+        titulo: "Guardada", tipo: "mates",
         ejercicios: [{ tipo: "logica", variante: "enigma", enunciado: "¿3?", respuesta: 3 }],
       }),
     },

@@ -38,24 +38,19 @@ const TIPOS = {
 export const TIPOS_PLANTILLA = Object.keys(TIPOS);
 
 /**
- * Formatos de ficha: cada JSON declara su "tipo" y eso decide en qué
- * zona del menú principal se lista y qué tipos de ejercicio admite.
- * Para añadir un formato nuevo (p. ej. "quiz") basta con una entrada.
+ * Asignaturas (zonas del menú): cada JSON declara su "tipo" (su
+ * asignatura) y eso decide en qué zona del menú principal se lista y
+ * qué motores (tipos de ejercicio) admite. Una ficha es siempre de UNA
+ * sola asignatura, pero puede mezclar varios de sus motores. Para
+ * añadir una asignatura nueva (p. ej. "lengua") basta con una entrada.
  */
 export const FORMATOS = {
-  calculo: {
-    bloque: "Cálculo",
-    icono: "🧮",
+  mates: {
+    bloque: "Matemáticas",
+    icono: "📐",
     orden: 1,
-    tipos: ["suma", "resta", "multiplicacion", "division", "problema", "mental", "truco"],
+    tipos: ["suma", "resta", "multiplicacion", "division", "problema", "mental", "truco", "logica"],
     permiteSecciones: true,
-  },
-  logica: {
-    bloque: "Lógica",
-    icono: "🧩",
-    orden: 2,
-    tipos: ["logica"],
-    permiteSecciones: false,
   },
 };
 

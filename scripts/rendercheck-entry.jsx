@@ -32,14 +32,14 @@ function check(name, cond, extra = "") {
 /* Plantillas simuladas: una válida (logica.json) y una rota, para
  * comprobar que la portada carga las buenas y avisa de las malas. */
 globalThis.__PLANTILLAS_MOCK__ = {
-  "C:\\proy\\plantillas\\calculo.json": {
-    default: JSON.parse(readFileSync("plantillas/calculo.json", "utf8")),
+  "C:\\proy\\plantillas\\mates.json": {
+    default: JSON.parse(readFileSync("plantillas/mates.json", "utf8")),
   },
   "C:\\proy\\plantillas\\logica.json": {
     default: JSON.parse(readFileSync("plantillas/logica.json", "utf8")),
   },
   "C:\\proy\\plantillas\\rota.json": {
-    default: { titulo: "Rota", tipo: "calculo", ejercicios: [{ tipo: "arpita" }] },
+    default: { titulo: "Rota", tipo: "mates", ejercicios: [{ tipo: "arpita" }] },
   },
 };
 
@@ -88,21 +88,21 @@ function render(state, opts = {}) {
   const html = render({ screen: "home", sectionIndex: 0, itemIndex: 0, progress: {} });
   check("portada: título", html.includes("Juego de Calcular"));
   check("portada: nivel", html.includes("4º Primaria"));
-  check("portada: hoja de hoy", html.includes("Ejercicios de hoy"));
+  check("portada: hoja de práctica", html.includes("Hoja de práctica"));
   check(
     "portada: las 4 secciones",
     ["Operaciones", "Problemas matemáticos", "Cálculo mental", "Trucos de cálculo mental"].every((t) => html.includes(t))
   );
   check("portada: botón Empezar", html.includes("Empezar"));
   check("portada: botón Resetear todo", html.includes("Resetear todo"));
-  check("portada: zona Cálculo en el menú", html.includes("🧮 Cálculo"));
-  check("portada: zona Lógica en el menú", html.includes("🧩 Lógica"));
+  check("portada: zona Matemáticas en el menú", html.includes("📐 Matemáticas"));
+  check("portada: sin zona Lógica propia (vive en Matemáticas)", !html.includes("🧩 Lógica"));
   check(
     "portada: zona Trivial en el menú",
     html.includes("🎯 Trivial") && html.includes('aria-label="Jugar al Trivial"')
   );
   check("portada: secciones desplegadas bajo la ficha en uso", html.includes("section-list--hija"));
-  check("portada: la ficha de Cálculo está en uso", html.includes('aria-label="Ejercicios de hoy: ficha en uso"'));
+  check("portada: la ficha base está en uso", html.includes('aria-label="Hoja de práctica: ficha en uso"'));
   check("portada: la ficha de Lógica se puede usar", html.includes('aria-label="Usar la ficha Lógica"'));
   check("portada: tarjeta de la hoja Lógica (plantilla)", html.includes("Lógica") && html.includes("· plantilla"));
   check("portada: aviso de la plantilla rota", html.includes("plantillas/rota.json"));
@@ -368,10 +368,10 @@ function render(state, opts = {}) {
     { sheetId: l.id }
   );
   check(
-    "portada de la hoja Lógica: sus secciones anidadas y las zonas del menú",
+    "portada de la hoja Lógica: su tarjeta y la zona de Matemáticas",
     htmlHome.includes("Series, comparaciones y enigmas para pensar") &&
-      htmlHome.includes("🧮 Cálculo") &&
-      htmlHome.includes("🧩 Lógica"),
+      htmlHome.includes("📐 Matemáticas") &&
+      !htmlHome.includes("🧩 Lógica"),
     htmlHome.slice(0, 400)
   );
   check(
@@ -379,7 +379,7 @@ function render(state, opts = {}) {
     !htmlHome.includes('disabled="" aria-label="Lógica: ficha en uso"')
   );
   check(
-    "portada de la hoja Lógica: la ficha de Cálculo no despliega sus secciones",
+    "portada de la hoja Lógica: la otra ficha no despliega sus secciones",
     !htmlHome.includes("Sumas, restas, multiplicaciones y divisiones")
   );
 
@@ -539,7 +539,7 @@ function render(state, opts = {}) {
 {
   const fichaRemota = JSON.stringify({
     titulo: "Retos de la abuela",
-    tipo: "logica",
+    tipo: "mates",
     ejercicios: [
       { tipo: "logica", variante: "enigma", enunciado: "Ana piensa un número y le suma 3. ¿Cuál era si obtiene 10?", respuesta: 7 },
     ],
@@ -560,7 +560,7 @@ function render(state, opts = {}) {
   );
   check(
     "fichas remotas: la guardada en la caché se lista en su zona",
-    html.includes("Retos de la abuela") && html.includes("🧩 Lógica"),
+    html.includes("Retos de la abuela") && html.includes("📐 Matemáticas"),
     html.slice(0, 300)
   );
 
