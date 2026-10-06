@@ -66,7 +66,9 @@ export function TrivialCategorias({ categorias, warnings, onElegir }) {
 /**
  * Pantalla de juego: una pregunta y «Mostrar solución» cuando quieras;
  * «Siguiente» solo aparece después de haber visto la respuesta. Sin
- * temporizadores, sin contadores y sin nada más.
+ * temporizadores, sin contadores y sin nada más. Si se está en «Todas
+ * las categorías», junto al título se muestra la categoría de la
+ * pregunta que está en pantalla.
  */
 export function TrivialJuego({
   titulo,
@@ -77,9 +79,18 @@ export function TrivialJuego({
   onVolver,
 }) {
   if (!pregunta) return null;
+  const todas = titulo == null;
   return (
     <div className="container">
-      <p className="group-label">{titulo ?? "Todas las categorías"}</p>
+      <p className="group-label">
+        {titulo ?? "Todas las categorías"}
+        {todas && pregunta.categoria && (
+          <>
+            {" · "}
+            <span className="trivial-cat-actual">{pregunta.categoria}</span>
+          </>
+        )}
+      </p>
 
       <div className="trivial-card">
         <p className="trivial-pregunta">{pregunta.pregunta}</p>

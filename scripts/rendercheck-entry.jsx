@@ -633,6 +633,24 @@ function render(state, opts = {}) {
       tJuego.includes("Primaria"),
     tJuego.slice(0, 300)
   );
+
+  // En «Todas las categorías», el título va seguido de la categoría de
+  // la pregunta que se está leyendo.
+  const tTodas = renderToString(
+    React.createElement(TrivialJuego, { ...props, titulo: null })
+  );
+  check(
+    "trivial: en «Todas» el título añade la categoría de la pregunta",
+    tTodas.includes("Todas las categorías") &&
+      tTodas.includes('class="trivial-cat-actual"') &&
+      tTodas.includes(">Primaria<"),
+    tTodas.slice(0, 300)
+  );
+  check(
+    "trivial: en una categoría concreta no se repite la categoría",
+    !tJuego.includes("trivial-cat-actual"),
+    tJuego.slice(0, 300)
+  );
   check(
     "trivial: sin solución vista aún no aparece «Siguiente»",
     !tJuego.includes("Siguiente"),

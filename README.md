@@ -145,7 +145,8 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
   (`juego-de-calcular:<ficha>:v1`), la ficha en uso queda marcada con *✓ En uso* y al
   elegir otra se retoma su progreso (o empieza si es la primera vez).
 - **Apartado Trivial** (zona 🎯 en la portada): preguntas al azar de `preguntas/`,
-  eligiendo **una categoría** o **todas mezcladas**. En pantalla solo la pregunta y un
+  eligiendo **una categoría** o **todas mezcladas** —en *todas*, el título lleva
+  **la categoría de la pregunta actual**—. En pantalla solo la pregunta y un
   botón **Mostrar solución** (a demanda: respuesta + detalle); **Siguiente** aparece
   solo tras ver la respuesta: **sin temporizadores, contadores ni marcador**, y sin
   fin (se sale con *‹ Inicio*).
@@ -373,6 +374,8 @@ Apartado de preguntas tipo quiz (zona **🎯 Trivial** de la portada). Al entrar
 
 Reglas del juego:
 
+- En **Todas las categorías**, el título va seguido de **la categoría de la pregunta**
+  que se está leyendo (al jugar una categoría concreta, el título ya la dice).
 - **Sin temporizadores, sin contadores y sin marcador**: solo la pregunta y **Mostrar
   solución** (a demanda); **«Siguiente» no aparece hasta que se ha visto la respuesta**.
 - «Siguiente» sortea otra al azar del mismo conjunto y **el juego no se acaba nunca**
@@ -428,7 +431,7 @@ del juego (3500 = `MMMD`).
 | Ficha rota → **aviso en la portada** con su ruta y el error, sin romper la app | ✅ fichero inválido en el mock de render: se salta y aparece el aviso |
 | **Menú por asignaturas** (📐 Matemáticas con sus fichas, 🎯 Trivial debajo): cada tarjeta con su **flecha incrustada a la izquierda para desplegar o recoger sus apartados** y el resto para activarla (ficha de una sola sección, se abre directa) | ✅ render de portada (`aria-expanded` y orden flecha→contenido) y de la ficha de Lógica; `SET_SHEET` queda en la portada con el progreso cargado |
 | **Fichas remotas**: lectura en vivo de una carpeta de GitHub, validadas con las mismas reglas, con caché en `localStorage` y aviso de las erróneas | ✅ descarga simulada (listado + base64), fusión local-gana-a-remota, fallo con/sin caché y portada con la ficha remota |
-| Apartado **Trivial** (🎯 en portada): categoría o todas mezcladas al azar, pregunta + **Mostrar solución** a demanda, **«Siguiente» solo tras ver la respuesta**, sin temporizadores ni contadores | ✅ `parsePreguntas` + sorteo; render de categorías, de la pregunta con sus botones (sin «Siguiente» hasta ver el detalle) y de la solución bajo demanda (sin restos de contador ni de tiempo) |
+| Apartado **Trivial** (🎯 en portada): categoría o todas mezcladas al azar, pregunta + **Mostrar solución** a demanda, **«Siguiente» solo tras ver la respuesta**, sin temporizadores ni contadores; en «Todas», el título muestra **la categoría de la pregunta actual** | ✅ `parsePreguntas` + sorteo; render de categorías, de la pregunta con sus botones (sin «Siguiente» hasta ver el detalle), de «Todas» con su categoría junto al título y de la solución bajo demanda (sin restos de contador ni de tiempo) |
 | Trivial: categoría **vacía** desactivada y fichero roto con **aviso por ruta** | ✅ mocks con `geografia.json` (`[]`) y `rota.json` (que no es lista); `primaria.json` validado entero (200) |
 | Apartado **Números romanos** (🔢 en portada): tres dificultades con sus rangos, sentido **50 % cifras ↔ 50 % romanos**, botonera adaptable sin campos de texto, **Comprobar** sin desvelar, solución con desglose y «ⓘ» con el algoritmo | ✅ `roman.js` (escritura/lectura canónicas, rangos y sorteos por tiradas) + render de las tres dificultades, de los dos sentidos, del acierto/fallo, de la solución y del «ⓘ» |
 | **Varias fichas**: cambiar de ficha con progreso independiente y ficha activa recordada | ✅ `SET_SHEET` + clave `hoja-activa`; portada, resumen y render de la ficha Lógica comprobados |
