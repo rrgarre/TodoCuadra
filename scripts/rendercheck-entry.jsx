@@ -28,6 +28,7 @@ import LingoScreen, {
   LingoTablero,
   LingoTeclado,
   LingoMensaje,
+  VOLTEO_MS,
 } from "../src/components/layout/LingoScreen.jsx";
 
 let failures = 0;
@@ -1274,6 +1275,23 @@ function render(state, opts = {}) {
   check(
     "lingo: cada casilla dice a qué intento y a qué letra pertenece",
     tab.includes('aria-label="Intento 1, letra 1"') && tab.includes('aria-label="Intento 6, letra 5"')
+  );
+
+  check(
+    "lingo: cada casilla lleva el orden de su volteo (una tras otra)",
+    (tab.match(/--volteo-orden/g) || []).length === 30 &&
+      tab.includes("--volteo-orden:0") &&
+      tab.includes("--volteo-orden:4"),
+    String((tab.match(/--volteo-orden/g) || []).length)
+  );
+  check(
+    "lingo: el volteo de las letras no llega a 1 segundo",
+    VOLTEO_MS > 0 && VOLTEO_MS <= 1000,
+    String(VOLTEO_MS)
+  );
+  check(
+    "lingo: nada de giro al entrar (se anima solo al comprobar)",
+    !tab.includes("is-volteando") && !pantalla.includes("is-volteando")
   );
 
   // Teclado con estados: pinta el fondo de la letra y se puede bloquear.

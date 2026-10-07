@@ -26,10 +26,26 @@ import {
  *   «Palabra no existe» y la fila no avanza.
  * - Las letras se pintan contra la palabra a adivinar: **verde** en su
  *   posición, **amarillo** si está pero en otra, **gris** si no está;
- *   el teclado inferior guarda el mejor estado de cada letra.
+ *   el teclado inferior guarda el mejor estado de cada letra. Al
+ *   comprobar, la fila **gira como paneles, una letra tras otra**
+ *   (≈0,9 s) antes de pintarse el teclado y salir el aviso.
  */
 
 const FILAS_TECLADO = ["QWERTYUIOP", "ASDFGHJKLÑ", "ZXCVBNM"];
+
+/**
+ * Duración del volteo que hace la fila al comprobar: las 5 casillas
+ * giran como paneles con 150 ms de retardo cada una y 300 ms de giro
+ * (0,9 s en total) y, cuando acaba, se pinta el teclado y sale el
+ * aviso. Debe casar con el `@keyframes lingo-volteo` de screens.css.
+ * Con «prefers-reduced-motion» no hay volteo: respuesta al instante.
+ */
+export const VOLTEO_MS =
+  typeof window !== "undefined" &&
+  typeof window.matchMedia === "function" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ? 0
+    : 950;
 
 const filaVacia = () => Array(TAM).fill("");
 const tableroVacio = () => Array.from({ length: FILAS }, filaVacia);
@@ -37,7 +53,9 @@ const tableroVacio = () => Array.from({ length: FILAS }, filaVacia);
 /**
  * Tablero de los 6 intentos: casillas de una letra («input» con una
  * sola casilla, sin teclado extra en el móvil). Solo la fila actual
- * se puede escribir; el resto queda de solo lectura.
+ * se puede escribir; el resto queda de solo lectura. Cada casilla
+ * lleva su orden de volteo (`--volteo-orden`) para que al comprobar
+ * las letras giran una detrás de otra.
  */
 export function LingoTablero({
   filas,
@@ -47,9 +65,14 @@ export function LingoTablero({
   refs,
   onEscribir,
   onKey,
+  volteando = false,
 }) {
   return (
-    <div className="lingo-tablero" role="group" aria-label="Los 6 intentos">
+    <div
+      className={`lingo-tablero${volteando ? " is-volteando" : ""}`}
+      role="group"
+      aria-label="Los 6 intentos"
+    >
       {filas.map((fila, f) => (
         <div className="lingo-fila" key={f}>
           {fila.map((letra, c) => {
@@ -62,6 +85,7 @@ export function LingoTablero({
                   refs.current[f * TAM + c] = el;
                 }}
                 className={`lingo-celda${estado ? ` is-${estado}` : ""}`}
+                style={{ "--volteo-orden": String(c) }}
                 type="text"
                 inputMode="text"
                 autoComplete="off"
@@ -171,9 +195,11 @@ export default function LingoScreen({ onExit }) {
   const [mensaje, setMensaje] = useState(null);
   const [fase, setFase] = useState("jugando"); // jugando | acertado | fallado
   const [comprobando, setComprobando] = useState(false);
+  const [volteando, setVolteando] = useState(false);
+  const volteoRef = useRef(null);
 
   const jugando = fase === "jugando" && Boolean(objetivo);
-  const editable = jugando && !comprobando;
+  const editable = jugando && !comprobando && !volteando;
   const refs = useRef([]);
   const enfocar = (f, c) => refs.current[f * TAM + c]?.focus();
 
@@ -187,6 +213,9 @@ export default function LingoScreen({ onExit }) {
     const libre = fila.findIndex((l) => !l);
     enfocar(actual, libre === -1 ? TAM - 1 : libre);
   }, [actual, editable, objetivo]);
+
+  // Si se sale de la pantalla con el volteo en marcha, se corta su reloj.
+  useEffect(() => () => clearTimeout(volteoRef.current), []);
 
   const escribir = (f, c, valor) => {
     if (!editable || f !== actual) return;
@@ -244,7 +273,7 @@ export default function LingoScreen({ onExit }) {
   };
 
   const comprobar = async () => {
-    if (!jugando || comprobando) return;
+    if (!jugando || comprobando || volteando) return;
     if (!filaCompleta(filas[actual])) {
       setMensaje({ tipo: "info", texto: "Faltan letras: la palabra tiene 5." });
       return;
@@ -271,28 +300,41 @@ export default function LingoScreen({ onExit }) {
     }
     const pista = intento.split("");
     const nuevos = colorear(pista, objetivo.split(""));
+    // Las letras se pintan ya y la animación las va girando cara a
+    // cara, una detrás de otra; el teclado, el aviso y la fila
+    // siguiente esperan a que el volteo termine.
     setEstados((prev) => prev.map((e, i) => (i === actual ? nuevos : e)));
-    setTeclado((prev) => fusionarTeclado(prev, tecladoDesdeFila(pista, nuevos)));
     setMensaje(null);
-    if (nuevos.every((e) => e === "ok")) {
-      setFase("acertado");
-      setMensaje({
-        tipo: "bien",
-        texto: `¡Correcto! La palabra era ${objetivo}.`,
-      });
-    } else if (actual + 1 >= FILAS) {
-      setFase("fallado");
-      setMensaje({
-        tipo: "mal",
-        texto: `Se acabaron los intentos. La palabra era ${objetivo}.`,
-      });
-    } else {
-      setActual(actual + 1);
-    }
     setComprobando(false);
+    setVolteando(true);
+    clearTimeout(volteoRef.current);
+    volteoRef.current = setTimeout(() => {
+      volteoRef.current = null;
+      setTeclado((prev) =>
+        fusionarTeclado(prev, tecladoDesdeFila(pista, nuevos))
+      );
+      if (nuevos.every((e) => e === "ok")) {
+        setFase("acertado");
+        setMensaje({
+          tipo: "bien",
+          texto: `¡Correcto! La palabra era ${objetivo}.`,
+        });
+      } else if (actual + 1 >= FILAS) {
+        setFase("fallado");
+        setMensaje({
+          tipo: "mal",
+          texto: `Se acabaron los intentos. La palabra era ${objetivo}.`,
+        });
+      } else {
+        setActual(actual + 1);
+      }
+      setVolteando(false);
+    }, VOLTEO_MS);
   };
 
   const nuevaPartida = () => {
+    clearTimeout(volteoRef.current);
+    volteoRef.current = null;
     setObjetivo(sortearPalabra(palabras, Math.random, objetivo));
     setFilas(tableroVacio());
     setEstados(Array(FILAS).fill(null));
@@ -301,6 +343,7 @@ export default function LingoScreen({ onExit }) {
     setMensaje(null);
     setFase("jugando");
     setComprobando(false);
+    setVolteando(false);
   };
 
   return (
@@ -330,6 +373,7 @@ export default function LingoScreen({ onExit }) {
             estados={estados}
             actual={actual}
             jugando={editable}
+            volteando={volteando}
             refs={refs}
             onEscribir={escribir}
             onKey={teclaDispositivo}

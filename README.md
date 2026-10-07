@@ -168,10 +168,11 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
   dispositivo. Un intento solo cuenta si **existe en el diccionario de la RAE** (o en la
   lista local `palabras/palabras.txt`): si no, sale *«Palabra no existe»* y **la fila
   no avanza**. Las letras se pintan contra la palabra oculta: **verde** en su posición,
-  **amarillo** si está pero en otra y **gris** si no está; el teclado inferior se queda
-  con el mejor estado de cada letra (verde > amarillo > gris). Al acertar o agotar los
-  6 intentos se enseña la palabra y **Palabra nueva** empieza otra partida; **sin
-  temporizadores ni marcador**, y se sale con *‹ Inicio*.
+  **amarillo** si está pero en otra y **gris** si no está, **girando como paneles, una
+  detrás de otra** (≈0,9 s); el teclado inferior se queda con el mejor estado de cada
+  letra (verde > amarillo > gris). Al acertar o agotar los 6 intentos se enseña la
+  palabra y **Palabra nueva** empieza otra partida; **sin temporizadores ni marcador**,
+  y se sale con *‹ Inicio*.
 - **Accesibilidad**: objetivos táctiles ≥ 44 px, foco visible, etiquetas y `aria-label` en
   las casillas (*«Cifra 1 del cociente»*, *«Llevada de las decenas»*…), estados comunicados
   con icono + texto, contraste alto.
@@ -462,6 +463,12 @@ adivinar **una palabra de 5 letras en 6 intentos**.
   cuentan bien (primero las verdes, después los amarillos sin pasarse). El teclado
   inferior guarda **el mejor estado de cada letra**: un verde se queda verde, un gris
   sube si luego aparece en amarillo o verde.
+- **Volteo al comprobar**: si la palabra existe, **las letras de la fila giran como
+  paneles, una detrás de otra** (150 ms de retardo por letra + 300 ms de giro ≈ 0,9 s):
+  la cara blanca se ve hasta la mitad del giro y entonces asoma el color. Mientras
+  dura, la fila está bloqueada; el teclado, el aviso y la fila siguiente se esperan a
+  que acabe (el reloj es `VOLTEO_MS` en `LingoScreen.jsx`, ≤ 1 s). Con la preferencia
+  del sistema **«prefers-reduced-motion»** no hay giro: el color aparece al instante.
 - **Fin de la partida**: al acertar sale *¡Correcto!* con la palabra; al agotar los
   6 intentos se enseña cuál era. Sin temporizadores, contadores ni marcador.
 
@@ -483,7 +490,7 @@ adivinar **una palabra de 5 letras en 6 intentos**.
 | Apartado **Trivial** (🎯 en portada): categoría o todas mezcladas al azar, pregunta + **Mostrar solución** a demanda, **«Siguiente» solo tras ver la respuesta**, sin temporizadores ni contadores; en «Todas», el título muestra **la categoría de la pregunta actual** | ✅ `parsePreguntas` + sorteo; render de categorías, de la pregunta con sus botones (sin «Siguiente» hasta ver el detalle), de «Todas» con su categoría junto al título y de la solución bajo demanda (sin restos de contador ni de tiempo) |
 | Trivial: categoría **vacía** desactivada y fichero roto con **aviso por ruta** | ✅ mocks con `geografia.json` (`[]`) y `rota.json` (que no es lista); `primaria.json` validado entero (200) |
 | Apartado **Números romanos** (🔢 en portada): tres dificultades con sus rangos, sentido **50 % cifras ↔ 50 % romanos**, botonera adaptable sin campos de texto, **Comprobar** sin desvelar, solución con desglose y «ⓘ» con el algoritmo | ✅ `roman.js` (escritura/lectura canónicas, rangos y sorteos por tiradas) + render de las tres dificultades, de los dos sentidos, del acierto/fallo, de la solución y del «ⓘ» |
-| Apartado **Lingo** (🔤 en portada): 6 intentos de 5 letras con cursor que salta, teclado de pantalla con Ñ + teclado del dispositivo, **«Palabra no existe» sin avanzar la fila** y colores verde/amarillo/gris en filas y teclado | ✅ `lingo.js` + `palabras/` (normalización, sorteo y `verificarIntento` con la petición simulada) + render de la portada, del tablero 6×5, del teclado con sus pintados y de los avisos |
+| Apartado **Lingo** (🔤 en portada): 6 intentos de 5 letras con cursor que salta, teclado de pantalla con Ñ + teclado del dispositivo, **«Palabra no existe» sin avanzar la fila**, colores verde/amarillo/gris en filas y teclado y **volteo de las letras una a una al comprobar** (≤ 1 s, con `prefers-reduced-motion`) | ✅ `lingo.js` + `palabras/` (normalización, sorteo y `verificarIntento` con la petición simulada) + render de la portada, del tablero 6×5 con el orden de volteo de cada casilla, del teclado con sus pintados y de los avisos; `VOLTEO_MS ≤ 1000` |
 | **Varias fichas**: cambiar de ficha con progreso independiente y ficha activa recordada | ✅ `SET_SHEET` + clave `hoja-activa`; portada, resumen y render de la ficha Lógica comprobados |
 | Problemas con botonera (sin campos de texto): «=» pone la operación en vertical y **Comprobar** valida cada paso con su magnitud adjunta | ✅ render de los 4 + validación por paso y repaso completo del desarrollo |
 | Cálculo mental con pista al segundo fallo | ✅ tests de validación |

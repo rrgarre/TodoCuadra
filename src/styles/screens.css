@@ -674,6 +674,7 @@
   display: grid;
   grid-template-columns: repeat(5, clamp(44px, 13vw, 56px));
   gap: var(--space-2);
+  perspective: 700px; /* profundidad del volteo de las letras */
 }
 
 .lingo-celda {
@@ -701,23 +702,76 @@
   cursor: default;
 }
 
-/* Colores del intento contra la palabra a adivinar. */
+/* Colores del intento contra la palabra a adivinar (las variables
+ * --lingo-color/-texto también las usa el volteo de abajo). */
 .lingo-celda.is-ok {
-  background: var(--color-success);
-  border-color: var(--color-success);
-  color: #fff;
+  --lingo-color: var(--color-success);
+  --lingo-texto: #fff;
+  background: var(--lingo-color);
+  border-color: var(--lingo-color);
+  color: var(--lingo-texto);
 }
 
 .lingo-celda.is-pos {
-  background: var(--color-amber);
-  border-color: var(--color-amber);
-  color: var(--color-text);
+  --lingo-color: var(--color-amber);
+  --lingo-texto: var(--color-text);
+  background: var(--lingo-color);
+  border-color: var(--lingo-color);
+  color: var(--lingo-texto);
 }
 
 .lingo-celda.is-no {
-  background: var(--color-text-muted);
-  border-color: var(--color-text-muted);
-  color: #fff;
+  --lingo-color: var(--color-text-muted);
+  --lingo-texto: #fff;
+  background: var(--lingo-color);
+  border-color: var(--lingo-color);
+  color: var(--lingo-texto);
+}
+
+/* Volteo al comprobar: cada letra gira como un panel, una detrás de
+ * otra (retardo `--volteo-orden` × 150 ms + 300 ms de giro ≈ 0,9 s;
+ * el aviso llega con VOLTEO_MS de LingoScreen.jsx). La cara blanca se
+ * ve hasta la mitad del giro y entonces asoma el color. */
+.lingo-celda.is-ok,
+.lingo-celda.is-pos,
+.lingo-celda.is-no {
+  animation: lingo-volteo 300ms ease-in-out backwards;
+  animation-delay: calc(var(--volteo-orden, 0) * 150ms);
+}
+
+@keyframes lingo-volteo {
+  0% {
+    transform: rotateY(0deg);
+    background-color: var(--color-surface);
+    border-color: var(--color-border-strong);
+    color: var(--color-text);
+  }
+  50% {
+    transform: rotateY(90deg);
+    background-color: var(--lingo-color);
+    border-color: var(--lingo-color);
+    color: var(--lingo-texto);
+  }
+  100% {
+    transform: rotateY(0deg);
+    background-color: var(--lingo-color);
+    border-color: var(--lingo-color);
+    color: var(--lingo-texto);
+  }
+}
+
+/* Mientras giran, la fila está bloqueada: sin el aro de foco. */
+.lingo-tablero.is-volteando .lingo-celda:focus {
+  box-shadow: none;
+}
+
+/* Con menos movimiento, las letras se pintan sin girar. */
+@media (prefers-reduced-motion: reduce) {
+  .lingo-celda.is-ok,
+  .lingo-celda.is-pos,
+  .lingo-celda.is-no {
+    animation: none;
+  }
 }
 
 /* Aviso bajo el tablero: «Palabra no existe», acierto, conexión… */
