@@ -309,21 +309,6 @@
   justify-content: center;
 }
 
-@media (max-width: 560px) {
-  .section-card {
-    flex-wrap: wrap;
-  }
-
-  .section-cta {
-    width: 100%;
-    text-align: center;
-  }
-
-  .topbar-meta {
-    font-size: 0.9rem;
-  }
-}
-
 /* ---- Zonas del menú (asignaturas: Matemáticas…) ---- */
 .zona {
   margin-top: var(--space-5);
@@ -874,4 +859,272 @@
   background: var(--color-text-muted);
   border-color: var(--color-text-muted);
   color: #fff;
+}
+
+/* ================= Móvil (≤600 px) =================
+ * Portada y pantallas condensadas para un móvil medio: menos margen
+ * muerto, tarjetas del menú en dos filas cortas (icono + texto a la
+ * izquierda —título a 2 líneas y descripción a 3 como tope—,
+ * progreso y botón a la derecha, sin CTA a todo el ancho) y barras
+ * ceñidas. El menú principal es la única pantalla pensada para
+ * recorrerse con scroll. */
+@media (max-width: 600px) {
+  .container {
+    padding: var(--space-3) var(--space-3) var(--space-4);
+  }
+
+  /* Portada: encabezado más ceñido. */
+  .hero {
+    padding: var(--space-4) var(--space-3) var(--space-3);
+  }
+
+  .hero h1 {
+    font-size: 1.55rem;
+  }
+
+  .hero-level {
+    margin-top: var(--space-1);
+    padding: 3px 10px;
+    font-size: 0.85rem;
+  }
+
+  .hero-sub {
+    margin-top: var(--space-2);
+    font-size: 1rem;
+  }
+
+  .zona {
+    margin-top: var(--space-4);
+  }
+
+  .zona-title {
+    margin-bottom: var(--space-2);
+    font-size: 1.02rem;
+  }
+
+  .section-list {
+    gap: var(--space-2);
+  }
+
+  /* Tarjetas del menú: icono y texto a la izquierda; progreso arriba
+     y botón abajo a la derecha. El texto manda, no la botonera. */
+  .section-card:not(.ficha-cabecera),
+  .ficha-zona {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "icon body prog"
+      "icon body cta";
+    align-items: center;
+    column-gap: var(--space-2);
+    row-gap: 2px;
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+  }
+
+  .ficha-cabecera {
+    border-radius: var(--radius-md);
+  }
+
+  .ficha-toggle {
+    flex: 0 0 40px;
+  }
+
+  .section-icon {
+    grid-area: icon;
+    width: 40px;
+    height: 40px;
+    font-size: 1.25rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .section-body {
+    grid-area: body;
+  }
+
+  .section-body strong,
+  .section-body span {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .section-body strong {
+    font-size: 0.98rem;
+    line-height: 1.25;
+    -webkit-line-clamp: 2;
+  }
+
+  .section-body span {
+    font-size: 0.82rem;
+    line-height: 1.3;
+    -webkit-line-clamp: 3;
+  }
+
+  .section-progress {
+    grid-area: prog;
+    align-self: end;
+    justify-self: end;
+    font-size: 0.82rem;
+  }
+
+  .section-cta {
+    grid-area: cta;
+    align-self: start;
+    justify-self: end;
+    padding: 5px 12px;
+    font-size: 0.82rem;
+  }
+
+  /* Apartados anidados bajo su ficha: casi sin margen. */
+  .section-list--hija {
+    margin-top: var(--space-2);
+    margin-left: var(--space-3);
+    padding-left: var(--space-2);
+  }
+
+  .plantilla-aviso {
+    margin-top: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    font-size: 0.88rem;
+  }
+
+  .home-footer {
+    margin-top: var(--space-4);
+    gap: var(--space-2);
+  }
+
+  .home-footer p {
+    font-size: 0.85rem;
+  }
+
+  /* Barra superior y progreso: media pulgada menos de alto. */
+  .topbar-inner {
+    min-height: 48px;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-3);
+  }
+
+  .topbar-title {
+    font-size: 0.98rem;
+  }
+
+  .topbar-meta {
+    font-size: 0.85rem;
+  }
+
+  .progress {
+    padding: 0 var(--space-3) var(--space-1);
+  }
+
+  .progress-track {
+    height: 8px;
+  }
+
+  .progress-label {
+    font-size: 0.8rem;
+  }
+
+  /* Rótulos y navegación: más ceñidos (todo cabe en una fila). */
+  .group-label {
+    margin: var(--space-3) 0 var(--space-2);
+    font-size: 0.82rem;
+  }
+
+  .item-nav {
+    margin-top: var(--space-3);
+    gap: var(--space-1);
+  }
+
+  .item-nav .btn {
+    padding: 6px 10px;
+    font-size: 0.88rem;
+  }
+
+  /* Trivial: categorías y tarjeta de la pregunta. */
+  .trivial-cats {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+
+  .trivial-cat {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .trivial-card {
+    padding: var(--space-3);
+  }
+
+  .trivial-pregunta {
+    font-size: 1.05rem;
+  }
+
+  .trivial-solucion {
+    margin-top: var(--space-3);
+    padding-top: var(--space-2);
+  }
+
+  /* Números romanos. */
+  .romanos-valor {
+    margin: var(--space-1) 0 var(--space-3);
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .romanos-respuesta {
+    min-height: var(--tap-min);
+    margin-bottom: var(--space-2);
+    font-size: 1.4rem;
+  }
+
+  .romanos-info {
+    margin-bottom: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .romanos-nota {
+    margin-top: var(--space-3);
+    font-size: 0.9rem;
+  }
+
+  /* Lingo: tablero y teclado sin flojera. */
+  .lingo-tablero {
+    margin: var(--space-3) 0 var(--space-2);
+    gap: var(--space-1);
+  }
+
+  .lingo-fila {
+    grid-template-columns: repeat(5, clamp(41px, 11.5vw, 56px));
+    gap: var(--space-1);
+  }
+
+  .lingo-celda {
+    height: clamp(41px, 11.5vw, 56px);
+  }
+
+  .lingo-mensaje {
+    margin-bottom: var(--space-2);
+    padding: var(--space-1) var(--space-2);
+    font-size: 0.92rem;
+  }
+
+  .lingo-teclado {
+    gap: var(--space-1);
+  }
+
+  .lingo-tecla {
+    padding: 2px 0;
+    font-size: 0.95rem;
+  }
+
+  /* Resumen: cuatro cifras en dos columnas. */
+  .summary-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .summary-sub {
+    margin-bottom: var(--space-4);
+  }
 }

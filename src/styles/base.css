@@ -248,3 +248,34 @@ img {
   background: var(--color-primary-soft);
   color: var(--color-primary-dark);
 }
+
+/* ---- Móvil (≤600 px): botones y bloques compactos ---- */
+@media (max-width: 600px) {
+  .btn {
+    padding: 8px 14px;
+    font-size: 0.98rem;
+  }
+
+  .input-number {
+    padding: 6px 8px;
+    font-size: 1.15rem;
+  }
+
+  .card {
+    padding: var(--space-4);
+  }
+
+  .feedback {
+    min-height: 0;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    font-size: 0.95rem;
+  }
+
+  .feedback-icon {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 22px;
+    font-size: 0.85rem;
+  }
+}

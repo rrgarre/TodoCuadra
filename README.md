@@ -176,10 +176,17 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
 - **Accesibilidad**: objetivos táctiles ≥ 44 px, foco visible, etiquetas y `aria-label` en
   las casillas (*«Cifra 1 del cociente»*, *«Llevada de las decenas»*…), estados comunicados
   con icono + texto, contraste alto.
-- **Responsive**: la retícula usa tamaños de casilla por media queries; en móvil se usa el
-  teclado numérico del sistema (salvo en los problemas, que se resuelven con su botonera
-  y no abren teclado; el Lingo sí abre el de letras, porque sus casillas son campos de
-  una letra) y todos los juegos conservan su teclado de pantalla.
+- **Responsive (móvil primero)**: por debajo de **600 px** todo se condensa para que en un
+  móvil medio quepa lo útil **sin scroll** —el menú principal es la única pantalla pensada
+  para recorrerse—: botones y tarjetas más compactos (iconos de 40 px, **título a 2 líneas
+  y descripción a 3 como tope**, y **sin CTA a todo el ancho**, de modo que el texto gana
+  ancho), márgenes ceñidos y objetivos táctiles de 44 px. En las secciones, la barra de
+  acciones con **«Comprobar» queda pegada abajo** (sticky dentro de la tarjeta): el botón
+  principal **nunca se esconde** aunque el desarrollo sea largo. La retícula usa tamaños de
+  casilla por media queries; en móvil se usa el teclado numérico del sistema (salvo en los
+  problemas, que se resuelven con su botonera y no abren teclado; el Lingo sí abre el de
+  letras, porque sus casillas son campos de una letra) y todos los juegos conservan su
+  teclado de pantalla.
 
 ## Estructura del proyecto
 
@@ -498,8 +505,8 @@ adivinar **una palabra de 5 letras en 6 intentos**.
 | Cálculo mental con pista al segundo fallo | ✅ tests de validación |
 | Trucos: intercalados en cálculo mental y en su sección | ✅ los 4 trucos renderizan en ambos sitios |
 | Progreso guardado en `localStorage` y retomado al recargar | ✅ `storage.js` versionado + tests de persistencia; botón **Resetear todo** en portada y resumen (retomada manual en navegador recomendada) |
-| Uso en móvil (teclado numérico, casillas ≥ 44 px, sin scroll horizontal) | ✅ `inputmode="numeric"`, tamaños por media queries (probar en dispositivo recomendado) |
-| `npm run build` termina sin errores | ✅ build de producción OK (≈436 kB JS + 29 kB CSS) |
+| Uso en móvil (menú y ejercicios condensados ≤ 600 px, «Comprobar» siempre a la vista, teclado numérico, sin scroll horizontal) | ✅ bloque de media queries móviles en `tokens`/`base`/`screens`/`exercises` (barra de acciones sticky + táctiles de 44 px) + `inputmode="numeric"` (probar en dispositivo recomendado) |
+| `npm run build` termina sin errores | ✅ build de producción OK (≈436 kB JS + 34 kB CSS) |
 | `npm install`, `npm run dev` y `npm run build` funcionan | ✅ verificado en Node 20 / Windows |
 
 > Las comprobaciones automatizadas cubren la lógica y el renderizado de todos los items;

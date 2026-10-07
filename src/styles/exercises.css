@@ -591,17 +591,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-@media (max-width: 480px) {
-  .exercise {
-    padding: var(--space-4);
-  }
-
-  .exercise-actions .btn-primary,
-  .tip-actions .btn-primary {
-    min-width: 100%;
-  }
-}
-
 /* ---- Lógica: series, comparaciones y enigmas ---- */
 .logic-prompt {
   margin: 0 0 var(--space-3);
@@ -718,4 +707,163 @@
   margin-top: var(--space-2);
   color: var(--color-text-soft);
   line-height: 1.5;
+}
+
+/* ================= Móvil (≤600 px) =================
+ * Ejercicios condensados para que la información útil (con «Comprobar»
+ * incluido) quepa en pantalla: menos padding y huecos, botonera más
+ * juntita y la barra de acciones pegada abajo (sticky), así el botón
+ * principal no se esconde aunque el desarrollo sea largo. */
+@media (max-width: 600px) {
+  .exercise {
+    padding: var(--space-3) var(--space-3) 0;
+    gap: var(--space-3);
+    border-radius: var(--radius-md);
+  }
+
+  .exercise-head {
+    gap: var(--space-2);
+  }
+
+  .exercise-type {
+    font-size: 1rem;
+  }
+
+  .exercise-step {
+    padding: 3px 10px;
+    font-size: 0.82rem;
+  }
+
+  .exercise-body {
+    gap: var(--space-3);
+  }
+
+  /* Acciones en una fila (Comprobar crece) y pegadas abajo: mientras
+     se recorre la tarjeta, «Comprobar» sigue a la vista. Cierra la
+     tarjeta, por eso la tarjeta no tiene padding por abajo. */
+  .exercise-actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    margin: 0 calc(-1 * var(--space-3));
+    padding: var(--space-2) var(--space-3)
+      calc(var(--space-2) + env(safe-area-inset-bottom, 0px));
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    border-radius: 0 0 calc(var(--radius-md) - 1px) calc(var(--radius-md) - 1px);
+    box-shadow: 0 -6px 16px rgba(31, 42, 61, 0.1);
+  }
+
+  .exercise-actions .btn {
+    min-width: 0;
+    padding: 8px 10px;
+    font-size: 0.92rem;
+  }
+
+  .exercise-actions .btn-primary {
+    flex: 1 1 auto;
+  }
+
+  /* Problemas: enunciado, magnitudes y desarrollo más ceñidos. */
+  .problem-text {
+    padding: var(--space-3);
+    font-size: 1.02rem;
+    line-height: 1.5;
+  }
+
+  .problem-resultados {
+    margin-top: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-1);
+    font-size: 0.88rem;
+  }
+
+  .resultado-tag {
+    min-width: 70px;
+  }
+
+  .wf-dev {
+    min-height: 56px;
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-1);
+  }
+
+  .wf-line {
+    font-size: 1.05rem;
+  }
+
+  /* Botonera de los problemas: teclas juntas pero táctiles. */
+  .keypad {
+    gap: var(--space-2);
+  }
+
+  .keypad-grid {
+    gap: var(--space-1);
+  }
+
+  .key {
+    padding: 6px 8px;
+    font-size: 1.2rem;
+  }
+
+  .keypad-controls .key,
+  .key-mag {
+    padding: 6px 8px;
+    font-size: 0.88rem;
+  }
+
+  .keypad-magnitudes-titulo {
+    font-size: 0.85rem;
+  }
+
+  .solution {
+    padding: var(--space-3);
+    gap: var(--space-2);
+  }
+
+  .mental-expr {
+    gap: var(--space-2);
+  }
+
+  .mental-expr .input-number {
+    font-size: clamp(1.3rem, 6vw, 1.8rem);
+  }
+
+  .tip {
+    gap: var(--space-3);
+  }
+
+  .tip-actions {
+    gap: var(--space-2);
+  }
+
+  .tip-actions .btn {
+    padding: 8px 10px;
+    font-size: 0.92rem;
+  }
+
+  .tip-actions .btn-primary {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  /* Lógica: opciones más estrechas para que quepan en dos filas. */
+  .logic-compare,
+  .logic-series {
+    margin-bottom: var(--space-3);
+  }
+
+  .logic-option {
+    min-width: 84px;
+    padding: 0 var(--space-3);
+    font-size: 0.95rem;
+  }
+
+  .logic-fields {
+    gap: var(--space-3);
+  }
+
+  .logic-field {
+    gap: var(--space-1);
+  }
 }

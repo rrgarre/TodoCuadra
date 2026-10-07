@@ -45,3 +45,11 @@
   /* Tamaño de una casilla de las operaciones verticales. */
   --cell: clamp(38px, 9vw, 52px);
 }
+
+/* Móvil: objetivos táctiles algo más compactos (44 px, lo mínimo
+   cómodo según la guía de Apple). */
+@media (max-width: 600px) {
+  :root {
+    --tap-min: 44px;
+  }
+}
