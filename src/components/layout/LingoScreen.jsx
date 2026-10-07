@@ -18,9 +18,11 @@ import {
  * Apartado Lingo: adivinar una palabra de 5 letras en 6 intentos.
  *
  * - El tablero son 6 filas de 5 **campos de una letra**; el cursor
- *   (el foco) salta solo hacia la derecha al escribir y el teclado de
- *   abajo también escribe (además se puede usar el teclado del
- *   dispositivo: físico en el ordenador y el del sistema en el móvil).
+ *   (el foco) salta solo hacia la derecha al escribir y se rellena con
+ *   el teclado de pantalla (con Ñ). Las casillas llevan
+ *   `inputMode="none"`: **en el móvil no se abre el teclado del
+ *   sistema** (manda el virtual); en el ordenador sigue funcionando
+ *   el teclado físico.
  * - Un intento solo cuenta si **existe en el diccionario de la RAE**
  *   (o en la lista local `palabras/palabras.txt`): si no, avisa
  *   «Palabra no existe» y la fila no avanza.
@@ -51,8 +53,9 @@ const filaVacia = () => Array(TAM).fill("");
 const tableroVacio = () => Array.from({ length: FILAS }, filaVacia);
 
 /**
- * Tablero de los 6 intentos: casillas de una letra («input» con una
- * sola casilla, sin teclado extra en el móvil). Solo la fila actual
+ * Tablero de los 6 intentos: casillas de una letra («input» con
+ * `inputMode="none"`: en el móvil no se abre el teclado del sistema,
+ * se usa el de pantalla). Solo la fila actual
  * se puede escribir; el resto queda de solo lectura. Cada casilla
  * lleva su orden de volteo (`--volteo-orden`) para que al comprobar
  * las letras giran una detrás de otra.
@@ -87,7 +90,7 @@ export function LingoTablero({
                 className={`lingo-celda${estado ? ` is-${estado}` : ""}`}
                 style={{ "--volteo-orden": String(c) }}
                 type="text"
-                inputMode="text"
+                inputMode="none"
                 autoComplete="off"
                 autoCorrect="off"
                 autoCapitalize="characters"

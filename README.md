@@ -164,8 +164,9 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
   marcador**, y sin fin.
 - **Apartado Lingo** (zona 🔤 en la portada): adivinar una **palabra de 5 letras** en
   **6 intentos**. Cada intento se escribe en campos de una letra —el cursor salta solo
-  hacia la derecha— con el teclado de pantalla (con **Ñ**) o con el teclado del
-  dispositivo. Un intento solo cuenta si **existe en el diccionario de la RAE** (o en la
+  hacia la derecha— **con el teclado de pantalla** (con **Ñ**): en el móvil **no se abre
+  el teclado del sistema** (`inputMode="none"` en las casillas) y en el ordenador sigue
+  sirviendo el teclado físico. Un intento solo cuenta si **existe en el diccionario de la RAE** (o en la
   lista local `palabras/palabras.txt`): si no, sale *«Palabra no existe»* y **la fila
   no avanza**. Las letras se pintan contra la palabra oculta: **verde** en su posición,
   **amarillo** si está pero en otra y **gris** si no está, **girando como paneles, una
@@ -183,10 +184,10 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
   ancho), márgenes ceñidos y objetivos táctiles de 44 px. En las secciones, la barra de
   acciones con **«Comprobar» queda pegada abajo** (sticky dentro de la tarjeta): el botón
   principal **nunca se esconde** aunque el desarrollo sea largo. La retícula usa tamaños de
-  casilla por media queries; en móvil se usa el teclado numérico del sistema (salvo en los
-  problemas, que se resuelven con su botonera y no abren teclado; el Lingo sí abre el de
-  letras, porque sus casillas son campos de una letra) y todos los juegos conservan su
-  teclado de pantalla.
+  casilla por media queries; en móvil se usa el teclado numérico del sistema, **salvo en
+  los problemas y en el Lingo**: los problemas se resuelven con su botonera y el Lingo con
+  su teclado de pantalla (sus casillas llevan `inputMode="none"`, así que **no se abre el
+  teclado del sistema**); el resto de juegos conservan su teclado de pantalla.
 
 ## Estructura del proyecto
 
@@ -456,10 +457,11 @@ adivinar **una palabra de 5 letras en 6 intentos**.
   singular bien puesto), que es la forma rápida de ver que el fichero se ha leído.
 - **Palabra al azar**: cada partida sortea una de la lista (sin repetir la anterior si
   hay más de una); «Palabra nueva» vuelve a sortear y reinicia el tablero.
-- **Dos teclados**: las casillas son **campos de una letra** con cursor que salta solo
-  hacia la derecha —se escribe con el teclado de pantalla (fila con **Ñ**, **Enviar** y
-  **⌫**) o con el teclado del dispositivo—, y el teclado de pantalla **se va pintando**
-  con los resultados.
+- **El teclado de la app**: las casillas son **campos de una letra** con cursor que salta
+  solo hacia la derecha y se rellenan con el teclado de pantalla (fila con **Ñ**,
+  **Enviar** y **⌫**), que **se va pintando** con los resultados. Las casillas llevan
+  `inputMode="none"`: **en el móvil no se abre el teclado del sistema** (manda el
+  virtual); en el ordenador el teclado físico sigue funcionando.
 - **La palabra tiene que existir**: antes de comprobar se consulta el diccionario de la
   RAE (<https://rae-api.com/>, clave en `palabras/rae.js`, CORS abierto y límite de
   60 consultas/minuto). Si no existe → aviso **«Palabra no existe»** y **la fila no
@@ -499,7 +501,7 @@ adivinar **una palabra de 5 letras en 6 intentos**.
 | Apartado **Trivial** (🎯 en portada): categoría o todas mezcladas al azar, pregunta + **Mostrar solución** a demanda, **«Siguiente» solo tras ver la respuesta**, sin temporizadores ni contadores; en «Todas», el título muestra **la categoría de la pregunta actual** | ✅ `parsePreguntas` + sorteo; render de categorías, de la pregunta con sus botones (sin «Siguiente» hasta ver el detalle), de «Todas» con su categoría junto al título y de la solución bajo demanda (sin restos de contador ni de tiempo) |
 | Trivial: categoría **vacía** desactivada y fichero roto con **aviso por ruta** | ✅ mocks con `geografia.json` (`[]`) y `rota.json` (que no es lista); `primaria.json` validado entero (200) |
 | Apartado **Números romanos** (🔢 en portada): tres dificultades con sus rangos, sentido **50 % cifras ↔ 50 % romanos**, botonera adaptable sin campos de texto, **Comprobar** sin desvelar, solución con desglose y «ⓘ» con el algoritmo | ✅ `roman.js` (escritura/lectura canónicas, rangos y sorteos por tiradas) + render de las tres dificultades, de los dos sentidos, del acierto/fallo, de la solución y del «ⓘ» |
-| Apartado **Lingo** (🔤 en portada): 6 intentos de 5 letras con cursor que salta, teclado de pantalla con Ñ + teclado del dispositivo, **«Palabra no existe» sin avanzar la fila**, colores verde/amarillo/gris en filas y teclado y **volteo de las letras una a una al comprobar** (≤ 1 s, con `prefers-reduced-motion`) | ✅ `lingo.js` + `palabras/` (normalización, sorteo y `verificarIntento` con la petición simulada) + render de la portada, del tablero 6×5 con el orden de volteo de cada casilla, del teclado con sus pintados y de los avisos; `VOLTEO_MS ≤ 1000` |
+| Apartado **Lingo** (🔤 en portada): 6 intentos de 5 letras con cursor que salta, teclado de pantalla con Ñ **sin teclado del sistema en móvil** (el físico, en ordenador), **«Palabra no existe» sin avanzar la fila**, colores verde/amarillo/gris en filas y teclado y **volteo de las letras una a una al comprobar** (≤ 1 s, con `prefers-reduced-motion`) | ✅ `lingo.js` + `palabras/` (normalización, sorteo y `verificarIntento` con la petición simulada) + render de la portada, del tablero 6×5 con el orden de volteo de cada casilla y `inputmode="none"`, del teclado con sus pintados y de los avisos; `VOLTEO_MS ≤ 1000` |
 | **Varias fichas**: cambiar de ficha con progreso independiente y ficha activa recordada | ✅ `SET_SHEET` + clave `hoja-activa`; portada, resumen y render de la ficha Lógica comprobados |
 | Problemas con botonera (sin campos de texto): «=» pone la operación en vertical y **Comprobar** valida cada paso con su magnitud adjunta | ✅ render de los 4 + validación por paso y repaso completo del desarrollo |
 | Cálculo mental con pista al segundo fallo | ✅ tests de validación |

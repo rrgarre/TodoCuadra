@@ -1289,6 +1289,11 @@ function render(state, opts = {}) {
     `${(tab.match(/readonly/g) || []).length} ro / ${(tab.match(/tabindex="0"/g) || []).length} focus`
   );
   check(
+    "lingo: las casillas no abren el teclado del sistema (se usa el de pantalla)",
+    (tab.match(/inputmode="none"/gi) || []).length === 30,
+    String((tab.match(/inputmode="none"/gi) || []).length)
+  );
+  check(
     "lingo: cada casilla dice a qué intento y a qué letra pertenece",
     tab.includes('aria-label="Intento 1, letra 1"') && tab.includes('aria-label="Intento 6, letra 5"')
   );
