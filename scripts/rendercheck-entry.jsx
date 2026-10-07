@@ -24,6 +24,11 @@ import RomanosScreen, {
   RomanosJuego,
 } from "../src/components/layout/RomanosScreen.jsx";
 import { construirPregunta } from "../src/utils/roman.js";
+import LingoScreen, {
+  LingoTablero,
+  LingoTeclado,
+  LingoMensaje,
+} from "../src/components/layout/LingoScreen.jsx";
 
 let failures = 0;
 function check(name, cond, extra = "") {
@@ -56,6 +61,12 @@ globalThis.__PREGUNTAS_MOCK__ = {
   },
   "C:\\proy\\preguntas\\geografia.json": { default: [] },
   "C:\\proy\\preguntas\\rota.json": { default: { titulo: "No soy una lista" } },
+};
+
+/* Palabras simuladas del Lingo: el fichero real (una palabra por línea,
+ * los valores son texto plano como el glob ?raw de Vite). */
+globalThis.__PALABRAS_MOCK__ = {
+  "palabras/palabras.txt": readFileSync("palabras/palabras.txt", "utf8"),
 };
 
 /* localStorage simulada, por clave: el progreso de cada hoja y la
@@ -1162,6 +1173,164 @@ function render(state, opts = {}) {
   );
   const keepSheet = reducer({ ...base, sheetId: "plantilla-ficha-de-logica-01" }, { type: "RESET" });
   check("RESET conserva la hoja activa", keepSheet.sheetId === "plantilla-ficha-de-logica-01");
+}
+
+/* ---------------- Apartado Lingo (palabra de 5 letras) ---------------- */
+
+{
+  // La portada lanza el juego con su zona y su botón.
+  const portada = render({ screen: "home", sectionIndex: 0, itemIndex: 0, progress: {} });
+  check(
+    "lingo: la portada tiene la zona y el botón del Lingo",
+    portada.includes("🔤 Lingo") && portada.includes('aria-label="Jugar al Lingo"') && portada.includes("Adivina la palabra"),
+    portada.slice(0, 300)
+  );
+
+  // Pantalla inicial: tablero de 6×5 casillas y teclado con Ñ.
+  const pantalla = renderToString(React.createElement(LingoScreen, { onExit() {} }));
+  check(
+    "lingo: 6 filas de 5 casillas (30 campos de una letra)",
+    (pantalla.match(/class="lingo-fila"/g) || []).length === 6 &&
+      (pantalla.match(/<input/g) || []).length === 30,
+    String((pantalla.match(/<input/g) || []).length)
+  );
+  check(
+    "lingo: teclado con Ñ, Enviar y ⌫",
+    pantalla.includes('aria-label="Teclado de letras"') &&
+      pantalla.includes('aria-label="letra Ñ"') &&
+      pantalla.includes("Enviar") &&
+      pantalla.includes("⌫"),
+    pantalla.slice(0, 500)
+  );
+  check(
+    "lingo: el grupo, «Palabra nueva» y sin aviso al empezar",
+    pantalla.includes("Palabra de 5 letras · 6 intentos") &&
+      pantalla.includes("Palabra nueva") &&
+      !pantalla.includes('class="lingo-mensaje')
+  );
+  const ban = ["PERRO", "LIBRO", "MANGO", "ARBOL", "NIÑOS", "MADRE", "SILLA", "CALLE", "MUNDO", "AGUAS"];
+  check(
+    "lingo: la palabra a adivinar no se revela al empezar",
+    ban.every((p) => !pantalla.includes(p)),
+    pantalla.slice(0, 300)
+  );
+  check(
+    "lingo: sin temporizadores ni progreso",
+    !/<progress|<time|role="timer"/.test(pantalla)
+  );
+
+  // Sin palabras en el fichero: aviso con la ruta y sin teclado.
+  const mockPalabras = globalThis.__PALABRAS_MOCK__;
+  globalThis.__PALABRAS_MOCK__ = {};
+  const sinPalabras = renderToString(React.createElement(LingoScreen, { onExit() {} }));
+  globalThis.__PALABRAS_MOCK__ = mockPalabras;
+  check(
+    "lingo: sin palabras se avisa con la ruta del fichero",
+    sinPalabras.includes("No hay palabras todavía") &&
+      sinPalabras.includes("palabras/palabras.txt") &&
+      !sinPalabras.includes("Teclado de letras"),
+    sinPalabras.slice(0, 400)
+  );
+
+  // Tablero con estados fijos: colores de fila y solo la fila actual editable.
+  const filas = [
+    ["P", "E", "R", "R", "O"],
+    ["M", "A", "T", "A", "S"],
+    ["L", "I", "B", "R", "O"],
+    Array(5).fill(""),
+    Array(5).fill(""),
+    Array(5).fill(""),
+  ];
+  const estados = [
+    ["ok", "pos", "no", "no", "ok"],
+    ["no", "no", "ok", "no", "pos"],
+    null,
+    null,
+    null,
+    null,
+  ];
+  const tab = renderToString(
+    React.createElement(LingoTablero, {
+      filas,
+      estados,
+      actual: 2,
+      jugando: true,
+      refs: { current: [] },
+      onEscribir() {},
+      onKey() {},
+    })
+  );
+  check(
+    "lingo: las letras se pintan de verde, amarillo y gris",
+    tab.includes("is-ok") && tab.includes("is-pos") && tab.includes("is-no"),
+    tab.slice(0, 600)
+  );
+  check(
+    "lingo: solo la fila actual se puede escribir (el resto, de solo lectura)",
+    (tab.match(/readonly/g) || []).length === 25 &&
+      (tab.match(/tabindex="0"/g) || []).length === 5,
+    `${(tab.match(/readonly/g) || []).length} ro / ${(tab.match(/tabindex="0"/g) || []).length} focus`
+  );
+  check(
+    "lingo: cada casilla dice a qué intento y a qué letra pertenece",
+    tab.includes('aria-label="Intento 1, letra 1"') && tab.includes('aria-label="Intento 6, letra 5"')
+  );
+
+  // Teclado con estados: pinta el fondo de la letra y se puede bloquear.
+  const tec = renderToString(
+    React.createElement(LingoTeclado, {
+      estados: { A: "ok", B: "pos", C: "no" },
+      disabled: false,
+      onKey() {},
+      onEnviar() {},
+      onBorrar() {},
+    })
+  );
+  check(
+    "lingo: el teclado se pinta con el mejor estado de cada letra",
+    tec.includes('class="lingo-tecla is-ok"') &&
+      tec.includes('class="lingo-tecla is-pos"') &&
+      tec.includes('class="lingo-tecla is-no"'),
+    tec.slice(0, 600)
+  );
+  check(
+    "lingo: tres filas de teclado con 27 letras",
+    (tec.match(/class="lingo-teclado-fila"/g) || []).length === 3 &&
+      (tec.match(/class="lingo-tecla[^"]*"[^>]*aria-label="letra /g) || []).length === 27,
+    String((tec.match(/aria-label="letra /g) || []).length)
+  );
+  const tecOff = renderToString(
+    React.createElement(LingoTeclado, {
+      estados: {},
+      disabled: true,
+      onKey() {},
+      onEnviar() {},
+      onBorrar() {},
+    })
+  );
+  check(
+    "lingo: mientras comprueba o acaba, las teclas quedan desactivadas",
+    (tecOff.match(/disabled="/g) || []).length === 29,
+    String((tecOff.match(/disabled="/g) || []).length)
+  );
+
+  // Avisos: «Palabra no existe» no es un error del juego, es un fallo.
+  const msgMal = renderToString(
+    React.createElement(LingoMensaje, { mensaje: { tipo: "mal", texto: "Palabra no existe" } })
+  );
+  check(
+    "lingo: «Palabra no existe» en su aviso rojo, sin adelantar fila",
+    msgMal.includes("Palabra no existe") && msgMal.includes("is-mal") && msgMal.includes('role="status"'),
+    msgMal
+  );
+  const msgOk = renderToString(
+    React.createElement(LingoMensaje, { mensaje: { tipo: "bien", texto: "¡Correcto!" } })
+  );
+  check("lingo: el acierto se avisa en verde", msgOk.includes("is-bien"));
+  check(
+    "lingo: sin mensaje no hay nada bajo el tablero",
+    renderToString(React.createElement(LingoMensaje, { mensaje: null })) === ""
+  );
 }
 
 console.log(failures === 0 ? "\nRENDER Y REDUCER CORRECTOS" : `\n${failures} FALLOS`);

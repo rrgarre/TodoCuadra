@@ -16,7 +16,7 @@ import { loadSheetState } from "../../utils/storage.js";
  * activa la ficha y, si tiene una sola sección, se abre directa a
  * los ejercicios.
  */
-export default function HomeScreen({ onOpenTrivial, onOpenRomanos }) {
+export default function HomeScreen({ onOpenTrivial, onOpenRomanos, onOpenLingo }) {
   const { sheet, state, dispatch, reset, setSheet } = useSheet();
   const hasProgress = useMemo(
     () => Object.keys(state.progress).length > 0,
@@ -246,6 +246,30 @@ export default function HomeScreen({ onOpenTrivial, onOpenRomanos }) {
                 <span className="section-body">
                   <strong>Del número al romano y del romano al número</strong>
                   <span>Elige la dificultad: fácil, medio o difícil</span>
+                </span>
+                <span className="section-cta">Jugar</span>
+              </button>
+            </li>
+          </ul>
+        </section>
+
+        {/* Lingo: adivinar la palabra de 5 letras (juego paralelo). */}
+        <section className="zona">
+          <h2 className="zona-title">🔤 Lingo</h2>
+          <ul className="section-list">
+            <li>
+              <button
+                type="button"
+                className="section-card"
+                aria-label="Jugar al Lingo"
+                onClick={onOpenLingo}
+              >
+                <span className="section-icon" aria-hidden="true">
+                  🔤
+                </span>
+                <span className="section-body">
+                  <strong>Adivina la palabra de 5 letras</strong>
+                  <span>6 intentos, con colores y el diccionario de la RAE</span>
                 </span>
                 <span className="section-cta">Jugar</span>
               </button>

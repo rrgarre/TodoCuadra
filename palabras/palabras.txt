@@ -1,0 +1,13 @@
+# Palabras de 5 letras para el juego Lingo (una por línea).
+# Se ignoran las líneas vacías y las que empiezan por #.
+# Mayúsculas y acentos no importan: «árbol» y «Árbol» son la misma.
+perro
+libro
+mango
+árbol
+niños
+madre
+silla
+calle
+mundo
+aguas

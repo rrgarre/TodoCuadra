@@ -46,14 +46,16 @@ Ejecuta dos suites sin dependencias adicionales:
 1. **`scripts/selftest.mjs`** — comprobaciones puras de lógica: columnas de la retícula,
    desplazamiento de las parciales, cocientes y restos de cada división, textos de las
    explicaciones paso a paso y mensajes de validación, la conversión de **números
-   romanos** (escritura, lectura, rangos de dificultad y sorteos) y el sistema de fichas
+   romanos** (escritura, lectura, rangos de dificultad y sorteos), el **Lingo**
+   (normalización de palabras, coloreado del intento, estados del teclado y consulta al
+   diccionario de la RAE con la petición simulada) y el sistema de fichas
    (cabecera `titulo`/`tipo`, asignaturas, `secciones`, paridad de `HojaDePracticas.json` y
    lectura remota con su caché).
 2. **`scripts/rendercheck-entry.jsx`** — renderizado en servidor (`react-dom/server`) de las
    tres pantallas (portada, secciones, resumen) y de los **39 items** de la ficha, más
    pruebas del reducer (guardar casilla, comprobar, avanzar, revelar solución, reiniciar,
-   cambiar de ficha), de la portada por zonas (fichas remotas incluidas) y de los dos
-   juegos aparte (Trivial y **Números romanos**).
+   cambiar de ficha), de la portada por zonas (fichas remotas incluidas) y de los tres
+   juegos aparte (Trivial, **Números romanos** y **Lingo**).
 
 Ambas suites están en verde en esta versión, y `npm run build` compila sin errores.
 
@@ -160,12 +162,23 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
   su desglose (`X + IV = 14`) y entonces aparece **Siguiente**. Un botón **ⓘ** discreto
   despliega el algoritmo en los dos sentidos; **sin temporizadores, contadores ni
   marcador**, y sin fin.
+- **Apartado Lingo** (zona 🔤 en la portada): adivinar una **palabra de 5 letras** en
+  **6 intentos**. Cada intento se escribe en campos de una letra —el cursor salta solo
+  hacia la derecha— con el teclado de pantalla (con **Ñ**) o con el teclado del
+  dispositivo. Un intento solo cuenta si **existe en el diccionario de la RAE** (o en la
+  lista local `palabras/palabras.txt`): si no, sale *«Palabra no existe»* y **la fila
+  no avanza**. Las letras se pintan contra la palabra oculta: **verde** en su posición,
+  **amarillo** si está pero en otra y **gris** si no está; el teclado inferior se queda
+  con el mejor estado de cada letra (verde > amarillo > gris). Al acertar o agotar los
+  6 intentos se enseña la palabra y **Palabra nueva** empieza otra partida; **sin
+  temporizadores ni marcador**, y se sale con *‹ Inicio*.
 - **Accesibilidad**: objetivos táctiles ≥ 44 px, foco visible, etiquetas y `aria-label` en
   las casillas (*«Cifra 1 del cociente»*, *«Llevada de las decenas»*…), estados comunicados
   con icono + texto, contraste alto.
 - **Responsive**: la retícula usa tamaños de casilla por media queries; en móvil se usa el
   teclado numérico del sistema (salvo en los problemas, que se resuelven con su botonera
-  y no abren teclado).
+  y no abren teclado; el Lingo sí abre el de letras, porque sus casillas son campos de
+  una letra) y todos los juegos conservan su teclado de pantalla.
 
 ## Estructura del proyecto
 
@@ -182,9 +195,13 @@ plantillas/               # TODO lo de las fichas: JSON + la lógica que los ent
 preguntas/                # apartado Trivial: un JSON por categoría (formato estándar)
   loader.js               # valida, agrupa por categoría y sortea al azar
   primaria.json           # «Primaria»: 200 preguntas (las demás, pendientes: `[]`)
+palabras/                 # apartado Lingo: las palabras de 5 letras a adivinar
+  loader.js               # normaliza (mayúsculas, sin tildes, con ñ), filtra y sortea
+  rae.js                  # diccionario de la RAE: clave, consulta y `verificarIntento`
+  palabras.txt            # una palabra por línea (hoy 10, se amplía a mano)
 src/
   main.jsx                # arranque
-  App.jsx                 # pantallas: portada → secciones → resumen (+ Trivial y romanos)
+  App.jsx                 # pantallas: portada → secciones → resumen (+ Trivial, romanos y Lingo)
   styles/                 # tokens, base, pantallas y ejercicios (CSS plano)
   data/sheets/
     index.js              # registro de fichas + helpers (items por sección, índice)
@@ -195,9 +212,10 @@ src/
                           #   problemas y mensajes en español
     storage.js            # lectura/escritura versionada de localStorage (+ hoja activa)
     roman.js              # números romanos: conversión, dificultades y sorteos del juego
+    lingo.js              # Lingo: coloreado del intento y estados del teclado
   components/
     layout/               # HomeScreen, SectionScreen, SummaryScreen, TrivialScreen,
-                          # RomanosScreen, TopBar
+                          # RomanosScreen, LingoScreen, TopBar
     common/               # ExerciseCard, DigitGrid, DigitCell, Feedback, Progress…
     exercises/            # Addition, Subtraction, Multiplication, Division,
                           # VerticalStep, WordProblem, MentalCalculation, MentalTip, Logica
@@ -416,6 +434,37 @@ La escritura es canónica (símbolos de mayor a menor, repetidos como mucho tres
 restas solo con IV, IX, XL, XC, CD y CM) en el rango 1–3999, suficiente para el máximo
 del juego (3500 = `MMMD`).
 
+## Lingo (`palabras/palabras.txt`)
+
+Apartado paralelo al Trivial y a los Números romanos (zona **🔤 Lingo** de la portada):
+adivinar **una palabra de 5 letras en 6 intentos**.
+
+- **La lista de palabras**: `palabras/palabras.txt`, **una palabra por línea**. Las
+  líneas vacías y las que empiezan por `#` se ignoran, y mayúsculas y acentos no importan
+  («árbol» = «Árbol»), pero **la Ñ sí cuenta** («niños» es válida). Las que no tengan
+  5 letras o estén repetidas se saltan, así que un despiste a mano no rompe la partida.
+  Para añadir palabras: abrir el fichero, escribir una por línea y recargar (hoy hay 10).
+- **Palabra al azar**: cada partida sortea una de la lista (sin repetir la anterior si
+  hay más de una); «Palabra nueva» vuelve a sortear y reinicia el tablero.
+- **Dos teclados**: las casillas son **campos de una letra** con cursor que salta solo
+  hacia la derecha —se escribe con el teclado de pantalla (fila con **Ñ**, **Enviar** y
+  **⌫**) o con el teclado del dispositivo—, y el teclado de pantalla **se va pintando**
+  con los resultados.
+- **La palabra tiene que existir**: antes de comprobar se consulta el diccionario de la
+  RAE (<https://rae-api.com/>, clave en `palabras/rae.js`, CORS abierto y límite de
+  60 consultas/minuto). Si no existe → aviso **«Palabra no existe»** y **la fila no
+  avanza** (hay que modificar el intento); si la API no responde y la palabra está en
+  nuestra lista local, se admite (respaldo sin red y para las palabras acentuadas, que
+  el teclado escribe sin tilde). La palabra de la partida **nunca se revela** hasta
+  acertar o agotar los intentos.
+- **Colores del intento** (contra la palabra oculta): **verde** si la letra está en su
+  posición, **amarillo** si está pero en otra y **gris** si no está; las repetidas se
+  cuentan bien (primero las verdes, después los amarillos sin pasarse). El teclado
+  inferior guarda **el mejor estado de cada letra**: un verde se queda verde, un gris
+  sube si luego aparece en amarillo o verde.
+- **Fin de la partida**: al acertar sale *¡Correcto!* con la palabra; al agotar los
+  6 intentos se enseña cuál era. Sin temporizadores, contadores ni marcador.
+
 ## Lista de verificación (sección 31)
 
 | Comprobación | Estado |
@@ -434,13 +483,14 @@ del juego (3500 = `MMMD`).
 | Apartado **Trivial** (🎯 en portada): categoría o todas mezcladas al azar, pregunta + **Mostrar solución** a demanda, **«Siguiente» solo tras ver la respuesta**, sin temporizadores ni contadores; en «Todas», el título muestra **la categoría de la pregunta actual** | ✅ `parsePreguntas` + sorteo; render de categorías, de la pregunta con sus botones (sin «Siguiente» hasta ver el detalle), de «Todas» con su categoría junto al título y de la solución bajo demanda (sin restos de contador ni de tiempo) |
 | Trivial: categoría **vacía** desactivada y fichero roto con **aviso por ruta** | ✅ mocks con `geografia.json` (`[]`) y `rota.json` (que no es lista); `primaria.json` validado entero (200) |
 | Apartado **Números romanos** (🔢 en portada): tres dificultades con sus rangos, sentido **50 % cifras ↔ 50 % romanos**, botonera adaptable sin campos de texto, **Comprobar** sin desvelar, solución con desglose y «ⓘ» con el algoritmo | ✅ `roman.js` (escritura/lectura canónicas, rangos y sorteos por tiradas) + render de las tres dificultades, de los dos sentidos, del acierto/fallo, de la solución y del «ⓘ» |
+| Apartado **Lingo** (🔤 en portada): 6 intentos de 5 letras con cursor que salta, teclado de pantalla con Ñ + teclado del dispositivo, **«Palabra no existe» sin avanzar la fila** y colores verde/amarillo/gris en filas y teclado | ✅ `lingo.js` + `palabras/` (normalización, sorteo y `verificarIntento` con la petición simulada) + render de la portada, del tablero 6×5, del teclado con sus pintados y de los avisos |
 | **Varias fichas**: cambiar de ficha con progreso independiente y ficha activa recordada | ✅ `SET_SHEET` + clave `hoja-activa`; portada, resumen y render de la ficha Lógica comprobados |
 | Problemas con botonera (sin campos de texto): «=» pone la operación en vertical y **Comprobar** valida cada paso con su magnitud adjunta | ✅ render de los 4 + validación por paso y repaso completo del desarrollo |
 | Cálculo mental con pista al segundo fallo | ✅ tests de validación |
 | Trucos: intercalados en cálculo mental y en su sección | ✅ los 4 trucos renderizan en ambos sitios |
 | Progreso guardado en `localStorage` y retomado al recargar | ✅ `storage.js` versionado + tests de persistencia; botón **Resetear todo** en portada y resumen (retomada manual en navegador recomendada) |
 | Uso en móvil (teclado numérico, casillas ≥ 44 px, sin scroll horizontal) | ✅ `inputmode="numeric"`, tamaños por media queries (probar en dispositivo recomendado) |
-| `npm run build` termina sin errores | ✅ build de producción OK (≈425 kB JS + 25 kB CSS) |
+| `npm run build` termina sin errores | ✅ build de producción OK (≈433 kB JS + 28 kB CSS) |
 | `npm install`, `npm run dev` y `npm run build` funcionan | ✅ verificado en Node 20 / Windows |
 
 > Las comprobaciones automatizadas cubren la lógica y el renderizado de todos los items;

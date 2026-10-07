@@ -23,6 +23,8 @@
   --color-danger-soft: #fdecec;
   --color-warning: #c77b12;
   --color-warning-soft: #fdf3e3;
+  /* Amarillo del Lingo: la letra está pero en otra posición. */
+  --color-amber: #e6b41a;
 
   --radius-sm: 8px;
   --radius-md: 12px;

@@ -659,3 +659,165 @@
   border-color: var(--color-danger);
   color: var(--color-danger);
 }
+
+/* ---------------- Lingo (palabra de 5 letras) ---------------- */
+
+/* Tablero: 6 filas de 5 casillas, centradas. */
+.lingo-tablero {
+  display: grid;
+  gap: var(--space-2);
+  justify-content: center;
+  margin: var(--space-4) 0;
+}
+
+.lingo-fila {
+  display: grid;
+  grid-template-columns: repeat(5, clamp(44px, 13vw, 56px));
+  gap: var(--space-2);
+}
+
+.lingo-celda {
+  width: 100%;
+  height: clamp(44px, 13vw, 56px);
+  padding: 0;
+  text-align: center;
+  font-family: inherit;
+  font-size: clamp(1.4rem, 6vw, 1.7rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+}
+
+.lingo-celda:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+.lingo-celda:read-only {
+  cursor: default;
+}
+
+/* Colores del intento contra la palabra a adivinar. */
+.lingo-celda.is-ok {
+  background: var(--color-success);
+  border-color: var(--color-success);
+  color: #fff;
+}
+
+.lingo-celda.is-pos {
+  background: var(--color-amber);
+  border-color: var(--color-amber);
+  color: var(--color-text);
+}
+
+.lingo-celda.is-no {
+  background: var(--color-text-muted);
+  border-color: var(--color-text-muted);
+  color: #fff;
+}
+
+/* Aviso bajo el tablero: «Palabra no existe», acierto, conexión… */
+.lingo-mensaje {
+  margin: 0 0 var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  text-align: center;
+}
+
+.lingo-mensaje.is-info {
+  background: var(--color-surface-alt);
+  border-color: var(--color-border);
+  color: var(--color-text-soft);
+}
+
+.lingo-mensaje.is-bien {
+  background: var(--color-success-soft);
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.lingo-mensaje.is-mal {
+  background: var(--color-danger-soft);
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+/* Teclado de pantalla: 3 filas; en la tercera, Enviar y ⌫. */
+.lingo-teclado {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.lingo-teclado-fila {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.lingo-tecla {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: var(--tap-min);
+  padding: 4px 0;
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* El hover solo cambia el borde: así no se borra su pintado. */
+.lingo-tecla:hover:not(:disabled) {
+  border-color: var(--color-primary);
+}
+
+.lingo-tecla:focus-visible {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+.lingo-tecla:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.lingo-tecla:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.lingo-tecla--ancha {
+  flex: 1.7 1 0;
+  font-size: 0.85rem;
+}
+
+.lingo-tecla.is-back {
+  font-size: 1.15rem;
+}
+
+/* El teclado se pinta con lo mejor de cada letra (verde > amarillo > gris). */
+.lingo-tecla.is-ok {
+  background: var(--color-success);
+  border-color: var(--color-success);
+  color: #fff;
+}
+
+.lingo-tecla.is-pos {
+  background: var(--color-amber);
+  border-color: var(--color-amber);
+  color: var(--color-text);
+}
+
+.lingo-tecla.is-no {
+  background: var(--color-text-muted);
+  border-color: var(--color-text-muted);
+  color: #fff;
+}

@@ -46,6 +46,21 @@ import {
   respuestaCorrecta,
   DIFICULTADES,
 } from "../src/utils/roman.js";
+import {
+  normalizarPalabra,
+  parsePalabras,
+  loadPalabras,
+  sortearPalabra,
+} from "../palabras/loader.js";
+import { palabraExiste, verificarIntento } from "../palabras/rae.js";
+import {
+  TAM,
+  FILAS,
+  colorear,
+  tecladoDesdeFila,
+  fusionarTeclado,
+  filaCompleta,
+} from "../src/utils/lingo.js";
 
 let failures = 0;
 function check(name, cond, extra = "") {
@@ -861,6 +876,138 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   check("romanos: romanos no aceptan «XIII» de más", !respuestaCorrecta("XIII", q14r));
   check("romanos: romanos no aceptan cifras", !respuestaCorrecta("14", q14r));
   check("romanos: romanos no aceptan vacío", !respuestaCorrecta("", q14r));
+}
+
+/* ---------- Lingo (palabra de 5 letras) ---------- */
+{
+  check("lingo: 5 letras y 6 intentos", TAM === 5 && FILAS === 6);
+
+  // Normalización: mayúsculas, sin tildes, con la ñ.
+  check("lingo: normaliza a mayúsculas", normalizarPalabra("perro") === "PERRO");
+  check("lingo: quita las tildes", normalizarPalabra("árbol") === "ARBOL");
+  check("lingo: conserva la ñ", normalizarPalabra("niños") === "NIÑOS");
+  check("lingo: sin espacios ni signos", normalizarPalabra(" ¡Calle! ") === "CALLE");
+  check("lingo: sin letras no queda nada", normalizarPalabra("123") === "");
+
+  // Lectura del fichero: comentarios, blancos, longitudes y duplicados.
+  const leidas = parsePalabras(
+    ["# comentario", "", "perro", "LIBRO", "árbol", "mesa", "Perro", "¡mundo!", "aguas"].join("\n")
+  );
+  check(
+    "lingo: el fichero se lee línea a línea",
+    JSON.stringify(leidas) === '["PERRO","LIBRO","ARBOL","MUNDO","AGUAS"]',
+    JSON.stringify(leidas)
+  );
+  check("lingo: fichero vacío → lista vacía", parsePalabras("").length === 0);
+
+  // El fichero real de partida.
+  const real = parsePalabras(readFileSync("palabras/palabras.txt", "utf8"));
+  check("lingo: palabras.txt trae 10 palabras de 5 letras o más", real.length >= 10, String(real.length));
+  check("lingo: palabras.txt todas de 5 letras", real.every((p) => p.length === 5));
+
+  // Cargador con mock (como en el render) y sorteo de la palabra.
+  globalThis.__PALABRAS_MOCK__ = { "palabras/palabras.txt": "perro\nlibro\nmango\n" };
+  const cargadas = loadPalabras().palabras;
+  delete globalThis.__PALABRAS_MOCK__;
+  check(
+    "lingo: loadPalabras une los ficheros ya normalizados",
+    JSON.stringify(cargadas) === '["PERRO","LIBRO","MANGO"]',
+    JSON.stringify(cargadas)
+  );
+  check("lingo: sin palabras no se sortea", sortearPalabra([]) === null);
+  check("lingo: sorteo determinista", sortearPalabra(["A", "B", "C"], () => 0) === "A");
+  check("lingo: el dado al máximo da la última", sortearPalabra(["A", "B", "C"], () => 0.999999) === "C");
+  check("lingo: el sorteo no repite la anterior", sortearPalabra(["A", "B"], () => 0, "A") === "B");
+
+  // Coloreado del intento (estilo Wordle, con repetidas contadas).
+  check(
+    "lingo: la palabra entera acertada sale toda verde",
+    JSON.stringify(colorear("MATAS".split(""), "MATAS".split(""))) === '["ok","ok","ok","ok","ok"]'
+  );
+  check(
+    "lingo: aciertos en su sitio y letras de otra posición",
+    JSON.stringify(colorear("MURIA".split(""), "MATAS".split(""))) === '["ok","no","no","no","pos"]',
+    JSON.stringify(colorear("MURIA".split(""), "MATAS".split("")))
+  );
+  check(
+    "lingo: primero las verdes (dos A en su sitio)",
+    JSON.stringify(colorear("AAAAA".split(""), "BACAD".split(""))) === '["no","ok","no","ok","no"]',
+    JSON.stringify(colorear("AAAAA".split(""), "BACAD".split("")))
+  );
+  check(
+    "lingo: las repetidas no se pasan del número en la palabra",
+    JSON.stringify(colorear("AAXXX".split(""), "BETAO".split(""))) === '["pos","no","no","no","no"]',
+    JSON.stringify(colorear("AAXXX".split(""), "BETAO".split("")))
+  );
+
+  // Teclado: el mejor estado de cada fila y fusión sin degradar.
+  check(
+    "lingo: la fila aporta el mejor estado de cada letra",
+    JSON.stringify(tecladoDesdeFila("AAXAA".split(""), ["pos", "ok", "no", "no", "no"])) === '{"A":"ok","X":"no"}'
+  );
+  check("lingo: el teclado no degrada el verde", fusionarTeclado({ A: "ok" }, { A: "no" }).A === "ok");
+  check("lingo: el gris sube a amarillo", fusionarTeclado({ A: "no" }, { A: "pos" }).A === "pos");
+  check("lingo: el amarillo sube a verde", fusionarTeclado({ A: "pos" }, { A: "ok" }).A === "ok");
+  const mezcla = fusionarTeclado({ A: "ok", B: "pos" }, { A: "pos", B: "ok" });
+  check("lingo: mezcla de estados conserva lo mejor", mezcla.A === "ok" && mezcla.B === "ok");
+
+  check("lingo: fila completa de 5", filaCompleta(["P", "E", "R", "R", "O"]));
+  check("lingo: fila sin completar", !filaCompleta(["P", "E"]) && !filaCompleta(["P", "E", "R", "R", ""]));
+
+  // Diccionario de la RAE (fetch falso, sin red en los tests).
+  const responde = (status, cuerpo) => async () => ({
+    status,
+    ok: status >= 200 && status < 300,
+    json: async () => cuerpo,
+  });
+  const sinRed = async () => {
+    throw new Error("sin conexión");
+  };
+  const okFetch = responde(200, { ok: true, data: { word: "hola" } });
+  const noFetch = responde(404, { ok: false, error: "NOT_FOUND", suggestions: null });
+  const conSug = responde(404, { ok: false, suggestions: ["árbol"] });
+  const otraSug = responde(404, { ok: false, suggestions: ["casa"] });
+
+  check("lingo: la RAE confirma la palabra", (await palabraExiste("hola", { fetchFn: okFetch })) === true);
+  check("lingo: la RAE dice que no existe", (await palabraExiste("xyzqwv", { fetchFn: noFetch })) === false);
+  check(
+    "lingo: sin tilde, la sugerencia equivalente cuenta",
+    (await palabraExiste("arbol", { fetchFn: conSug })) === true
+  );
+  check(
+    "lingo: una sugerencia de otra palabra no vale",
+    (await palabraExiste("arbol", { fetchFn: otraSug })) === false
+  );
+  let tiro500 = false;
+  try {
+    await palabraExiste("hola", { fetchFn: responde(500, {}) });
+  } catch {
+    tiro500 = true;
+  }
+  check("lingo: un error de la API se propaga", tiro500);
+
+  check(
+    "lingo: intento confirmado por la API",
+    (await verificarIntento("hola", { fetchFn: okFetch })).ok === true
+  );
+  check(
+    "lingo: no existe en la API y no está en la lista",
+    (await verificarIntento("xyzqwv", { fetchFn: noFetch })).ok === false
+  );
+  check(
+    "lingo: no existe en la API pero sí en la lista local",
+    (await verificarIntento("perro", { fetchFn: noFetch, enLista: true })).ok === true
+  );
+  const sinLista = await verificarIntento("perro", { fetchFn: sinRed });
+  check(
+    "lingo: sin red y sin lista avisa de conexión",
+    sinLista.ok === false && sinLista.error === "red",
+    JSON.stringify(sinLista)
+  );
+  check(
+    "lingo: sin red la lista local respalda",
+    (await verificarIntento("perro", { fetchFn: sinRed, enLista: true })).ok === true
+  );
 }
 
 /* ---------- Plantillas (carpeta plantillas/*.json) ---------- */
