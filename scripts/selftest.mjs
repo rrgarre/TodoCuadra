@@ -902,7 +902,7 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
 
   // El fichero real de partida.
   const real = parsePalabras(readFileSync("palabras/palabras.txt", "utf8"));
-  check("lingo: palabras.txt trae 10 palabras de 5 letras o más", real.length >= 10, String(real.length));
+  check("lingo: palabras.txt trae al menos 10 palabras de 5 letras", real.length >= 10, String(real.length));
   check("lingo: palabras.txt todas de 5 letras", real.every((p) => p.length === 5));
 
   // Cargador con mock (como en el render) y sorteo de la palabra.

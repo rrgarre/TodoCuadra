@@ -199,7 +199,7 @@ preguntas/                # apartado Trivial: un JSON por categoría (formato es
 palabras/                 # apartado Lingo: las palabras de 5 letras a adivinar
   loader.js               # normaliza (mayúsculas, sin tildes, con ñ), filtra y sortea
   rae.js                  # diccionario de la RAE: clave, consulta y `verificarIntento`
-  palabras.txt            # una palabra por línea (hoy 10, se amplía a mano)
+  palabras.txt            # una palabra por línea (lista que amplías a mano)
 src/
   main.jsx                # arranque
   App.jsx                 # pantallas: portada → secciones → resumen (+ Trivial, romanos y Lingo)
@@ -444,7 +444,9 @@ adivinar **una palabra de 5 letras en 6 intentos**.
   líneas vacías y las que empiezan por `#` se ignoran, y mayúsculas y acentos no importan
   («árbol» = «Árbol»), pero **la Ñ sí cuenta** («niños» es válida). Las que no tengan
   5 letras o estén repetidas se saltan, así que un despiste a mano no rompe la partida.
-  Para añadir palabras: abrir el fichero, escribir una por línea y recargar (hoy hay 10).
+  Para añadir palabras: abrir el fichero, escribir una por línea y recargar;
+  **el título de la pantalla cuenta cuántas hay** (`🔤 Lingo · N palabras`, con el
+  singular bien puesto), que es la forma rápida de ver que el fichero se ha leído.
 - **Palabra al azar**: cada partida sortea una de la lista (sin repetir la anterior si
   hay más de una); «Palabra nueva» vuelve a sortear y reinicia el tablero.
 - **Dos teclados**: las casillas son **campos de una letra** con cursor que salta solo
@@ -497,7 +499,7 @@ adivinar **una palabra de 5 letras en 6 intentos**.
 | Trucos: intercalados en cálculo mental y en su sección | ✅ los 4 trucos renderizan en ambos sitios |
 | Progreso guardado en `localStorage` y retomado al recargar | ✅ `storage.js` versionado + tests de persistencia; botón **Resetear todo** en portada y resumen (retomada manual en navegador recomendada) |
 | Uso en móvil (teclado numérico, casillas ≥ 44 px, sin scroll horizontal) | ✅ `inputmode="numeric"`, tamaños por media queries (probar en dispositivo recomendado) |
-| `npm run build` termina sin errores | ✅ build de producción OK (≈433 kB JS + 28 kB CSS) |
+| `npm run build` termina sin errores | ✅ build de producción OK (≈436 kB JS + 29 kB CSS) |
 | `npm install`, `npm run dev` y `npm run build` funcionan | ✅ verificado en Node 20 / Windows |
 
 > Las comprobaciones automatizadas cubren la lógica y el renderizado de todos los items;

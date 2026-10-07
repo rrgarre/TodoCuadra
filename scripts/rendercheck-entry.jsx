@@ -24,6 +24,7 @@ import RomanosScreen, {
   RomanosJuego,
 } from "../src/components/layout/RomanosScreen.jsx";
 import { construirPregunta } from "../src/utils/roman.js";
+import { loadPalabras } from "../palabras/loader.js";
 import LingoScreen, {
   LingoTablero,
   LingoTeclado,
@@ -1231,6 +1232,21 @@ function render(state, opts = {}) {
       sinPalabras.includes("palabras/palabras.txt") &&
       !sinPalabras.includes("Teclado de letras"),
     sinPalabras.slice(0, 400)
+  );
+
+  // El título de la pantalla cuenta las palabras del fichero (el
+  // total lo lee del propio fichero: la lista crece a mano).
+  globalThis.__PALABRAS_MOCK__ = { "palabras/palabras.txt": "perro" };
+  const unaPalabra = renderToString(React.createElement(LingoScreen, { onExit() {} }));
+  globalThis.__PALABRAS_MOCK__ = mockPalabras;
+  const totalPalabras = loadPalabras().palabras.length;
+  check(
+    "lingo: el título del juego cuenta las palabras del fichero (número y plural)",
+    pantalla.includes(`🔤 Lingo · ${totalPalabras} palabras`) &&
+      unaPalabra.includes("🔤 Lingo · 1 palabra") &&
+      sinPalabras.includes("🔤 Lingo · 0 palabras") &&
+      totalPalabras >= 10,
+    `${totalPalabras} en el título`
   );
 
   // Tablero con estados fijos: colores de fila y solo la fila actual editable.

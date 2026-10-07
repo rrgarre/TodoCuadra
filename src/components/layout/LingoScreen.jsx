@@ -353,7 +353,11 @@ export default function LingoScreen({ onExit }) {
           <button type="button" className="btn btn-ghost" onClick={onExit}>
             ‹ Inicio
           </button>
-          <span className="topbar-title">🔤 Lingo</span>
+          <span className="topbar-title">
+            {`🔤 Lingo · ${palabras.length} ${
+              palabras.length === 1 ? "palabra" : "palabras"
+            }`}
+          </span>
         </div>
       </header>
 
