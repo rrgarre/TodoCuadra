@@ -12,3 +12,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <App />
   </React.StrictMode>
 );
+
+// Registrar service worker para que la app sea "instalable" (PWA)
+// y funcione sin conexión. Solo en entorno de producción/localhost,
+// que es donde los navegadores exigen origen seguro para ofrecer la instalación.
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/service-worker.js");
+  });
+}
