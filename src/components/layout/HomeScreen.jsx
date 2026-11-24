@@ -16,7 +16,7 @@ import { loadSheetState } from "../../utils/storage.js";
  * activa la ficha y, si tiene una sola sección, se abre directa a
  * los ejercicios.
  */
-export default function HomeScreen({ onOpenTrivial, onOpenRomanos, onOpenLingo }) {
+export default function HomeScreen({ onOpenTrivial, onOpenRomanos, onOpenLingo, onOpenBanderas }) {
   const { sheet, state, dispatch, reset, setSheet } = useSheet();
   const hasProgress = useMemo(
     () => Object.keys(state.progress).length > 0,
@@ -270,6 +270,31 @@ export default function HomeScreen({ onOpenTrivial, onOpenRomanos, onOpenLingo }
                 <span className="section-body">
                   <strong>Adivina la palabra de 5 letras</strong>
                   <span>6 intentos, con colores y el diccionario de la RAE</span>
+                </span>
+                <span className="section-cta">Jugar</span>
+              </button>
+            </li>
+          </ul>
+        </section>
+
+        {/* Banderas: adivinar la bandera de un país (juego paralelo,
+            por debajo del Lingo). */}
+        <section className="zona">
+          <h2 className="zona-title">🏁 Banderas</h2>
+          <ul className="section-list">
+            <li>
+              <button
+                type="button"
+                className="section-card"
+                aria-label="Jugar al juego de las banderas"
+                onClick={onOpenBanderas}
+              >
+                <span className="section-icon" aria-hidden="true">
+                  🏁
+                </span>
+                <span className="section-body">
+                  <strong>Adivina la bandera de un país</strong>
+                  <span>20 banderas al azar, con aciertos, fallos y tiempo</span>
                 </span>
                 <span className="section-cta">Jugar</span>
               </button>

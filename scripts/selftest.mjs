@@ -61,6 +61,19 @@ import {
   fusionarTeclado,
   filaCompleta,
 } from "../src/utils/lingo.js";
+import {
+  COLUMNAS,
+  MAX_BANDERAS,
+  PUNTOS_ACIERTO,
+  PUNTOS_FALLO,
+  PUNTOS_SEGUNDO,
+  sortearBanderas,
+  crearPartida,
+  clicBandera,
+  puntuacion,
+  formatoTiempo,
+} from "../src/utils/banderas.js";
+import { parsePaises, loadBanderas } from "../banderas/loader.js";
 
 let failures = 0;
 function check(name, cond, extra = "") {
@@ -1927,6 +1940,206 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
   check("lógica deducción: correcta", dedOk.ok, JSON.stringify(dedOk));
   const dedCeros = validateStep(ded, { step: 0, values: { answer: "02,01" }, attempts: 0 });
   check("lógica deducción: acepta ceros a la izquierda", dedCeros.ok, JSON.stringify(dedCeros));
+}
+
+/* ---------- Banderas (juego de países) ---------- */
+
+{
+  // El fichero de países: ids únicos, nombres y suficientes para
+  // llenar el tablero de 20.
+  const textoBanderas = readFileSync("banderas/paises.json", "utf8");
+  const datosBanderas = JSON.parse(textoBanderas);
+  const listaBanderas = datosBanderas.paises;
+  check(
+    "banderas: el fichero trae 20 países o más",
+    Array.isArray(listaBanderas) && listaBanderas.length >= 20,
+    String(listaBanderas?.length)
+  );
+  check(
+    "banderas: ids sin repetir y nombres rellenados",
+    Array.isArray(listaBanderas) &&
+      listaBanderas.every(
+        (p) =>
+          typeof p.id === "string" && p.id.trim().length > 0 &&
+          typeof p.nombre === "string" && p.nombre.trim().length > 0
+      ) &&
+      new Set(listaBanderas.map((p) => p.id)).size === listaBanderas.length
+  );
+
+  // parsePaises: el JSON real, uno roto y entradas a medias.
+  check(
+    "banderas: parsePaises lee el JSON real completo",
+    parsePaises(textoBanderas).length === listaBanderas.length,
+    String(parsePaises(textoBanderas).length)
+  );
+  check(
+    "banderas: un JSON roto no rompe (vuelve vacío)",
+    Array.isArray(parsePaises("{ no es json")) && parsePaises("{ no es json").length === 0
+  );
+  const varias = parsePaises(
+    JSON.stringify([
+      { id: "a", nombre: "A" },
+      { id: "b" },
+      { nombre: "C" },
+      { id: "a", nombre: "Otra" },
+      "zarra",
+    ])
+  );
+  check(
+    "banderas: salta lo que no tiene id o nombre y no duplica ids",
+    varias.length === 1 && varias[0].id === "a" && varias[0].nombre === "A",
+    JSON.stringify(varias)
+  );
+
+  // loadBanderas: solo se juega con los que ya tienen imagen.
+  const mockPrevia = globalThis.__BANDERAS_MOCK__;
+  globalThis.__BANDERAS_MOCK__ = {
+    paises: {
+      "banderas/paises.json": JSON.stringify({
+        paises: [
+          { id: "espana", nombre: "España" },
+          { id: "francia", nombre: "Francia" },
+        ],
+      }),
+    },
+    imagenes: { "banderas/imagenes/espana.png": "img/espana.png" },
+  };
+  const cargadas = loadBanderas();
+  globalThis.__BANDERAS_MOCK__ = mockPrevia;
+  check(
+    "banderas: sin imagen el país no sale (la lista se amplía a mano)",
+    cargadas.paises.length === 1 &&
+      cargadas.paises[0].id === "espana" &&
+      cargadas.paises[0].url === "img/espana.png",
+    JSON.stringify(cargadas)
+  );
+
+  // Sorteo: hasta 20 al azar, sin repetir y repetible con el mismo
+  // azar (para los tests).
+  const banco = Array.from({ length: 30 }, (_, i) => ({ id: `p${i}`, nombre: `País ${i}` }));
+  const sorteo = sortearBanderas(banco);
+  check(
+    "banderas: sortea 20 de las 30 sin repetir",
+    sorteo.length === 20 && new Set(sorteo.map((p) => p.id)).size === 20,
+    String(sorteo.length)
+  );
+  check(
+    "banderas: con menos de 20 se usan todas",
+    sortearBanderas(banco.slice(0, 7)).length === 7
+  );
+  const rndFijo = () => 0.5;
+  check(
+    "banderas: el sorteo se puede repetir con el mismo azar",
+    sortearBanderas(banco, 20, rndFijo).map((p) => p.id).join() ===
+      sortearBanderas(banco, 20, rndFijo).map((p) => p.id).join()
+  );
+
+  // Partida: tablero, orden de preguntas y clics.
+  const partida = crearPartida(banco);
+  check(
+    "banderas: la partida arranca con 20 preguntas y todo a cero",
+    partida.tablero.length === 20 &&
+      partida.objetivos.length === 20 &&
+      partida.fase === "jugando" &&
+      partida.aciertos === 0 &&
+      partida.fallos === 0 &&
+      partida.idx === 0 &&
+      partida.segundos === 0,
+    JSON.stringify({ idx: partida.idx, fase: partida.fase })
+  );
+  check(
+    "banderas: cada bandera del tablero se pregunta exactamente una vez",
+    [...partida.objetivos].sort().join() === partida.tablero.map((p) => p.id).sort().join()
+  );
+
+  const acerto = clicBandera(partida, partida.objetivos[0]);
+  check(
+    "banderas: al acertar sube el acierto, avanza y limpia descartadas",
+    acerto.aciertos === 1 &&
+      acerto.idx === 1 &&
+      acerto.marcado?.ok === true &&
+      acerto.descartadas.length === 0 &&
+      acerto.fase === "jugando",
+    JSON.stringify({ a: acerto.aciertos, i: acerto.idx })
+  );
+  const falloId = acerto.tablero.find(
+    (p) => p.id !== acerto.objetivos[0] && p.id !== acerto.objetivos[1]
+  ).id;
+  const fallo = clicBandera(acerto, falloId);
+  check(
+    "banderas: el fallo no avanza, descarta la bandera y se marca",
+    fallo.fallos === 1 &&
+      fallo.idx === 1 &&
+      fallo.marcado?.ok === false &&
+      fallo.descartadas.includes(falloId),
+    JSON.stringify({ f: fallo.fallos, i: fallo.idx })
+  );
+  const repetida = clicBandera(fallo, falloId);
+  check(
+    "banderas: repetir la bandera descartada no cuenta otro fallo",
+    repetida === fallo
+  );
+  const usada = clicBandera(fallo, fallo.objetivos[0]);
+  check("banderas: tocar una bandera ya acertada no cuenta", usada === fallo);
+  const bien = clicBandera(fallo, fallo.objetivos[1]);
+  check(
+    "banderas: tras el fallo, el acierto de la pregunta sigue contando",
+    bien.aciertos === 2 && bien.idx === 2 && bien.descartadas.length === 0,
+    JSON.stringify({ a: bien.aciertos, i: bien.idx })
+  );
+
+  let p = fallo;
+  let vueltas = 0;
+  while (p.fase === "jugando" && vueltas < 100) {
+    p = clicBandera(p, p.objetivos[p.idx]);
+    vueltas += 1;
+  }
+  check(
+    "banderas: al acertar la última se acaba la partida",
+    p.fase === "fin" && p.aciertos === 20,
+    `${p.fase} / ${p.aciertos}`
+  );
+  check(
+    "banderas: terminada, los clics ya no puntúan",
+    clicBandera(p, p.objetivos[0]) === p
+  );
+
+  // Puntuación: aciertos × 100 − fallos × 50 − segundos × 2, con
+  // suelo en 0 (los tres pesos son constantes para probarlos).
+  check(
+    "banderas: constantes de la fórmula",
+    PUNTOS_ACIERTO === 100 &&
+      PUNTOS_FALLO === 50 &&
+      PUNTOS_SEGUNDO === 2 &&
+      MAX_BANDERAS === 20 &&
+      COLUMNAS === 4
+  );
+  check(
+    "banderas: la puntuación suma aciertos, resta fallos y tiempo",
+    puntuacion({ aciertos: 20, fallos: 0, segundos: 0 }) === 2000 &&
+      puntuacion({ aciertos: 20, fallos: 3, segundos: 97 }) === 1656 &&
+      puntuacion({ aciertos: 0, fallos: 0, segundos: 0 }) === 0,
+    String(puntuacion({ aciertos: 20, fallos: 3, segundos: 97 }))
+  );
+  check(
+    "banderas: la puntuación nunca baja de cero",
+    puntuacion({ aciertos: 1, fallos: 10, segundos: 500 }) === 0
+  );
+  check(
+    "banderas: el tiempo se formatea en m:ss",
+    formatoTiempo(0) === "0:00" &&
+      formatoTiempo(5) === "0:05" &&
+      formatoTiempo(97) === "1:37" &&
+      formatoTiempo(605) === "10:05",
+    formatoTiempo(97)
+  );
+
+  // La rejilla del CSS: 4 columnas (20 banderas = 4 × 5).
+  const cssBanderas = readFileSync("src/styles/screens.css", "utf8");
+  check(
+    "banderas: la rejilla del CSS es de 4 columnas",
+    /\.banderas-grid\s*{[^}]*repeat\(4,\s*1fr\)/.test(cssBanderas)
+  );
 }
 
 console.log(failures === 0 ? "\nTODO CORRECTO" : `\n${failures} FALLOS`);

@@ -174,6 +174,14 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
   letra (verde > amarillo > gris). Al acertar o agotar los 6 intentos se enseña la
   palabra y **Palabra nueva** empieza otra partida; **sin temporizadores ni marcador**,
   y se sale con *‹ Inicio*.
+- **Apartado Banderas** (zona 🏁 en la portada, justo debajo del Lingo): adivinar **la
+  bandera de un país**. Se sortean hasta **20 banderas** de las disponibles en una
+  **rejilla de 4 columnas** (4 × 5) y abajo aparece **el nombre de un país**: hay que
+  **tocar su bandera**. Al acertar **el siguiente nombre sale al instante** (la bandera
+  acertada chilla un momento y se queda con su ✓); un clic equivocado tiembla en rojo,
+  suma un fallo y esa bandera se apaga hasta la pregunta siguiente. Arriba van
+  **aciertos, fallos y tiempo**; al terminar, la puntuación sale desglosada
+  (**aciertos × 100 − fallos × 50 − segundos × 2**) y se sale con *‹ Inicio*.
 - **Accesibilidad**: objetivos táctiles ≥ 44 px, foco visible, etiquetas y `aria-label` en
   las casillas (*«Cifra 1 del cociente»*, *«Llevada de las decenas»*…), estados comunicados
   con icono + texto, contraste alto.
@@ -199,6 +207,7 @@ plantillas/               # TODO lo de las fichas: JSON + la lógica que los ent
   remotas.js              # config de la carpeta remota de GitHub (vacío = desactivada)
   HojaDePracticas.json    # ficha «Hoja de práctica» (sheet-001): 31 ejercicios + 4 trucos
   Operaciones01.json      # ficha «Operaciones 01» (sheet-002): 3 de cada
+  PracticaDiaria-2026-10-15.json  # ficha «2026-10-15 práctica diaria»: 17 ejercicios del día
   FichaDeLogica01.json    # ficha «Ficha de Lógica 01»: 15 retos (series, comparaciones, enigmas,
                           #   deducciones y eliminatorias)
 preguntas/                # apartado Trivial: un JSON por categoría (formato estándar)
@@ -208,9 +217,13 @@ palabras/                 # apartado Lingo: las palabras de 5 letras a adivinar
   loader.js               # normaliza (mayúsculas, sin tildes, con ñ), filtra y sortea
   rae.js                  # diccionario de la RAE: clave, consulta y `verificarIntento`
   palabras.txt            # una palabra por línea (lista que amplías a mano)
+banderas/                 # apartado Banderas: los países y sus banderas
+  loader.js               # une cada país con su imagen (las que ya estén) y filtra
+  paises.json             # un país por entrada: id + nombre (lista que amplías a mano)
+  imagenes/               # las banderas, llamadas como el id (espana.png, …)
 src/
   main.jsx                # arranque
-  App.jsx                 # pantallas: portada → secciones → resumen (+ Trivial, romanos y Lingo)
+  App.jsx                 # pantallas: portada → secciones → resumen (+ Trivial, romanos, Lingo y Banderas)
   styles/                 # tokens, base, pantallas y ejercicios (CSS plano)
   data/sheets/
     index.js              # registro de fichas + helpers (items por sección, índice)
@@ -222,9 +235,10 @@ src/
     storage.js            # lectura/escritura versionada de localStorage (+ hoja activa)
     roman.js              # números romanos: conversión, dificultades y sorteos del juego
     lingo.js              # Lingo: coloreado del intento y estados del teclado
+    banderas.js           # Banderas: sorteo del tablero, clics y puntuación
   components/
     layout/               # HomeScreen, SectionScreen, SummaryScreen, TrivialScreen,
-                          # RomanosScreen, LingoScreen, TopBar
+                          # RomanosScreen, LingoScreen, BanderasScreen, TopBar
     common/               # ExerciseCard, DigitGrid, DigitCell, Feedback, Progress…
     exercises/            # Addition, Subtraction, Multiplication, Division,
                           # VerticalStep, WordProblem, MentalCalculation, MentalTip, Logica
@@ -354,6 +368,12 @@ propia ficha (los mismos ids pueden aparecer en varias secciones):
 - `plantillas/Operaciones01.json` — **Operaciones 01** (🔢, id `sheet-002`): 12
   operaciones —3 sumas, 3 restas, 3 multiplicaciones y 3 divisiones— sin problemas ni
   nada más; una sola sección con los 4 grupos que se abre directa.
+- `plantillas/PracticaDiaria-2026-10-15.json` — **2026-10-15 práctica diaria** (📅, id
+  `practica-diaria-2026-10-15`): lo que toca un día —3 sumas y 3 restas **de 4 cifras**,
+  3 multiplicaciones **con el segundo término de 2 cifras**, 3 divisiones **de dividendo
+  grande entre 1 cifra**, 2 problemas (uno guiado y otro eligiendo la operación) y 3 retos
+  de lógica (serie, enigma y deducción)—: **17 ejercicios** en una sola sección, con un
+  grupo por tipo, que se abre directa.
 
 ### Fichas remotas (GitHub)
 
@@ -483,6 +503,38 @@ adivinar **una palabra de 5 letras en 6 intentos**.
 - **Fin de la partida**: al acertar sale *¡Correcto!* con la palabra; al agotar los
   6 intentos se enseña cuál era. Sin temporizadores, contadores ni marcador.
 
+## Banderas (`banderas/`)
+
+Apartado paralelo al Trivial, a los Números romanos y al Lingo (zona **🏁 Banderas** de
+la portada, justo debajo de la del Lingo): adivinar **la bandera de un país**.
+
+- **Dónde están los pares país-bandera**, en dos sitios que casan entre sí:
+  - `banderas/paises.json`: **un país por entrada**, con su `id` y su `nombre`
+    (`{ "id": "espana", "nombre": "España" }`).
+  - `banderas/imagenes/`: **una imagen por bandera llamada como el `id`**
+    (`espana.png`, `reino-unido.svg`…; sirven `png`, `svg`, `jpg`, `jpeg` y `webp`).
+  Solo se juega con los países que **ya tienen imagen**, así que puedes ir juntando las
+  banderas **una a una** y el juego usa las que estén (el título de la pantalla cuenta
+  cuántas hay). Un JSON roto o una entrada sin `id`/`nombre` se salta sin romper el
+  resto, igual que las palabras del Lingo.
+- **La partida**: se sortean hasta **20 banderas** de las disponibles y salen en una
+  **rejilla de 4 columnas** (4 × 5); abajo aparece **el nombre de un país** y hay que
+  **tocar su bandera**. Cada bandera se pregunta **una vez** (el orden de los nombres
+  va aparte del de la rejilla). Al acertar **el siguiente nombre sale al instante**: la
+  bandera acertada chilla un momento y se queda con su ✓; un clic equivocado tiembla en
+  rojo, suma un fallo y **esa bandera se apaga hasta la pregunta siguiente** (no deja
+  repetir el error). Con la preferencia del sistema **«prefers-reduced-motion»** no hay
+  animación: solo los colores.
+- **Marcador y puntuación**: arriba se ven **aciertos (✔), fallos (✘), tiempo (⏱)** y
+  por dónde vas; el reloj corre desde que entras hasta que acaba la última bandera. Al
+  terminar, la puntuación sale **desglosada**, para ir probando cómo pesa cada parte:
+  `puntos = aciertos × 100 − fallos × 50 − segundos × 2` (suelo en 0). Los tres pesos
+  son constantes de `src/utils/banderas.js` (`PUNTOS_ACIERTO`, `PUNTOS_FALLO` y
+  `PUNTOS_SEGUNDO`) para ajustarlos a mano; el resumen también muestra aciertos,
+  fallos y tiempo en formato `m:ss`, con *Otra partida* y *‹ Inicio*.
+- **En móvil**: la rejilla se mantiene en 4 columnas y la pantalla entera (marcador,
+  rejilla y nombre) cabe sin scroll, con casillas táctiles amplias.
+
 ## Lista de verificación (sección 31)
 
 | Comprobación | Estado |
@@ -502,13 +554,14 @@ adivinar **una palabra de 5 letras en 6 intentos**.
 | Trivial: categoría **vacía** desactivada y fichero roto con **aviso por ruta** | ✅ mocks con `geografia.json` (`[]`) y `rota.json` (que no es lista); `primaria.json` validado entero (200) |
 | Apartado **Números romanos** (🔢 en portada): tres dificultades con sus rangos, sentido **50 % cifras ↔ 50 % romanos**, botonera adaptable sin campos de texto, **Comprobar** sin desvelar, solución con desglose y «ⓘ» con el algoritmo | ✅ `roman.js` (escritura/lectura canónicas, rangos y sorteos por tiradas) + render de las tres dificultades, de los dos sentidos, del acierto/fallo, de la solución y del «ⓘ» |
 | Apartado **Lingo** (🔤 en portada): 6 intentos de 5 letras con cursor que salta, teclado de pantalla con Ñ **sin teclado del sistema en móvil** (el físico, en ordenador), **«Palabra no existe» sin avanzar la fila**, colores verde/amarillo/gris en filas y teclado y **volteo de las letras una a una al comprobar** (≤ 1 s, con `prefers-reduced-motion`) | ✅ `lingo.js` + `palabras/` (normalización, sorteo y `verificarIntento` con la petición simulada) + render de la portada, del tablero 6×5 con el orden de volteo de cada casilla y `inputmode="none"`, del teclado con sus pintados y de los avisos; `VOLTEO_MS ≤ 1000` |
+| Apartado **Banderas** (🏁 en portada, debajo del Lingo): hasta **20 banderas** al azar en **rejilla de 4 columnas** (4 × 5), el nombre del país abajo y clic en su bandera —acierto → siguiente al instante con ✓ y pulso, fallo → temblor rojo y bandera apagada hasta la siguiente—, marcador de **aciertos/fallos/tiempo** y **puntuación desglosada** (`aciertos × 100 − fallos × 50 − segundos × 2`, suelo en 0) | ✅ `banderas/` (JSON de países + imágenes por id, solo se juega con las que ya estén) + `utils/banderas.js` (sorteo, clics y puntuación) + render de la portada, de la rejilla con sus estados, del resumen con el desglose y del aviso sin imágenes; 23 tests de lógica + 11 de render y la rejilla de 4 columnas en el CSS |
 | **Varias fichas**: cambiar de ficha con progreso independiente y ficha activa recordada | ✅ `SET_SHEET` + clave `hoja-activa`; portada, resumen y render de la ficha Lógica comprobados |
 | Problemas con botonera (sin campos de texto): «=» pone la operación en vertical y **Comprobar** valida cada paso con su magnitud adjunta | ✅ render de los 4 + validación por paso y repaso completo del desarrollo |
 | Cálculo mental con pista al segundo fallo | ✅ tests de validación |
 | Trucos: intercalados en cálculo mental y en su sección | ✅ los 4 trucos renderizan en ambos sitios |
 | Progreso guardado en `localStorage` y retomado al recargar | ✅ `storage.js` versionado + tests de persistencia; botón **Resetear todo** en portada y resumen (retomada manual en navegador recomendada) |
 | Uso en móvil (menú y ejercicios condensados ≤ 600 px, «Comprobar» siempre a la vista, teclado numérico, sin scroll horizontal) | ✅ bloque de media queries móviles en `tokens`/`base`/`screens`/`exercises` (barra de acciones sticky + táctiles de 44 px) + `inputmode="numeric"` (probar en dispositivo recomendado) |
-| `npm run build` termina sin errores | ✅ build de producción OK (≈436 kB JS + 34 kB CSS) |
+| `npm run build` termina sin errores | ✅ build de producción OK (≈447 kB JS + 37 kB CSS) |
 | `npm install`, `npm run dev` y `npm run build` funcionan | ✅ verificado en Node 20 / Windows |
 
 > Las comprobaciones automatizadas cubren la lógica y el renderizado de todos los items;

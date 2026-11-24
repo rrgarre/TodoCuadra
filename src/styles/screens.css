@@ -861,6 +861,200 @@
   color: #fff;
 }
 
+/* ---------------- Banderas (banderas de países) ---------------- */
+
+/* Marcador de la partida: aciertos, fallos, tiempo y por dónde vas. */
+.banderas-marcador {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-4);
+  margin: var(--space-2) 0 var(--space-3);
+  font-weight: 700;
+  color: var(--color-text-soft);
+}
+
+.banderas-progreso {
+  color: var(--color-primary);
+}
+
+/* Rejilla de 4 columnas: 20 banderas salen en 4 × 5. */
+.banderas-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+  user-select: none;
+}
+
+.bandera {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  padding: 0;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.bandera:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.bandera:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.bandera img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Ya acertada: apagada y con su ✓ verde (sigue sin poder tocarla). */
+.bandera.is-usada {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.bandera.is-usada::after {
+  content: "✓";
+  position: absolute;
+  right: 4px;
+  bottom: 2px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--color-success);
+}
+
+/* Descartada en la pregunta actual: ya no suma fallos. */
+.bandera.is-descartada {
+  cursor: default;
+  opacity: 0.4;
+}
+
+/* Ágil y amable: el acierto chilla un instante y el fallo tiembla. */
+.bandera.is-acerto {
+  border-color: var(--color-success);
+  animation: bandera-acerto 0.45s ease;
+}
+
+.bandera.is-fallo {
+  border-color: var(--color-danger);
+  animation: bandera-fallo 0.35s ease;
+}
+
+@keyframes bandera-acerto {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.07);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes bandera-fallo {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+/* El nombre de abajo cambia con una entrada corta al siguiente país. */
+.banderas-pregunta {
+  margin: 0;
+  text-align: center;
+}
+
+.banderas-nombre {
+  display: block;
+  font-size: clamp(1.5rem, 6vw, 2rem);
+  font-weight: 800;
+  color: var(--color-text);
+  animation: bandera-nombre 0.18s ease;
+}
+
+@keyframes bandera-nombre {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Con menos movimiento, todo va sin animación (los colores quedan). */
+@media (prefers-reduced-motion: reduce) {
+  .bandera.is-acerto,
+  .bandera.is-fallo,
+  .banderas-nombre {
+    animation: none;
+  }
+
+  .bandera:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* Resumen al terminar: la puntuación con su desglose. */
+.banderas-resumen {
+  padding: var(--space-4);
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.banderas-resumen-cifra {
+  margin: 0 0 var(--space-3);
+  font-size: 1.05rem;
+  color: var(--color-text-soft);
+}
+
+.banderas-resumen-cifra strong {
+  font-size: 2rem;
+  color: var(--color-primary);
+}
+
+.banderas-desglose {
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.banderas-desglose li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-1) 0;
+  font-size: 0.95rem;
+  color: var(--color-text-soft);
+  border-top: 1px dashed var(--color-border);
+}
+
+.banderas-resumen-nota {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
 /* ================= Móvil (≤600 px) =================
  * Portada y pantallas condensadas para un móvil medio: menos margen
  * muerto, tarjetas del menú en dos filas cortas (icono + texto a la
@@ -1115,6 +1309,26 @@
   .lingo-tecla {
     padding: 2px 0;
     font-size: 0.95rem;
+  }
+
+  /* Banderas: rejilla de 4 ceñida, marcador y nombre sin flojera. */
+  .banderas-grid {
+    gap: var(--space-1);
+    margin-bottom: var(--space-3);
+  }
+
+  .banderas-marcador {
+    gap: var(--space-1) var(--space-3);
+    margin: var(--space-1) 0 var(--space-2);
+    font-size: 0.92rem;
+  }
+
+  .banderas-nombre {
+    font-size: clamp(1.4rem, 7vw, 1.8rem);
+  }
+
+  .banderas-resumen {
+    padding: var(--space-3);
   }
 
   /* Resumen: cuatro cifras en dos columnas. */

@@ -31,6 +31,11 @@ import LingoScreen, {
   LingoMensaje,
   VOLTEO_MS,
 } from "../src/components/layout/LingoScreen.jsx";
+import BanderasScreen, {
+  BanderasMatriz,
+  BanderasResumen,
+} from "../src/components/layout/BanderasScreen.jsx";
+import { loadBanderas } from "../banderas/loader.js";
 
 let failures = 0;
 function check(name, cond, extra = "") {
@@ -69,6 +74,17 @@ globalThis.__PREGUNTAS_MOCK__ = {
  * los valores son texto plano como el glob ?raw de Vite). */
 globalThis.__PALABRAS_MOCK__ = {
   "palabras/palabras.txt": readFileSync("palabras/palabras.txt", "utf8"),
+};
+
+/* Banderas simuladas: el JSON real y una imagen por cada país (el
+ * glob de Vite imaginaría las rutas de banderas/imagenes/). */
+const banderasJson = readFileSync("banderas/paises.json", "utf8");
+const banderasPaises = JSON.parse(banderasJson).paises;
+globalThis.__BANDERAS_MOCK__ = {
+  paises: { "banderas/paises.json": banderasJson },
+  imagenes: Object.fromEntries(
+    banderasPaises.map((p) => [`banderas/imagenes/${p.id}.png`, `img/${p.id}.png`])
+  ),
 };
 
 /* localStorage simulada, por clave: el progreso de cada hoja y la
@@ -1369,6 +1385,128 @@ function render(state, opts = {}) {
   check(
     "lingo: sin mensaje no hay nada bajo el tablero",
     renderToString(React.createElement(LingoMensaje, { mensaje: null })) === ""
+  );
+}
+
+/* ---------------- Apartado Banderas (banderas de países) ---------------- */
+
+{
+  // La portada lanza el juego con su zona, por debajo del Lingo.
+  const portada = render({ screen: "home", sectionIndex: 0, itemIndex: 0, progress: {} });
+  check(
+    "banderas: la portada tiene la zona y el botón, justo debajo del Lingo",
+    portada.includes("🏁 Banderas") &&
+      portada.includes('aria-label="Jugar al juego de las banderas"') &&
+      portada.indexOf("🔤 Lingo") !== -1 &&
+      portada.indexOf("🔤 Lingo") < portada.indexOf("🏁 Banderas"),
+    portada.slice(0, 300)
+  );
+
+  const pantalla = renderToString(React.createElement(BanderasScreen, { onExit() {} }));
+  const celdas = (pantalla.match(/class="bandera[\s"]/g) || []).length;
+  check("banderas: matriz de 20 banderas (4 × 5)", celdas === 20, String(celdas));
+
+  // La rejilla vive en el CSS: 4 columnas.
+  const cssBanderas = readFileSync("src/styles/screens.css", "utf8");
+  check(
+    "banderas: la rejilla es de 4 columnas en el CSS",
+    /\.banderas-grid\s*{[^}]*repeat\(4,\s*1fr\)/.test(cssBanderas)
+  );
+
+  const totalBanderas = loadBanderas().paises.length;
+  check(
+    "banderas: el título cuenta los países con imagen (y hay 20 o más)",
+    pantalla.includes(`🏁 Banderas · ${totalBanderas} países`) && totalBanderas >= 20,
+    `${totalBanderas} países`
+  );
+
+  const nombresBanderas = banderasPaises.map((p) => p.nombre);
+  check(
+    "banderas: abajo aparece el nombre de un país y las imágenes no lo cuentan",
+    pantalla.includes('class="banderas-pregunta"') &&
+      nombresBanderas.some((n) => pantalla.includes(n)) &&
+      pantalla.includes('alt=""'),
+    pantalla.slice(0, 400)
+  );
+
+  check(
+    "banderas: marcador de aciertos, fallos, tiempo y por dónde vas",
+    pantalla.includes('aria-label="Marcador"') &&
+      pantalla.includes("✔") &&
+      pantalla.includes("✘") &&
+      pantalla.includes("⏱") &&
+      pantalla.includes("banderas-progreso"),
+    pantalla.slice(0, 400)
+  );
+
+  check(
+    "banderas: cada casilla es un botón numerado",
+    pantalla.includes('aria-label="Bandera 1"') &&
+      pantalla.includes('aria-label="Bandera 20"'),
+    pantalla.slice(0, 400)
+  );
+
+  // Estados de las casillas con datos fijos: acertada con ✓,
+  // descartada apagada y el último fallo tiembla en rojo.
+  const fijas = banderasPaises.slice(0, 4).map((p) => ({ ...p, url: `img/${p.id}.png` }));
+  const mat = renderToString(
+    React.createElement(BanderasMatriz, {
+      banderas: fijas,
+      usadas: [fijas[0].id],
+      descartadas: [fijas[1].id],
+      marcado: { id: fijas[2].id, ok: false },
+      onClic() {},
+    })
+  );
+  check(
+    "banderas: la acertada lleva ✓, la descartada apagada y el fallo tiembla",
+    mat.includes("is-usada") &&
+      mat.includes("is-descartada") &&
+      mat.includes("is-fallo") &&
+      (mat.match(/disabled="/g) || []).length === 2,
+    `${(mat.match(/disabled="/g) || []).length} desactivadas`
+  );
+  const matOk = renderToString(
+    React.createElement(BanderasMatriz, {
+      banderas: fijas,
+      usadas: [fijas[3].id],
+      descartadas: [],
+      marcado: { id: fijas[3].id, ok: true },
+      onClic() {},
+    })
+  );
+  check("banderas: el acierto se anima en verde", matOk.includes("is-acerto"));
+
+  // Resumen: la puntuación con su desglose (20×100 − 3×50 − 97×2).
+  const res = renderToString(
+    React.createElement(BanderasResumen, {
+      partida: { aciertos: 20, fallos: 3, segundos: 97 },
+      onOtra() {},
+      onExit() {},
+    })
+  );
+  check(
+    "banderas: el resumen desglosa aciertos, fallos y tiempo (2.000 − 150 − 194)",
+    res.includes("1.656") &&
+      res.includes("20 × 100 = 2.000") &&
+      res.includes("3 × 50 = −150") &&
+      res.includes("97 s × 2 = −194") &&
+      res.includes("Otra partida"),
+    res.slice(0, 600)
+  );
+
+  // Sin imágenes: aviso con las dos rutas y sin rejilla.
+  const mockBanderas = globalThis.__BANDERAS_MOCK__;
+  globalThis.__BANDERAS_MOCK__ = { paises: {}, imagenes: {} };
+  const sinBanderas = renderToString(React.createElement(BanderasScreen, { onExit() {} }));
+  globalThis.__BANDERAS_MOCK__ = mockBanderas;
+  check(
+    "banderas: sin imágenes se avisa con las dos rutas y sin rejilla",
+    sinBanderas.includes("No hay banderas todavía") &&
+      sinBanderas.includes("banderas/imagenes/") &&
+      sinBanderas.includes("banderas/paises.json") &&
+      !sinBanderas.includes("banderas-grid"),
+    sinBanderas.slice(0, 400)
   );
 }
 

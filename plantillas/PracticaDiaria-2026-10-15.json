@@ -1,0 +1,86 @@
+{
+  "titulo": "2026-10-15 práctica diaria",
+  "tipo": "mates",
+  "id": "practica-diaria-2026-10-15",
+  "nivel": "4º Primaria",
+  "icono": "📅",
+  "descripcion": "3 sumas, 3 restas, 3 multiplicaciones, 3 divisiones, 2 problemas y 3 de lógica",
+  "ejercicios": [
+    { "id": "dia-sum-1", "tipo": "suma", "a": 3456, "b": 2789 },
+    { "id": "dia-sum-2", "tipo": "suma", "a": 5127, "b": 4698 },
+    { "id": "dia-sum-3", "tipo": "suma", "a": 8045, "b": 1976 },
+
+    { "id": "dia-res-1", "tipo": "resta", "a": 6240, "b": 3785 },
+    { "id": "dia-res-2", "tipo": "resta", "a": 9003, "b": 4567 },
+    { "id": "dia-res-3", "tipo": "resta", "a": 7312, "b": 2849 },
+
+    { "id": "dia-mul-1", "tipo": "multiplicacion", "a": 437, "b": 26 },
+    { "id": "dia-mul-2", "tipo": "multiplicacion", "a": 582, "b": 47 },
+    { "id": "dia-mul-3", "tipo": "multiplicacion", "a": 629, "b": 85 },
+
+    { "id": "dia-div-1", "tipo": "division", "a": 8472, "b": 6 },
+    { "id": "dia-div-2", "tipo": "division", "a": 9345, "b": 5 },
+    { "id": "dia-div-3", "tipo": "division", "a": 7268, "b": 4 },
+
+    {
+      "id": "dia-prob-1",
+      "tipo": "problema",
+      "modo": "guiado",
+      "texto": "El supermercado tenía 1.250 latas de tomate. Por la mañana vendieron 485 y por la tarde llegaron 320 latas nuevas. ¿Cuántas latas hay ahora?",
+      "pasos": [
+        { "op": "resta", "a": 1250, "b": 485 },
+        { "op": "suma", "a": 765, "b": 320 }
+      ],
+      "respuesta": 1085,
+      "resultados": {
+        "parciales": ["Latas tras la venta"],
+        "final": "Latas ahora"
+      }
+    },
+    {
+      "id": "dia-prob-2",
+      "tipo": "problema",
+      "modo": "eleccion",
+      "texto": "En la granja hay 35 gallinas y cada una pone 6 huevos al día. Guardan los huevos en cajas de 30. ¿Cuántas cajas llenan al día?",
+      "pasos": [
+        { "op": "multiplicacion", "a": 35, "b": 6 },
+        { "op": "division", "a": 210, "b": 30 }
+      ],
+      "respuesta": 7,
+      "resultados": {
+        "parciales": ["Huevos al día"],
+        "final": "Cajas llenas"
+      }
+    },
+
+    {
+      "id": "dia-log-1",
+      "tipo": "logica",
+      "variante": "serie",
+      "enunciado": "¿Qué número sigue en la serie?",
+      "elementos": [120, 115, 110, 105],
+      "respuesta": 100,
+      "pista": "Comprueba de cuánto en cuánto bajan los números.",
+      "explicacion": "La serie baja de 5 en 5: 105 − 5 = 100."
+    },
+    {
+      "id": "dia-log-2",
+      "tipo": "logica",
+      "variante": "enigma",
+      "enunciado": "Sara tiene 8 cajas con 24 canicas en cada una. Después pierde 15 canicas. ¿Cuántas canicas le quedan?",
+      "respuesta": 177,
+      "pista": "Primero calcula todas las canicas que tenía y después quita las perdidas.",
+      "explicacion": "8 × 24 = 192 canicas; 192 − 15 = 177."
+    },
+    {
+      "id": "dia-log-3",
+      "tipo": "logica",
+      "variante": "deduccion",
+      "enunciado": "En la granja hay 7 animales: vacas y gallinas. En total tienen 20 patas. ¿Cuántas vacas y cuántas gallinas hay?",
+      "etiquetas": ["Vacas", "Gallinas"],
+      "respuesta": [3, 4],
+      "pista": "Las vacas tienen 4 patas y las gallinas 2. Empieza probando con 1 vaca.",
+      "explicacion": "3 vacas (12 patas) y 4 gallinas (8 patas) suman 7 animales y 20 patas."
+    }
+  ]
+}
