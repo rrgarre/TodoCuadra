@@ -882,7 +882,8 @@
 .banderas-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-2);
+  column-gap: var(--space-2);
+  row-gap: var(--space-3); /* más aire entre filas */
   margin: 0 0 var(--space-4);
   user-select: none;
 }
@@ -890,6 +891,7 @@
 .bandera {
   position: relative;
   aspect-ratio: 3 / 2;
+  container-type: size; /* el ✓ se mide en unidades de la casilla */
   padding: 0;
   overflow: hidden;
   background: var(--color-surface);
@@ -916,26 +918,53 @@
   object-fit: contain;
 }
 
-/* Ya acertada: apagada y con su ✓ verde (sigue sin poder tocarla). */
+/* Ya acertada: la bandera se apaga y el ✓ verde la llena entera,
+ * con halo blanco para verse sobre cualquier color (el tamaño va en
+ * unidades de la casilla, así que escala en móvil y en escritorio). */
 .bandera.is-usada {
   cursor: default;
-  opacity: 0.55;
+}
+
+.bandera.is-usada img {
+  opacity: 0.5;
 }
 
 .bandera.is-usada::after {
   content: "✓";
   position: absolute;
-  right: 4px;
-  bottom: 2px;
-  font-size: 0.9rem;
-  font-weight: 800;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 100cqh;
+  line-height: 1;
+  font-weight: 900;
   color: var(--color-success);
+  filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff)
+    drop-shadow(0 1px 2px rgba(31, 42, 61, 0.55));
+  pointer-events: none;
 }
 
-/* Descartada en la pregunta actual: ya no suma fallos. */
+/* Descartada en la pregunta actual: ya no suma fallos y se queda
+ * con un degradado rojizo encima. */
 .bandera.is-descartada {
   cursor: default;
+}
+
+.bandera.is-descartada img {
   opacity: 0.4;
+}
+
+.bandera.is-descartada::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(214, 69, 69, 0.65),
+    rgba(214, 69, 69, 0.2)
+  );
+  pointer-events: none;
 }
 
 /* Ágil y amable: el acierto chilla un instante y el fallo tiembla. */
@@ -976,7 +1005,7 @@
 
 /* El nombre de abajo cambia con una entrada corta al siguiente país. */
 .banderas-pregunta {
-  margin: 0;
+  margin: var(--space-3) 0 0; /* el nombre, un poco más abajo */
   text-align: center;
 }
 
@@ -1313,7 +1342,8 @@
 
   /* Banderas: rejilla de 4 ceñida, marcador y nombre sin flojera. */
   .banderas-grid {
-    gap: var(--space-1);
+    column-gap: var(--space-1);
+    row-gap: var(--space-2);
     margin-bottom: var(--space-3);
   }
 

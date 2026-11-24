@@ -179,8 +179,9 @@ Total: **39 items** de pantalla = **31 ejercicios con corrección** + **4 trucos
   bandera de un país**. Se sortean hasta **20 banderas** de las disponibles en una
   **rejilla de 4 columnas** (4 × 5) y abajo aparece **el nombre de un país**: hay que
   **tocar su bandera**. Al acertar **el siguiente nombre sale al instante** (la bandera
-  acertada chilla un momento y se queda con su ✓); un clic equivocado tiembla en rojo,
-  suma un fallo y esa bandera se apaga hasta la pregunta siguiente. Arriba van
+  acertada chilla un momento y se queda con un **✓ verde a lo grande** que la llena);
+  un clic equivocado tiembla en rojo, suma un fallo y esa bandera se apaga **con un
+  degradado rojizo** hasta la pregunta siguiente. Arriba van
   **aciertos, fallos y tiempo**; al terminar, la puntuación sale desglosada
   (**aciertos × 100 − fallos × 50 − segundos × 2**) y se sale con *‹ Inicio*.
 - **Accesibilidad**: objetivos táctiles ≥ 44 px, foco visible, etiquetas y `aria-label` en
@@ -527,10 +528,11 @@ la portada, justo debajo de la del Lingo): adivinar **la bandera de un país**.
   **rejilla de 4 columnas** (4 × 5); abajo aparece **el nombre de un país** y hay que
   **tocar su bandera**. Cada bandera se pregunta **una vez** (el orden de los nombres
   va aparte del de la rejilla). Al acertar **el siguiente nombre sale al instante**: la
-  bandera acertada chilla un momento y se queda con su ✓; un clic equivocado tiembla en
-  rojo, suma un fallo y **esa bandera se apaga hasta la pregunta siguiente** (no deja
-  repetir el error). Con la preferencia del sistema **«prefers-reduced-motion»** no hay
-  animación: solo los colores.
+  bandera acertada chilla un momento y se queda con un **✓ verde a lo grande** que la
+  llena entera (con halo blanco, para verse sobre cualquier color); un clic equivocado
+  tiembla en rojo, suma un fallo y **esa bandera se apaga con un degradado rojizo hasta
+  la pregunta siguiente** (no deja repetir el error). Con la preferencia del sistema
+  **«prefers-reduced-motion»** no hay animación: solo los colores.
 - **Marcador y puntuación**: arriba se ven **aciertos (✔), fallos (✘), tiempo (⏱)** y
   por dónde vas; el reloj corre desde que entras hasta que acaba la última bandera. Al
   terminar, la puntuación sale **desglosada**, para ir probando cómo pesa cada parte:
@@ -560,7 +562,7 @@ la portada, justo debajo de la del Lingo): adivinar **la bandera de un país**.
 | Trivial: categoría **vacía** desactivada y fichero roto con **aviso por ruta** | ✅ mocks con `geografia.json` (`[]`) y `rota.json` (que no es lista); `primaria.json` validado entero (200) |
 | Apartado **Números romanos** (🔢 en portada): tres dificultades con sus rangos, sentido **50 % cifras ↔ 50 % romanos**, botonera adaptable sin campos de texto, **Comprobar** sin desvelar, solución con desglose y «ⓘ» con el algoritmo | ✅ `roman.js` (escritura/lectura canónicas, rangos y sorteos por tiradas) + render de las tres dificultades, de los dos sentidos, del acierto/fallo, de la solución y del «ⓘ» |
 | Apartado **Lingo** (🔤 en portada): 6 intentos de 5 letras con cursor que salta, teclado de pantalla con Ñ **sin teclado del sistema en móvil** (el físico, en ordenador), **«Palabra no existe» sin avanzar la fila**, colores verde/amarillo/gris en filas y teclado y **volteo de las letras una a una al comprobar** (≤ 1 s, con `prefers-reduced-motion`) | ✅ `lingo.js` + `palabras/` (normalización, sorteo y `verificarIntento` con la petición simulada) + render de la portada, del tablero 6×5 con el orden de volteo de cada casilla y `inputmode="none"`, del teclado con sus pintados y de los avisos; `VOLTEO_MS ≤ 1000` |
-| Apartado **Banderas** (🏁 en portada, debajo del Lingo): hasta **20 banderas** (de las **254** incluidas) al azar en **rejilla de 4 columnas** (4 × 5), el nombre del país abajo y clic en su bandera —acierto → siguiente al instante con ✓ y pulso, fallo → temblor rojo y bandera apagada hasta la siguiente—, marcador de **aciertos/fallos/tiempo** y **puntuación desglosada** (`aciertos × 100 − fallos × 50 − segundos × 2`, suelo en 0) | ✅ `banderas/` (imágenes del mundo con `id` = nombre del fichero y traducción en `paises.json`; `npm test` avisa de imágenes sin traducción) + `utils/banderas.js` (sorteo, clics y puntuación) + render de la portada, de la rejilla con sus estados, del resumen con el desglose y del aviso sin imágenes; 24 tests de lógica + 11 de render y la rejilla de 4 columnas en el CSS |
+| Apartado **Banderas** (🏁 en portada, debajo del Lingo): hasta **20 banderas** (de las **254** incluidas) al azar en **rejilla de 4 columnas** (4 × 5), el nombre del país abajo y clic en su bandera —acierto → siguiente al instante con ✓ grande y pulso, fallo → temblor rojo y degradado rojizo hasta la siguiente—, marcador de **aciertos/fallos/tiempo** y **puntuación desglosada** (`aciertos × 100 − fallos × 50 − segundos × 2`, suelo en 0) | ✅ `banderas/` (imágenes del mundo con `id` = nombre del fichero y traducción en `paises.json`; `npm test` avisa de imágenes sin traducción) + `utils/banderas.js` (sorteo, clics y puntuación) + render de la portada, de la rejilla con sus estados, del resumen con el desglose y del aviso sin imágenes; 24 tests de lógica + 11 de render y la rejilla de 4 columnas en el CSS |
 | **Varias fichas**: cambiar de ficha con progreso independiente y ficha activa recordada | ✅ `SET_SHEET` + clave `hoja-activa`; portada, resumen y render de la ficha Lógica comprobados |
 | Problemas con botonera (sin campos de texto): «=» pone la operación en vertical y **Comprobar** valida cada paso con su magnitud adjunta | ✅ render de los 4 + validación por paso y repaso completo del desarrollo |
 | Cálculo mental con pista al segundo fallo | ✅ tests de validación |
