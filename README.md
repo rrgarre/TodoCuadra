@@ -30,7 +30,8 @@ npm run build   # genera la versión de producción en dist/
 npm run preview # sirve dist/ en local para comprobarla
 ```
 
-El resultado es una carpeta `dist/` estática (HTML + JS + CSS) que funciona en cualquier
+El resultado es una carpeta `dist/` estática (HTML + JS + CSS + las imágenes de las
+banderas) que funciona en cualquier
 hosting estático (GitHub Pages, Netlify, Vercel, un simple servidor de ficheros…).
 `vite.config.js` usa `base: "./"`, así que también funciona si se publica dentro de una
 subcarpeta.
@@ -219,8 +220,8 @@ palabras/                 # apartado Lingo: las palabras de 5 letras a adivinar
   palabras.txt            # una palabra por línea (lista que amplías a mano)
 banderas/                 # apartado Banderas: los países y sus banderas
   loader.js               # une cada país con su imagen (las que ya estén) y filtra
-  paises.json             # un país por entrada: id + nombre (lista que amplías a mano)
-  imagenes/               # las banderas, llamadas como el id (espana.png, …)
+  paises.json             # id = nombre del fichero + traducción al español (ampliable)
+  imagenes/               # las banderas del mundo (Spain.svg, United States.svg, …)
 src/
   main.jsx                # arranque
   App.jsx                 # pantallas: portada → secciones → resumen (+ Trivial, romanos, Lingo y Banderas)
@@ -509,14 +510,19 @@ Apartado paralelo al Trivial, a los Números romanos y al Lingo (zona **🏁 Ban
 la portada, justo debajo de la del Lingo): adivinar **la bandera de un país**.
 
 - **Dónde están los pares país-bandera**, en dos sitios que casan entre sí:
-  - `banderas/paises.json`: **un país por entrada**, con su `id` y su `nombre`
-    (`{ "id": "espana", "nombre": "España" }`).
-  - `banderas/imagenes/`: **una imagen por bandera llamada como el `id`**
-    (`espana.png`, `reino-unido.svg`…; sirven `png`, `svg`, `jpg`, `jpeg` y `webp`).
-  Solo se juega con los países que **ya tienen imagen**, así que puedes ir juntando las
-  banderas **una a una** y el juego usa las que estén (el título de la pantalla cuenta
-  cuántas hay). Un JSON roto o una entrada sin `id`/`nombre` se salta sin romper el
-  resto, igual que las palabras del Lingo.
+  - `banderas/imagenes/`: **una imagen por bandera**, con el nombre del país en
+    inglés **tal cual** (`Spain.svg`, `United States.svg`, `Côte d'Ivoire.svg`…;
+    sirven `png`, `svg`, `jpg`, `jpeg` y `webp`). Hay **254 banderas** de todo el
+    mundo ya incluidas.
+  - `banderas/paises.json`: **un país por entrada**; el `id` es **el nombre del
+    fichero exactamente igual** (con espacios, mayúsculas y acentos) y el `nombre`
+    es la **traducción al español** que se enseña en el juego
+    (`{ "id": "Spain", "nombre": "España" }`).
+  Solo se juega con los países que **tienen imagen y traducción**: si añades una
+  bandera nueva solo tienes que copiar su nombre (sin la extensión) como `id` y
+  ponerle el nombre en español, y `npm test` avisa de lo que falte. Un JSON roto o
+  una entrada sin `id`/`nombre` se salta sin romper el resto, igual que las
+  palabras del Lingo.
 - **La partida**: se sortean hasta **20 banderas** de las disponibles y salen en una
   **rejilla de 4 columnas** (4 × 5); abajo aparece **el nombre de un país** y hay que
   **tocar su bandera**. Cada bandera se pregunta **una vez** (el orden de los nombres
@@ -554,14 +560,14 @@ la portada, justo debajo de la del Lingo): adivinar **la bandera de un país**.
 | Trivial: categoría **vacía** desactivada y fichero roto con **aviso por ruta** | ✅ mocks con `geografia.json` (`[]`) y `rota.json` (que no es lista); `primaria.json` validado entero (200) |
 | Apartado **Números romanos** (🔢 en portada): tres dificultades con sus rangos, sentido **50 % cifras ↔ 50 % romanos**, botonera adaptable sin campos de texto, **Comprobar** sin desvelar, solución con desglose y «ⓘ» con el algoritmo | ✅ `roman.js` (escritura/lectura canónicas, rangos y sorteos por tiradas) + render de las tres dificultades, de los dos sentidos, del acierto/fallo, de la solución y del «ⓘ» |
 | Apartado **Lingo** (🔤 en portada): 6 intentos de 5 letras con cursor que salta, teclado de pantalla con Ñ **sin teclado del sistema en móvil** (el físico, en ordenador), **«Palabra no existe» sin avanzar la fila**, colores verde/amarillo/gris en filas y teclado y **volteo de las letras una a una al comprobar** (≤ 1 s, con `prefers-reduced-motion`) | ✅ `lingo.js` + `palabras/` (normalización, sorteo y `verificarIntento` con la petición simulada) + render de la portada, del tablero 6×5 con el orden de volteo de cada casilla y `inputmode="none"`, del teclado con sus pintados y de los avisos; `VOLTEO_MS ≤ 1000` |
-| Apartado **Banderas** (🏁 en portada, debajo del Lingo): hasta **20 banderas** al azar en **rejilla de 4 columnas** (4 × 5), el nombre del país abajo y clic en su bandera —acierto → siguiente al instante con ✓ y pulso, fallo → temblor rojo y bandera apagada hasta la siguiente—, marcador de **aciertos/fallos/tiempo** y **puntuación desglosada** (`aciertos × 100 − fallos × 50 − segundos × 2`, suelo en 0) | ✅ `banderas/` (JSON de países + imágenes por id, solo se juega con las que ya estén) + `utils/banderas.js` (sorteo, clics y puntuación) + render de la portada, de la rejilla con sus estados, del resumen con el desglose y del aviso sin imágenes; 23 tests de lógica + 11 de render y la rejilla de 4 columnas en el CSS |
+| Apartado **Banderas** (🏁 en portada, debajo del Lingo): hasta **20 banderas** (de las **254** incluidas) al azar en **rejilla de 4 columnas** (4 × 5), el nombre del país abajo y clic en su bandera —acierto → siguiente al instante con ✓ y pulso, fallo → temblor rojo y bandera apagada hasta la siguiente—, marcador de **aciertos/fallos/tiempo** y **puntuación desglosada** (`aciertos × 100 − fallos × 50 − segundos × 2`, suelo en 0) | ✅ `banderas/` (imágenes del mundo con `id` = nombre del fichero y traducción en `paises.json`; `npm test` avisa de imágenes sin traducción) + `utils/banderas.js` (sorteo, clics y puntuación) + render de la portada, de la rejilla con sus estados, del resumen con el desglose y del aviso sin imágenes; 24 tests de lógica + 11 de render y la rejilla de 4 columnas en el CSS |
 | **Varias fichas**: cambiar de ficha con progreso independiente y ficha activa recordada | ✅ `SET_SHEET` + clave `hoja-activa`; portada, resumen y render de la ficha Lógica comprobados |
 | Problemas con botonera (sin campos de texto): «=» pone la operación en vertical y **Comprobar** valida cada paso con su magnitud adjunta | ✅ render de los 4 + validación por paso y repaso completo del desarrollo |
 | Cálculo mental con pista al segundo fallo | ✅ tests de validación |
 | Trucos: intercalados en cálculo mental y en su sección | ✅ los 4 trucos renderizan en ambos sitios |
 | Progreso guardado en `localStorage` y retomado al recargar | ✅ `storage.js` versionado + tests de persistencia; botón **Resetear todo** en portada y resumen (retomada manual en navegador recomendada) |
 | Uso en móvil (menú y ejercicios condensados ≤ 600 px, «Comprobar» siempre a la vista, teclado numérico, sin scroll horizontal) | ✅ bloque de media queries móviles en `tokens`/`base`/`screens`/`exercises` (barra de acciones sticky + táctiles de 44 px) + `inputmode="numeric"` (probar en dispositivo recomendado) |
-| `npm run build` termina sin errores | ✅ build de producción OK (≈447 kB JS + 37 kB CSS) |
+| `npm run build` termina sin errores | ✅ build de producción OK (≈482 kB JS + 37 kB CSS + 254 banderas SVG; los SVG se quedan como ficheros aparte con `assetsInlineLimit: 0`) |
 | `npm install`, `npm run dev` y `npm run build` funcionan | ✅ verificado en Node 20 / Windows |
 
 > Las comprobaciones automatizadas cubren la lógica y el renderizado de todos los items;

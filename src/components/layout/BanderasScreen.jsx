@@ -183,8 +183,8 @@ export default function BanderasScreen({ onExit }) {
         <div className="container">
           <div className="plantilla-aviso" role="alert">
             <strong>⚠ No hay banderas todavía.</strong> Guarda las imágenes en
-            banderas/imagenes/ con el mismo nombre que el id de
-            banderas/paises.json (p. ej. espana.png) y recarga.
+            banderas/imagenes/ y su entrada en banderas/paises.json, con el
+            id igual al nombre del fichero (p. ej. Spain.svg) y recarga.
           </div>
         </div>
       ) : !jugando ? (

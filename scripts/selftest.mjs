@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import {
   buildMultiplication,
   buildDivision,
@@ -1964,6 +1964,21 @@ for (const [dividend, divisor, quotient, expectedSteps] of [
           typeof p.nombre === "string" && p.nombre.trim().length > 0
       ) &&
       new Set(listaBanderas.map((p) => p.id)).size === listaBanderas.length
+  );
+
+  // Imágenes y JSON van a la par: cada imagen con su traducción (el
+  // id es el nombre del fichero tal cual, con espacios y acentos).
+  const imgsBanderas = readdirSync("banderas/imagenes").filter((f) =>
+    /\.(svg|png|jpe?g|webp)$/i.test(f)
+  );
+  const idsBanderas = new Set(listaBanderas.map((p) => p.id));
+  const sinEntrada = imgsBanderas.filter(
+    (f) => !idsBanderas.has(f.replace(/\.[^.]+$/, ""))
+  );
+  check(
+    "banderas: cada imagen de la carpeta tiene su traducción en el JSON",
+    sinEntrada.length === 0,
+    sinEntrada.slice(0, 3).join(", ")
   );
 
   // parsePaises: el JSON real, uno roto y entradas a medias.

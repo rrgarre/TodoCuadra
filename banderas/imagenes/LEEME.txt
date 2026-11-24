@@ -1,0 +1,9 @@
+Las banderas ya están: una por fichero, con el nombre del país en
+inglés tal cual (Spain.svg, United States.svg, Côte d'Ivoire.svg).
+
+Ese nombre es el "id" de ../paises.json y cada imagen necesita su
+entrada con el nombre en español que se enseña en el juego:
+    { "id": "Spain", "nombre": "España" }
+
+Al añadir una imagen nueva, copia su nombre (sin la extensión) como
+id y ponle su traducción; si falta, npm test avisa.
