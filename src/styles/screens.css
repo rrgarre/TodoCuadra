@@ -955,15 +955,14 @@
   object-fit: contain;
 }
 
-/* Ya acertada: la bandera se apaga y el ✓ verde la llena entera,
- * con halo blanco para verse sobre cualquier color (el tamaño va en
- * unidades de la casilla, así que escala en móvil y en escritorio). */
+/* Acertada: la bandera deja un hueco blanco — sin imagen ni check,
+ * solo el espacio de la casilla (el fondo es blanco). */
 .bandera.is-usada {
   cursor: default;
 }
 
 .bandera.is-usada img {
-  opacity: 0.5;
+  opacity: 0;
 }
 
 .bandera.is-usada::after {
@@ -980,6 +979,11 @@
   filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff)
     drop-shadow(0 1px 2px rgba(31, 42, 61, 0.55));
   pointer-events: none;
+}
+
+/* El check verde de las aciertadas no se ve: el hueco queda blanco. */
+.bandera.is-usada::after {
+  display: none;
 }
 
 /* Descartada en la pregunta actual: ya no suma fallos y se queda
