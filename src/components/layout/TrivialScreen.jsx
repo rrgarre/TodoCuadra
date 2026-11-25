@@ -81,7 +81,7 @@ export function TrivialJuego({
   if (!pregunta) return null;
   const todas = titulo == null;
   return (
-    <div className="container">
+    <div className="container trivial-contenedor">
       <p className="group-label">
         {titulo ?? "Todas las categorías"}
         {todas && pregunta.categoria && (
@@ -104,7 +104,7 @@ export function TrivialJuego({
         )}
       </div>
 
-      <nav className="item-nav" aria-label="Controles del trivial">
+      <nav className="item-nav trivial-nav" aria-label="Controles del trivial">
         <button
           type="button"
           className="btn"

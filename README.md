@@ -23,6 +23,14 @@ npm run dev     # servidor de desarrollo con recarga en caliente
 Abre la URL que imprime Vite en pantalla (normalmente `http://localhost:5173/`; si ese puerto
 está ocupado, Vite usa el siguiente y lo indica en la terminal).
 
+La pestaña del navegador muestra el logo: usa `favicon.ico`, `favicon-16.png` o
+`favicon-32.png` de `public/` (generados del logo de la raíz con el script
+`gen-icons.ps1`/`gen-favicon-ico2.ps1` en el directorio de la sesión). Para
+**instalar la app en la pantalla de inicio del móvil**, el manifiesto
+(`public/manifest.json`) apunta a `icon-192.png`, `icon-512.png` (Android/Chrome);
+`icon-maskable-512.png` tiene forma adaptable, y iOS usa
+`apple-touch-icon.png` (`<link rel="apple-touch-icon">` en `index.html`).
+
 ## Compilar para publicar
 
 ```bash
@@ -435,6 +443,9 @@ Reglas del juego:
   fichero + posición); un fichero que no es una lista no se carga.
 - Para añadir una categoría: crea `preguntas/mi-categoria.json` con `[ ... ]` y recarga.
   La app lee la carpeta entera con `import.meta.glob` (sin backend).
+- Los botones de **Mostrar solución / Cambiar categoría / Siguiente** quedan
+  **fijos abajo de la pantalla** (más pequeños en móvil): siguen a la parte inferior
+  aunque crezca el recuadro con la respuesta.
 
 ## Números romanos (juego)
 
@@ -483,7 +494,8 @@ adivinar **una palabra de 5 letras en 6 intentos**.
   solo hacia la derecha y se rellenan con el teclado de pantalla (fila con **Ñ**,
   **Enviar** y **⌫**), que **se va pintando** con los resultados. Las casillas llevan
   `inputMode="none"`: **en el móvil no se abre el teclado del sistema** (manda el
-  virtual); en el ordenador el teclado físico sigue funcionando.
+  virtual); en el ordenador el teclado físico sigue funcionando. El teclado virtual
+  queda **fijo abajo de la pantalla**, según el tamaño (no tapa la pantalla).
 - **La palabra tiene que existir**: antes de comprobar se consulta el diccionario de la
   RAE (<https://rae-api.com/>, clave en `palabras/rae.js`, CORS abierto y límite de
   60 consultas/minuto). Si no existe → aviso **«Palabra no existe»** y **la fila no
@@ -569,7 +581,7 @@ la portada, justo debajo de la del Lingo): adivinar **la bandera de un país**.
 | Trucos: intercalados en cálculo mental y en su sección | ✅ los 4 trucos renderizan en ambos sitios |
 | Progreso guardado en `localStorage` y retomado al recargar | ✅ `storage.js` versionado + tests de persistencia; botón **Resetear todo** en portada y resumen (retomada manual en navegador recomendada) |
 | Uso en móvil (menú y ejercicios condensados ≤ 600 px, «Comprobar» siempre a la vista, teclado numérico, sin scroll horizontal) | ✅ bloque de media queries móviles en `tokens`/`base`/`screens`/`exercises` (barra de acciones sticky + táctiles de 44 px) + `inputmode="numeric"` (probar en dispositivo recomendado) |
-| `npm run build` termina sin errores | ✅ build de producción OK (≈482 kB JS + 37 kB CSS + 254 banderas SVG; los SVG se quedan como ficheros aparte con `assetsInlineLimit: 0`) |
+| `npm run build` termina sin errores | ✅ build de producción OK (≈482 kB JS + ≈38 kB CSS + 254 banderas SVG; los SVG se quedan como ficheros aparte con `assetsInlineLimit: 0`) |
 | `npm install`, `npm run dev` y `npm run build` funcionan | ✅ verificado en Node 20 / Windows |
 
 > Las comprobaciones automatizadas cubren la lógica y el renderizado de todos los items;

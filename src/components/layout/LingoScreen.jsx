@@ -372,7 +372,7 @@ export default function LingoScreen({ onExit }) {
           </div>
         </div>
       ) : (
-        <div className="container">
+        <div className="container lingo-contenedor">
           <p className="group-label">{`Palabra de 5 letras · ${FILAS} intentos`}</p>
 
           <LingoTablero

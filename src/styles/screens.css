@@ -499,6 +499,32 @@
   color: var(--color-primary-dark);
 }
 
+/* --- Trivial: controles fijos abajo (barra que se queda pegada al
+ * final de la pantalla; el recuadro de la pregunta crece sin moverla).
+ * Se quedan abajo también cuando sale la solución y el recuadro más
+ * grande. --- */
+.trivial-nav {
+  position: fixed;
+  bottom: calc(var(--space-4) * 3); /* 3 veces más de margen abajo de los botones */
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border-top: 2px solid var(--color-border-strong);
+  box-shadow: var(--shadow-md);
+}
+
+/* Hueco abajo del recuadro para que no tape. */
+.trivial-contenedor {
+  padding-bottom: calc(
+    var(--space-4) + var(--space-2) + var(--tap-min) + 2px + var(--space-4) * 2
+  );
+}
+
 /* ---------------- Números romanos (juego) ---------------- */
 
 /* Rango de números bajo cada dificultad. */
@@ -787,10 +813,21 @@
   color: var(--color-danger);
 }
 
-/* Teclado de pantalla: 3 filas; en la tercera, Enviar y ⌫. */
+/* Teclado de pantalla: 3 filas; en la tercera, Enviar y ⌫.
+ * Se queda pegado abajo (sigue ahí cuando huya el tablero). */
 .lingo-teclado {
   display: grid;
   gap: var(--space-2);
+  position: fixed;
+  bottom: calc(var(--space-6) * 3); /* margen abajo de la pantalla: 3 × 32 px */
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+/* Hueco abajo del teclado fijo para que no tape la pregunta. */
+.lingo-contenedor {
+  padding-bottom: calc(175px + var(--space-6) * 3);
 }
 
 .lingo-teclado-fila {
@@ -1005,7 +1042,7 @@
 
 /* El nombre de abajo cambia con una entrada corta al siguiente país. */
 .banderas-pregunta {
-  margin: var(--space-3) 0 0; /* el nombre, un poco más abajo */
+  margin: calc(var(--space-6) * 3) 0 0; /* el nombre, bastante más abajo */
   text-align: center;
 }
 
@@ -1264,7 +1301,8 @@
     font-size: 0.88rem;
   }
 
-  /* Trivial: categorías y tarjeta de la pregunta. */
+  /* Trivial: categorías, tarjeta de la pregunta y la barra de
+   * controles con botones más altos en la parte inferior. */
   .trivial-cats {
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: var(--space-2);
@@ -1277,6 +1315,16 @@
 
   .trivial-card {
     padding: var(--space-3);
+  }
+
+  .trivial-nav {
+    bottom: calc(var(--space-4) * 3);
+    padding: var(--space-2) var(--space-3);
+    border-top-width: 1px;
+  }
+
+  .trivial-contenedor {
+    padding-bottom: calc(28px + var(--space-4) * 3);
   }
 
   .trivial-pregunta {
